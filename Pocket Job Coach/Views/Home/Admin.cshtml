@@ -7,13 +7,20 @@
 <h3>Add A User</h3>
 <form id="addUserForm">
     First name:<br/>
-    <input type="text" name="firstname">
+    <input type="text" name="firstname" style="width:200px;">
     <br/>
     Last name:<br/>
-    <input type="text" name="lastname">
+    <input type="text" name="lastname" style="width:200px;">
     <br />
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit" style="margin-top:50px; width:100px;">
 </form>
+
+<div id="showUsers" style="margin-top: 100px;">
+    <h3>List of Users:</h3>
+    <textarea readonly style="height:200px;">
+        
+    </textarea>
+</div>
 
 <ul data-role="listview" data-inset="true">
     <li data-role="list-divider">Navigation</li>
