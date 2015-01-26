@@ -1,2 +1,14 @@
-﻿body {
+﻿
+
+/* Custom Styles */
+body {
+}
+
+.addUserForm
+{
+    width: 20%;
+}
+
+.ui-btn .userFormSubmitButton{
+
 }
