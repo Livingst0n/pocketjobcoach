@@ -42,3 +42,9 @@
 .ui-btn-active  {
     text-shadow: none;
 }
+
+/* Custom Styles */
+.addUserForm
+{
+    width: 20%;
+}
