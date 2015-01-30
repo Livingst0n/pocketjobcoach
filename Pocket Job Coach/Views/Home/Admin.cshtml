@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Admin";
+    
 }
 
 <h2>Admin</h2>
@@ -17,9 +18,23 @@
 
 <div id="showUsers" style="margin-top: 100px;">
     <h3>List of Users:</h3>
-    <textarea readonly style="height:200px;">
-        
-    </textarea>
+    <table>
+        <thead>
+            <tr>
+                <th>First Name  </th>
+                <th>Last Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewData.Model)
+            {
+                <tr>
+                    <td>@item["firstName"]</td>
+                    <td>@item["lastName"]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
 <ul data-role="listview" data-inset="true">
