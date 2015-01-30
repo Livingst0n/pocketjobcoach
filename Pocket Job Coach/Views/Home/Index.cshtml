@@ -2,19 +2,9 @@
     ViewBag.Title = "Home Page";
 }
 
-<h2>@ViewBag.Message</h2>
-<p>
-    To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
-</p>
+<h2>@ViewBag.date</h2>
 
 <ul data-role="listview" data-inset="true">
-    <li data-role="list-divider">Navigation</li>
-    <li>Time and Date Bar</li>
-    <li>Alerts</li>
-    <li>Task</li>
-    <li>Tools</li>
-    <li>Contact</li>
-    <li>@Html.ActionLink("About", "About", "Home")</li>
     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
     <li>@Html.ActionLink("Admin", "Admin", "Home")</li>
 </ul>
