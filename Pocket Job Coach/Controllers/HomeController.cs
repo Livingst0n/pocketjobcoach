@@ -29,19 +29,19 @@ namespace Pocket_Job_Coach.Controllers
         public ActionResult Admin()
         {
             ViewBag.Message = "Your Admin page.";
-            var db = new MySqlConnection("Server=mysql1.gear.host;Port=3306;Database=pjc;Uid=pjc;Pwd=Parcmen!;");
-            //var db = new MySqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
-            var selectQueryString = "SELECT * FROM temp ORDER BY firstname";
-            db.Open();
-            MySqlCommand myCommand = new MySqlCommand(selectQueryString);
-            myCommand.Connection = db;
-            MySqlDataAdapter myAdapter = new MySqlDataAdapter();
-            myAdapter.SelectCommand = myCommand;
-            DataTable myData = new DataTable();
-            myAdapter.Fill(myData);
-            db.Close();
+            //var db = new MySqlConnection("Server=mysql1.gear.host;Port=3306;Database=pjc;Uid=pjc;Pwd=Parcmen!;");
+            ////var db = new MySqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+            //var selectQueryString = "SELECT * FROM temp ORDER BY firstname";
+            //db.Open();
+            //MySqlCommand myCommand = new MySqlCommand(selectQueryString);
+            //myCommand.Connection = db;
+            //MySqlDataAdapter myAdapter = new MySqlDataAdapter();
+            //myAdapter.SelectCommand = myCommand;
+            //DataTable myData = new DataTable();
+            //myAdapter.Fill(myData);
+            //db.Close();
 
-            ViewData.Model = myData.AsEnumerable();
+            //ViewData.Model =  myData;
 
             return View();
         }
@@ -49,7 +49,21 @@ namespace Pocket_Job_Coach.Controllers
         [HttpPost]
         public ActionResult Admin(AdminData AD) // Calling on http post (on Submit)
         {
-            return View();
+            if (ModelState.IsValid) //checking model is valid or not
+            {
+                DataAccessLayer.DBdata objDB = new DataAccessLayer.DBdata(); //calling class DBdata
+                string result = objDB.InsertData(AD); // passing Value to DBClass from model
+                ViewData["result"] = result;
+                ModelState.Clear(); //clearing model
+                return View();
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error in saving data");
+                return View();
+            }
+
+            //return View();
         }
 
         

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Pocket_Job_Coach.Models.AdminData
+
+@{
     ViewBag.Title = "Admin";
     
 }
@@ -6,33 +8,40 @@
 <h2>Admin</h2>
 
 <h3>Add A User</h3>
-<form id="addUserForm">
-    First name:<br/>
-    <input type="text" name="firstname" style="width:200px;"/>
-    <br/>
-    Last name:<br/>
-    <input type="text" name="lastname" style="width:200px;"/>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        @*First name:<br />
+    <input type="text" name="firstname" style="width:200px;" />
     <br />
-    <input type="submit" value="Submit" style="margin-top:50px; width:100px;"/>
-</form>
+    Last name:<br />
+    <input type="text" name="lastname" style="width:200px;" />
+    <br />*@
+
+        @Html.TextBoxFor(a => a.firstName)
+        @Html.TextBoxFor(a => a.lastName)
+
+        <input type="submit" value="Submit" style="margin-top:50px; width:100px;" />
+    </fieldset>
+}
 
 <div id="showUsers" style="margin-top: 100px;">
     <h3>List of Users:</h3>
     <table>
         <thead>
             <tr>
-                <th>First Name  </th>
+                <th>First Name</th>
                 <th>Last Name</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in ViewData.Model)
+            @*@foreach (var item in ViewData.Model)
             {
                 <tr>
                     <td>@item["firstName"]</td>
                     <td>@item["lastName"]</td>
                 </tr>
-            }
+            }*@
         </tbody>
     </table>
 </div>

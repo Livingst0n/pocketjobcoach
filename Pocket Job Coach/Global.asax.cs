@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Pocket_Job_Coach.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -22,6 +24,9 @@ namespace Pocket_Job_Coach
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //use our database
+            Database.SetInitializer<pjcDbContext>(null);
         }
     }
 }
