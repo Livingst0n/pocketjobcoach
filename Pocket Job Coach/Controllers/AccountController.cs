@@ -163,11 +163,6 @@ namespace Pocket_Job_Coach.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Admin(HomeController HC) // Calling on http post (on Submit)
-        {
-            return View();
-        }
 
         #region Status Codes
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)
