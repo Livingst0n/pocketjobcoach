@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.Configuration;
 
 namespace Pocket_Job_Coach.Controllers
 {
@@ -28,6 +29,7 @@ namespace Pocket_Job_Coach.Controllers
         {
             ViewBag.Message = "Your Admin page.";
             var db = new MySqlConnection("Server=mysql1.gear.host;Port=3306;Database=pjc;Uid=pjc;Pwd=Parcmen!;");
+            //var db = new MySqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
             var selectQueryString = "SELECT * FROM temp ORDER BY firstname";
             db.Open();
             MySqlCommand myCommand = new MySqlCommand(selectQueryString);
@@ -42,5 +44,7 @@ namespace Pocket_Job_Coach.Controllers
 
             return View();
         }
+
+        
     }
 }
