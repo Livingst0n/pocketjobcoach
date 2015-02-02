@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MySql.Data.MySqlClient;
 using System.Data;
 using System.Configuration;
+using Pocket_Job_Coach.Models;
 
 namespace Pocket_Job_Coach.Controllers
 {
@@ -42,6 +43,12 @@ namespace Pocket_Job_Coach.Controllers
 
             ViewData.Model = myData.AsEnumerable();
 
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Admin(AdminData AD) // Calling on http post (on Submit)
+        {
             return View();
         }
 
