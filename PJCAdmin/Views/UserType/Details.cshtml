@@ -1,0 +1,22 @@
+﻿@model PJCAdmin.Models.usertype
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>usertype</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.typeName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.typeName)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.userTypeID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
