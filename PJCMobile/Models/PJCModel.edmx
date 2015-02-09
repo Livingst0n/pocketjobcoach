@@ -1,0 +1,843 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="pocketjobcoachModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="job">
+          <Key>
+            <PropertyRef Name="jobID" />
+          </Key>
+          <Property Name="jobID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="jobTitle" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="jobtask">
+          <Key>
+            <PropertyRef Name="jobID" />
+            <PropertyRef Name="taskID" />
+          </Key>
+          <Property Name="jobID" Type="int" Nullable="false" />
+          <Property Name="taskID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="prompt">
+          <Key>
+            <PropertyRef Name="promptID" />
+          </Key>
+          <Property Name="promptID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="typeID" Type="int" Nullable="false" />
+          <Property Name="taskID" Type="int" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="prompttype">
+          <Key>
+            <PropertyRef Name="typeID" />
+          </Key>
+          <Property Name="typeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="typeName" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="task">
+          <Key>
+            <PropertyRef Name="taskID" />
+          </Key>
+          <Property Name="taskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="taskCategoryID" Type="int" Nullable="false" />
+          <Property Name="taskName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="taskcategory">
+          <Key>
+            <PropertyRef Name="categoryID" />
+          </Key>
+          <Property Name="categoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="categoryName" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="temp">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="city" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="state" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="homePhone" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="mobilePhone" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="workPhone" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="userTypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="userjob">
+          <Key>
+            <PropertyRef Name="jobID" />
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="jobID" Type="int" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="userrelation">
+          <Key>
+            <PropertyRef Name="userID" />
+            <PropertyRef Name="userID2" />
+          </Key>
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="userID2" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usertask">
+          <Key>
+            <PropertyRef Name="userID" />
+            <PropertyRef Name="taskID" />
+          </Key>
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="taskID" Type="int" Nullable="false" />
+          <Property Name="startTime" Type="datetime2" Precision="0" />
+          <Property Name="endTime" Type="datetime2" Precision="0" />
+          <Property Name="daysOfWeek" Type="nvarchar" MaxLength="7" />
+          <Property Name="sendNotification" Type="smallint" Nullable="false" />
+          <Property Name="feedbackMessage" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="usertaskprompt">
+          <Key>
+            <PropertyRef Name="userID" />
+            <PropertyRef Name="taskID" />
+            <PropertyRef Name="promptID" />
+          </Key>
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="taskID" Type="int" Nullable="false" />
+          <Property Name="promptID" Type="int" Nullable="false" />
+          <Property Name="promptLengthMin" Type="int" />
+        </EntityType>
+        <EntityType Name="usertype">
+          <Key>
+            <PropertyRef Name="userTypeID" />
+          </Key>
+          <Property Name="userTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="typeName" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <Association Name="jobtask$jobtask_jobid_fk">
+          <End Role="job" Type="Self.job" Multiplicity="1" />
+          <End Role="jobtask" Type="Self.jobtask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="job">
+              <PropertyRef Name="jobID" />
+            </Principal>
+            <Dependent Role="jobtask">
+              <PropertyRef Name="jobID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="jobtask$jobtask_taskid_fk">
+          <End Role="task" Type="Self.task" Multiplicity="1" />
+          <End Role="jobtask" Type="Self.jobtask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="taskID" />
+            </Principal>
+            <Dependent Role="jobtask">
+              <PropertyRef Name="taskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="prompt$prompt_taskID_FK">
+          <End Role="task" Type="Self.task" Multiplicity="1" />
+          <End Role="prompt" Type="Self.prompt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="taskID" />
+            </Principal>
+            <Dependent Role="prompt">
+              <PropertyRef Name="taskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="prompt$prompt_typeid_FK">
+          <End Role="prompttype" Type="Self.prompttype" Multiplicity="1" />
+          <End Role="prompt" Type="Self.prompt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="prompttype">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="prompt">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="task$task_taskCategoryID_FK">
+          <End Role="taskcategory" Type="Self.taskcategory" Multiplicity="1" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taskcategory">
+              <PropertyRef Name="categoryID" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="taskCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user$user_usertypeID_FK">
+          <End Role="usertype" Type="Self.usertype" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="usertype">
+              <PropertyRef Name="userTypeID" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userjob$userjob_jobid_FK">
+          <End Role="job" Type="Self.job" Multiplicity="1" />
+          <End Role="userjob" Type="Self.userjob" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="job">
+              <PropertyRef Name="jobID" />
+            </Principal>
+            <Dependent Role="userjob">
+              <PropertyRef Name="jobID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userjob$userjob_userID_FK">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="userjob" Type="Self.userjob" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="userjob">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userrelation$userrelation_userID_FK">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="userrelation" Type="Self.userrelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="userrelation">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userrelation$userrelation_userID2_FK">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="userrelation" Type="Self.userrelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="userrelation">
+              <PropertyRef Name="userID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usertask$usertask_taskID_FK">
+          <End Role="task" Type="Self.task" Multiplicity="1" />
+          <End Role="usertask" Type="Self.usertask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="taskID" />
+            </Principal>
+            <Dependent Role="usertask">
+              <PropertyRef Name="taskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usertask$usertask_userID_FK">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="usertask" Type="Self.usertask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="usertask">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usertaskprompt$usertaskprompt_promptID_FK">
+          <End Role="prompt" Type="Self.prompt" Multiplicity="1" />
+          <End Role="usertaskprompt" Type="Self.usertaskprompt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="prompt">
+              <PropertyRef Name="promptID" />
+            </Principal>
+            <Dependent Role="usertaskprompt">
+              <PropertyRef Name="promptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usertaskprompt$usertaskprompt_taskID_FK">
+          <End Role="task" Type="Self.task" Multiplicity="1" />
+          <End Role="usertaskprompt" Type="Self.usertaskprompt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="taskID" />
+            </Principal>
+            <Dependent Role="usertaskprompt">
+              <PropertyRef Name="taskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usertaskprompt$usertaskprompt_userid_FK">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="usertaskprompt" Type="Self.usertaskprompt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="usertaskprompt">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="pocketjobcoachModelStoreContainer">
+          <EntitySet Name="job" EntityType="Self.job" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="jobtask" EntityType="Self.jobtask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="prompt" EntityType="Self.prompt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="prompttype" EntityType="Self.prompttype" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="task" EntityType="Self.task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="taskcategory" EntityType="Self.taskcategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="temp" EntityType="Self.temp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userjob" EntityType="Self.userjob" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userrelation" EntityType="Self.userrelation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usertask" EntityType="Self.usertask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usertaskprompt" EntityType="Self.usertaskprompt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usertype" EntityType="Self.usertype" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="jobtask$jobtask_jobid_fk" Association="Self.jobtask$jobtask_jobid_fk">
+            <End Role="job" EntitySet="job" />
+            <End Role="jobtask" EntitySet="jobtask" />
+          </AssociationSet>
+          <AssociationSet Name="jobtask$jobtask_taskid_fk" Association="Self.jobtask$jobtask_taskid_fk">
+            <End Role="task" EntitySet="task" />
+            <End Role="jobtask" EntitySet="jobtask" />
+          </AssociationSet>
+          <AssociationSet Name="prompt$prompt_taskID_FK" Association="Self.prompt$prompt_taskID_FK">
+            <End Role="task" EntitySet="task" />
+            <End Role="prompt" EntitySet="prompt" />
+          </AssociationSet>
+          <AssociationSet Name="prompt$prompt_typeid_FK" Association="Self.prompt$prompt_typeid_FK">
+            <End Role="prompttype" EntitySet="prompttype" />
+            <End Role="prompt" EntitySet="prompt" />
+          </AssociationSet>
+          <AssociationSet Name="task$task_taskCategoryID_FK" Association="Self.task$task_taskCategoryID_FK">
+            <End Role="taskcategory" EntitySet="taskcategory" />
+            <End Role="task" EntitySet="task" />
+          </AssociationSet>
+          <AssociationSet Name="user$user_usertypeID_FK" Association="Self.user$user_usertypeID_FK">
+            <End Role="usertype" EntitySet="usertype" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="userjob$userjob_jobid_FK" Association="Self.userjob$userjob_jobid_FK">
+            <End Role="job" EntitySet="job" />
+            <End Role="userjob" EntitySet="userjob" />
+          </AssociationSet>
+          <AssociationSet Name="userjob$userjob_userID_FK" Association="Self.userjob$userjob_userID_FK">
+            <End Role="user" EntitySet="user" />
+            <End Role="userjob" EntitySet="userjob" />
+          </AssociationSet>
+          <AssociationSet Name="userrelation$userrelation_userID_FK" Association="Self.userrelation$userrelation_userID_FK">
+            <End Role="user" EntitySet="user" />
+            <End Role="userrelation" EntitySet="userrelation" />
+          </AssociationSet>
+          <AssociationSet Name="userrelation$userrelation_userID2_FK" Association="Self.userrelation$userrelation_userID2_FK">
+            <End Role="user" EntitySet="user" />
+            <End Role="userrelation" EntitySet="userrelation" />
+          </AssociationSet>
+          <AssociationSet Name="usertask$usertask_taskID_FK" Association="Self.usertask$usertask_taskID_FK">
+            <End Role="task" EntitySet="task" />
+            <End Role="usertask" EntitySet="usertask" />
+          </AssociationSet>
+          <AssociationSet Name="usertask$usertask_userID_FK" Association="Self.usertask$usertask_userID_FK">
+            <End Role="user" EntitySet="user" />
+            <End Role="usertask" EntitySet="usertask" />
+          </AssociationSet>
+          <AssociationSet Name="usertaskprompt$usertaskprompt_promptID_FK" Association="Self.usertaskprompt$usertaskprompt_promptID_FK">
+            <End Role="prompt" EntitySet="prompt" />
+            <End Role="usertaskprompt" EntitySet="usertaskprompt" />
+          </AssociationSet>
+          <AssociationSet Name="usertaskprompt$usertaskprompt_taskID_FK" Association="Self.usertaskprompt$usertaskprompt_taskID_FK">
+            <End Role="task" EntitySet="task" />
+            <End Role="usertaskprompt" EntitySet="usertaskprompt" />
+          </AssociationSet>
+          <AssociationSet Name="usertaskprompt$usertaskprompt_userid_FK" Association="Self.usertaskprompt$usertaskprompt_userid_FK">
+            <End Role="user" EntitySet="user" />
+            <End Role="usertaskprompt" EntitySet="usertaskprompt" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="pocketjobcoachModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="job">
+          <Key>
+            <PropertyRef Name="jobID" />
+          </Key>
+          <Property Name="jobID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="jobTitle" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tasks" Relationship="Self.jobtask" FromRole="job" ToRole="task" />
+          <NavigationProperty Name="users" Relationship="Self.userjob" FromRole="job" ToRole="user" />
+        </EntityType>
+        <EntityType Name="prompt">
+          <Key>
+            <PropertyRef Name="promptID" />
+          </Key>
+          <Property Name="promptID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="typeID" Type="Int32" Nullable="false" />
+          <Property Name="taskID" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="task" Relationship="Self.prompt_prompt_taskID_FK" FromRole="prompt" ToRole="task" />
+          <NavigationProperty Name="prompttype" Relationship="Self.prompt_prompt_typeid_FK" FromRole="prompt" ToRole="prompttype" />
+          <NavigationProperty Name="usertaskprompts" Relationship="Self.usertaskprompt_usertaskprompt_promptID_FK" FromRole="prompt" ToRole="usertaskprompt" />
+        </EntityType>
+        <EntityType Name="prompttype">
+          <Key>
+            <PropertyRef Name="typeID" />
+          </Key>
+          <Property Name="typeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="typeName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="prompts" Relationship="Self.prompt_prompt_typeid_FK" FromRole="prompttype" ToRole="prompt" />
+        </EntityType>
+        <EntityType Name="task">
+          <Key>
+            <PropertyRef Name="taskID" />
+          </Key>
+          <Property Name="taskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="taskCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="taskName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="prompts" Relationship="Self.prompt_prompt_taskID_FK" FromRole="task" ToRole="prompt" />
+          <NavigationProperty Name="taskcategory" Relationship="Self.task_task_taskCategoryID_FK" FromRole="task" ToRole="taskcategory" />
+          <NavigationProperty Name="usertasks" Relationship="Self.usertask_usertask_taskID_FK" FromRole="task" ToRole="usertask" />
+          <NavigationProperty Name="usertaskprompts" Relationship="Self.usertaskprompt_usertaskprompt_taskID_FK" FromRole="task" ToRole="usertaskprompt" />
+          <NavigationProperty Name="jobs" Relationship="Self.jobtask" FromRole="task" ToRole="job" />
+        </EntityType>
+        <EntityType Name="taskcategory">
+          <Key>
+            <PropertyRef Name="categoryID" />
+          </Key>
+          <Property Name="categoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="categoryName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tasks" Relationship="Self.task_task_taskCategoryID_FK" FromRole="taskcategory" ToRole="task" />
+        </EntityType>
+        <EntityType Name="temp">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="state" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="homePhone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mobilePhone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="workPhone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="userTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="usertype" Relationship="Self.user_user_usertypeID_FK" FromRole="user" ToRole="usertype" />
+          <NavigationProperty Name="usertasks" Relationship="Self.usertask_usertask_userID_FK" FromRole="user" ToRole="usertask" />
+          <NavigationProperty Name="usertaskprompts" Relationship="Self.usertaskprompt_usertaskprompt_userid_FK" FromRole="user" ToRole="usertaskprompt" />
+          <NavigationProperty Name="jobs" Relationship="Self.userjob" FromRole="user" ToRole="job" />
+          <NavigationProperty Name="user1" Relationship="Self.userrelation" FromRole="user" ToRole="user1" />
+          <NavigationProperty Name="users" Relationship="Self.userrelation" FromRole="user1" ToRole="user" />
+        </EntityType>
+        <EntityType Name="usertask">
+          <Key>
+            <PropertyRef Name="userID" />
+            <PropertyRef Name="taskID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="taskID" Type="Int32" Nullable="false" />
+          <Property Name="startTime" Type="DateTime" Precision="0" />
+          <Property Name="endTime" Type="DateTime" Precision="0" />
+          <Property Name="daysOfWeek" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+          <Property Name="sendNotification" Type="Int16" Nullable="false" />
+          <Property Name="feedbackMessage" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="task" Relationship="Self.usertask_usertask_taskID_FK" FromRole="usertask" ToRole="task" />
+          <NavigationProperty Name="user" Relationship="Self.usertask_usertask_userID_FK" FromRole="usertask" ToRole="user" />
+        </EntityType>
+        <EntityType Name="usertaskprompt">
+          <Key>
+            <PropertyRef Name="userID" />
+            <PropertyRef Name="taskID" />
+            <PropertyRef Name="promptID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="taskID" Type="Int32" Nullable="false" />
+          <Property Name="promptID" Type="Int32" Nullable="false" />
+          <Property Name="promptLengthMin" Type="Int32" />
+          <NavigationProperty Name="prompt" Relationship="Self.usertaskprompt_usertaskprompt_promptID_FK" FromRole="usertaskprompt" ToRole="prompt" />
+          <NavigationProperty Name="task" Relationship="Self.usertaskprompt_usertaskprompt_taskID_FK" FromRole="usertaskprompt" ToRole="task" />
+          <NavigationProperty Name="user" Relationship="Self.usertaskprompt_usertaskprompt_userid_FK" FromRole="usertaskprompt" ToRole="user" />
+        </EntityType>
+        <EntityType Name="usertype">
+          <Key>
+            <PropertyRef Name="userTypeID" />
+          </Key>
+          <Property Name="userTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="typeName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.user_user_usertypeID_FK" FromRole="usertype" ToRole="user" />
+        </EntityType>
+        <Association Name="prompt_prompt_taskID_FK">
+          <End Role="task" Type="Self.task" Multiplicity="1" />
+          <End Role="prompt" Type="Self.prompt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="taskID" />
+            </Principal>
+            <Dependent Role="prompt">
+              <PropertyRef Name="taskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="prompt_prompt_typeid_FK">
+          <End Role="prompttype" Type="Self.prompttype" Multiplicity="1" />
+          <End Role="prompt" Type="Self.prompt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="prompttype">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="prompt">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usertaskprompt_usertaskprompt_promptID_FK">
+          <End Role="prompt" Type="Self.prompt" Multiplicity="1" />
+          <End Role="usertaskprompt" Type="Self.usertaskprompt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="prompt">
+              <PropertyRef Name="promptID" />
+            </Principal>
+            <Dependent Role="usertaskprompt">
+              <PropertyRef Name="promptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="task_task_taskCategoryID_FK">
+          <End Role="taskcategory" Type="Self.taskcategory" Multiplicity="1" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taskcategory">
+              <PropertyRef Name="categoryID" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="taskCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usertask_usertask_taskID_FK">
+          <End Role="task" Type="Self.task" Multiplicity="1" />
+          <End Role="usertask" Type="Self.usertask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="taskID" />
+            </Principal>
+            <Dependent Role="usertask">
+              <PropertyRef Name="taskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usertaskprompt_usertaskprompt_taskID_FK">
+          <End Role="task" Type="Self.task" Multiplicity="1" />
+          <End Role="usertaskprompt" Type="Self.usertaskprompt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="taskID" />
+            </Principal>
+            <Dependent Role="usertaskprompt">
+              <PropertyRef Name="taskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_user_usertypeID_FK">
+          <End Role="usertype" Type="Self.usertype" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="usertype">
+              <PropertyRef Name="userTypeID" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usertask_usertask_userID_FK">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="usertask" Type="Self.usertask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="usertask">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usertaskprompt_usertaskprompt_userid_FK">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="usertaskprompt" Type="Self.usertaskprompt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="usertaskprompt">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="jobtask">
+          <End Role="job" Type="Self.job" Multiplicity="*" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+        </Association>
+        <Association Name="userjob">
+          <End Role="job" Type="Self.job" Multiplicity="*" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+        </Association>
+        <Association Name="userrelation">
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <End Role="user1" Type="Self.user" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="PJCModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="jobs" EntityType="Self.job" />
+          <EntitySet Name="prompts" EntityType="Self.prompt" />
+          <EntitySet Name="prompttypes" EntityType="Self.prompttype" />
+          <EntitySet Name="tasks" EntityType="Self.task" />
+          <EntitySet Name="taskcategories" EntityType="Self.taskcategory" />
+          <EntitySet Name="temps" EntityType="Self.temp" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="usertasks" EntityType="Self.usertask" />
+          <EntitySet Name="usertaskprompts" EntityType="Self.usertaskprompt" />
+          <EntitySet Name="usertypes" EntityType="Self.usertype" />
+          <AssociationSet Name="prompt_prompt_taskID_FK" Association="Self.prompt_prompt_taskID_FK">
+            <End Role="task" EntitySet="tasks" />
+            <End Role="prompt" EntitySet="prompts" />
+          </AssociationSet>
+          <AssociationSet Name="prompt_prompt_typeid_FK" Association="Self.prompt_prompt_typeid_FK">
+            <End Role="prompttype" EntitySet="prompttypes" />
+            <End Role="prompt" EntitySet="prompts" />
+          </AssociationSet>
+          <AssociationSet Name="usertaskprompt_usertaskprompt_promptID_FK" Association="Self.usertaskprompt_usertaskprompt_promptID_FK">
+            <End Role="prompt" EntitySet="prompts" />
+            <End Role="usertaskprompt" EntitySet="usertaskprompts" />
+          </AssociationSet>
+          <AssociationSet Name="task_task_taskCategoryID_FK" Association="Self.task_task_taskCategoryID_FK">
+            <End Role="taskcategory" EntitySet="taskcategories" />
+            <End Role="task" EntitySet="tasks" />
+          </AssociationSet>
+          <AssociationSet Name="usertask_usertask_taskID_FK" Association="Self.usertask_usertask_taskID_FK">
+            <End Role="task" EntitySet="tasks" />
+            <End Role="usertask" EntitySet="usertasks" />
+          </AssociationSet>
+          <AssociationSet Name="usertaskprompt_usertaskprompt_taskID_FK" Association="Self.usertaskprompt_usertaskprompt_taskID_FK">
+            <End Role="task" EntitySet="tasks" />
+            <End Role="usertaskprompt" EntitySet="usertaskprompts" />
+          </AssociationSet>
+          <AssociationSet Name="user_user_usertypeID_FK" Association="Self.user_user_usertypeID_FK">
+            <End Role="usertype" EntitySet="usertypes" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="usertask_usertask_userID_FK" Association="Self.usertask_usertask_userID_FK">
+            <End Role="user" EntitySet="users" />
+            <End Role="usertask" EntitySet="usertasks" />
+          </AssociationSet>
+          <AssociationSet Name="usertaskprompt_usertaskprompt_userid_FK" Association="Self.usertaskprompt_usertaskprompt_userid_FK">
+            <End Role="user" EntitySet="users" />
+            <End Role="usertaskprompt" EntitySet="usertaskprompts" />
+          </AssociationSet>
+          <AssociationSet Name="jobtask" Association="Self.jobtask">
+            <End Role="job" EntitySet="jobs" />
+            <End Role="task" EntitySet="tasks" />
+          </AssociationSet>
+          <AssociationSet Name="userjob" Association="Self.userjob">
+            <End Role="job" EntitySet="jobs" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="userrelation" Association="Self.userrelation">
+            <End Role="user" EntitySet="users" />
+            <End Role="user1" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="pocketjobcoachModelStoreContainer" CdmEntityContainer="PJCModel">
+          <EntitySetMapping Name="jobs">
+            <EntityTypeMapping TypeName="pocketjobcoachModel.job">
+              <MappingFragment StoreEntitySet="job">
+                <ScalarProperty Name="jobID" ColumnName="jobID" />
+                <ScalarProperty Name="jobTitle" ColumnName="jobTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="prompts">
+            <EntityTypeMapping TypeName="pocketjobcoachModel.prompt">
+              <MappingFragment StoreEntitySet="prompt">
+                <ScalarProperty Name="promptID" ColumnName="promptID" />
+                <ScalarProperty Name="typeID" ColumnName="typeID" />
+                <ScalarProperty Name="taskID" ColumnName="taskID" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="prompttypes">
+            <EntityTypeMapping TypeName="pocketjobcoachModel.prompttype">
+              <MappingFragment StoreEntitySet="prompttype">
+                <ScalarProperty Name="typeID" ColumnName="typeID" />
+                <ScalarProperty Name="typeName" ColumnName="typeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tasks">
+            <EntityTypeMapping TypeName="pocketjobcoachModel.task">
+              <MappingFragment StoreEntitySet="task">
+                <ScalarProperty Name="taskID" ColumnName="taskID" />
+                <ScalarProperty Name="taskCategoryID" ColumnName="taskCategoryID" />
+                <ScalarProperty Name="taskName" ColumnName="taskName" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="taskcategories">
+            <EntityTypeMapping TypeName="pocketjobcoachModel.taskcategory">
+              <MappingFragment StoreEntitySet="taskcategory">
+                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+                <ScalarProperty Name="categoryName" ColumnName="categoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="temps">
+            <EntityTypeMapping TypeName="pocketjobcoachModel.temp">
+              <MappingFragment StoreEntitySet="temp">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="pocketjobcoachModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="homePhone" ColumnName="homePhone" />
+                <ScalarProperty Name="mobilePhone" ColumnName="mobilePhone" />
+                <ScalarProperty Name="workPhone" ColumnName="workPhone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="userTypeID" ColumnName="userTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usertasks">
+            <EntityTypeMapping TypeName="pocketjobcoachModel.usertask">
+              <MappingFragment StoreEntitySet="usertask">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="taskID" ColumnName="taskID" />
+                <ScalarProperty Name="startTime" ColumnName="startTime" />
+                <ScalarProperty Name="endTime" ColumnName="endTime" />
+                <ScalarProperty Name="daysOfWeek" ColumnName="daysOfWeek" />
+                <ScalarProperty Name="sendNotification" ColumnName="sendNotification" />
+                <ScalarProperty Name="feedbackMessage" ColumnName="feedbackMessage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usertaskprompts">
+            <EntityTypeMapping TypeName="pocketjobcoachModel.usertaskprompt">
+              <MappingFragment StoreEntitySet="usertaskprompt">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="taskID" ColumnName="taskID" />
+                <ScalarProperty Name="promptID" ColumnName="promptID" />
+                <ScalarProperty Name="promptLengthMin" ColumnName="promptLengthMin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usertypes">
+            <EntityTypeMapping TypeName="pocketjobcoachModel.usertype">
+              <MappingFragment StoreEntitySet="usertype">
+                <ScalarProperty Name="userTypeID" ColumnName="userTypeID" />
+                <ScalarProperty Name="typeName" ColumnName="typeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="jobtask" TypeName="pocketjobcoachModel.jobtask" StoreEntitySet="jobtask">
+            <EndProperty Name="job">
+              <ScalarProperty Name="jobID" ColumnName="jobID" />
+            </EndProperty>
+            <EndProperty Name="task">
+              <ScalarProperty Name="taskID" ColumnName="taskID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="userjob" TypeName="pocketjobcoachModel.userjob" StoreEntitySet="userjob">
+            <EndProperty Name="job">
+              <ScalarProperty Name="jobID" ColumnName="jobID" />
+            </EndProperty>
+            <EndProperty Name="user">
+              <ScalarProperty Name="userID" ColumnName="userID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="userrelation" TypeName="pocketjobcoachModel.userrelation" StoreEntitySet="userrelation">
+            <EndProperty Name="user">
+              <ScalarProperty Name="userID" ColumnName="userID" />
+            </EndProperty>
+            <EndProperty Name="user1">
+              <ScalarProperty Name="userID" ColumnName="userID2" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

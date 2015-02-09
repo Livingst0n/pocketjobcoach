@@ -1,0 +1,22 @@
+﻿@model PJCMobile.Models.job
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>job</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.jobTitle)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.jobTitle)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.jobID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7f24783a66154432bf334baa63e15037" Name="Diagram1">
+        <EntityTypeShape EntityType="pocketjobcoachModel.job" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="pocketjobcoachModel.prompt" Width="1.5" PointX="8.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="pocketjobcoachModel.prompttype" Width="1.5" PointX="6" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="pocketjobcoachModel.task" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="pocketjobcoachModel.taskcategory" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="pocketjobcoachModel.temp" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="pocketjobcoachModel.user" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="pocketjobcoachModel.usertask" Width="1.5" PointX="11.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="pocketjobcoachModel.usertaskprompt" Width="1.5" PointX="13.5" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="pocketjobcoachModel.usertype" Width="1.5" PointX="3.75" PointY="3.25" IsExpanded="true" />
+        <AssociationConnector Association="pocketjobcoachModel.prompt_prompt_taskID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="pocketjobcoachModel.prompt_prompt_typeid_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="pocketjobcoachModel.usertaskprompt_usertaskprompt_promptID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="pocketjobcoachModel.task_task_taskCategoryID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="pocketjobcoachModel.usertask_usertask_taskID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="pocketjobcoachModel.usertaskprompt_usertaskprompt_taskID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="pocketjobcoachModel.user_user_usertypeID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="pocketjobcoachModel.usertask_usertask_userID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="pocketjobcoachModel.usertaskprompt_usertaskprompt_userid_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="pocketjobcoachModel.jobtask" ManuallyRouted="false" />
+        <AssociationConnector Association="pocketjobcoachModel.userjob" ManuallyRouted="false" />
+        <AssociationConnector Association="pocketjobcoachModel.userrelation" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

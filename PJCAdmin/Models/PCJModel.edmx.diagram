@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="93c3f20444bc499aa2aa3f1ad3eede37" Name="Diagram1">
+        <EntityTypeShape EntityType="PJCModel.job" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PJCModel.prompt" Width="1.5" PointX="8.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PJCModel.prompttype" Width="1.5" PointX="6" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PJCModel.task" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PJCModel.taskcategory" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PJCModel.temp" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PJCModel.user" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PJCModel.usertask" Width="1.5" PointX="11.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PJCModel.usertaskprompt" Width="1.5" PointX="13.5" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PJCModel.usertype" Width="1.5" PointX="3.75" PointY="3.25" IsExpanded="true" />
+        <AssociationConnector Association="PJCModel.prompt_prompt_taskID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PJCModel.prompt_prompt_typeid_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PJCModel.usertaskprompt_usertaskprompt_promptID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PJCModel.task_task_taskCategoryID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PJCModel.usertask_usertask_taskID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PJCModel.usertaskprompt_usertaskprompt_taskID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PJCModel.user_user_usertypeID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PJCModel.usertask_usertask_userID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PJCModel.usertaskprompt_usertaskprompt_userid_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PJCModel.jobtask" ManuallyRouted="false" />
+        <AssociationConnector Association="PJCModel.userjob" ManuallyRouted="false" />
+        <AssociationConnector Association="PJCModel.userrelation" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

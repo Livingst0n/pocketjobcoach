@@ -1,0 +1,38 @@
+﻿@model PJCAdmin.Models.job
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>job</legend>
+
+        @Html.HiddenFor(model => model.jobID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.jobTitle)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.jobTitle)
+            @Html.ValidationMessageFor(model => model.jobTitle)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

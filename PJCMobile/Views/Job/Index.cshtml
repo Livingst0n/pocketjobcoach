@@ -1,0 +1,33 @@
+﻿@model IEnumerable<PJCMobile.Models.job>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.jobTitle)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.jobTitle)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.jobID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.jobID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.jobID })
+        </td>
+    </tr>
+}
+
+</table>
