@@ -11,6 +11,7 @@ namespace PJCMobile.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class taskcategory
     {
@@ -20,6 +21,8 @@ namespace PJCMobile.Models
         }
     
         public int categoryID { get; set; }
+        
+        [DisplayName("Category")]
         public string categoryName { get; set; }
     
         public virtual ICollection<task> tasks { get; set; }

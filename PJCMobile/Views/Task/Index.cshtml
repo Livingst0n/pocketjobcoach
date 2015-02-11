@@ -1,0 +1,44 @@
+﻿@model IEnumerable<PJCMobile.Models.task>
+
+@{
+    ViewBag.Title = "Tasks";
+}
+
+@*<h2 style ="text-align: center">Tasks</h2>*@
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+
+<table> @*style="text-align: center">*@
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.taskcategory.categoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.taskName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.taskcategory.categoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.taskName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.taskID })
+            </td>
+        </tr>
+    }
+
+</table>
