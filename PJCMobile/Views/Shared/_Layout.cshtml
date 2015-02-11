@@ -14,8 +14,8 @@
                 @if (IsSectionDefined("Header")) {
                     @RenderSection("Header")
                 } else {
-                    <h1>@ViewBag.Title</h1>
                     @Html.Partial("_LoginPartial")
+                    <h1>@ViewBag.Title</h1>
                 }
             </div>
             <div data-role="content">

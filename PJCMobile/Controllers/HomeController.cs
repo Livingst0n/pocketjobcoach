@@ -10,7 +10,9 @@ namespace PJCMobile.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+            DateTime date = DateTime.Now;
+            string format = "h:mm tt MMM d yyyy";
+            ViewBag.date = date.ToString(format);
 
             return View();
         }
