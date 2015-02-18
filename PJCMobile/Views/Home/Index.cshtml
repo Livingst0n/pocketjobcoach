@@ -1,19 +1,66 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@*@section Header {
+        @Html.ActionLink(User.Identity.Name, "Index", "Account", routeValues: null, htmlAttributes: new { @class="ui-btn-right", data_icon = "gear" })
+        <h1>@ViewBag.Title</h1>
+    }
 
-@section Header {
-    @Html.ActionLink(User.Identity.Name, "Index", "Account", routeValues: null, htmlAttributes: new { @class="ui-btn-right", data_icon = "gear" })
-    <h1>@ViewBag.Title</h1>
-}
+    <h2>@ViewBag.date</h2>*@
+<!--<center><h2>@ViewBag.date</h2></center>-->
+<script type="text/javascript">
+    tday = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+    tmonth = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 
-<h2>@ViewBag.date</h2>
+    function GetClock() {
+        var d = new Date();
+        var nday = d.getDay(), nmonth = d.getMonth(), ndate = d.getDate(), nyear = d.getYear(), nhour = d.getHours(), nmin = d.getMinutes(), nsec = d.getSeconds(), ap;
 
+        if (nhour == 0) { ap = " AM"; nhour = 12; }
+        else if (nhour < 12) { ap = " AM"; }
+        else if (nhour == 12) { ap = " PM"; }
+        else if (nhour > 12) { ap = " PM"; nhour -= 12; }
 
+        if (nyear < 1000) nyear += 1900;
+        if (nmin <= 9) nmin = "0" + nmin;
+        if (nsec <= 9) nsec = "0" + nsec;
+
+        document.getElementById('clockbox').innerHTML = "" + tday[nday] + ", " + tmonth[nmonth] + " " + ndate + ", " + nyear + " " + nhour + ":" + nmin + ":" + nsec + ap + "";
+    }
+
+    window.onload = function () {
+        GetClock();
+        setInterval(GetClock, 1000);
+    }
+</script>
+<div id="clockbox" style="text-align:center;"></div>
+
+        
+            <!--<li data-role="list-divider">Navigation</li>-->
+            <table style="width:100%">
+                <tr>
+                    <td>
+                        <ul data-role="listview" data-inset="true">
+                            <li style="height:150px;">@Html.ActionLink("Alerts", "About", "Home")</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul data-role="listview" data-inset="true">
+                            <li style="height:150px;">@Html.ActionLink("Task", "Contact", "Home")</li>
+                        </ul>
+                        </td>
+                </tr>
+                <tr>
+                    <td>
+                        <ul data-role="listview" data-inset="true">
+                            <li style="height:150px;">@Html.ActionLink("Tools", "Contact", "Home")</li>
+                        </ul>
+                    </td>
+                    <td>
 <ul data-role="listview" data-inset="true">
-    <li data-role="list-divider">Navigation</li>
-    <li>@Html.ActionLink("Alerts", "About", "Home")</li>
-    <li>@Html.ActionLink("Task", "Index", "Task")</li>
-    <li>@Html.ActionLink("Tools", "Index", "Tools")</li>
-    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li style="height:150px;">@Html.ActionLink("Contact", "Contact", "Home")</li>
 </ul>
+                    </td>
+                </tr>
+            </table>
+        
