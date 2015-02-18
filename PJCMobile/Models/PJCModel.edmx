@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="pocketjobcoachModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="pjcModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="job">
           <Key>
             <PropertyRef Name="jobID" />
@@ -52,14 +52,6 @@
           </Key>
           <Property Name="categoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="categoryName" Type="nvarchar" MaxLength="25" Nullable="false" />
-        </EntityType>
-        <EntityType Name="temp">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="firstName" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="lastName" Type="nvarchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -305,14 +297,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="pocketjobcoachModelStoreContainer">
+        <EntityContainer Name="pjcModelStoreContainer">
           <EntitySet Name="job" EntityType="Self.job" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="jobtask" EntityType="Self.jobtask" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="prompt" EntityType="Self.prompt" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="prompttype" EntityType="Self.prompttype" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="task" EntityType="Self.task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="taskcategory" EntityType="Self.taskcategory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="temp" EntityType="Self.temp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="userjob" EntityType="Self.userjob" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="userrelation" EntityType="Self.userrelation" Schema="dbo" store:Type="Tables" />
@@ -380,10 +371,11 @@
             <End Role="usertaskprompt" EntitySet="usertaskprompt" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="pocketjobcoachModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="pjcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="job">
           <Key>
             <PropertyRef Name="jobID" />
@@ -435,14 +427,6 @@
           <Property Name="categoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="categoryName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="tasks" Relationship="Self.task_task_taskCategoryID_FK" FromRole="taskcategory" ToRole="task" />
-        </EntityType>
-        <EntityType Name="temp">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="firstName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="lastName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -624,13 +608,12 @@
           <End Role="user" Type="Self.user" Multiplicity="*" />
           <End Role="user1" Type="Self.user" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="PJCModel" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="pjcEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="jobs" EntityType="Self.job" />
           <EntitySet Name="prompts" EntityType="Self.prompt" />
           <EntitySet Name="prompttypes" EntityType="Self.prompttype" />
           <EntitySet Name="tasks" EntityType="Self.task" />
           <EntitySet Name="taskcategories" EntityType="Self.taskcategory" />
-          <EntitySet Name="temps" EntityType="Self.temp" />
           <EntitySet Name="users" EntityType="Self.user" />
           <EntitySet Name="usertasks" EntityType="Self.usertask" />
           <EntitySet Name="usertaskprompts" EntityType="Self.usertaskprompt" />
@@ -689,9 +672,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="pocketjobcoachModelStoreContainer" CdmEntityContainer="PJCModel">
+        <EntityContainerMapping StorageEntityContainer="pjcModelStoreContainer" CdmEntityContainer="pjcEntities1">
           <EntitySetMapping Name="jobs">
-            <EntityTypeMapping TypeName="pocketjobcoachModel.job">
+            <EntityTypeMapping TypeName="pjcModel.job">
               <MappingFragment StoreEntitySet="job">
                 <ScalarProperty Name="jobID" ColumnName="jobID" />
                 <ScalarProperty Name="jobTitle" ColumnName="jobTitle" />
@@ -699,7 +682,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="prompts">
-            <EntityTypeMapping TypeName="pocketjobcoachModel.prompt">
+            <EntityTypeMapping TypeName="pjcModel.prompt">
               <MappingFragment StoreEntitySet="prompt">
                 <ScalarProperty Name="promptID" ColumnName="promptID" />
                 <ScalarProperty Name="typeID" ColumnName="typeID" />
@@ -710,7 +693,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="prompttypes">
-            <EntityTypeMapping TypeName="pocketjobcoachModel.prompttype">
+            <EntityTypeMapping TypeName="pjcModel.prompttype">
               <MappingFragment StoreEntitySet="prompttype">
                 <ScalarProperty Name="typeID" ColumnName="typeID" />
                 <ScalarProperty Name="typeName" ColumnName="typeName" />
@@ -718,7 +701,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tasks">
-            <EntityTypeMapping TypeName="pocketjobcoachModel.task">
+            <EntityTypeMapping TypeName="pjcModel.task">
               <MappingFragment StoreEntitySet="task">
                 <ScalarProperty Name="taskID" ColumnName="taskID" />
                 <ScalarProperty Name="taskCategoryID" ColumnName="taskCategoryID" />
@@ -728,24 +711,15 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="taskcategories">
-            <EntityTypeMapping TypeName="pocketjobcoachModel.taskcategory">
+            <EntityTypeMapping TypeName="pjcModel.taskcategory">
               <MappingFragment StoreEntitySet="taskcategory">
                 <ScalarProperty Name="categoryID" ColumnName="categoryID" />
                 <ScalarProperty Name="categoryName" ColumnName="categoryName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="temps">
-            <EntityTypeMapping TypeName="pocketjobcoachModel.temp">
-              <MappingFragment StoreEntitySet="temp">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="firstName" ColumnName="firstName" />
-                <ScalarProperty Name="lastName" ColumnName="lastName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="pocketjobcoachModel.user">
+            <EntityTypeMapping TypeName="pjcModel.user">
               <MappingFragment StoreEntitySet="user">
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
@@ -763,7 +737,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="usertasks">
-            <EntityTypeMapping TypeName="pocketjobcoachModel.usertask">
+            <EntityTypeMapping TypeName="pjcModel.usertask">
               <MappingFragment StoreEntitySet="usertask">
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="taskID" ColumnName="taskID" />
@@ -776,7 +750,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="usertaskprompts">
-            <EntityTypeMapping TypeName="pocketjobcoachModel.usertaskprompt">
+            <EntityTypeMapping TypeName="pjcModel.usertaskprompt">
               <MappingFragment StoreEntitySet="usertaskprompt">
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="taskID" ColumnName="taskID" />
@@ -786,14 +760,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="usertypes">
-            <EntityTypeMapping TypeName="pocketjobcoachModel.usertype">
+            <EntityTypeMapping TypeName="pjcModel.usertype">
               <MappingFragment StoreEntitySet="usertype">
                 <ScalarProperty Name="userTypeID" ColumnName="userTypeID" />
                 <ScalarProperty Name="typeName" ColumnName="typeName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="jobtask" TypeName="pocketjobcoachModel.jobtask" StoreEntitySet="jobtask">
+          <AssociationSetMapping Name="jobtask" TypeName="pjcModel.jobtask" StoreEntitySet="jobtask">
             <EndProperty Name="job">
               <ScalarProperty Name="jobID" ColumnName="jobID" />
             </EndProperty>
@@ -801,7 +775,7 @@
               <ScalarProperty Name="taskID" ColumnName="taskID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="userjob" TypeName="pocketjobcoachModel.userjob" StoreEntitySet="userjob">
+          <AssociationSetMapping Name="userjob" TypeName="pjcModel.userjob" StoreEntitySet="userjob">
             <EndProperty Name="job">
               <ScalarProperty Name="jobID" ColumnName="jobID" />
             </EndProperty>
@@ -809,7 +783,7 @@
               <ScalarProperty Name="userID" ColumnName="userID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="userrelation" TypeName="pocketjobcoachModel.userrelation" StoreEntitySet="userrelation">
+          <AssociationSetMapping Name="userrelation" TypeName="pjcModel.userrelation" StoreEntitySet="userrelation">
             <EndProperty Name="user">
               <ScalarProperty Name="userID" ColumnName="userID" />
             </EndProperty>

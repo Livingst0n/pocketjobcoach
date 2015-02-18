@@ -189,8 +189,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
-    <Compile Include="Controllers\PromptTypeController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\UserTypeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -198,49 +196,46 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\job.cs">
-      <DependentUpon>PCJModel.tt</DependentUpon>
+      <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PCJModel.Context.cs">
-      <DependentUpon>PCJModel.Context.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
+    <Compile Include="Models\PJCModel.Context.cs">
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PJCModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PCJModel.cs">
-      <DependentUpon>PCJModel.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
+    <Compile Include="Models\PJCModel.cs">
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PCJModel.Designer.cs">
-      <DependentUpon>PCJModel.edmx</DependentUpon>
-      <DesignTime>True</DesignTime>
+    <Compile Include="Models\PJCModel.Designer.cs">
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PJCModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\prompt.cs">
-      <DependentUpon>PCJModel.tt</DependentUpon>
+      <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\prompttype.cs">
-      <DependentUpon>PCJModel.tt</DependentUpon>
+      <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\task.cs">
-      <DependentUpon>PCJModel.tt</DependentUpon>
+      <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\taskcategory.cs">
-      <DependentUpon>PCJModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\temp.cs">
-      <DependentUpon>PCJModel.tt</DependentUpon>
+      <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\user.cs">
-      <DependentUpon>PCJModel.tt</DependentUpon>
+      <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\usertask.cs">
-      <DependentUpon>PCJModel.tt</DependentUpon>
+      <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\usertaskprompt.cs">
-      <DependentUpon>PCJModel.tt</DependentUpon>
+      <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\usertype.cs">
-      <DependentUpon>PCJModel.tt</DependentUpon>
+      <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -302,21 +297,27 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <EntityDeploy Include="Models\PJCModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PJCModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\PJCModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PJCModel.edmx</DependentUpon>
+      <LastGenOutput>PJCModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\PJCModel.edmx.diagram">
+      <DependentUpon>PJCModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\PJCModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PJCModel.edmx</DependentUpon>
+      <LastGenOutput>PJCModel.cs</LastGenOutput>
+    </Content>
+    <None Include="Properties\PublishProfiles\pjc - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\pjc - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\PJC.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
-    <Content Include="Models\PCJModel.Context.tt">
-      <DependentUpon>PCJModel.edmx</DependentUpon>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PCJModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\PCJModel.edmx.diagram">
-      <DependentUpon>PCJModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\PCJModel.tt">
-      <DependentUpon>PCJModel.edmx</DependentUpon>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PCJModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -399,12 +400,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="Models\PCJModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>PCJModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

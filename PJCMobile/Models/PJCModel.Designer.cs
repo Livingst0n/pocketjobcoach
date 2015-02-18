@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'c:\users\nathan\documents\visual studio 2013\Projects\CS 4750\Pocket Job Coach\PJCMobile\Models\PJCModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Nathan\Documents\GitHub\Pocket-Job-Coach\PJCMobile\Models\PJCModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

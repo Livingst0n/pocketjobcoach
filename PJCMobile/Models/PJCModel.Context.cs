@@ -13,10 +13,10 @@ namespace PJCMobile.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class PJCModel : DbContext
+    public partial class pjcEntities1 : DbContext
     {
-        public PJCModel()
-            : base("name=PJCModel")
+        public pjcEntities1()
+            : base("name=pjcEntities1")
         {
         }
     
@@ -30,7 +30,6 @@ namespace PJCMobile.Models
         public DbSet<prompttype> prompttypes { get; set; }
         public DbSet<task> tasks { get; set; }
         public DbSet<taskcategory> taskcategories { get; set; }
-        public DbSet<temp> temps { get; set; }
         public DbSet<user> users { get; set; }
         public DbSet<usertask> usertasks { get; set; }
         public DbSet<usertaskprompt> usertaskprompts { get; set; }

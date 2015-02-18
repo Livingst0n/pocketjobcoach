@@ -13,10 +13,10 @@ namespace PJCAdmin.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class PJCEntities : DbContext
+    public partial class pjcEntities : DbContext
     {
-        public PJCEntities()
-            : base("name=PJCEntities")
+        public pjcEntities()
+            : base("name=pjcEntities")
         {
         }
     
@@ -30,7 +30,6 @@ namespace PJCAdmin.Models
         public DbSet<prompttype> prompttypes { get; set; }
         public DbSet<task> tasks { get; set; }
         public DbSet<taskcategory> taskcategories { get; set; }
-        public DbSet<temp> temps { get; set; }
         public DbSet<user> users { get; set; }
         public DbSet<usertask> usertasks { get; set; }
         public DbSet<usertaskprompt> usertaskprompts { get; set; }

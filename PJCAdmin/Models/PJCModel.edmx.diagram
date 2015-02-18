@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4b70fce3c7b941498cddca27de3207e7" Name="Diagram1">
+      <Diagram DiagramId="e6a1f79dbdbd41e787c4ec48cdfcfcd4" Name="Diagram1">
         <EntityTypeShape EntityType="pjcModel.job" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.prompt" Width="1.5" PointX="8.25" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.prompttype" Width="1.5" PointX="6" PointY="2.25" IsExpanded="true" />
