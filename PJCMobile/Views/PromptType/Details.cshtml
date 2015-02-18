@@ -1,0 +1,29 @@
+﻿@model PJCMobile.Models.prompttype
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>prompttype</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.typeID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.typeID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.typeName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.typeName)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
