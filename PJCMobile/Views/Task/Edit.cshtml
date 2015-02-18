@@ -1,0 +1,54 @@
+﻿@model PJCMobile.Models.task
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>task</legend>
+
+        @Html.HiddenFor(model => model.taskID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.taskCategoryID, "taskcategory")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("taskCategoryID", String.Empty)
+            @Html.ValidationMessageFor(model => model.taskCategoryID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.taskName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.taskName)
+            @Html.ValidationMessageFor(model => model.taskName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.description)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.description)
+            @Html.ValidationMessageFor(model => model.description)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
