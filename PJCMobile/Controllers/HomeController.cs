@@ -11,11 +11,7 @@ namespace PJCMobile.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            DateTime date = DateTime.Now;
-            string format = "h:mm tt MMM d yyyy";
-            ViewBag.date = date.ToString(format);
-
-            return View();
+           return View();
         }
 
         [Authorize]
