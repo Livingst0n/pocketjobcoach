@@ -8,6 +8,7 @@ namespace PJCMobile.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
             DateTime date = DateTime.Now;
@@ -17,6 +18,7 @@ namespace PJCMobile.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";
@@ -24,6 +26,7 @@ namespace PJCMobile.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

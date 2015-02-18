@@ -11,7 +11,7 @@ namespace PJCAdmin.Controllers
 {
     public class JobController : Controller
     {
-        private PJCEntities db = new PJCEntities();
+        private pjcEntities db = new pjcEntities();
 
         //
         // GET: /Job/

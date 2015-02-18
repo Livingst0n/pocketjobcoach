@@ -11,7 +11,7 @@ namespace PJCMobile.Controllers
 {
     public class JobController : Controller
     {
-        private PJCModel db = new PJCModel();
+        private pjcEntities1 db = new pjcEntities1();
 
         //
         // GET: /Job/

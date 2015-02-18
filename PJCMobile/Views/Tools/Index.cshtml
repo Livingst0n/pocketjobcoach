@@ -4,6 +4,12 @@
 
 <h2>Tools Page</h2>
 
-<button title="NotesButton" value="Notes"></button>
+@*<button title="NotesButton" value="Notes"></button>
 <button title="WageCalculatorButton" value="Wage Calculator"></button>
-<button title="CalendarButon" value="Calendar"></button>
+<button title="CalendarButon" value="Calendar"></button>*@
+
+<ul data-role="listview" data-inset="true">
+    <li>@Html.ActionLink("Notes", "Notes", "Tools")</li>
+    <li>@Html.ActionLink("Wage Calculator", "WageCalculator", "Tools")</li>
+    <li>@Html.ActionLink("Calendar", "Calendar", "Tools")</li>
+</ul>

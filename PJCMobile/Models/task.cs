@@ -11,7 +11,6 @@ namespace PJCMobile.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     
     public partial class task
     {
@@ -23,14 +22,9 @@ namespace PJCMobile.Models
             this.jobs = new HashSet<job>();
         }
     
-    
         public int taskID { get; set; }
         public int taskCategoryID { get; set; }
-
-        [DisplayName("Task")]
         public string taskName { get; set; }
-
-        [DisplayName("Category")]
         public string description { get; set; }
     
         public virtual ICollection<prompt> prompts { get; set; }
