@@ -219,6 +219,7 @@
     <Compile Include="Models\prompttype.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PromptTypeController.cs" />
     <Compile Include="Models\task.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
