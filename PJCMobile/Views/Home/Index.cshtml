@@ -1,13 +1,22 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@*@section Header {
+        @Html.ActionLink(User.Identity.Name, "Index", "Account", routeValues: null, htmlAttributes: new { @class="ui-btn-right", data_icon = "gear" })
+        <h1>@ViewBag.Title</h1>
+    }
 
+<<<<<<< HEAD
 @section Header {
     @Html.ActionLink(User.Identity.Name, "Index", "Account", routeValues: null, htmlAttributes: new { @class="ui-btn-right", data_icon = "gear" })
     <h1>@ViewBag.Title</h1>
 }
 
 <h2>@ViewBag.date</h2>
+=======
+    <h2>@ViewBag.date</h2>*@
+<!--<center><h2>@ViewBag.date</h2></center>-->
+>>>>>>> origin/master
 <script type="text/javascript">
     tday = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
     tmonth = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
