@@ -1,4 +1,17 @@
-﻿html {
+﻿a.actionlinkasbutton
+{
+    /*background: url(../Images/image.gif) no-repeat top left;*/
+     display: block;
+     width: 80px;
+     /*height: 30px;*/
+     padding: 7px;
+     border: 1px solid #787878;
+     background-color:#fff;/*#c7d1d6;*/
+     text-decoration:none;
+     /*text-indent: -9999px;*/ /* hides the link text */
+}
+
+html {
     background-color: #e2e2e2;
     margin: 0;
     padding: 0;
