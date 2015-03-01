@@ -11,14 +11,10 @@ namespace PJCMobile.Controllers
         //[Authorize]
         public ActionResult Index()
         {
-            DateTime date = DateTime.Now;
-            string format = "h:mm tt MMM d yyyy";
-            ViewBag.date = date.ToString(format);
-
-            return View();
+           return View();
         }
 
-        [Authorize]
+        //[Authorize]
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";
@@ -26,7 +22,7 @@ namespace PJCMobile.Controllers
             return View();
         }
 
-        [Authorize]
+        //[Authorize]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

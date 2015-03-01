@@ -11,17 +11,20 @@ namespace PJCAdmin.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class taskcategory
     {
         public taskcategory()
         {
             this.tasks = new HashSet<task>();
         }
-    
+
+        [DisplayName("Category ID")]
         public int categoryID { get; set; }
+        [DisplayName("Category Name")]
         public string categoryName { get; set; }
-    
+
         public virtual ICollection<task> tasks { get; set; }
     }
 }

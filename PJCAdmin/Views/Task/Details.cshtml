@@ -1,0 +1,36 @@
+﻿@model PJCAdmin.Models.task
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>task</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.taskcategory.categoryName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.taskcategory.categoryName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.taskName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.taskName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.description)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.taskID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

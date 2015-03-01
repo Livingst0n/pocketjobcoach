@@ -1,0 +1,40 @@
+﻿@model PJCAdmin.Models.task
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>task</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.taskcategory.categoryName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.taskcategory.categoryName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.taskName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.taskName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.description)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
