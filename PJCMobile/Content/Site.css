@@ -43,6 +43,20 @@
     text-shadow: none;
 }
 
-body {
-    
+li div a{
+    height: 130px;
+}
+
+li div div {
+    height: 120px !important;
+}
+
+li div span {
+    display:none!important;
+}
+
+.btn-icon {
+    text-align: center;
+    display: block !important;
+    margin-top: -115px;
 }
