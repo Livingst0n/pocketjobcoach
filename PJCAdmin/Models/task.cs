@@ -30,7 +30,7 @@ namespace PJCAdmin.Models
         public int taskCategoryID { get; set; }
         [DisplayName("Task Name")]
         public string taskName { get; set; }
-        [DisplayNameAttribute("Description")]
+        [DisplayName("Description")]
         public string description { get; set; }
     
         public virtual ICollection<prompt> prompts { get; set; }

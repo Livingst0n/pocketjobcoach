@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PJCAdmin.Models;
+using System.IO;
 
 namespace PJCAdmin.Controllers
 {
@@ -20,8 +21,27 @@ namespace PJCAdmin.Controllers
         {
             var tasks = db.tasks.Include(t => t.taskcategory);
             return View(tasks.ToList());
+            //var prompts = new SelectList(db.prompts, "promptID");
+            //return PartialView(new prompt() { promptID });
         }
 
+        public ActionResult Upload()
+        {
+           
+            return PartialView("_Prompt");
+        }
+        //[HttpPost]
+        //public ActionResult Upload(HttpPostedFileBase file)
+        //{
+            //if  (file != null && file.ContentLength > 0)
+            //{
+                //var fileName = Path.GetFileName(file.FileName);
+
+                //var path = Path.Combine(Server.MapPath("~/App_Data"), fileName);
+                //file.SaveAs(path);
+            //}
+            //return Redirect("Create");
+        //}
         //
         // GET: /Task/Details/5
 
@@ -49,8 +69,9 @@ namespace PJCAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(task task)
+        public ActionResult Create(task task, HttpPostedFileBase file)
         {
+            //validate
             if (ModelState.IsValid)
             {
                 db.tasks.Add(task);

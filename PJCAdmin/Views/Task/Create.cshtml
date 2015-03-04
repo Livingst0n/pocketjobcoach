@@ -6,7 +6,10 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) {
+@*@using (Html.BeginForm("Upload", "Task", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
+
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -36,10 +39,19 @@
             @Html.EditorFor(model => model.description)
             @Html.ValidationMessageFor(model => model.description)
         </div>
-         
-        @Html.ActionLink("Upload a file", "Index", "Upload",null, new { @class = "actionlinkasbutton"})@*@Html.ActionLink("Upload a file", "Index", "Upload")*@
+        <div class="editor-label">
+            @Html.Label("Upload a Media File")
+            @Html.ActionLink("Upload", "Upload","Task")
+        </div>
+        @*@Html.ActionLink("Upload a file", "Index", "Upload",null, new { @class = "actionlinkasbutton"})@Html.ActionLink("Upload a file", "Index", "Upload")*@
+        @*<input type="file" name="file" />*@
+
+        
+        @Html.Partial("_Prompt", new List<PJCAdmin.Models.prompt>()) 
+
+        @*@Html.RenderPartial("~/Views/Shared/_Prompt.cshtml")*@
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Create Task" />
         </p>
     </fieldset>
 }
