@@ -22,6 +22,8 @@ namespace PJCAdmin.Models
     
         public int jobID { get; set; }
         public string jobTitle { get; set; }
+
+        public int taskId { get; set; }
     
         public virtual ICollection<task> tasks { get; set; }
         public virtual ICollection<user> users { get; set; }
