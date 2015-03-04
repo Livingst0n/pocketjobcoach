@@ -64,13 +64,33 @@
         <td>
             <ul data-role="listview" data-inset="true">
                 <li style="height: 150px;">
-                    @Html.ActionLink("Contact", "Index", "Contact")
+                    <a href="/Home/About" class="ui-link-inherit">Alerts</a>
                     <i class="fa fa-phone fa-5x btn-icon"></i>
                 </li>
             </ul>
         </td>
     </tr>
 </table>
+
+<script type="text/x-jquery-tmpl">
+    $(function () {
+        $("li i").on("click", function () {
+            $(this).prev().click();
+            alert("icon");
+        });
+
+        $("li a").on("click", function () {
+            alert("hoopla");
+        });
+
+        $("#clockbox").on("click", function () {
+            alert("hoopla");
+        });
+
+        $('#clockbox').click(function () {
+            alert('click called.');
+        });
+    });</script>
 
 
         
