@@ -31,6 +31,12 @@
             $(document).on("mobileinit", function () {
                 $.mobile.ajaxEnabled = false;
             });
+
+            $(function () {
+                $("li i").on("click", function () {
+                    $(this).prev()[0].click();
+                });
+            });
         </script>
         @Scripts.Render("~/bundles/jquerymobile")
         @RenderSection("scripts", required: false)
