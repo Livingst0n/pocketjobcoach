@@ -375,6 +375,7 @@
     <Content Include="Views\Task\Edit.cshtml" />
     <Content Include="Views\Task\Delete.cshtml" />
     <Content Include="Views\Shared\_Prompt.cshtml" />
+    <Content Include="Views\Job\_taskList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -39,7 +39,9 @@ namespace PJCAdmin.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            List<task> tasks = db.tasks.ToList();
+
+            return View(tasks);
         }
 
         //
