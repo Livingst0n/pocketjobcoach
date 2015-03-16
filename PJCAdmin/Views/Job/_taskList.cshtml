@@ -1,7 +1,8 @@
-﻿
+﻿@model PJCAdmin.Models.task
 
         <li>
-            @Html.DisplayFor(modelItem => item.taskName)
-            &nbsp; &nbsp;<button>Add</button>
+            @Html.DisplayFor(model => model.taskName)
+            &nbsp; &nbsp;<button class="task" data-taskID="@Model.taskID" data-selected="false">Add</button>
+            @Html.CheckBox("tasks[]", false, new Dictionary<string, object> { { "value", Model.taskID }, {"style","display:none;"}})
         </li>
 
