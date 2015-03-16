@@ -8,8 +8,35 @@
 <button title="WageCalculatorButton" value="Wage Calculator"></button>
 <button title="CalendarButon" value="Calendar"></button>*@
 
-<ul data-role="listview" data-inset="true">
-    <li>@Html.ActionLink("Notes", "Notes", "Tools")</li>
-    <li>@Html.ActionLink("Wage Calculator", "WageCalculator", "Tools")</li>
-    <li>@Html.ActionLink("Calendar", "Calendar", "Tools")</li>
-</ul>
+
+
+<table style="width: 100%">
+    <tr>
+        <td style="width:50%">
+            <ul data-role="listview" data-inset="true">
+                <li style="height: 150px;">
+                    @Html.ActionLink("Wage Calculator", "WageCalculator", "Tools")
+                    <i class="fa fa-calculator fa-5x btn-icon"></i>
+                </li>
+            </ul>
+        </td>
+        <td>
+            <ul data-role="listview" data-inset="true">
+                <li style="height: 150px;">
+                    @Html.ActionLink("Notes", "Notes", "Tools")
+                    <i class="fa fa-pencil fa-5x btn-icon"></i>
+                </li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <ul data-role="listview" data-inset="true">
+                <li style="height: 150px;">
+                    @Html.ActionLink("Calendar", "Calendar", "Tools")
+                    <i class="fa fa-calendar fa-5x btn-icon"></i>
+                </li>
+            </ul>
+        </td>
+    </tr>
+</table>
