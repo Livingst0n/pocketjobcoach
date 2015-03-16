@@ -1,0 +1,30 @@
+﻿@{
+ViewBag.Title = "Users";
+}
+
+<h2>Users</h2>
+<p>
+    @Html.ActionLink("Create New", "New")
+</p>
+<table>
+    <tr>
+        <th>
+            User
+        </th>
+        <th></th>
+    </tr>
+@foreach (MembershipUser user in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => user.UserName)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { user = user.UserName }) |
+            @Html.ActionLink("Edit", "Edit", new { user = user.UserName }) |
+            @Html.ActionLink("Reset Password", "AdminResetPassword", new { user = user.UserName }) |
+            @Html.ActionLink("Delete", "Delete", new { user = user.UserName })
+        </td>
+    </tr>
+}
+</table>

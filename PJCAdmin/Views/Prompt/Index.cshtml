@@ -1,15 +1,21 @@
 ﻿@model IEnumerable<PJCAdmin.Models.prompt>
 
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.typeID)
+            @Html.DisplayNameFor(model => model.prompttype.typeName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.taskID)
+            @Html.DisplayNameFor(model => model.task.taskName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.title)
@@ -23,10 +29,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.typeID)
+            @Html.DisplayFor(modelItem => item.prompttype.typeName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.taskID)
+            @Html.DisplayFor(modelItem => item.task.taskName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.title)

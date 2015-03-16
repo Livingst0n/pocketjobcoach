@@ -1,0 +1,50 @@
+﻿@model MembershipUser
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit User</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Registration Form</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.UserName)
+                @Html.DisplayFor(m => m.UserName)
+                @Html.HiddenFor(m => m.UserName)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email)
+            </li>
+            <li>
+                <label>User Type</label>
+                <select name="usertype" class="form-control">
+                    @foreach (string role in Roles.GetAllRoles())
+                    {
+                        if (Roles.IsUserInRole(Model.UserName,role)) {
+                            <option value="@role" selected>@role</option>
+                        }else { 
+                            <option value="@role">@role</option>
+                        }
+                    }
+                </select>
+            </li>    
+        </ol>
+        <input type="submit" value="Save" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<p>
+    @Html.ActionLink("Back to User Details", "Details", new { user = Model.UserName }) |
+    @Html.ActionLink("Back to List", "List")
+</p>

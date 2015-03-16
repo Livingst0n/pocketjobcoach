@@ -164,7 +164,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
+    <Compile Include="Controllers\pjcEntities.cs" />
+    <Compile Include="Controllers\PromptController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Controllers\UserTypeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -374,7 +377,18 @@
     <Content Include="Views\Task\Create.cshtml" />
     <Content Include="Views\Task\Edit.cshtml" />
     <Content Include="Views\Task\Delete.cshtml" />
+    <Content Include="Views\Task\_Prompt.cshtml" />
+    <Content Include="Views\Prompt\Index.cshtml" />
+    <Content Include="Views\Prompt\Details.cshtml" />
+    <Content Include="Views\Prompt\Create.cshtml" />
+    <Content Include="Views\Prompt\Edit.cshtml" />
+    <Content Include="Views\Prompt\Delete.cshtml" />
     <Content Include="Views\Shared\_Prompt.cshtml" />
+    <Content Include="Views\Job\_taskList.cshtml" />
+    <Content Include="Views\Account\List.cshtml" />
+    <Content Include="Views\Account\Details.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Unauthorized\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
