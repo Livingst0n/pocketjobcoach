@@ -14,22 +14,23 @@ namespace PJCAdmin.Controllers
     {
         private pjcEntities db = new pjcEntities();
 
-        //
         // GET: /Task/
-
         public ActionResult Index()
         {
+            //Retrieve tasks and related taskcategory
             var tasks = db.tasks.Include(t => t.taskcategory);
-            return View(tasks.ToList());
+            return View(tasks.ToList());      
             //var prompts = new SelectList(db.prompts, "promptID");
             //return PartialView(new prompt() { promptID });
         }
 
-        public ActionResult Upload()
-        {
-           
+        public ActionResult _Prompt()
+        {        
+            //var promptTypes = db.tas
             return PartialView("_Prompt");
         }
+
+
         //[HttpPost]
         //public ActionResult Upload(HttpPostedFileBase file)
         //{
@@ -47,7 +48,10 @@ namespace PJCAdmin.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            task task = db.tasks.Find(id);
+            //task task = db.tasks.Find(id);
+            var task = db.tasks.Find(id);
+            //to pull associated prompts0
+
             if (task == null)
             {
                 return HttpNotFound();
@@ -55,21 +59,20 @@ namespace PJCAdmin.Controllers
             return View(task);
         }
 
-        //
-        // GET: /Task/Create
 
+        // GET: /Task/Create
         public ActionResult Create()
         {
             ViewBag.taskCategoryID = new SelectList(db.taskcategories, "categoryID", "categoryName");
+            ViewBag.prompt = new SelectList(db.prompttypes, "typeID", "typeName");
+
             return View();
         }
 
-        //
         // POST: /Task/Create
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(task task, HttpPostedFileBase file)
+        public ActionResult Create(task task, List<prompt> prompts)
         {
             //validate
             if (ModelState.IsValid)
@@ -83,9 +86,7 @@ namespace PJCAdmin.Controllers
             return View(task);
         }
 
-        //
         // GET: /Task/Edit/5
-
         public ActionResult Edit(int id = 0)
         {
             task task = db.tasks.Find(id);
@@ -97,9 +98,7 @@ namespace PJCAdmin.Controllers
             return View(task);
         }
 
-        //
         // POST: /Task/Edit/5
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(task task)
@@ -114,9 +113,7 @@ namespace PJCAdmin.Controllers
             return View(task);
         }
 
-        //
         // GET: /Task/Delete/5
-
         public ActionResult Delete(int id = 0)
         {
             task task = db.tasks.Find(id);
@@ -127,9 +124,7 @@ namespace PJCAdmin.Controllers
             return View(task);
         }
 
-        //
         // POST: /Task/Delete/5
-
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
