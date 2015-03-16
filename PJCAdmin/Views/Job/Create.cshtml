@@ -4,9 +4,18 @@
     ViewBag.Title = "Create";
 }
 
+<script type="text/javascript">
+    function AddAllTasks() {
+        var rowCount = $('#allTasksList li').length;
+        var index = rowCount + 1;
+        $('#myteams').append("<tr><td><input type='hidden' name='teams.Index' value='" + index + "' /><input type='text' name='teams[" + index + "].TeamName' /></td><td><input type='text'  name='teams[" + index + "].Country'/></td></tr>");
+    }
+</script>
+
 <h2>Create</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -35,13 +44,17 @@
             <h3>Search Tasks:</h3>
             <input />
             <br />
+
             <h3>Available Tasks:</h3>
-            <ul style="list-style:none;">
-                <li>Place holder for a task &nbsp; &nbsp;<button>Add</button></li>
-                <li>Place holder for a task &nbsp; &nbsp;<button>Add</button></li>
-                <li>Place holder for a task &nbsp; &nbsp;<button>Add</button></li>
+            <ul id="allTasksList" style="list-style:none;">
+                @foreach (PJCAdmin.Models.task item in (List<PJCAdmin.Models.task>)ViewData["Tasks"])
+                {
+                    @Html.Partial("_taskList", item)
+                }
             </ul>
-        </fieldset> 
+
+
+        </fieldset>
         <br />
         <p>
             <input type="submit" value="Create Job" />
@@ -52,6 +65,24 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script>
+    $(function () {
+        $('button.task').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if ($(this).data("selected") == "true") {
+                $(this).data("selected", "false");
+                $(this).html("Add");
+                $('input[type="checkbox"]', $(this).parent()).attr("checked", false);
+            } else {
+                $(this).data("selected", "true");
+                $(this).html("Remove");
+                $('input[type="checkbox"]', $(this).parent()).attr("checked", true);
+            }
+        })
+    })
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

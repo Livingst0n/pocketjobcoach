@@ -1,0 +1,31 @@
+﻿@model MembershipUser
+
+@{
+    ViewBag.Title = "User Details -" + Model.UserName;
+}
+
+<h2>User Details <small style="color:#808080">@Html.DisplayFor(model => model.UserName)</small></h2>
+
+<table>
+    <tr><td><b>Username</b></td><td>@Html.DisplayFor(model => model.UserName)</td></tr>
+    <tr><td><b>Full Name</b></td><td></td></tr>
+    <tr><td><b>E-Mail</b></td><td>@Html.DisplayFor(model => model.Email)</td></tr>
+    <tr><td><b>Address</b></td><td></td></tr>
+    <tr><td><b>Phone</b></td><td></td></tr>
+    <tr><td><b>User Type</b></td><td>
+    @foreach (string role in Roles.GetRolesForUser(Model.UserName))
+    {
+        @role
+    }
+  
+    </td></tr>
+</table>
+
+<p>
+    @Html.ActionLink("Assigned Tasks", "List", "Task", new { user = Model.UserName })
+</p>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { user = Model.UserName }) |
+    @Html.ActionLink("Back to List", "List")
+</p>

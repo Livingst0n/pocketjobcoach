@@ -1,19 +1,33 @@
 ﻿@model IEnumerable<PJCAdmin.Models.job>
 
-@{
+@*@{
     ViewBag.Title = "Index";
-}
+}*@
 
-<h2>Index</h2>
+<h2>Jobs</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@*<div id="hmenu">
+    <ul>
+        <li><a href="http://www.w3.org/Consortium/activities">W3C Activities</a></li>
+        <li><a href="http://www.w3.org/TR/">W3C Technical Reports</a></li>
+        <li><a href="http://www.w3.org/Consortium/siteindex">W3C Site Index</a></li>
+        <li><a href="http://www.w3.org/Consortium/new-to-w3c">New Visitors</a></li>
+        <li><a href="http://www.w3.org/Consortium/">About W3C</a></li>
+        <li><a href="http://www.w3.org/Consortium/join">Join W3C</a></li>
+        <li><a href="http://www.w3.org/Consortium/contact">Contact W3C</a></li>
+    </ul>
+</div>*@ 
+
 <table>
     <tr>
         <th>
             <!-- test -->
-            @Html.DisplayNameFor(model => model.jobTitle)
+            @*@Html.DisplayNameFor(model => model.jobTitle)*@
+            Job Title
         </th>
         <th></th>
     </tr>
