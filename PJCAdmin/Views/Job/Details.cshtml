@@ -16,6 +16,25 @@
 
     <div class="display-field">
         @Html.DisplayFor(model => model.jobTitle)
+        @Html.DisplayFor(model => model.jobID)
+        @Html.DisplayFor(model => model.tasks)
+
+        @foreach (var item in Model.tasks)
+        {
+            <table>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.jobID)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Edit") |
+                        @Html.ActionLink("Details", "Details", "Edit") |
+                        @Html.ActionLink("Delete", "Delete", "Edit")
+                    </td>
+                </tr>
+            </table>
+        }
+
     </div>
 
 
