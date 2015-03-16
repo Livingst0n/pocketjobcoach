@@ -4,10 +4,18 @@
     ViewBag.Title = "Create Task";
 }
 
-<h2>Create</h2>
+<h2>Create Task</h2>
 
-@*@using (Html.BeginForm("Upload", "Task", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
+<script type="text/javascript">
+    function AddPrompt() {
+        var rowCount = $('#insertprompt tr').length;
+        var index = rowCount + 1;
+        $('#insertprompt').append("<tr><td><input type='hidden' name='prompts.Index' value='" +
+            index + "' /><input type='text' name='prompts.typeName' /></td></tr>");
+    }
+</script>
 
+@*Html.BeginForm is analogoud to <form> tag*@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -20,13 +28,15 @@
             @Html.LabelFor(model => model.taskCategoryID, "Task Category")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("taskCategoryID", String.Empty)
+            @*This drop down should display the task category name (since we "include"d this in Index())*@
+            @Html.DropDownList("taskCategoryID", "Select a task category")
             @Html.ValidationMessageFor(model => model.taskCategoryID)
         </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.taskName)
         </div>
+
         <div class="editor-field">
             @Html.EditorFor(model => model.taskName)
             @Html.ValidationMessageFor(model => model.taskName)
@@ -35,25 +45,43 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.description)
         </div>
+
         <div class="editor-field">
             @Html.EditorFor(model => model.description)
             @Html.ValidationMessageFor(model => model.description)
         </div>
         <div class="editor-label">
-            @Html.Label("Upload a Media File")
-            @Html.ActionLink("Upload", "Upload","Task")
+            <h3>Upload a Media File</h3>
         </div>
-        @*@Html.ActionLink("Upload a file", "Index", "Upload",null, new { @class = "actionlinkasbutton"})@Html.ActionLink("Upload a file", "Index", "Upload")*@
-        @*<input type="file" name="file" />*@
+        <div class="editor-label">
+            @Html.Label("URL")
+        </div>
+        <div class="editor-field">
+            <input type="text" name="Text" />
 
-        
-        @Html.Partial("_Prompt", new List<PJCAdmin.Models.prompt>()) 
-
-        @*@Html.RenderPartial("~/Views/Shared/_Prompt.cshtml")*@
-        <p>
-            <input type="submit" value="Create Task" />
-        </p>
+        </div>
+        <div class="editor-label">
+            @Html.Label("Type")
+        </div>
     </fieldset>
+    @**********************************************@
+
+    <fieldset>
+        <input type="button" value="Add Media Link" onclick="AddPrompt();" />
+        @*@Html.Partial("_Prompt", new List<PJCAdmin.Models.prompttype>())*@
+
+        <table id="insertprompt">
+            <tr>
+                <td>
+                    Prompt Type:
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+   
+     <p>
+        <input type="submit" value="Done" />
+    </p>
 }
 
 <div>
