@@ -16,28 +16,29 @@ namespace PJCMobile.Controllers
             return View();
         }
 
-        //
-        // GET: /Tools/Details/5
-
+       
+        //Wage Calculator Page
         public ActionResult WageCalculator()
         {
             return View();
         }
 
-        //
-        // GET: /Tools/Create
+   
 
+
+        
+        //Notes Page
         public ActionResult Notes()
         {
             return View();
         }
 
-        //
-        // POST: /Tools/Create
+    
 
-
+        //Calendar Page
         public ActionResult Calendar()
         {
+
             return View();
         }
     }
