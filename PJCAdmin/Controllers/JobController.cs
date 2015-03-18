@@ -47,12 +47,13 @@ namespace PJCAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(job job)
+        public ActionResult Create(job job, task[] taskList)
         {
             if (ModelState.IsValid)
             {
                 db.jobs.Add(job);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 

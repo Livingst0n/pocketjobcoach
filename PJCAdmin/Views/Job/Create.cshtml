@@ -47,9 +47,18 @@
 
             <h3>Available Tasks:</h3>
             <ul id="allTasksList" style="list-style:none;">
-                @foreach (PJCAdmin.Models.task item in (List<PJCAdmin.Models.task>)ViewData["Tasks"])
+                
+                @*@foreach (PJCAdmin.Models.task item in (List<PJCAdmin.Models.task>)ViewData["Tasks"])
                 {
                     @Html.Partial("_taskList", item)
+                    
+                }*@
+                @for(int i = 0; i < ((List<PJCAdmin.Models.task>)ViewData["Tasks"]).Count; i++){
+                    <li>
+                        @Html.Label(((List<PJCAdmin.Models.task>)ViewData["Tasks"]).ElementAt(i).taskName)
+                        &nbsp; &nbsp;<button class="task" data-taskID="@((List<PJCAdmin.Models.task>)ViewData["Tasks"]).ElementAt(i).taskID" data-selected="false">Add</button>
+                        @Html.CheckBox("taskList["+i+"]", false, new Dictionary<string, object> { { "value", ((List<PJCAdmin.Models.task>)ViewData["Tasks"]).ElementAt(i).taskID }, {"style","display:none;"}})
+                    </li>
                 }
             </ul>
 

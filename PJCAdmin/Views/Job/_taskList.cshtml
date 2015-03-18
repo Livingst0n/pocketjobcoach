@@ -3,6 +3,6 @@
         <li>
             @Html.DisplayFor(model => model.taskName)
             &nbsp; &nbsp;<button class="task" data-taskID="@Model.taskID" data-selected="false">Add</button>
-            @Html.CheckBox("tasks[]", false, new Dictionary<string, object> { { "value", Model.taskID }, {"style","display:none;"}})
+            @Html.CheckBox("taskList["+index+"]", false, new Dictionary<string, object> { { "value", Model.taskID }, {"style","display:none;"}})
         </li>
 

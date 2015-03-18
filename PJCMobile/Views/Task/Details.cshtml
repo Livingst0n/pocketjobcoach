@@ -4,33 +4,24 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>@Html.DisplayFor(model => model.taskName)</h2>
 
-<fieldset>
-    <legend>task</legend>
+<div class="display-field">
+    @Html.DisplayFor(model => model.description)
+</div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.taskcategory.categoryName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.taskcategory.categoryName)
-    </div>
+<ul style="list-style-type: none;">
+    @foreach (var item in Model.prompts)
+    {
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.taskName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.taskName)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.description)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.description)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.taskID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        <li>@Html.DisplayFor(modelItem => item.title)</li>
+        <li>
+            <img src="@Html.DisplayFor(modelItem => item.description)" /></li>
+        <li>----</li>
+    }
+</ul>
+<ul data-role="listview" data-inset="true">
+    <li>
+        @Html.ActionLink("Finished!", "Index", "Task")
+    </li>
+</ul>

@@ -277,6 +277,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>PJCModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Scripts\Calendar.js" />
     <Content Include="Models\PJCModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>PJCModel.edmx</DependentUpon>
@@ -350,9 +351,11 @@
     <Content Include="Views\Task\Edit.cshtml" />
     <Content Include="Views\Task\Delete.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Shared\_prompt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\JS\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
