@@ -11,7 +11,9 @@
         var rowCount = $('#insertprompt tr').length;
         var index = rowCount + 1;
         $('#insertprompt').append("<tr><td><input type='hidden' name='prompts.Index' value='" +
-            index + "' /><input type='text' name='prompts.typeName' /></td></tr>");
+            index + "' /><input type='text' name='prompts.typeName' /></td></tr><tr><td><input type='hidden' name='prompts.Index' value='" +
+            index + "' /><input type='text' name='prompts.title' /></td></tr> <tr><td><input type='hidden' name='prompts.Index' value='" +
+            index + "' /><input type='text' name='prompts.description' /></td></tr> <tr><td>________________________</td></tr>");
     }
 </script>
 
@@ -75,11 +77,6 @@
 
         <table id="insertprompt">
             <tr>
-                <td>
-                    <div class="editor-label">
-                        @Html.LabelFor(model => model.prompt.prompt)
-                    </div>
-                </td>
             </tr>
         </table>
     </fieldset>
