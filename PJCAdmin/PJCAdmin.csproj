@@ -164,7 +164,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
-    <Compile Include="Controllers\pjcEntities.cs" />
     <Compile Include="Controllers\PromptController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
@@ -380,7 +379,6 @@
     <Content Include="Views\Shared\_Prompt.cshtml" />
     <Content Include="Views\Prompt\Index.cshtml" />
     <Content Include="Views\Prompt\Details.cshtml" />
-    <Content Include="Views\Prompt\Create.cshtml" />
     <Content Include="Views\Prompt\Edit.cshtml" />
     <Content Include="Views\Prompt\Delete.cshtml" />
     <Content Include="Views\Job\_taskList.cshtml" />

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using PJCAdmin.Models;
+using System.Data;
 
 namespace PJCMobile.Controllers
 {
@@ -21,12 +22,102 @@ namespace PJCMobile.Controllers
             return View();
         }
 
+        public ActionResult List(int id = 0)
+        {
+            if (Roles.IsUserInRole("Administrator"))
+                return View(Membership.GetAllUsers());
+            else
+                Response.Redirect("~/Unauthorized");
+            return View();
+        }
+
+        public ActionResult Details(string user = "")
+        {
+            if (Roles.IsUserInRole("Administrator"))
+            {
+                MembershipUser account = Membership.GetUser(user);
+                if (account == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(account);
+            }
+            else
+                Response.Redirect("~/Unauthorized");
+            return View();
+        }
+
+        public ActionResult Edit(string user = "")
+        {
+            if (Roles.IsUserInRole("Administrator"))
+            {
+                MembershipUser account = Membership.GetUser(user);
+                if (account == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(account);
+            }
+            else
+                Response.Redirect("~/Unauthorized");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(string UserName, string Email, string usertype)
+        {
+            if (Roles.IsUserInRole("Administrator"))
+            {
+                MembershipUser user = Membership.GetUser(UserName);
+                user.Email = Email;
+                Membership.UpdateUser(user);
+                foreach (string aRole in Roles.GetAllRoles())
+                {
+                    //Only Let the user be in one role
+                    try
+                    {
+                        Roles.RemoveUserFromRole(user.UserName, aRole);
+                    }
+                    catch
+                    {
+                        // Don't Worry About It.... :)
+                    }
+                }
+                Roles.AddUserToRole(user.UserName, usertype);
+                return RedirectToAction("List");
+            }
+            else
+                Response.Redirect("~/Unauthorized");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AdminPasswordReset(string user)
+        {
+            if (ModelState.IsValid && Roles.IsUserInRole("Administrator"))
+            {
+
+                MembershipUser currentUser = Membership.GetUser(user);
+                string newpassword = currentUser.ResetPassword();
+                //Send email to user with new password
+                Response.Redirect("~/Account/List");
+                return View();
+            }
+            else
+                Response.Redirect("~/Unauthorized");
+            return View();
+
+        }
+
         //
         // GET: /Account/Login
 
         [AllowAnonymous]
         public ActionResult Login()
         {
+
             return View();
         }
 
@@ -40,22 +131,31 @@ namespace PJCMobile.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    if (Url.IsLocalUrl(returnUrl))
+                    if (!Roles.IsUserInRole(model.UserName, "User"))
                     {
-                        return Redirect(returnUrl);
+                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                        if (Url.IsLocalUrl(returnUrl))
+                        {
+                            return Redirect(returnUrl);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        ModelState.AddModelError("", "This login can only be used with the Pocket Job Coach Mobile App.");
                     }
                 }
                 else
                 {
                     ModelState.AddModelError("", "The user name or password provided is incorrect.");
                 }
+
             }
 
             // If we got this far, something failed, redisplay form
@@ -78,6 +178,7 @@ namespace PJCMobile.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+
             return View();
         }
 
