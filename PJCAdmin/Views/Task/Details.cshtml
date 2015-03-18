@@ -7,47 +7,56 @@
 <h2>Details</h2>
 <br />
 <hr />
-<h3>Task</h3>
+<h3 style="text-decoration:underline">Task</h3>
+<br />
 <fieldset>
     <legend>task</legend>
     @*--------------------Task----------------------*@
     <div class="display-label" style="font-style:oblique;">
-        @Html.DisplayNameFor(model => model.taskcategory.categoryName)
+        <b>
+            @Html.DisplayNameFor(model => model.taskcategory.categoryName)
+        </b>
     </div>
-
     <div class="display-field">
+
         @Html.DisplayFor(model => model.taskcategory.categoryName)
     </div>
 
     <div class="display-label" style="font-style:oblique;">
-        @Html.DisplayNameFor(model => model.taskName)
+        <b>
+            @Html.DisplayNameFor(model => model.taskName)
+        </b>
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.taskName)
     </div>
 
     <div class="display-label" style="font-style:oblique;">
-        @Html.DisplayNameFor(model => model.description)
+        <b>
+            @Html.DisplayNameFor(model => model.description)
+        </b>
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.description)
     </div>
     @*--------------------Prompt----------------------*@
-    <h3>Media</h3>
-        <ul style="list-style-type: none;">
+    <h3 style="text-decoration:underline">Media</h3>
+    <div>
+        <ul style="list-style-type: none; padding: 0; ">
             @foreach (var item in Model.prompts)
             {
-
                 <li>@Html.DisplayFor(modelItem => item.title)</li>
                 <li>@Html.DisplayFor(modelItem => item.prompttype.typeName)</li>
                 <li>@Html.DisplayFor(modelItem => item.description)</li>
-                <li>----</li>
+                <li> <img style="width: 50px;height:50px;" src=@Html.DisplayFor(modelItem => item.description) /></li>
             }
         </ul>
+    </div>
     @*---------------------------------------------------*@
 
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.taskID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.taskID }, new { @class = "actionlinkasbutton" })
+    <br />
+    @Html.ActionLink("<< Back to List", "Index")
 </p>

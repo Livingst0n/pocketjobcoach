@@ -5,9 +5,9 @@
 }
 
 <h2>Task Dashboard</h2>
+<hr />
 
-
-<table>
+<table class="tablestyle1">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.taskcategory.categoryName)
@@ -43,6 +43,6 @@
 </table>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create",null, new { @class = "actionlinkasbutton" })
 </p>
 

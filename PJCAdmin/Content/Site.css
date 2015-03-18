@@ -2,7 +2,7 @@
 {
     /*background: url(../Images/image.gif) no-repeat top left;*/
      display: block;
-     width: 80px;
+     width: 75px;
      /*height: 30px;*/
      padding: 7px;
      border: 1px solid #787878;
@@ -11,6 +11,18 @@
      /*text-indent: -9999px;*/ /* hides the link text */
 }
 
+table.tablestyle1{
+  text-align: left;
+  line-height: 40px;
+   margin-left: auto;
+    margin-right: auto;
+}
+
+div.labelstyle1
+{
+    font-
+}
+/*Defaults*/
 html {
     background-color: #e2e2e2;
     margin: 0;

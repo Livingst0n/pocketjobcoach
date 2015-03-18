@@ -40,12 +40,15 @@ namespace PJCAdmin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(prompt);
+
+            else if (Request.IsAjaxRequest())
+            {
+                return PartialView("_Prompt", prompt);
+            }
+            return View(prompt); //default code
         }
 
-        //
         // GET: /Prompt/Create
-
         public ActionResult Create()
         {
             ViewBag.taskID = new SelectList(db.tasks, "taskID", "taskName");
@@ -53,9 +56,7 @@ namespace PJCAdmin.Controllers
             return View();
         }
 
-        //
         // POST: /Prompt/Create
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(prompt prompt)
@@ -72,9 +73,7 @@ namespace PJCAdmin.Controllers
             return View(prompt);
         }
 
-        //
         // GET: /Prompt/Edit/5
-
         public ActionResult Edit(int id = 0)
         {
             prompt prompt = db.prompts.Find(id);
@@ -87,9 +86,7 @@ namespace PJCAdmin.Controllers
             return View(prompt);
         }
 
-        //
         // POST: /Prompt/Edit/5
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(prompt prompt)
@@ -105,9 +102,7 @@ namespace PJCAdmin.Controllers
             return View(prompt);
         }
 
-        //
         // GET: /Prompt/Delete/5
-
         public ActionResult Delete(int id = 0)
         {
             prompt prompt = db.prompts.Find(id);
@@ -115,20 +110,27 @@ namespace PJCAdmin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(prompt);
+            
+            //return View(prompt);//default
+            return PartialView("_Prompt", prompt);
         }
 
-        //
         // POST: /Prompt/Delete/5
-
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        public PartialViewResult DeleteConfirmed(int id)
         {
             prompt prompt = db.prompts.Find(id);
+            var taskID = prompt.taskID;
+          
             db.prompts.Remove(prompt);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            var returnPrompts = db.prompts.Include(p => p.task).Include(p => p.prompttype).Where(p => p.taskID == taskID);
+            
+            //return RedirectToAction("Index"); default code
+            return PartialView("_Prompt", returnPrompts.ToList());
         }
 
         protected override void Dispose(bool disposing)

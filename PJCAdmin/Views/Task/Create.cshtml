@@ -50,10 +50,8 @@
             @Html.EditorFor(model => model.description)
             @Html.ValidationMessageFor(model => model.description)
         </div>
-        <div class="editor-label">
-            <h3>Upload a Media File</h3>
-        </div>
-        <div class="editor-label">
+        
+        @*<div class="editor-label">
             @Html.Label("URL")
         </div>
         <div class="editor-field">
@@ -62,8 +60,13 @@
         </div>
         <div class="editor-label">
             @Html.Label("Type")
-        </div>
+        </div>*@
     </fieldset>
+
+<div class="editor-label">
+    <h3>Upload a Media File</h3>
+</div>
+
     @**********************************************@
 
     <fieldset>
@@ -73,7 +76,9 @@
         <table id="insertprompt">
             <tr>
                 <td>
-                    Prompt Type:
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.prompt.prompt)
+                    </div>
                 </td>
             </tr>
         </table>

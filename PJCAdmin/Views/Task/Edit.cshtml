@@ -49,7 +49,7 @@
     <hr />
     <fieldset>
         @*--------------------Prompt-----------------*@
-        @foreach (var item in Model.prompts)
+        @*@foreach (var item in Model.prompts)
         {
             <div class="editor-label">
                 @Html.LabelFor(modelItem => item.title)
@@ -57,14 +57,13 @@
             <div class="editor-field">
                 @Html.EditorFor(modelItem => item.title)
             </div>
-            @*-----*@
+            
             <div class="editor-label">
                 @Html.LabelFor(modelItem => item.prompttype.typeName)
             </div>
             <div class="editor-field">
                 @Html.EditorFor(modelItem => item.prompttype.typeName)
             </div>
-            @*-----*@
             <div class="editor-label">
                 @Html.LabelFor(modelItem => item.description)
             </div>
@@ -72,8 +71,9 @@
                 @Html.EditorFor(modelItem => item.description)
             </div>
             <br />
-        }
-
+            @Html.ActionLink("Delete", "Delete", new { id=item.promptID })
+        }*@
+        @Html.Partial("_Prompt", Model.prompts)
         @*-------------------------------------------*@
         <p>
             <input type="submit" value="Save" />
@@ -82,7 +82,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("<< Back to List", "Index")
 </div>
 
 @section Scripts {
