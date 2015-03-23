@@ -1,7 +1,9 @@
 ﻿@model PJCAdmin.Models.job
 
+
 @{
     ViewBag.Title = "Create";
+    
 }
 
 <script type="text/javascript">
@@ -53,6 +55,7 @@
                     @Html.Partial("_taskList", item)
                     
                 }*@
+                
                 @for(int i = 0; i < ((List<PJCAdmin.Models.task>)ViewData["Tasks"]).Count; i++){
                     <li>
                         @Html.Label(((List<PJCAdmin.Models.task>)ViewData["Tasks"]).ElementAt(i).taskName)
