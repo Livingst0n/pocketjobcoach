@@ -53,6 +53,7 @@ namespace PJCAdmin.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 db.jobs.Add(job);
                 db.SaveChanges();
 
