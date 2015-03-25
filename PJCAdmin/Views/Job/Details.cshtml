@@ -16,15 +16,15 @@
 
     <div class="display-field">
         @Html.DisplayFor(model => model.jobTitle)
-        @Html.DisplayFor(model => model.jobID)
-        @Html.DisplayFor(model => model.tasks)
+        @*@@Html.DisplayFor(model => model.jobID)*@
+        @*@@Html.DisplayFor(model => model.tasks)*@
 
         @foreach (var item in Model.tasks)
         {
             <table>
                 <tr>
                     <td>
-                        @Html.DisplayFor(model => model.jobID)
+                        @item.taskName
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", "Edit") |
