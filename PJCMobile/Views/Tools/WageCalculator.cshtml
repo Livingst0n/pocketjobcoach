@@ -3,24 +3,15 @@
    
 }
 
-
-
-    <script> 
-     void  calcWage() 
-     Response.Write("Money Earned:" + (Math.round(hourlyWage.valueAsNumber * hoursWorked.valueAsNumber), 2));
-    
-
-    </script>
-
 <h2>Wage Calculator</h2>
 <div>
     <form>    
        
         Enter number of hours worked: <input id ="hoursWorked" type="number"  rows ="30" cols ="30" width = "20" size="20"/>
-        Enter hourly wage: <input id ="hourlyWage" type="text" size="25" width="25"/>
-        <input id="CalculateButton" type="submit" value="Calculate" onclick="calcWage"/>
+        Enter hourly wage: <input id ="hourlyWage" type="number" size="25" width="25"/>
+        <input id="CalculateButton" type="submit" value="Calculate" onclick= "Math.round((hoursWorked.value * hourlyWage.value),2)" />
         <b></b>
-        <label id="DisplayWage">Money Earned: </label>
+        <label id="DisplayWage">Money Earned: </label> 
         
     </form>
 </div>
