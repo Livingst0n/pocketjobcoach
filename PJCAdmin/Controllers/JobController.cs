@@ -39,6 +39,8 @@ namespace PJCAdmin.Controllers
 
         public ActionResult Create()
         {
+            ViewData["Tasks"] = db.tasks.ToList();
+
             return View();
         }
 
@@ -47,11 +49,21 @@ namespace PJCAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(job job, task[] taskList)
+        public ActionResult Create(job job, string[] taskList)
         {
             if (ModelState.IsValid)
             {
+                
+                
+
+                foreach (var item in taskList)
+                {
+                    if(item != "false")
+                        job.tasks.Add(db.tasks.Find(Convert.ToInt32(item)));
+                }
+
                 db.jobs.Add(job);
+
                 db.SaveChanges();
 
                 return RedirectToAction("Index");

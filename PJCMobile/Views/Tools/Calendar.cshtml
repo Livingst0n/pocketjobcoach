@@ -8,27 +8,19 @@
 
     <title>Calendar</title>
 
-    <script src="~/Scripts/jquery.calendar-widget.js" type="text/javascript"> </script>
+    <link rel="stylesheet" type="text/css" href="~/Content/themes/base/jquery-ui.css"/>
 
 </head>
 
 
 <body>
 
-    <div id="calendar" style="float:left">
-        
-    </div>
-
-    @*@Scripts.Render("~/Scripts/jquery.calendar-widget")*@
-    @*@RenderSection("Scripts",required:false)*@
-    <script type="text/javascript">
-        calendar();
-    </script>
+    <div id="calendar" style="float:left"> </div>
 
     <script>
-        $(function () {
-            $("#calendar").calendarWidget({ month: 3, year: 2015 });
-        });
+    $(function () {
+        $("#calendar").datepicker();
+    });
     </script>
 
 </body>

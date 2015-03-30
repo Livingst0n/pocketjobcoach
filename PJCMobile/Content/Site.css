@@ -60,3 +60,7 @@ li div span {
     display: block !important;
     margin-top: -115px;
 }
+
+img{
+    max-width:100%;
+}
