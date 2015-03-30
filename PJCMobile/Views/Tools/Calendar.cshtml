@@ -2,28 +2,31 @@
     ViewBag.Title = "Calendar";
 }
 
-<html>
+@**@<html>
 
 <head>
 
     <title>Calendar</title>
+    <script src="~/Scripts/jquery.calendar-widget.js" type="text/javascript"> </script>
+    <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" type="text/css" />
+    <link rel="stylesheet" href="/resources/demos/style.css">
 
-    <link rel="stylesheet" type="text/css" href="~/Content/themes/base/jquery-ui.css"/>
+ 
+
 
 </head>
 
-
 <body>
 
-    <div id="calendar" style="float:left"> </div>
-
+ <div id="calendar"></div>
     <script>
     $(function () {
-        $("#calendar").datepicker();
+        $("#calendar").datepicker()
+
     });
     </script>
-
+ 
+  
 </body>
-
-
 </html>
+
