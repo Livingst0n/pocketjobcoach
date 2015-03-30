@@ -1,14 +1,18 @@
 ﻿@model IEnumerable<PJCAdmin.Models.prompt>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Prompt Dashboard";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
+<p>Prompts for <b>@ViewBag.Task.taskName</b></p>
+
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { id = ViewBag.Task.taskID })
 </p>
+
+
 <table>
     <tr>
         <th>
@@ -49,3 +53,4 @@
 }
 
 </table>
+@Html.ActionLink("Back to Edit Task", "Edit","Task", new {id = ViewBag.Task.taskID},null) 

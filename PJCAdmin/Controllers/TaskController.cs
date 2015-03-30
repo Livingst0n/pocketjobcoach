@@ -17,41 +17,20 @@ namespace PJCAdmin.Controllers
         // GET: /Task/
         public ActionResult Index()
         {
-            //Retrieve tasks and related taskcategory
+            //Retrieve tasks and related taskcategory, a reference of the list of associated prompts is already in each task
             var tasks = db.tasks.Include(t => t.taskcategory);
             return View(tasks.ToList());      
-            //var prompts = new SelectList(db.prompts, "promptID");
-            //return PartialView(new prompt() { promptID });
         }
 
         public ActionResult _Prompt()
         {        
-            //var promptTypes = db.tas
             return PartialView("_Prompt");
         }
 
-
-        //[HttpPost]
-        //public ActionResult Upload(HttpPostedFileBase file)
-        //{
-            //if  (file != null && file.ContentLength > 0)
-            //{
-                //var fileName = Path.GetFileName(file.FileName);
-
-                //var path = Path.Combine(Server.MapPath("~/App_Data"), fileName);
-                //file.SaveAs(path);
-            //}
-            //return Redirect("Create");
-        //}
-        //
         // GET: /Task/Details/5
-
         public ActionResult Details(int id = 0)
         {
-            //task task = db.tasks.Find(id);
             var task = db.tasks.Find(id);
-            //to pull associated prompts0
-
             if (task == null)
             {
                 return HttpNotFound();
@@ -64,7 +43,7 @@ namespace PJCAdmin.Controllers
         public ActionResult Create()
         {
             ViewBag.taskCategoryID = new SelectList(db.taskcategories, "categoryID", "categoryName");
-            ViewBag.prompt = new SelectList(db.prompttypes, "typeID", "typeName");
+            ViewBag.prompt = new SelectList(db.prompts, "prompt", "prompt");
 
             return View();
         }
@@ -95,6 +74,7 @@ namespace PJCAdmin.Controllers
                 return HttpNotFound();
             }
             ViewBag.taskCategoryID = new SelectList(db.taskcategories, "categoryID", "categoryName", task.taskCategoryID);
+            
             return View(task);
         }
 
@@ -106,6 +86,7 @@ namespace PJCAdmin.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(task).State = EntityState.Modified;
+                db.Entry(task.prompts).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

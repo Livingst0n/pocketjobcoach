@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>@ViewBag.Title</h2>
 <br />
 
 @using (Html.BeginForm())
@@ -42,45 +42,21 @@
             @Html.EditorFor(model => model.description)
             @Html.ValidationMessageFor(model => model.description)
         </div>
-    </fieldset>
     <br />
-    <br />
-    <h3>Media</h3>
-    <hr />
-    <fieldset>
-        @*--------------------Prompt-----------------*@
-        @*@foreach (var item in Model.prompts)
-        {
-            <div class="editor-label">
-                @Html.LabelFor(modelItem => item.title)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(modelItem => item.title)
-            </div>
-            
-            <div class="editor-label">
-                @Html.LabelFor(modelItem => item.prompttype.typeName)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(modelItem => item.prompttype.typeName)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(modelItem => item.description)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(modelItem => item.description)
-            </div>
-            <br />
-            @Html.ActionLink("Delete", "Delete", new { id=item.promptID })
-        }*@
-        @Html.Partial("_Prompt", Model.prompts)
-        @*-------------------------------------------*@
+    @*<br />
+    <h3>Prompt</h3>
+    <hr />*@
+
+            @*--------------------Prompt-----------------*@
+            @*@Html.Partial("_Prompt", Model.prompts)*@
+            @*-------------------------------------------*@
+        @Html.ActionLink("Go To Prompts", "Index", "Prompt", new { id = Model.taskID},null)
         <p>
             <input type="submit" value="Save" />
         </p>
     </fieldset>
 }
-
+<hr />
 <div>
     @Html.ActionLink("<< Back to List", "Index")
 </div>

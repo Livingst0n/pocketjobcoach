@@ -277,7 +277,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>PJCModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Scripts\Calendar.js" />
     <Content Include="Models\PJCModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>PJCModel.edmx</DependentUpon>
@@ -304,6 +303,7 @@
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery.calendar-widget.js" />
     <Content Include="Scripts\jquery.mobile-1.2.0.js" />
     <Content Include="Scripts\jquery.mobile-1.2.0.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -354,7 +354,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\JS\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

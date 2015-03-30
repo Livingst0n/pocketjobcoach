@@ -1,10 +1,10 @@
 ﻿@model PJCAdmin.Models.prompt
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Create";
 }
 
-<h2>Edit Prompt for <i>@Model.task.taskName</i></h2>
+<h2>Create Prompt for <i>@ViewBag.task.taskName</i></h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -13,22 +13,28 @@
     <fieldset>
         <legend>prompt</legend>
 
-        @Html.HiddenFor(model => model.promptID)
-
         <div class="editor-label">
-            @Html.LabelFor(model => model.typeID, "Prompt Type")
+            @Html.LabelFor(model => model.typeID, "prompttype")
         </div>
         <div class="editor-field">
             @Html.DropDownList("typeID", String.Empty)
             @Html.ValidationMessageFor(model => model.typeID)
-            
         </div>
-        @Html.HiddenFor(model => model.taskID)
+     
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.taskID)
+        </div>
+
+        <div class="editor-field">
+            @Html.EditorFor(model => model.taskID)
+        </div>*@
+        @Html.HiddenFor(model => model.taskID, new { Value = ViewBag.task.taskID })
+
         @*<div class="editor-label">
             @Html.LabelFor(model => model.taskID, "task")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("taskID", String.Empty)
+            @Html.DropDownList("taskID", (string)ViewBag.task.taskName)
             @Html.ValidationMessageFor(model => model.taskID)
         </div>*@
 
@@ -49,13 +55,13 @@
         </div>
 
         <p>
-            <input type="submit" value="Save" />
-          </p>
+            <input type="submit" value="Create" />
+        </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index", new { id = Model.taskID})
+    @Html.ActionLink("Back to List", "Index", new { id = ViewBag.task.taskID })
 </div>
 
 @section Scripts {
