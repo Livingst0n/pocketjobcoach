@@ -2,22 +2,31 @@
     ViewBag.Title = "Calendar";
 }
 
+@**@<html>
 
-<h3>Calendar</h3>
+<head>
 
-<div>
+    <title>Calendar</title>
+    <script src="~/Scripts/jquery.calendar-widget.js" type="text/javascript"> </script>
+    <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" type="text/css" />
+    <link rel="stylesheet" href="/resources/demos/style.css">
 
-    <img src="http://www.freeallpictures.com/wp-content/uploads/2015/01/March-Calendar-2015-4.gif" style="max-width:100%;">
+ 
 
 
-    <script src ="/Scripts/Calendar.js"></script>
-    <script  type="text/javascript">
-    $("#calendar").calendarWidget({
-        month: 3,
-        year: 2015
+</head>
+
+<body>
+
+ <div id="calendar"></div>
+    <script>
+    $(function () {
+        $("#calendar").datepicker()
+
     });
     </script>
-
-</div>
-
+ 
+  
+</body>
+</html>
 

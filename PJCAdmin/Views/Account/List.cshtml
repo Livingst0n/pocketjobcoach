@@ -4,7 +4,7 @@ ViewBag.Title = "Users";
 
 <h2>Users</h2>
 <p>
-    @Html.ActionLink("Create New", "New")
+    @Html.ActionLink("Create New", "Create")
 </p>
 <table>
     <tr>
@@ -23,7 +23,7 @@ ViewBag.Title = "Users";
             @Html.ActionLink("Details", "Details", new { user = user.UserName }) |
             @Html.ActionLink("Edit", "Edit", new { user = user.UserName }) |
             @Html.ActionLink("Reset Password", "AdminResetPassword", new { user = user.UserName }) |
-            @Html.ActionLink("Delete", "Delete", new { user = user.UserName })
+            @Html.ActionLink("Delete", "Delete", new { username = user.UserName })
         </td>
     </tr>
 }
