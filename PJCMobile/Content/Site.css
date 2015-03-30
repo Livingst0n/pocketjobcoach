@@ -44,7 +44,7 @@
 }
 
 li div a{
-    height: 130px;
+    height: inherit;
 }
 
 li div div {
@@ -61,6 +61,21 @@ li div span {
     margin-top: -115px;
 }
 
+.task-icon {
+    text-align: right;
+    display: block !important;
+    margin-top: -140px;
+    padding-right: 16px;
+}
+
+.task-links {
+    display:inline !important;
+}
+
 img{
     max-width:100%;
+}
+
+.taskChk {
+    height: 50px !important;
 }

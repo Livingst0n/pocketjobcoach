@@ -22,6 +22,8 @@
 </ul>
 <ul data-role="listview" data-inset="true">
     <li>
-        @Html.ActionLink("Finished!", "Index", "Task")
+        @*@Html.ActionLink("Finish", "Index", "Task", null, new { @class="ui-btn-left", data_icon = "arrow-l", data_rel = "back" })*@
+        @Html.ActionLink("Finish", "Index", "Task", new { id=Model.taskID, data_rel="back" })
     </li>
 </ul>
+

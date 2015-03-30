@@ -4,11 +4,18 @@
     ViewBag.Title = "Tasks";
 }
 
+
 @foreach (var item in Model)
 {
     <ul data-role="listview" data-inset="true">
-        <li>
-            @Html.ActionLink(item.taskName, "Details", new { id=item.taskID })
+        <li >
+            @Html.ActionLink(item.taskName, "Details", new { id=item.taskID, @class="task-links" })
+            @if(1 == 2){
+                <i class="fa fa-square-o fa-2x task-icon"></i>
+            }
+            else{
+                <i class="fa fa-check-square-o fa-2x task-icon"></i>
+            }
         </li>
     </ul>
-}
+} 

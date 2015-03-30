@@ -130,5 +130,13 @@ namespace PJCMobile.Controllers
             db.Dispose();
             base.Dispose(disposing);
         }
+
+        [HttpPost, ActionName("Finish")]
+        public ActionResult completeTask(int id)
+        {
+            task task = db.tasks.Find(id);
+            
+            return RedirectToAction("Index");
+        }
     }
 }
