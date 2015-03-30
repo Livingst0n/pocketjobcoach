@@ -1,19 +1,19 @@
 ﻿@model PJCAdmin.Models.RegisterModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Create User";
 }
 
 <hgroup class="title">
     <h1>@ViewBag.Title.</h1>
-    <h2>Create a new account.</h2>
+    <h2>Create a new user account.</h2>
 </hgroup>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
 
     <fieldset>
-        <legend>Registration Form</legend>
         <ol>
             <li>
                 @Html.LabelFor(m => m.UserName)
@@ -31,8 +31,24 @@
                 @Html.LabelFor(m => m.ConfirmPassword)
                 @Html.PasswordFor(m => m.ConfirmPassword)
             </li>
+            <li>
+                <label>User Type</label>
+                <select name="usertype" class="form-control">
+                    @foreach (string role in Roles.GetAllRoles())
+                    {
+                        if (role == "User")
+                        {
+                            <option value="@role" selected>@role</option>
+                        }
+                        else
+                        {
+                            <option value="@role">@role</option>
+                        }
+                    }
+                </select>
+            </li>
         </ol>
-        <input type="submit" value="Register" />
+        <input type="submit" value="Create User" />
     </fieldset>
 }
 
