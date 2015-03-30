@@ -111,6 +111,76 @@ namespace PJCMobile.Controllers
 
         }
 
+        public ActionResult Create()
+        {
+            if (ModelState.IsValid && Roles.IsUserInRole("Administrator"))
+            {
+                return View();
+            }
+            else
+                Response.Redirect("~/Unauthorized");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(RegisterModel model, string usertype)
+        {
+            // Attempt to register the user
+            MembershipCreateStatus createStatus;
+            Membership.CreateUser(model.UserName, model.Password, model.Email, passwordQuestion: null, passwordAnswer: null, isApproved: true, providerUserKey: null, status: out createStatus);
+
+            if (createStatus == MembershipCreateStatus.Success)
+            {
+                foreach (string aRole in Roles.GetAllRoles())
+                {
+                    //Only Let the user be in one role
+                    try
+                    {
+                        Roles.RemoveUserFromRole(model.UserName, aRole);
+                    }
+                    catch
+                    {
+                        // Don't Worry About It.... :)
+                    }
+                }
+                Roles.AddUserToRole(model.UserName, usertype);
+                return RedirectToAction("List", "Account");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Unable to create user!");
+            }
+            // If we got this far, something failed, redisplay form
+            return View();
+        }
+
+
+        public ActionResult Delete(string username)
+        {
+            if (username != "")
+            {
+                ViewData["user"] = username;
+                return View();
+            }
+            else
+                Response.Redirect("~/Account/List");
+            //Will Never Get here
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(string username, int nothing = 0)
+        {
+            Membership.DeleteUser(username);
+            Response.Redirect("~/Account/List");
+            //Will Never Get Here
+            return View();
+        }
+
+
+
         //
         // GET: /Account/Login
 
@@ -173,45 +243,6 @@ namespace PJCMobile.Controllers
         }
 
         //
-        // GET: /Account/Register
-
-        [AllowAnonymous]
-        public ActionResult Register()
-        {
-
-            return View();
-        }
-
-        //
-        // POST: /Account/Register
-
-        [AllowAnonymous]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                // Attempt to register the user
-                MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, passwordQuestion: null, passwordAnswer: null, isApproved: true, providerUserKey: null, status: out createStatus);
-
-                if (createStatus == MembershipCreateStatus.Success)
-                {
-                    FormsAuthentication.SetAuthCookie(model.UserName, createPersistentCookie: false);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
-                }
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
         // GET: /Account/ChangePassword
 
         public ActionResult ChangePassword()
@@ -263,6 +294,8 @@ namespace PJCMobile.Controllers
         {
             return View();
         }
+
+
 
         #region Status Codes
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)
