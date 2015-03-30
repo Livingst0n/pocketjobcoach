@@ -4,8 +4,8 @@
     ViewBag.Title = "Prompt Dashboard";
 }
 
-<h2>@ViewBag.Title</h2>
-<p>Prompts for <b>@ViewBag.Task.taskName</b></p>
+<h2>@ViewBag.Title for <i>@ViewBag.Task.taskName</i></h2>
+@*<p>Prompts for <b>@ViewBag.Task.taskName</b></p>*@
 
 
 <p>
@@ -30,27 +30,30 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.prompttype.typeName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.task.taskName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.promptID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.promptID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.promptID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.prompttype.typeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.task.taskName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.promptID })
+            </td>
+            <td>
+                @*@Html.ActionLink("Details", "Details", new { id=item.promptID }) |*@
+                @Html.ActionLink("Delete", "Delete", new { id = item.promptID })
+            </td>
+        </tr>
+    }
 
 </table>
-@Html.ActionLink("Back to Edit Task", "Edit","Task", new {id = ViewBag.Task.taskID},null) 
+@Html.ActionLink("Back to Edit Task", "Edit", "Task", new { id = ViewBag.Task.taskID }, null) 

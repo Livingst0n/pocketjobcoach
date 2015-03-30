@@ -52,32 +52,28 @@
             @Html.EditorFor(model => model.description)
             @Html.ValidationMessageFor(model => model.description)
         </div>
-        
-        <div class="editor-label">
-            @Html.Label("URL")
-        </div>
-        <div class="editor-field">
-            @*@Html.EditorFor(model => model.prompts)*@
-        </div>
+        @*-----------------------------------------*@
         <div class="editor-label">
             @Html.Label("Type")
         </div>
         <div class="editor-field">
             @*@Html.EditorFor(model => model.prompts)*@
-            @Html.DropDownList("typeName", String.Empty)
-            
+            @Html.DropDownList("promptTypeID", String.Empty)         
         </div>
 
-    </fieldset>
-
-<div class="editor-label">
-    <h3>Upload a Media File</h3>
-</div>
-
-    @**********************************************@
-
-    <fieldset>
-        @*<input type="button" value="Add Media Link" onclick="AddPrompt();" />*@
+        <div class="editor-label">
+            @Html.Label("Title")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.prompts.)
+        </div>
+        <div class="editor-label">
+            @Html.Label("URL")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.prompts)
+        </div>
+        <input type="button" value="Add Media Link" onclick="AddPrompt();" />
         @*@Html.Partial("_Prompt", new List<PJCAdmin.Models.prompttype>())*@
 
         <table id="insertprompt">
