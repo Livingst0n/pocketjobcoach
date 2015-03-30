@@ -4,9 +4,12 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Edit Job</h2>
+<br />
+<br />
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -16,12 +19,60 @@
         @Html.HiddenFor(model => model.jobID)
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.jobTitle)
+            <h3>Job Title</h3>
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.jobTitle)
             @Html.ValidationMessageFor(model => model.jobTitle)
         </div>
+
+        <h3>Assigned Tasks:</h3>
+        @foreach (var item in Model.tasks)
+        {
+            <table>
+                <tr>
+                    <td>
+                        @item.taskName
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Edit") |
+                        @Html.ActionLink("Details", "Details", "Edit") |
+                        @Html.ActionLink("Delete", "Delete", "Edit")
+                    </td>
+                </tr>
+            </table>
+        }
+        <br />
+        <fieldset>
+            <h3>Available Tasks:</h3>
+            <ul id="allTasksList" style="list-style:none;">
+
+                @*@foreach (PJCAdmin.Models.task item in (List<PJCAdmin.Models.task>)ViewData["Tasks"])
+                    {
+                        @Html.Partial("_taskList", item)
+
+                    }*@
+
+                @for (int i = 0; i < ((List<PJCAdmin.Models.task>)ViewData["Tasks"]).Count; i++)
+                {
+                    foreach (var item in Model.tasks)
+                    {
+                        if ((((List<PJCAdmin.Models.task>)ViewData["Tasks"]).ElementAt(i).taskName) != @item.taskName)
+                        {
+                            
+                            <li>
+                                @Html.Label(((List<PJCAdmin.Models.task>)ViewData["Tasks"]).ElementAt(i).taskName)
+                                &nbsp; &nbsp;<button class="task" data-taskid="@((List<PJCAdmin.Models.task>)ViewData["Tasks"]).ElementAt(i).taskID" data-selected="false">Add</button>
+                                @Html.CheckBox("taskList[" + i + "]", false, new Dictionary<string, object> { { "value", ((List<PJCAdmin.Models.task>)ViewData["Tasks"]).ElementAt(i).taskID }, { "style", "display:none;" } })
+
+                            </li>
+                        }
+                    }
+                }
+
+                
+            </ul>
+        </fieldset>
 
         <p>
             <input type="submit" value="Save" />
@@ -32,6 +83,24 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script>
+    $(function () {
+        $('button.task').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if ($(this).data("selected") == "true") {
+                $(this).data("selected", "false");
+                $(this).html("Add");
+                $('input[type="checkbox"]', $(this).parent()).attr("checked", false);
+            } else {
+                $(this).data("selected", "true");
+                $(this).html("Remove");
+                $('input[type="checkbox"]', $(this).parent()).attr("checked", true);
+            }
+        })
+    })
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -77,6 +77,8 @@ namespace PJCAdmin.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            ViewData["Tasks"] = db.tasks.ToList();
+
             job job = db.jobs.Find(id);
             if (job == null)
             {
@@ -90,10 +92,16 @@ namespace PJCAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(job job)
+        public ActionResult Edit(job job, string[] taskList)
         {
             if (ModelState.IsValid)
             {
+                foreach (var item in taskList)
+                {
+                    if (item != "false")
+                        job.tasks.Add(db.tasks.Find(Convert.ToInt32(item)));
+                }
+
                 db.Entry(job).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
