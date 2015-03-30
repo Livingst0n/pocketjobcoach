@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Edit Prompt for <i>@Model.task.taskName</i></h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -16,20 +16,21 @@
         @Html.HiddenFor(model => model.promptID)
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.typeID, "prompttype")
+            @Html.LabelFor(model => model.typeID, "Prompt Type")
         </div>
         <div class="editor-field">
             @Html.DropDownList("typeID", String.Empty)
             @Html.ValidationMessageFor(model => model.typeID)
+            
         </div>
-
-        <div class="editor-label">
+        @Html.HiddenFor(model => model.taskID)
+        @*<div class="editor-label">
             @Html.LabelFor(model => model.taskID, "task")
         </div>
         <div class="editor-field">
             @Html.DropDownList("taskID", String.Empty)
             @Html.ValidationMessageFor(model => model.taskID)
-        </div>
+        </div>*@
 
         <div class="editor-label">
             @Html.LabelFor(model => model.title)
@@ -49,12 +50,12 @@
 
         <p>
             <input type="submit" value="Save" />
-        </p>
+          </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", new { id = Model.taskID})
 </div>
 
 @section Scripts {
