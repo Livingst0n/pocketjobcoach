@@ -53,11 +53,10 @@
             @Html.ValidationMessageFor(model => model.description)
         </div>
         @*-----------------------------------------*@
-        <div class="editor-label">
+        @*<div class="editor-label">
             @Html.Label("Type")
         </div>
         <div class="editor-field">
-            @*@Html.EditorFor(model => model.prompts)*@
             @Html.DropDownList("promptTypeID", String.Empty)         
         </div>
 
@@ -74,16 +73,16 @@
             @Html.EditorFor(model => model.prompts)
         </div>
         <input type="button" value="Add Media Link" onclick="AddPrompt();" />
-        @*@Html.Partial("_Prompt", new List<PJCAdmin.Models.prompttype>())*@
+        @@Html.Partial("_Prompt", new List<PJCAdmin.Models.prompttype>())*@
 
-        <table id="insertprompt">
+        @*<table id="insertprompt">
             <tr>
             </tr>
-        </table>
+        </table>*@
     </fieldset>
    
      <p>
-        <input type="submit" value="Done" />
+        <input type="submit" value="Create" />
     </p>
 }
 
