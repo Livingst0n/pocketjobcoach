@@ -68,6 +68,11 @@ namespace PJCAdmin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (prompt.typeID == 1)
+                {
+                    string[] url = prompt.description.Split('/');
+                    prompt.description = "https://www.youtube.com/embed/" + url[url.Length - 1];
+                }
                 db.prompts.Add(prompt);
                 db.SaveChanges();
                 //return RedirectToAction("Index"); 
