@@ -96,17 +96,20 @@ namespace PJCAdmin.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 foreach (var item in taskList)
                 {
                     if (item != "false")
-                        job.tasks.Add(db.tasks.Find(Convert.ToInt32(item)));
+                        db.jobs.Find(job.jobID).tasks.Add((db.tasks.Find(Convert.ToInt32(item))));
+                        
                 }
 
-                db.Entry(job).State = EntityState.Modified;
+                //db.Entry(job).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
             }
-            return View(job);
+            //return View(job);
+            return RedirectToAction("Index");
         }
 
         //
