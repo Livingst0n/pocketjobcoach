@@ -58,7 +58,9 @@ namespace PJCAdmin.Controllers
             {
                 db.tasks.Add(task);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                //return RedirectToAction("Index");//default code
+                return Redirect("/Prompt/Index/" + task.taskID);
             }
 
             ViewBag.taskCategoryID = new SelectList(db.taskcategories, "categoryID", "categoryName", task.taskCategoryID);
