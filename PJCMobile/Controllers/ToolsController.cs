@@ -20,13 +20,11 @@ namespace PJCMobile.Controllers
         //Wage Calculator Page
         public ActionResult WageCalculator()
         {
+
             return View();
         }
 
-   
-
-
-        
+      
         //Notes Page
         public ActionResult Notes()
         {
