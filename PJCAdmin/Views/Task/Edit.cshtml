@@ -1,10 +1,10 @@
 ﻿@model PJCAdmin.Models.task
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Task";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>@ViewBag.Title: @Model.taskName</h2>
 <br />
 
 @using (Html.BeginForm())
@@ -50,7 +50,7 @@
             @*--------------------Prompt-----------------*@
             @*@Html.Partial("_Prompt", Model.prompts)*@
             @*-------------------------------------------*@
-        @Html.ActionLink("Go To Prompts", "Index", "Prompt", new { id = Model.taskID},null)
+        @Html.ActionLink("Manage Prompts", "Index", "Prompt", new { id = Model.taskID},null)
         <p>
             <input type="submit" value="Save" />
         </p>

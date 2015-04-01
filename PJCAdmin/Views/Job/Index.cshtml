@@ -4,11 +4,7 @@
     ViewBag.Title = "Index";
 }*@
 
-<h2>Jobs</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2>Job List</h2>
 
 @*<div id="hmenu">
     <ul>
@@ -46,3 +42,7 @@
 }
 
 </table>
+<br />
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "actionlinkasbutton", style = "text-decoration:none;" })
+</p>

@@ -43,8 +43,8 @@ namespace PJCAdmin.Controllers
         public ActionResult Create()
         {
             ViewBag.taskCategoryID = new SelectList(db.taskcategories, "categoryID", "categoryName");
-            ViewBag.prompt = new SelectList(db.prompts, "prompt", "prompt");
-
+            //ViewBag.prompt = new SelectList(db.prompts, "prompt", "prompt");
+            ViewBag.promptTypeID = new SelectList(db.prompttypes, "typeID", "typeName");
             return View();
         }
 
@@ -58,7 +58,9 @@ namespace PJCAdmin.Controllers
             {
                 db.tasks.Add(task);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                //return RedirectToAction("Index");//default code
+                return Redirect("/Prompt/Index/" + task.taskID);
             }
 
             ViewBag.taskCategoryID = new SelectList(db.taskcategories, "categoryID", "categoryName", task.taskCategoryID);
