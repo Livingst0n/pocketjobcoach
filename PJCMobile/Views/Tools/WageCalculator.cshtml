@@ -1,18 +1,47 @@
 ﻿@{
     ViewBag.Title = "WageCalculator";
-   
+    
 }
+
+<script>
+    function isNumberKey(key) {
+    //getting key code of pressed key
+    var keycode = (key.which) ? key.which : key.keyCode;
+    
+    //Make sure it is a number or a decimal point
+    if (keycode > 31 && (keycode < 48 || keycode > 57) && keycode != 46) {
+        alert(" You can enter only characters 0 to 9 ");
+        return false;
+    }
+    else return true;
+}
+</script>
+
+    
 
 <h2>Wage Calculator</h2>
 <div>
-    <form>    
-       
-        Enter number of hours worked: <input id ="hoursWorked" type="number"  rows ="30" cols ="30" width = "20" size="20"/>
-        Enter hourly wage: <input id ="hourlyWage" type="number" size="25" width="25"/>
-        <input id="CalculateButton" type="submit" value="Calculate" onclick= "Math.round((hoursWorked.value * hourlyWage.value),2)" />
-        <b></b>
-        <label id="DisplayWage">Money Earned: </label> 
+    <form method="post">    
         
+        Enter number of hours worked: <input name="hoursWorked" type="text"  onkeypress="return isNumberKey(event)"/>
+        Enter hourly wage: <input name="hourlyWage" type="text" onkeypress="return isNumberKey(event)" />
+        <input id="CalculateButton" type="submit" value="Calculate"  />
+        <b></b>
+        
+      @{
+          if (IsPost)
+          {
+              double hours = Double.Parse(Request.Form["hoursWorked"]);
+              double wage = Double.Parse(Request.Form["hourlyWage"]);
+
+              double total = hours* wage;
+              string.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", total);
+             
+            <text> Money Earned:$ @Math.Round(total,2)</text>
+             
+          }
+    }  
+                
     </form>
 </div>
 
