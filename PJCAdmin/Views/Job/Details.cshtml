@@ -10,37 +10,49 @@
     <legend>job</legend>
 
     @*<div class="display-label">
-         @Html.DisplayNameFor(model => model.jobTitle)
-    </div>*@
-    Job Title
+             @Html.DisplayNameFor(model => model.jobTitle)
+        </div>*@
+    <h3>Job Title</h3>
 
     <div class="display-field">
-        @Html.DisplayFor(model => model.jobTitle)
-        @*@@Html.DisplayFor(model => model.jobID)*@
-        @*@@Html.DisplayFor(model => model.tasks)*@
+        <div style="margin-left:50px;">
+            @Html.DisplayFor(model => model.jobTitle)
+            @*@@Html.DisplayFor(model => model.jobID)*@
+            @*@@Html.DisplayFor(model => model.tasks)*@
+        </div>
 
-        @foreach (var item in Model.tasks)
-        {
-            <table>
-                <tr>
-                    <td>
-                        @item.taskName
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", "Edit") |
-                        @Html.ActionLink("Details", "Details", "Edit") |
-                        @Html.ActionLink("Delete", "Delete", "Edit")
-                    </td>
-                </tr>
-            </table>
-        }
+        <h3>Assigned Tasks:</h3>
+        <div style="margin-left:50px;">
+            @foreach (var item in Model.tasks)
+            {
+                <table>
+                    <tr>
+                        <td>
+                            @item.taskName
+                        </td>
+                        @*<td>
+                            @Html.ActionLink("Edit", "Edit", "Edit") |
+                            @Html.ActionLink("Details", "Details", "Edit") |
+                            @Html.ActionLink("Delete", "Delete", "Edit")
+                        </td>*@
+                    </tr>
+                </table>
+            }
+        </div>
 
     </div>
+    <br />
+    <br />
 
 
-    
+
+
+
+
+
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.jobID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.jobID }, new { @class = "actionlinkasbutton", style = "text-decoration:none; text-align:center; display:inline; padding:10px 15px; font-weight:bold;" }) &nbsp; | &nbsp; @Html.ActionLink("Back to List", "Index")
 </p>
+
+@*@Html.ActionLink("Create New", "Create", null, new { @class = "actionlinkasbutton", style = "text-decoration:none;" })*@
