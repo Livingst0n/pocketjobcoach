@@ -1,49 +1,51 @@
 ﻿@model IEnumerable<PJCAdmin.Models.job>
 
 @*@{
-    ViewBag.Title = "Index";
-}*@
+        ViewBag.Title = "Index";
+    }*@
 
 <h2>Job List</h2>
 <br />
 
 @*<div id="hmenu">
-    <ul>
-        <li><a href="http://www.w3.org/Consortium/activities">W3C Activities</a></li>
-        <li><a href="http://www.w3.org/TR/">W3C Technical Reports</a></li>
-        <li><a href="http://www.w3.org/Consortium/siteindex">W3C Site Index</a></li>
-        <li><a href="http://www.w3.org/Consortium/new-to-w3c">New Visitors</a></li>
-        <li><a href="http://www.w3.org/Consortium/">About W3C</a></li>
-        <li><a href="http://www.w3.org/Consortium/join">Join W3C</a></li>
-        <li><a href="http://www.w3.org/Consortium/contact">Contact W3C</a></li>
-    </ul>
-</div>*@ 
+        <ul>
+            <li><a href="http://www.w3.org/Consortium/activities">W3C Activities</a></li>
+            <li><a href="http://www.w3.org/TR/">W3C Technical Reports</a></li>
+            <li><a href="http://www.w3.org/Consortium/siteindex">W3C Site Index</a></li>
+            <li><a href="http://www.w3.org/Consortium/new-to-w3c">New Visitors</a></li>
+            <li><a href="http://www.w3.org/Consortium/">About W3C</a></li>
+            <li><a href="http://www.w3.org/Consortium/join">Join W3C</a></li>
+            <li><a href="http://www.w3.org/Consortium/contact">Contact W3C</a></li>
+        </ul>
+    </div>*@
+<div style="margin-left:50px;">
+    <table>
+        <tr>
+            <th>
+                <!-- test -->
+                @*@Html.DisplayNameFor(model => model.jobTitle)*@
+                Job Title
+            </th>
+            <th></th>
+        </tr>
 
-<table>
-    <tr>
-        <th>
-            <!-- test -->
-            @*@Html.DisplayNameFor(model => model.jobTitle)*@
-            Job Title
-        </th>
-        <th></th>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.jobTitle)  &nbsp;&nbsp;&nbsp;
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.jobID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.jobID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.jobID })
+                </td>
+            </tr>
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.jobTitle)  &nbsp;&nbsp;&nbsp;
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.jobID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.jobID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.jobID })
-        </td>
-    </tr>
-}
-
-</table>
-<br /><br />
+    </table>
+</div>
+<br /><br>
 <p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "actionlinkasbutton", style = "text-decoration:none;" })
+    @Html.ActionLink("Create New", "Create", null, new { @class = "actionlinkasbutton", style = "text-decoration:none; font-weight:bold;" })
 </p>

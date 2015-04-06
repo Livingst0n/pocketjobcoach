@@ -30,11 +30,11 @@
                         <td>
                             @item.taskName
                         </td>
-                        <td>
+                        @*<td>
                             @Html.ActionLink("Edit", "Edit", "Edit") |
                             @Html.ActionLink("Details", "Details", "Edit") |
                             @Html.ActionLink("Delete", "Delete", "Edit")
-                        </td>
+                        </td>*@
                     </tr>
                 </table>
             }
@@ -52,6 +52,7 @@
 
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.jobID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.jobID }, new { @class = "actionlinkasbutton", style = "text-decoration:none; text-align:center; display:inline; padding:10px 15px; font-weight:bold;" }) &nbsp; | &nbsp; @Html.ActionLink("Back to List", "Index")
 </p>
+
+@*@Html.ActionLink("Create New", "Create", null, new { @class = "actionlinkasbutton", style = "text-decoration:none;" })*@

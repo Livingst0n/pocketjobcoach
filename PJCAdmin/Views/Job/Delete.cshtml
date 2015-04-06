@@ -6,18 +6,45 @@
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<fieldset>
-    <legend>job</legend>
+<h3>Are you sure you want to delete this job?</h3>
+<div style="margin-left:50px;">
+    <fieldset>
+        <legend>job</legend>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.jobTitle)
+        @*<div class="display-label">
+                @Html.DisplayNameFor(model => model.jobTitle)
+            </div>*@
+        <h3>Job Title</h3>
+        <div style="margin-left:50px;">
+            <div class="display-field">
+                @Html.DisplayFor(model => model.jobTitle)
+            </div>
+        </div>
+    </fieldset>
+    <h3>Assigned Tasks:</h3>
+    <div style="margin-left:50px;">
+        @foreach (var item in Model.tasks)
+        {
+            <table>
+                <tr>
+                    <td>
+                        @item.taskName
+                    </td>
+                    @*<td>
+                            @Html.ActionLink("Edit", "Edit", "Edit") |
+                            @Html.ActionLink("Details", "Details", "Edit") |
+                            @Html.ActionLink("Delete", "Delete", "Edit")
+                        </td>*@
+                </tr>
+            </table>
+        }
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.jobTitle)
-    </div>
-</fieldset>
-@using (Html.BeginForm()) {
+
+</div>
+<br /><br />
+
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     <p>
         <input type="submit" value="Delete" /> |
