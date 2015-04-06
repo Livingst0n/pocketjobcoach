@@ -5,6 +5,7 @@
 }*@
 
 <h2>Job List</h2>
+<br />
 
 @*<div id="hmenu">
     <ul>
@@ -31,7 +32,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.jobTitle)
+            @Html.DisplayFor(modelItem => item.jobTitle)  &nbsp;&nbsp;&nbsp;
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.jobID }) |
@@ -42,7 +43,7 @@
 }
 
 </table>
-<br />
+<br /><br />
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "actionlinkasbutton", style = "text-decoration:none;" })
 </p>
