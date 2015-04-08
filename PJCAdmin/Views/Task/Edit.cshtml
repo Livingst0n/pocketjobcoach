@@ -1,19 +1,17 @@
 ﻿@model PJCAdmin.Models.task
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Task";
 }
 
-<h2>@ViewBag.Title</h2>
-<br />
+<h2>@ViewBag.Title: @Model.taskName</h2>
+<hr />
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-    
-    <h3>Task</h3>
-    <hr />
+    @Html.ValidationSummary(true)   
+  
     <fieldset>
         <legend>task</legend>
         @*--------------------Task----------------------*@
@@ -43,20 +41,14 @@
             @Html.ValidationMessageFor(model => model.description)
         </div>
     <br />
-    @*<br />
-    <h3>Prompt</h3>
-    <hr />*@
+        @Html.ActionLink("Manage Prompts", "Index", "Prompt", new { id = Model.taskID }, null)
 
-            @*--------------------Prompt-----------------*@
-            @*@Html.Partial("_Prompt", Model.prompts)*@
-            @*-------------------------------------------*@
-        @Html.ActionLink("Go To Prompts", "Index", "Prompt", new { id = Model.taskID},null)
-        <p>
-            <input type="submit" value="Save" />
-        </p>
     </fieldset>
 }
 <hr />
+<p>
+    <input type="submit" value="Save" />
+</p>
 <div>
     @Html.ActionLink("<< Back to List", "Index")
 </div>

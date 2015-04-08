@@ -808,14 +808,14 @@ a.ui-link-inherit {
 /* Interaction cues
 -----------------------------------------------------------------------------------------------------------*/
 .ui-disabled {
-	filter: Alpha(Opacity=30);
-	opacity: .3;
+	/*filter: Alpha(Opacity=30);*/
+	opacity: 1 !important;
 	zoom: 1;
 }
 .ui-disabled,
 .ui-disabled a {
-	cursor: default !important;
-	pointer-events: none;
+	/*cursor: default !important;
+	pointer-events: none;*/
 }
 /* Icons
 -----------------------------------------------------------------------------------------------------------*/

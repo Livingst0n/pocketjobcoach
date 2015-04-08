@@ -16,12 +16,43 @@
 
         <li>@Html.DisplayFor(modelItem => item.title)</li>
         <li>
-            <img src="@Html.DisplayFor(modelItem => item.description)" /></li>
+            @if(item.typeID == 1){
+                @*<object width="425" height="350">
+                    <param name="movie" value="@Html.DisplayFor(modelItem => item.description)" />
+                    <embed src="@Html.DisplayFor(modelItem => item.description)" type="application/x-shockwave-flash" width="425" height="350" />
+                </object>
+                <embed width="420" height="315" src="@Html.DisplayFor(modelItem => item.description)">
+                <object width="420" height="315"
+                    data="@Html.DisplayFor(modelItem => item.description)">
+                </object>*@
+                
+                <iframe width="560" height="315" src="@Html.DisplayFor(modelItem => item.description)" frameborder="0" allowfullscreen></iframe>
+            }
+            else if (item.typeID == 2)
+            {
+                <audio controls>
+                  <source src="@Html.DisplayFor(modelItem => item.description)" type="audio/ogg">
+                  <source src="@Html.DisplayFor(modelItem => item.description)" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                </audio>
+            }
+            else if (item.typeID == 3)
+            {
+                <img src="@Html.DisplayFor(modelItem => item.description)" />
+            }
+            else if (item.typeID == 4)
+            {
+                @*<img src="@Html.DisplayFor(modelItem => item.description)" />*@
+            }
+        </li>
+            
         <li>----</li>
     }
 </ul>
 <ul data-role="listview" data-inset="true">
     <li>
-        @Html.ActionLink("Finished!", "Index", "Task")
+        @*@Html.ActionLink("Finish", "Index", "Task", null, new { @class="ui-btn-left", data_icon = "arrow-l", data_rel = "back" })*@
+        @Html.ActionLink("Finish", "Index", "Task", new { id=Model.taskID, data_rel="back" })
     </li>
 </ul>
+

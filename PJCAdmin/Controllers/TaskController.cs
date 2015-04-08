@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using PJCAdmin.Models;
 using System.IO;
+using PagedList;//NuGet package used to add paging 
 
 namespace PJCAdmin.Controllers
 {
@@ -15,12 +16,27 @@ namespace PJCAdmin.Controllers
         private pjcEntities db = new pjcEntities();
 
         // GET: /Task/
-        public ActionResult Index()
+        public ActionResult Index(string searchString, int? page)
         {
             //Retrieve tasks and related taskcategory, a reference of the list of associated prompts is already in each task
-            var tasks = db.tasks.Include(t => t.taskcategory);
-            return View(tasks.ToList());      
+            var tasks = db.tasks.Include(t => t.taskcategory);//before pagination
+
+            if(!String.IsNullOrEmpty(searchString))
+            {
+                tasks = tasks.Where(t => t.taskName.Contains(searchString));
+                page = 1;
+            }
+
+            tasks = tasks.OrderBy(t => t.taskName);
+            int pageSize = 10;
+            int pageNumber = (page ?? 1); //if page is null, pageNumber= 1
+
+            ViewBag.searchString = searchString;
+            //return View(tasks.ToList());  //before adding pagination
+            return View(tasks.ToPagedList(pageNumber, pageSize));
         }
+
+        //public ActionResult Index(int?)
 
         public ActionResult _Prompt()
         {        
@@ -43,8 +59,8 @@ namespace PJCAdmin.Controllers
         public ActionResult Create()
         {
             ViewBag.taskCategoryID = new SelectList(db.taskcategories, "categoryID", "categoryName");
-            ViewBag.prompt = new SelectList(db.prompts, "prompt", "prompt");
-
+            //ViewBag.prompt = new SelectList(db.prompts, "prompt", "prompt");
+            ViewBag.promptTypeID = new SelectList(db.prompttypes, "typeID", "typeName");
             return View();
         }
 
@@ -58,7 +74,9 @@ namespace PJCAdmin.Controllers
             {
                 db.tasks.Add(task);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                //return RedirectToAction("Index");//default code
+                return Redirect("/Prompt/Index/" + task.taskID);
             }
 
             ViewBag.taskCategoryID = new SelectList(db.taskcategories, "categoryID", "categoryName", task.taskCategoryID);
@@ -110,8 +128,14 @@ namespace PJCAdmin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var prompts = db.prompts.Where(p => p.taskID == id);
+            
             task task = db.tasks.Find(id);
             db.tasks.Remove(task);
+            foreach (prompt p in prompts)
+            {
+                db.prompts.Remove(p);
+            }
             db.SaveChanges();
             return RedirectToAction("Index");
         }

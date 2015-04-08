@@ -23,12 +23,23 @@ namespace PJCAdmin.Controllers
 
         //
         // GET: /Prompt/
-        public ActionResult Index(int id = 0)
+        public ActionResult Index(int id = 0, int selectedValue = 0)
         {
-                var prompts = db.prompts.Include(p => p.task).Include(p => p.prompttype).Where(p => p.taskID == id);
-                task associatedTask = db.tasks.Find(id);
-                ViewBag.Task = associatedTask;
-                return View(prompts.ToList());
+
+            var prompts = db.prompts.Include(p => p.task).Include(p => p.prompttype).Where(p => p.taskID == id);
+
+            if (selectedValue > 0)
+            {
+                prompts = prompts.Where(p => p.prompttype.typeID.Equals(selectedValue));
+                //prompts = prompts.Where(p => p.prompttype.typeName.Contains(selectedValue));
+            }
+
+            task associatedTask = db.tasks.Find(id);
+            ViewBag.Task = associatedTask;
+
+            ViewBag.selectedValue = selectedValue;
+            ViewBag.promptTypeList = new SelectList(db.prompttypes, "typeID", "typeName");
+            return View(prompts.ToList());
         }
 
         // GET: /Prompt/Details/5
@@ -38,11 +49,6 @@ namespace PJCAdmin.Controllers
             if (prompt == null)
             {
                 return HttpNotFound();
-            }
-
-            else if (Request.IsAjaxRequest())
-            {
-                return PartialView("_Prompt", prompt);
             }
             return View(prompt); //default code
         }
@@ -68,6 +74,11 @@ namespace PJCAdmin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (prompt.typeID == 1)
+                {
+                    string[] url = prompt.description.Split('/');
+                    prompt.description = "https://www.youtube.com/embed/" + url[url.Length - 1];
+                }
                 db.prompts.Add(prompt);
                 db.SaveChanges();
                 //return RedirectToAction("Index"); 

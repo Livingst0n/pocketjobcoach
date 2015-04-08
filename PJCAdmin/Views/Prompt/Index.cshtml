@@ -4,53 +4,72 @@
     ViewBag.Title = "Prompt Dashboard";
 }
 
-<h2>@ViewBag.Title</h2>
-<p>Prompts for <b>@ViewBag.Task.taskName</b></p>
-
-
-<p>
-    @Html.ActionLink("Create New", "Create", new { id = ViewBag.Task.taskID })
-</p>
-
-
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.prompttype.typeName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.task.taskName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.description)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.prompttype.typeName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.task.taskName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.promptID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.promptID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.promptID })
-        </td>
-    </tr>
+<h2>@ViewBag.Title for <i>@ViewBag.Task.taskName</i></h2>
+@using (Html.BeginForm())
+{
+    <p>
+        Filter by Prompt Type:@Html.DropDownList("selectedValue", (SelectList)ViewBag.promptTypeList, String.Empty)
+        <input type="submit" value="Filter" />
+    </p>
 }
+<hr />
+<table>
+    @if (Model.Count() > 0)
+    {
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.prompttype.typeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.task.taskName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th></th>
+        </tr>
+
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.prompttype.typeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.task.taskName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.promptID })
+                </td>
+                <td>
+                    @*@Html.ActionLink("Details", "Details", new { id=item.promptID }) |*@
+                    @Html.ActionLink("Delete", "Delete", new { id = item.promptID })
+                </td>
+            </tr>
+        }
+    }
+    else if (Model.Count() == 0 && ViewBag.selectedValue > 0)
+    {
+        <tr>No prompts were found for the given filter criteria.</tr>
+    }
+    else
+    {
+        <tr>No prompts have been created for this task.</tr>
+    }
 
 </table>
-@Html.ActionLink("Back to Edit Task", "Edit","Task", new {id = ViewBag.Task.taskID},null) 
+
+<hr />
+<p>
+    @Html.ActionLink("Create New", "Create", new { id = ViewBag.Task.taskID }, new { @class = "actionlinkasbutton" })
+</p>
+@Html.ActionLink("<< Back to Edit Task", "Edit", "Task", new { id = ViewBag.Task.taskID }, null) 
