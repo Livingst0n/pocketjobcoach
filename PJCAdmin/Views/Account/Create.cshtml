@@ -47,10 +47,63 @@
                     }
                 </select>
             </li>
+            <li>
+                <label>Job</label>
+                <select name="job" id="selectjob">
+                    <option value=""></option>
+                    @for (int i = 0; i < ((List<PJCAdmin.Models.job>)ViewData["Jobs"]).Count; i++)
+                    {
+                        <option value="@(((List<PJCAdmin.Models.job>)ViewData["Jobs"]).ElementAt(i).jobID)">
+                            @Html.Label(((List<PJCAdmin.Models.job>)ViewData["Jobs"]).ElementAt(i).jobTitle)
+                        </option>
+                    }
+                </select>
+                <label>Apply Template Tasks <input type="checkbox" name="applyJobTemplate" value="1" /></label>
+            </li>
+            <li style="margin-top:20px;"><label>Assigned Users</label></li>
+            <li>
+                <ul id="assignedUsersList">
+                    <li id="nousers" style="color:#999"><i>No Assigned Users</i></li>
+                </ul>
+            </li>
+            <li style="margin-top:20px;">
+                <select name="selectAddUsers" id="selectAddUsers">
+                    @for (int i = 0; i < ((List<PJCAdmin.Models.User>)ViewData["Users"]).Count; i++)
+                    {
+                        <option value="@(((List<PJCAdmin.Models.User>)ViewData["Users"]).ElementAt(i).UserId)">
+                            @Html.Label(((List<PJCAdmin.Models.User>)ViewData["Users"]).ElementAt(i).UserName)
+                        </option>
+                    }
+                </select>
+                <button id="addUser">Assign User</button>
+            </li>
         </ol>
         <input type="submit" value="Create User" />
     </fieldset>
 }
+
+<script>
+    $(function () {
+        $('#addUser').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if ($('#nousers').size() > 0)
+                $('#nousers').remove();
+            var id = $('#selectAddUsers').val();
+            var name = $('#selectAddUsers option:selected').html();
+            $('#assignedUsersList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="selectedUsers[' + ($('#assignedUsersList').size()).toString() + ']"  value="' + id + '" /></li>')
+        });
+
+        $('#assignedUsersList').on('click', '.remove-user', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).parent().remove();
+            if ($('#assignedUsersList').children().size() == 0) {
+                $('#assignedUsersList').append('<li id="nousers" style="color:#999"><i>No Assigned Users</i></li>');
+            }
+        });
+    });
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -19,8 +19,6 @@ namespace PJCMobile.Models
             this.usertasks = new HashSet<usertask>();
             this.usertaskprompts = new HashSet<usertaskprompt>();
             this.jobs = new HashSet<job>();
-            this.user1 = new HashSet<user>();
-            this.users = new HashSet<user>();
         }
     
         public int userID { get; set; }
@@ -40,7 +38,5 @@ namespace PJCMobile.Models
         public virtual ICollection<usertask> usertasks { get; set; }
         public virtual ICollection<usertaskprompt> usertaskprompts { get; set; }
         public virtual ICollection<job> jobs { get; set; }
-        public virtual ICollection<user> user1 { get; set; }
-        public virtual ICollection<user> users { get; set; }
     }
 }

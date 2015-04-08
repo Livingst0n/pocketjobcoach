@@ -10,10 +10,10 @@
         <EntityTypeShape EntityType="pjcModel.prompttype" Width="1.5" PointX="6" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.task" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.taskcategory" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="pjcModel.user" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="pjcModel.user" Width="1.5" PointX="6" PointY="4.75" IsExpanded="false" />
         <EntityTypeShape EntityType="pjcModel.usertask" Width="1.5" PointX="11.25" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.usertaskprompt" Width="1.5" PointX="13.5" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="pjcModel.usertype" Width="1.5" PointX="3.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="pjcModel.usertype" Width="1.5" PointX="3.75" PointY="3.25" IsExpanded="false" />
         <AssociationConnector Association="pjcModel.prompt_prompt_taskID_FK" ManuallyRouted="false" />
         <AssociationConnector Association="pjcModel.prompt_prompt_typeid_FK" ManuallyRouted="false" />
         <AssociationConnector Association="pjcModel.usertaskprompt_usertaskprompt_promptID_FK" ManuallyRouted="false" />
@@ -25,7 +25,19 @@
         <AssociationConnector Association="pjcModel.usertaskprompt_usertaskprompt_userid_FK" ManuallyRouted="false" />
         <AssociationConnector Association="pjcModel.jobtask" ManuallyRouted="false" />
         <AssociationConnector Association="pjcModel.userjob" ManuallyRouted="false" />
-        <AssociationConnector Association="pjcModel.userrelation" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="pjcModel.Application" Width="1.5" PointX="0.75" PointY="13.625" />
+        <EntityTypeShape EntityType="pjcModel.Membership" Width="1.5" PointX="7.5" PointY="12.25" />
+        <EntityTypeShape EntityType="pjcModel.Profile" Width="1.5" PointX="7.5" PointY="18.625" />
+        <EntityTypeShape EntityType="pjcModel.Role" Width="1.5" PointX="3" PointY="13.625" />
+        <EntityTypeShape EntityType="pjcModel.UserProfile" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="pjcModel.User" Width="1.5" PointX="5.25" PointY="13.125" />
+        <AssociationConnector Association="pjcModel.MembershipEntity_Application" />
+        <AssociationConnector Association="pjcModel.RoleEntity_Application" />
+        <AssociationConnector Association="pjcModel.User_Application" />
+        <AssociationConnector Association="pjcModel.MembershipEntity_User" />
+        <AssociationConnector Association="pjcModel.ProfileEntity_User" />
+        <AssociationConnector Association="pjcModel.userrelationship" />
+        <AssociationConnector Association="pjcModel.UsersInRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

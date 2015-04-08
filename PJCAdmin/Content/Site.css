@@ -18,10 +18,6 @@ table.tablestyle1{
     margin-right: auto;
 }
 
-div.labelstyle1
-{
-    font-
-}
 /*Defaults*/
 html {
     background-color: #e2e2e2;
@@ -622,6 +618,10 @@ tr.pager td {
     header .float-left,
     header .float-right {
         float: none;
+    }
+
+    header .float-left a {
+      margin-left: -26px;
     }
 
     /* logo */

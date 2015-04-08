@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "AssignedTasks";
+}
+
+<h2>Assigned Tasks for @(((MembershipUser)ViewData["User"]).UserName)</h2>
+@if (((List<PJCAdmin.Models.usertask>)ViewData["Tasks"]).Count > 0) {
+<table>
+    <thead>
+        <tr>
+            <th>Task</th>
+            <th>Schedule</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (PJCAdmin.Models.usertask ut in ((List<PJCAdmin.Models.usertask>)ViewData["Tasks"]))
+            {
+                <tr>
+                    <td>@ut.task.taskName</td>
+                    <td>@ut.daysOfWeek<br /> @ut.startTime - @ut.endTime</td>
+                    <td>@Html.ActionLink("Edit", "EditAssignedTask", new { user = ((MembershipUser)ViewData["User"]).UserName, task = ut.taskID }) | @Html.ActionLink("Remove", "RemoveAssignedTask", new { user = ((MembershipUser)ViewData["User"]).UserName, task = ut.taskID })</td>
+                </tr>
+            }
+    </tbody>
+</table>
+}
+else
+{
+    <p>No Tasks are Assigned to this User</p>
+}
+<br />
+@Html.ActionLink("Assign New Task", "AssignNewTask", new { user = ((MembershipUser)ViewData["User"]).UserName }) | @Html.ActionLink("Back to Details", "Details", new { user = ((MembershipUser)ViewData["User"]).UserName }) 

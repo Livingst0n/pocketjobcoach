@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Remove Assigned Task";
+}
+
+<h2>Task Removal Confirmation</h2>
+
+<h4>Are you sure you want to remove &quot;@(((PJCAdmin.Models.task)ViewData["task"]).taskName)&quot; task from @ViewData["user"] assigned tasks? <small> This action is irreversible.</small></h4>
+<br />
+<form action="~/Account/RemoveAssignedTask" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="username" value="@ViewData["user"]" />
+    <input type="hidden" name="taskid" value="@(((PJCAdmin.Models.task)ViewData["task"]).taskID)" />
+    <input type="submit" value="Yes" />
+</form>
+<br />
+<br />
+@Html.ActionLink("Cancel", "List")

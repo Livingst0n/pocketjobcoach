@@ -12,16 +12,9 @@ namespace PJCAdmin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class taskcategory
+    public partial class UserProfile
     {
-        public taskcategory()
-        {
-            this.tasks = new HashSet<task>();
-        }
-    
-        public int categoryID { get; set; }
-        public string categoryName { get; set; }
-    
-        public virtual ICollection<task> tasks { get; set; }
+        public int UserId { get; set; }
+        public string UserName { get; set; }
     }
 }

@@ -5,13 +5,34 @@
 }
 
 <h2>User Details <small style="color:#808080">@Html.DisplayFor(model => model.UserName)</small></h2>
-
+@if (Model.UserName == Membership.GetUser().UserName) { 
+    @Html.ActionLink("Change Password", "ChangePassword");
+}
 <table>
     <tr><td><b>Username</b></td><td>@Html.DisplayFor(model => model.UserName)</td></tr>
+    <tr>
+        <td><b>Account Status</b></td>
+        <td>
+            @if (Model.IsLockedOut)
+            {
+                <span>Locked (User is not allowed to login)</span>
+            }
+            else
+            {
+                <span>Active</span>
+            }
+        </td>
+    </tr>
     <tr><td><b>Full Name</b></td><td></td></tr>
     <tr><td><b>E-Mail</b></td><td>@Html.DisplayFor(model => model.Email)</td></tr>
     <tr><td><b>Address</b></td><td></td></tr>
     <tr><td><b>Phone</b></td><td></td></tr>
+    <tr>
+        <td><b>Job</b></td>
+        <td>
+            @Html.Raw(((PJCAdmin.Models.job)ViewData["SelectedJob"]).jobTitle)
+        </td>
+    </tr>
     <tr><td><b>User Type</b></td><td>
     @foreach (string role in Roles.GetRolesForUser(Model.UserName))
     {
@@ -19,10 +40,20 @@
     }
   
     </td></tr>
+    <tr>
+    <td><b>Assigned Users</b></td>
+    <td>
+        @for (int i = 0; i < ((List<MembershipUser>)ViewData["AssignedUsers"]).Count; i++)
+        {
+            @Html.ActionLink(((List<MembershipUser>)ViewData["AssignedUsers"]).ElementAt(i).UserName, "Details", new { user = ((List<MembershipUser>)ViewData["AssignedUsers"]).ElementAt(i).UserName })
+            <br />
+        }
+    </td>
+    </tr>
 </table>
 
 <p>
-    @Html.ActionLink("Assigned Tasks", "List", "Task", new { user = Model.UserName })
+    @Html.ActionLink("Assigned Tasks", "AssignedTasks", new { user = Model.UserName })
 </p>
 
 <p>

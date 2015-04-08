@@ -34,5 +34,11 @@ namespace PJCMobile.Models
         public DbSet<usertask> usertasks { get; set; }
         public DbSet<usertaskprompt> usertaskprompts { get; set; }
         public DbSet<usertype> usertypes { get; set; }
+        public DbSet<Application> Applications { get; set; }
+        public DbSet<Membership> Memberships { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<User> Users1 { get; set; }
     }
 }

@@ -157,10 +157,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Application.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\job.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Membership.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PJCModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -176,10 +182,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PJCModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Profile.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\prompt.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\prompttype.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User1.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserProfile.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

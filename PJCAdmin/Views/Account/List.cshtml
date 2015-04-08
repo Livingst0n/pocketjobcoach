@@ -22,8 +22,11 @@ ViewBag.Title = "Users";
         <td>
             @Html.ActionLink("Details", "Details", new { user = user.UserName }) |
             @Html.ActionLink("Edit", "Edit", new { user = user.UserName }) |
-            @Html.ActionLink("Reset Password", "AdminResetPassword", new { user = user.UserName }) |
+            @Html.ActionLink("Reset Password", "AdminResetPassword", new { user = user.UserName })
+            @if (Roles.IsUserInRole("Administrator")) { 
+               <span>|</span>
             @Html.ActionLink("Delete", "Delete", new { username = user.UserName })
+            }
         </td>
     </tr>
 }

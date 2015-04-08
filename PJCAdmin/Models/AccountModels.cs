@@ -43,6 +43,11 @@ namespace PJCAdmin.Models
 
     public class RegisterModel
     {
+        public RegisterModel()
+        {
+            this.jobs = new HashSet<job>();
+        }
+
         [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
@@ -62,5 +67,8 @@ namespace PJCAdmin.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+
+        public virtual ICollection<job> jobs { get; set; }
     }
 }
