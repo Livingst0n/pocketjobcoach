@@ -46,10 +46,10 @@
             @Html.ValidationMessageFor(model => model.title)
         </div>
 
-        <div class="editor-label">
+        <div class="editor-label" id="labelURL">
             @Html.LabelFor(model => model.description)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" id="fieldURL">
             @Html.EditorFor(model => model.description)
             @Html.ValidationMessageFor(model => model.description)
         </div>
@@ -67,3 +67,21 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+    $(document).ready(function () {
+        $('select[name="typeID"]').change(function(){
+            if ($(this).val() == "4"){
+                $("#fieldURL:first input").remove()
+                $("#fieldURL:first").append("<textarea name='description' id='description'></textarea>");
+                $("#labelURL").html("<label>List</label>");
+            }
+            else{
+                $("#fieldURL:first textarea").remove();
+                $("#labelURL").html("<label>URL</label>");
+                if ($("#fieldURL:first input").size() == 0)
+                    $("#fieldURL:first").append("<input type='url' name='description' id='description'\>");
+            }
+        });
+    });
+</script>
