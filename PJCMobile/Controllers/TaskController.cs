@@ -138,5 +138,37 @@ namespace PJCMobile.Controllers
             
             return RedirectToAction("Index");
         }
+
+        // GET: /Task/Alert
+
+        public ActionResult AlertsIndex()
+        {
+            var tasks = db.tasks.Include(t => t.taskcategory);
+            if (tasks.Count() == 0)
+            {
+                List<task> temp = tasks.ToList();
+                temp.Add(new task { taskName = "No tasks have been assigned.", description = "Oops!" });
+                return View(temp);
+            }
+            return View(tasks.ToList());
+        }
+
+        //
+        // POST: /Task/Alert
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AlertsIndex(task task)
+        {
+            if (ModelState.IsValid)
+            {
+                db.tasks.Add(task);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.taskCategoryID = new SelectList(db.taskcategories, "categoryID", "categoryName", task.taskCategoryID);
+            return View(task);
+        }
     }
 }
