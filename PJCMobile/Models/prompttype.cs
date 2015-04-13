@@ -7,19 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PJCMobile
+namespace PJCMobile.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Profile
+    public partial class prompttype
     {
-        public System.Guid UserId { get; set; }
-        public string PropertyNames { get; set; }
-        public string PropertyValueStrings { get; set; }
-        public byte[] PropertyValueBinary { get; set; }
-        public System.DateTime LastUpdatedDate { get; set; }
+        public prompttype()
+        {
+            this.prompts = new HashSet<prompt>();
+        }
     
-        public virtual User User { get; set; }
+        public int typeID { get; set; }
+        public string typeName { get; set; }
+    
+        public virtual ICollection<prompt> prompts { get; set; }
     }
 }

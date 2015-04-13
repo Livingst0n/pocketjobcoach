@@ -11,7 +11,7 @@ namespace PJCMobile.Controllers
 {
     public class TaskController : Controller
     {
-        private pjcEntities1 db = new pjcEntities1();
+        private pjcEntities db = new pjcEntities();
 
         //
         // GET: /Task/
