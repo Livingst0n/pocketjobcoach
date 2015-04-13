@@ -11,43 +11,44 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>task</legend>
-        @*--------------------Task----------------------*@
-        @Html.HiddenFor(model => model.taskID)
+    @*<fieldset>*@
+    @*<legend>task</legend>*@
+    @*--------------------Task----------------------*@
+    @Html.HiddenFor(model => model.taskID)
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.taskCategoryID, "Task Category") @*HOW TO CHANGE THE DISPLAY NAME WITHOUT CHANGING THE MODEL*@
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("taskCategoryID", String.Empty)
-            @Html.ValidationMessageFor(model => model.taskCategoryID)
-        </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.taskCategoryID, "Task Category") @*HOW TO CHANGE THE DISPLAY NAME WITHOUT CHANGING THE MODEL*@
+    </div>
+    <div class="editor-field">
+        @Html.DropDownList("taskCategoryID", String.Empty)
+        @Html.ValidationMessageFor(model => model.taskCategoryID)
+    </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.taskName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.taskName)
-            @Html.ValidationMessageFor(model => model.taskName)
-        </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.taskName)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.taskName)
+        @Html.ValidationMessageFor(model => model.taskName)
+    </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.description)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.description)
-            @Html.ValidationMessageFor(model => model.description)
-        </div>
-        <br />
-        @Html.ActionLink("Manage Prompts", "Index", "Prompt", new { id = Model.taskID }, null)
-
-    </fieldset>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.description)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.description)
+        @Html.ValidationMessageFor(model => model.description)
+    </div>
+    <br />
+    @Html.ActionLink("Manage Prompts", "Index", "Prompt", new { id = Model.taskID }, null)
+    <hr />
+    @*</fieldset>*@
+    <p>
+        <input type="submit" value="Save" />
+    </p>
 }
-<hr />
-<p>
-    <input type="submit" value="Save" />
-</p>
+
+
 <div>
     @Html.ActionLink("<< Back to List", "Index")
 </div>

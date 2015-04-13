@@ -11,6 +11,7 @@ namespace PJCAdmin.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class prompt
     {
@@ -22,7 +23,11 @@ namespace PJCAdmin.Models
         public int promptID { get; set; }
         public int typeID { get; set; }
         public int taskID { get; set; }
+
+        [DisplayName("Prompt Title")]
         public string title { get; set; }
+
+        [DisplayName("Prompt Content")]
         public string description { get; set; }
     
         public virtual task task { get; set; }

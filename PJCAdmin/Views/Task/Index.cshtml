@@ -12,66 +12,64 @@
 
 @using (Html.BeginForm())
 {
-    <p>
+    <div id="searchDiv">
         Find by Task Name: @Html.TextBox("SearchString")
         <input type="submit" value="Search" id="search" />
-        @Html.ActionLink("Reset","Index")
-    </p>
+        @Html.ActionLink("Create Task", "Create", null, new { @class = "actionlinkasbutton" })
+        @Html.ActionLink("Reset", "Index")
+    </div>
 }
-<hr />
+<div>
+    <hr />
 
-@if (Model.Count() > 0)
-{
-    @*<table class="tablestyle1">*@
-    <table>
-        <tr>
-            <th>
-                @*@Html.DisplayNameFor(model => model.taskcategory.categoryName)*@
-                @Html.DisplayNameFor(model => Model[0].taskcategory.categoryName)
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.taskName)*@
-                @Html.DisplayNameFor(model => Model[0].taskName)
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.description)*@
-                @Html.DisplayNameFor(model => Model[0].description)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    @if (Model.Count() > 0)
+    {
+        <table>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.taskcategory.categoryName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.taskName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.description)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.taskID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.taskID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.taskID })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => Model[0].taskcategory.categoryName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model[0].taskName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model[0].description)
+                </th>
+                <th></th>
             </tr>
-        }
 
-    </table>
-}
-else
-{
-    <p>No tasks were found</p>
-}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.taskcategory.categoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.taskName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.description)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.taskID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.taskID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.taskID })
+                    </td>
+                </tr>
+            }
 
-<hr />
-<p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "actionlinkasbutton" })
-</p>
-<div style="align-content:center;">
+        </table>
+    }
+    else
+    {
+        <p>No tasks were found</p>
+    }
+
+    <hr />
+</div>
+<div class="pageDiv">
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    <div class="pageNumber">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
 </div>

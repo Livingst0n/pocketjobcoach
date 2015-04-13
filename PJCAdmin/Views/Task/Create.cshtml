@@ -6,17 +6,7 @@
 
 <h2>Create Task</h2>
 
-<script type="text/javascript">
-    function AddPrompt() {
-        var rowCount = $('#insertprompt tr').length;
-        var index = rowCount + 1;
-        $('#insertprompt').append("<tr><td><input type='hidden' name='prompts.Index' value='" +
-            index + "' /><input type='text' name='prompts.typeName' /></td></tr><tr><td><input type='hidden' name='prompts.Index' value='" +
-            index + "' /><input type='text' name='prompts.title' /></td></tr> <tr><td><input type='hidden' name='prompts.Index' value='" +
-            index + "' /><input type='text' name='prompts.description' /></td></tr> <tr><td>________________________</td></tr>");
-    }
-</script>
-
+<hr />
 @*Html.BeginForm is analogous to <form> tag*@
 @using (Html.BeginForm())
 {
@@ -52,43 +42,17 @@
             @Html.EditorFor(model => model.description)
             @Html.ValidationMessageFor(model => model.description)
         </div>
-        @*-----------------------------------------*@
-        @*<div class="editor-label">
-            @Html.Label("Type")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("promptTypeID", String.Empty)         
-        </div>
-
-        <div class="editor-label">
-            @Html.Label("Title")
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.prompts.)
-        </div>
-        <div class="editor-label">
-            @Html.Label("URL")
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.prompts)
-        </div>
-        <input type="button" value="Add Media Link" onclick="AddPrompt();" />
-        @@Html.Partial("_Prompt", new List<PJCAdmin.Models.prompttype>())*@
-
-        @*<table id="insertprompt">
-            <tr>
-            </tr>
-        </table>*@
     </fieldset>
-   
-     <p>
-        <input type="submit" value="Create" />
+    <hr />
+    <p>
+        <div>
+            <input type="submit" value="Create" />
+            @Html.ActionLink("Cancel", "Index")
+        </div>
     </p>
 }
 
-<div>
-    @Html.ActionLink("<< Back to List", "Index")
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

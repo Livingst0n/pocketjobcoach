@@ -11,21 +11,21 @@
     <legend>task</legend>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.taskcategory.categoryName)
+         <i>@Html.DisplayNameFor(model => model.taskcategory.categoryName)</i>
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.taskcategory.categoryName)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.taskName)
+         <i>@Html.DisplayNameFor(model => model.taskName)</i>
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.taskName)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.description)
+         <i>@Html.DisplayNameFor(model => model.description)</i>
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.description)
@@ -35,6 +35,6 @@
     @Html.AntiForgeryToken()
     <p>
         <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Cancel", "Index")
     </p>
 }

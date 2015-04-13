@@ -11,6 +11,7 @@ namespace PJCAdmin.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class prompttype
     {
@@ -20,6 +21,8 @@ namespace PJCAdmin.Models
         }
     
         public int typeID { get; set; }
+
+        [DisplayName("Prompt Type")]
         public string typeName { get; set; }
     
         public virtual ICollection<prompt> prompts { get; set; }

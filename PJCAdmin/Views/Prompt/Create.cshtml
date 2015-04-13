@@ -5,8 +5,9 @@
 }
 
 <h2>Create Prompt for <i>@ViewBag.task.taskName</i></h2>
-
-@using (Html.BeginForm()) {
+<hr />
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -20,23 +21,23 @@
             @Html.DropDownList("typeID", String.Empty)
             @Html.ValidationMessageFor(model => model.typeID)
         </div>
-     
-        @*<div class="editor-label">
-            @Html.LabelFor(model => model.taskID)
-        </div>
 
-        <div class="editor-field">
-            @Html.EditorFor(model => model.taskID)
-        </div>*@
+        @*<div class="editor-label">
+                @Html.LabelFor(model => model.taskID)
+            </div>
+
+            <div class="editor-field">
+                @Html.EditorFor(model => model.taskID)
+            </div>*@
         @Html.HiddenFor(model => model.taskID, new { Value = ViewBag.task.taskID })
 
         @*<div class="editor-label">
-            @Html.LabelFor(model => model.taskID, "task")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("taskID", (string)ViewBag.task.taskName)
-            @Html.ValidationMessageFor(model => model.taskID)
-        </div>*@
+                @Html.LabelFor(model => model.taskID, "task")
+            </div>
+            <div class="editor-field">
+                @Html.DropDownList("taskID", (string)ViewBag.task.taskName)
+                @Html.ValidationMessageFor(model => model.taskID)
+            </div>*@
 
         <div class="editor-label">
             @Html.LabelFor(model => model.title)
@@ -53,16 +54,16 @@
             @Html.EditorFor(model => model.description)
             @Html.ValidationMessageFor(model => model.description)
         </div>
-
+        <hr />
         <p>
-            <input type="submit" value="Create" />
+            <div>
+                <input type="submit" value="Create" />
+                @Html.ActionLink("Cancel", "Index", new { id = ViewBag.task.taskID })
+            </div>
+            
         </p>
     </fieldset>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index", new { id = ViewBag.task.taskID })
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -70,13 +71,13 @@
 
 <script>
     $(document).ready(function () {
-        $('select[name="typeID"]').change(function(){
-            if ($(this).val() == "4"){
+        $('select[name="typeID"]').change(function () {
+            if ($(this).val() == "4") {
                 $("#fieldURL:first input").remove()
                 $("#fieldURL:first").append("<textarea name='description' id='description'></textarea>");
                 $("#labelURL").html("<label>List</label>");
             }
-            else{
+            else {
                 $("#fieldURL:first textarea").remove();
                 $("#labelURL").html("<label>URL</label>");
                 if ($("#fieldURL:first input").size() == 0)
