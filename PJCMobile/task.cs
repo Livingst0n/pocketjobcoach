@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PJCMobile.Models
+namespace PJCMobile
 {
     using System;
     using System.Collections.Generic;

@@ -7,22 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PJCMobile.Models
+namespace PJCMobile
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class usertask
+    public partial class prompt
     {
-        public int userID { get; set; }
+        public prompt()
+        {
+            this.usertaskprompts = new HashSet<usertaskprompt>();
+        }
+    
+        public int promptID { get; set; }
+        public int typeID { get; set; }
         public int taskID { get; set; }
-        public Nullable<System.DateTime> startTime { get; set; }
-        public Nullable<System.DateTime> endTime { get; set; }
-        public string daysOfWeek { get; set; }
-        public short sendNotification { get; set; }
-        public string feedbackMessage { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
     
         public virtual task task { get; set; }
-        public virtual user user { get; set; }
+        public virtual prompttype prompttype { get; set; }
+        public virtual ICollection<usertaskprompt> usertaskprompts { get; set; }
     }
 }

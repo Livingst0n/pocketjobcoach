@@ -7,23 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PJCMobile.Models
+namespace PJCMobile
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class job
+    public partial class Role
     {
-        public job()
+        public Role()
         {
-            this.tasks = new HashSet<task>();
-            this.users = new HashSet<user>();
+            this.Users = new HashSet<User>();
         }
     
-        public int jobID { get; set; }
-        public string jobTitle { get; set; }
+        public System.Guid RoleId { get; set; }
+        public System.Guid ApplicationId { get; set; }
+        public string RoleName { get; set; }
+        public string Description { get; set; }
     
-        public virtual ICollection<task> tasks { get; set; }
-        public virtual ICollection<user> users { get; set; }
+        public virtual Application Application { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

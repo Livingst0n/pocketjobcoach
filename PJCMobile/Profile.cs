@@ -7,21 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PJCMobile.Models
+namespace PJCMobile
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class taskcategory
+    public partial class Profile
     {
-        public taskcategory()
-        {
-            this.tasks = new HashSet<task>();
-        }
+        public System.Guid UserId { get; set; }
+        public string PropertyNames { get; set; }
+        public string PropertyValueStrings { get; set; }
+        public byte[] PropertyValueBinary { get; set; }
+        public System.DateTime LastUpdatedDate { get; set; }
     
-        public int categoryID { get; set; }
-        public string categoryName { get; set; }
-    
-        public virtual ICollection<task> tasks { get; set; }
+        public virtual User User { get; set; }
     }
 }
