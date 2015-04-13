@@ -7,20 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PJCMobile
+namespace PJCMobile.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class usertaskprompt
+    public partial class Profile
     {
-        public System.Guid userID { get; set; }
-        public int taskID { get; set; }
-        public int promptID { get; set; }
-        public Nullable<int> promptLengthMin { get; set; }
+        public System.Guid UserId { get; set; }
+        public string PropertyNames { get; set; }
+        public string PropertyValueStrings { get; set; }
+        public byte[] PropertyValueBinary { get; set; }
+        public System.DateTime LastUpdatedDate { get; set; }
     
-        public virtual prompt prompt { get; set; }
-        public virtual task task { get; set; }
         public virtual User User { get; set; }
     }
 }

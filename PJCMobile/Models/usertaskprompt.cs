@@ -7,21 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PJCMobile
+namespace PJCMobile.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class taskcategory
+    public partial class usertaskprompt
     {
-        public taskcategory()
-        {
-            this.tasks = new HashSet<task>();
-        }
+        public System.Guid userID { get; set; }
+        public int taskID { get; set; }
+        public int promptID { get; set; }
+        public Nullable<int> promptLengthMin { get; set; }
     
-        public int categoryID { get; set; }
-        public string categoryName { get; set; }
-    
-        public virtual ICollection<task> tasks { get; set; }
+        public virtual prompt prompt { get; set; }
+        public virtual task task { get; set; }
+        public virtual User User { get; set; }
     }
 }

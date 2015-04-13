@@ -7,21 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PJCMobile
+namespace PJCMobile.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class prompttype
+    public partial class Role
     {
-        public prompttype()
+        public Role()
         {
-            this.prompts = new HashSet<prompt>();
+            this.Users = new HashSet<User>();
         }
     
-        public int typeID { get; set; }
-        public string typeName { get; set; }
+        public System.Guid RoleId { get; set; }
+        public System.Guid ApplicationId { get; set; }
+        public string RoleName { get; set; }
+        public string Description { get; set; }
     
-        public virtual ICollection<prompt> prompts { get; set; }
+        public virtual Application Application { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }
