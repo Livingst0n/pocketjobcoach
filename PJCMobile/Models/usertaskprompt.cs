@@ -14,13 +14,13 @@ namespace PJCMobile.Models
     
     public partial class usertaskprompt
     {
-        public int userID { get; set; }
+        public System.Guid userID { get; set; }
         public int taskID { get; set; }
         public int promptID { get; set; }
         public Nullable<int> promptLengthMin { get; set; }
     
         public virtual prompt prompt { get; set; }
         public virtual task task { get; set; }
-        public virtual user user { get; set; }
+        public virtual User User { get; set; }
     }
 }

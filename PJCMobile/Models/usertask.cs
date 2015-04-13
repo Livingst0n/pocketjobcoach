@@ -14,7 +14,7 @@ namespace PJCMobile.Models
     
     public partial class usertask
     {
-        public int userID { get; set; }
+        public System.Guid userID { get; set; }
         public int taskID { get; set; }
         public Nullable<System.DateTime> startTime { get; set; }
         public Nullable<System.DateTime> endTime { get; set; }
@@ -23,6 +23,6 @@ namespace PJCMobile.Models
         public string feedbackMessage { get; set; }
     
         public virtual task task { get; set; }
-        public virtual user user { get; set; }
+        public virtual User User { get; set; }
     }
 }

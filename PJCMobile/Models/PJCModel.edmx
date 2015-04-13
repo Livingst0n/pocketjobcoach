@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="pjcModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="pjcModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Applications">
           <Key>
             <PropertyRef Name="ApplicationId" />
@@ -104,30 +104,13 @@
           <Property Name="categoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="categoryName" Type="nvarchar" MaxLength="25" Nullable="false" />
         </EntityType>
-        <EntityType Name="user">
-          <Key>
-            <PropertyRef Name="userID" />
-          </Key>
-          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="firstName" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="lastName" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="address" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="city" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="state" Type="nvarchar" MaxLength="2" Nullable="false" />
-          <Property Name="homePhone" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="mobilePhone" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="workPhone" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="email" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="password" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="userTypeID" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="userjob">
           <Key>
-            <PropertyRef Name="jobID" />
             <PropertyRef Name="userID" />
+            <PropertyRef Name="jobID" />
           </Key>
+          <Property Name="userID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="jobID" Type="int" Nullable="false" />
-          <Property Name="userID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -167,7 +150,7 @@
             <PropertyRef Name="userID" />
             <PropertyRef Name="taskID" />
           </Key>
-          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="userID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="taskID" Type="int" Nullable="false" />
           <Property Name="startTime" Type="datetime2" Precision="0" />
           <Property Name="endTime" Type="datetime2" Precision="0" />
@@ -181,18 +164,35 @@
             <PropertyRef Name="taskID" />
             <PropertyRef Name="promptID" />
           </Key>
-          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="userID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="taskID" Type="int" Nullable="false" />
           <Property Name="promptID" Type="int" Nullable="false" />
           <Property Name="promptLengthMin" Type="int" />
         </EntityType>
-        <EntityType Name="usertype">
-          <Key>
-            <PropertyRef Name="userTypeID" />
-          </Key>
-          <Property Name="userTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="typeName" Type="nvarchar" MaxLength="25" Nullable="false" />
-        </EntityType>
+        <Association Name="FK_userjob_job">
+          <End Role="job" Type="Self.job" Multiplicity="1" />
+          <End Role="userjob" Type="Self.userjob" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="job">
+              <PropertyRef Name="jobID" />
+            </Principal>
+            <Dependent Role="userjob">
+              <PropertyRef Name="jobID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userjob_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="userjob" Type="Self.userjob" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="userjob">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_userrelationship_User2">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="userrelationship" Type="Self.userrelationship" Multiplicity="*" />
@@ -214,6 +214,18 @@
             </Principal>
             <Dependent Role="userrelationship">
               <PropertyRef Name="useridParent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usertask_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="usertask" Type="Self.usertask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="usertask">
+              <PropertyRef Name="userID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -325,18 +337,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="user$user_usertypeID_FK">
-          <End Role="usertype" Type="Self.usertype" Multiplicity="1" />
-          <End Role="user" Type="Self.user" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="usertype">
-              <PropertyRef Name="userTypeID" />
-            </Principal>
-            <Dependent Role="user">
-              <PropertyRef Name="userID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="User_Application">
           <End Role="Applications" Type="Self.Applications" Multiplicity="1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
@@ -346,30 +346,6 @@
             </Principal>
             <Dependent Role="Users">
               <PropertyRef Name="ApplicationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="userjob$userjob_jobid_FK">
-          <End Role="job" Type="Self.job" Multiplicity="1" />
-          <End Role="userjob" Type="Self.userjob" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="job">
-              <PropertyRef Name="jobID" />
-            </Principal>
-            <Dependent Role="userjob">
-              <PropertyRef Name="jobID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="userjob$userjob_userID_FK">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="userjob" Type="Self.userjob" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="userID" />
-            </Principal>
-            <Dependent Role="userjob">
-              <PropertyRef Name="userID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -409,18 +385,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="usertask$usertask_userID_FK">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="usertask" Type="Self.usertask" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="userID" />
-            </Principal>
-            <Dependent Role="usertask">
-              <PropertyRef Name="userID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="usertaskprompt$usertaskprompt_promptID_FK">
           <End Role="prompt" Type="Self.prompt" Multiplicity="1" />
           <End Role="usertaskprompt" Type="Self.usertaskprompt" Multiplicity="*" />
@@ -446,11 +410,11 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="usertaskprompt$usertaskprompt_userid_FK">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="usertaskprompt" Type="Self.usertaskprompt" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="userID" />
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
             </Principal>
             <Dependent Role="usertaskprompt">
               <PropertyRef Name="userID" />
@@ -468,7 +432,6 @@
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="task" EntityType="Self.task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="taskcategory" EntityType="Self.taskcategory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="userjob" EntityType="Self.userjob" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="userrelationship" EntityType="Self.userrelationship" Schema="dbo" store:Type="Tables" />
@@ -476,7 +439,14 @@
           <EntitySet Name="UsersInRoles" EntityType="Self.UsersInRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usertask" EntityType="Self.usertask" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usertaskprompt" EntityType="Self.usertaskprompt" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="usertype" EntityType="Self.usertype" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_userjob_job" Association="Self.FK_userjob_job">
+            <End Role="job" EntitySet="job" />
+            <End Role="userjob" EntitySet="userjob" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userjob_Users" Association="Self.FK_userjob_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="userjob" EntitySet="userjob" />
+          </AssociationSet>
           <AssociationSet Name="FK_userrelationship_User2" Association="Self.FK_userrelationship_User2">
             <End Role="Users" EntitySet="Users" />
             <End Role="userrelationship" EntitySet="userrelationship" />
@@ -484,6 +454,10 @@
           <AssociationSet Name="FK_userrelationship_Users" Association="Self.FK_userrelationship_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="userrelationship" EntitySet="userrelationship" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usertask_Users" Association="Self.FK_usertask_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="usertask" EntitySet="usertask" />
           </AssociationSet>
           <AssociationSet Name="jobtask$jobtask_jobid_fk" Association="Self.jobtask$jobtask_jobid_fk">
             <End Role="job" EntitySet="job" />
@@ -521,21 +495,9 @@
             <End Role="taskcategory" EntitySet="taskcategory" />
             <End Role="task" EntitySet="task" />
           </AssociationSet>
-          <AssociationSet Name="user$user_usertypeID_FK" Association="Self.user$user_usertypeID_FK">
-            <End Role="usertype" EntitySet="usertype" />
-            <End Role="user" EntitySet="user" />
-          </AssociationSet>
           <AssociationSet Name="User_Application" Association="Self.User_Application">
             <End Role="Applications" EntitySet="Applications" />
             <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="userjob$userjob_jobid_FK" Association="Self.userjob$userjob_jobid_FK">
-            <End Role="job" EntitySet="job" />
-            <End Role="userjob" EntitySet="userjob" />
-          </AssociationSet>
-          <AssociationSet Name="userjob$userjob_userID_FK" Association="Self.userjob$userjob_userID_FK">
-            <End Role="user" EntitySet="user" />
-            <End Role="userjob" EntitySet="userjob" />
           </AssociationSet>
           <AssociationSet Name="UsersInRole_Role" Association="Self.UsersInRole_Role">
             <End Role="Roles" EntitySet="Roles" />
@@ -549,10 +511,6 @@
             <End Role="task" EntitySet="task" />
             <End Role="usertask" EntitySet="usertask" />
           </AssociationSet>
-          <AssociationSet Name="usertask$usertask_userID_FK" Association="Self.usertask$usertask_userID_FK">
-            <End Role="user" EntitySet="user" />
-            <End Role="usertask" EntitySet="usertask" />
-          </AssociationSet>
           <AssociationSet Name="usertaskprompt$usertaskprompt_promptID_FK" Association="Self.usertaskprompt$usertaskprompt_promptID_FK">
             <End Role="prompt" EntitySet="prompt" />
             <End Role="usertaskprompt" EntitySet="usertaskprompt" />
@@ -562,14 +520,26 @@
             <End Role="usertaskprompt" EntitySet="usertaskprompt" />
           </AssociationSet>
           <AssociationSet Name="usertaskprompt$usertaskprompt_userid_FK" Association="Self.usertaskprompt$usertaskprompt_userid_FK">
-            <End Role="user" EntitySet="user" />
+            <End Role="Users" EntitySet="Users" />
             <End Role="usertaskprompt" EntitySet="usertaskprompt" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="pjcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Application">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="ApplicationName" Type="String" MaxLength="235" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Memberships" Relationship="Self.MembershipEntity_Application" FromRole="Applications" ToRole="Memberships" />
+          <NavigationProperty Name="Roles" Relationship="Self.RoleEntity_Application" FromRole="Applications" ToRole="Roles" />
+          <NavigationProperty Name="Users" Relationship="Self.User_Application" FromRole="Applications" ToRole="Users" />
+        </EntityType>
         <EntityType Name="job">
           <Key>
             <PropertyRef Name="jobID" />
@@ -577,7 +547,44 @@
           <Property Name="jobID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="jobTitle" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="tasks" Relationship="Self.jobtask" FromRole="job" ToRole="task" />
-          <NavigationProperty Name="users" Relationship="Self.userjob" FromRole="job" ToRole="user" />
+          <NavigationProperty Name="Users" Relationship="Self.userjob" FromRole="job" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordFormat" Type="Int32" Nullable="false" />
+          <Property Name="PasswordSalt" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordQuestion" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordAnswer" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <Property Name="IsLockedOut" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastLoginDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastPasswordChangedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastLockoutDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FailedPasswordAttemptCount" Type="Int32" Nullable="false" />
+          <Property Name="FailedPasswordAttemptWindowStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FailedPasswordAnswerAttemptCount" Type="Int32" Nullable="false" />
+          <Property Name="FailedPasswordAnswerAttemptWindowsStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Comment" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Application" Relationship="Self.MembershipEntity_Application" FromRole="Memberships" ToRole="Applications" />
+          <NavigationProperty Name="User" Relationship="Self.MembershipEntity_User" FromRole="Memberships" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="PropertyNames" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PropertyValueStrings" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PropertyValueBinary" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.ProfileEntity_User" FromRole="Profiles" ToRole="Users" />
         </EntityType>
         <EntityType Name="prompt">
           <Key>
@@ -599,6 +606,17 @@
           <Property Name="typeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="typeName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="prompts" Relationship="Self.prompt_prompt_typeid_FK" FromRole="prompttype" ToRole="prompt" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Application" Relationship="Self.RoleEntity_Application" FromRole="Roles" ToRole="Applications" />
+          <NavigationProperty Name="Users" Relationship="Self.UsersInRoles" FromRole="Roles" ToRole="Users" />
         </EntityType>
         <EntityType Name="task">
           <Key>
@@ -622,33 +640,38 @@
           <Property Name="categoryName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="tasks" Relationship="Self.task_task_taskCategoryID_FK" FromRole="taskcategory" ToRole="task" />
         </EntityType>
-        <EntityType Name="user">
+        <EntityType Name="UserProfile">
           <Key>
-            <PropertyRef Name="userID" />
+            <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="firstName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="lastName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="city" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="state" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="homePhone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="mobilePhone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="workPhone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="userTypeID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="usertype" Relationship="Self.user_user_usertypeID_FK" FromRole="user" ToRole="usertype" />
-          <NavigationProperty Name="usertasks" Relationship="Self.usertask_usertask_userID_FK" FromRole="user" ToRole="usertask" />
-          <NavigationProperty Name="usertaskprompts" Relationship="Self.usertaskprompt_usertaskprompt_userid_FK" FromRole="user" ToRole="usertaskprompt" />
-          <NavigationProperty Name="jobs" Relationship="Self.userjob" FromRole="user" ToRole="job" />
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="56" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
+          <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Application" Relationship="Self.User_Application" FromRole="Users" ToRole="Applications" />
+          <NavigationProperty Name="Membership" Relationship="Self.MembershipEntity_User" FromRole="Users" ToRole="Memberships" />
+          <NavigationProperty Name="Profile" Relationship="Self.ProfileEntity_User" FromRole="Users" ToRole="Profiles" />
+          <NavigationProperty Name="usertasks" Relationship="Self.FK_usertask_Users" FromRole="Users" ToRole="usertask" />
+          <NavigationProperty Name="usertaskprompts" Relationship="Self.usertaskprompt_usertaskprompt_userid_FK" FromRole="Users" ToRole="usertaskprompt" />
+          <NavigationProperty Name="jobs" Relationship="Self.userjob" FromRole="Users" ToRole="job" />
+          <NavigationProperty Name="Users1" Relationship="Self.userrelationship" FromRole="Users" ToRole="Users1" />
+          <NavigationProperty Name="Users" Relationship="Self.userrelationship" FromRole="Users1" ToRole="Users" />
+          <NavigationProperty Name="Roles" Relationship="Self.UsersInRoles" FromRole="Users" ToRole="Roles" />
         </EntityType>
         <EntityType Name="usertask">
           <Key>
             <PropertyRef Name="userID" />
             <PropertyRef Name="taskID" />
           </Key>
-          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="userID" Type="Guid" Nullable="false" />
           <Property Name="taskID" Type="Int32" Nullable="false" />
           <Property Name="startTime" Type="DateTime" Precision="0" />
           <Property Name="endTime" Type="DateTime" Precision="0" />
@@ -656,7 +679,7 @@
           <Property Name="sendNotification" Type="Int16" Nullable="false" />
           <Property Name="feedbackMessage" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="task" Relationship="Self.usertask_usertask_taskID_FK" FromRole="usertask" ToRole="task" />
-          <NavigationProperty Name="user" Relationship="Self.usertask_usertask_userID_FK" FromRole="usertask" ToRole="user" />
+          <NavigationProperty Name="User" Relationship="Self.FK_usertask_Users" FromRole="usertask" ToRole="Users" />
         </EntityType>
         <EntityType Name="usertaskprompt">
           <Key>
@@ -664,22 +687,74 @@
             <PropertyRef Name="taskID" />
             <PropertyRef Name="promptID" />
           </Key>
-          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="userID" Type="Guid" Nullable="false" />
           <Property Name="taskID" Type="Int32" Nullable="false" />
           <Property Name="promptID" Type="Int32" Nullable="false" />
           <Property Name="promptLengthMin" Type="Int32" />
           <NavigationProperty Name="prompt" Relationship="Self.usertaskprompt_usertaskprompt_promptID_FK" FromRole="usertaskprompt" ToRole="prompt" />
           <NavigationProperty Name="task" Relationship="Self.usertaskprompt_usertaskprompt_taskID_FK" FromRole="usertaskprompt" ToRole="task" />
-          <NavigationProperty Name="user" Relationship="Self.usertaskprompt_usertaskprompt_userid_FK" FromRole="usertaskprompt" ToRole="user" />
+          <NavigationProperty Name="User" Relationship="Self.usertaskprompt_usertaskprompt_userid_FK" FromRole="usertaskprompt" ToRole="Users" />
         </EntityType>
-        <EntityType Name="usertype">
-          <Key>
-            <PropertyRef Name="userTypeID" />
-          </Key>
-          <Property Name="userTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="typeName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="user" Relationship="Self.user_user_usertypeID_FK" FromRole="usertype" ToRole="user" />
-        </EntityType>
+        <Association Name="MembershipEntity_Application">
+          <End Role="Applications" Type="Self.Application" Multiplicity="1" />
+          <End Role="Memberships" Type="Self.Membership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Applications">
+              <PropertyRef Name="ApplicationId" />
+            </Principal>
+            <Dependent Role="Memberships">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RoleEntity_Application">
+          <End Role="Applications" Type="Self.Application" Multiplicity="1" />
+          <End Role="Roles" Type="Self.Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Applications">
+              <PropertyRef Name="ApplicationId" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Application">
+          <End Role="Applications" Type="Self.Application" Multiplicity="1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Applications">
+              <PropertyRef Name="ApplicationId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MembershipEntity_User">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Memberships" Type="Self.Membership" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Memberships">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProfileEntity_User">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Profiles" Type="Self.Profile" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Profiles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="prompt_prompt_taskID_FK">
           <End Role="task" Type="Self.task" Multiplicity="1" />
           <End Role="prompt" Type="Self.prompt" Multiplicity="*" />
@@ -752,24 +827,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="user_user_usertypeID_FK">
-          <End Role="usertype" Type="Self.usertype" Multiplicity="1" />
-          <End Role="user" Type="Self.user" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="usertype">
-              <PropertyRef Name="userTypeID" />
-            </Principal>
-            <Dependent Role="user">
-              <PropertyRef Name="userID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="usertask_usertask_userID_FK">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
+        <Association Name="FK_usertask_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="usertask" Type="Self.usertask" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="userID" />
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
             </Principal>
             <Dependent Role="usertask">
               <PropertyRef Name="userID" />
@@ -777,11 +840,11 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="usertaskprompt_usertaskprompt_userid_FK">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="usertaskprompt" Type="Self.usertaskprompt" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="userID" />
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
             </Principal>
             <Dependent Role="usertaskprompt">
               <PropertyRef Name="userID" />
@@ -794,18 +857,50 @@
         </Association>
         <Association Name="userjob">
           <End Role="job" Type="Self.job" Multiplicity="*" />
-          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="pjcEntities1" annotation:LazyLoadingEnabled="true">
+        <Association Name="userrelationship">
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <End Role="Users1" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <Association Name="UsersInRoles">
+          <End Role="Roles" Type="Self.Role" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="pjcEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Applications" EntityType="Self.Application" />
           <EntitySet Name="jobs" EntityType="Self.job" />
+          <EntitySet Name="Memberships" EntityType="Self.Membership" />
+          <EntitySet Name="Profiles" EntityType="Self.Profile" />
           <EntitySet Name="prompts" EntityType="Self.prompt" />
           <EntitySet Name="prompttypes" EntityType="Self.prompttype" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="tasks" EntityType="Self.task" />
           <EntitySet Name="taskcategories" EntityType="Self.taskcategory" />
-          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
+          <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="usertasks" EntityType="Self.usertask" />
           <EntitySet Name="usertaskprompts" EntityType="Self.usertaskprompt" />
-          <EntitySet Name="usertypes" EntityType="Self.usertype" />
+          <AssociationSet Name="MembershipEntity_Application" Association="Self.MembershipEntity_Application">
+            <End Role="Applications" EntitySet="Applications" />
+            <End Role="Memberships" EntitySet="Memberships" />
+          </AssociationSet>
+          <AssociationSet Name="RoleEntity_Application" Association="Self.RoleEntity_Application">
+            <End Role="Applications" EntitySet="Applications" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="User_Application" Association="Self.User_Application">
+            <End Role="Applications" EntitySet="Applications" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="MembershipEntity_User" Association="Self.MembershipEntity_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Memberships" EntitySet="Memberships" />
+          </AssociationSet>
+          <AssociationSet Name="ProfileEntity_User" Association="Self.ProfileEntity_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Profiles" EntitySet="Profiles" />
+          </AssociationSet>
           <AssociationSet Name="prompt_prompt_taskID_FK" Association="Self.prompt_prompt_taskID_FK">
             <End Role="task" EntitySet="tasks" />
             <End Role="prompt" EntitySet="prompts" />
@@ -830,16 +925,12 @@
             <End Role="task" EntitySet="tasks" />
             <End Role="usertaskprompt" EntitySet="usertaskprompts" />
           </AssociationSet>
-          <AssociationSet Name="user_user_usertypeID_FK" Association="Self.user_user_usertypeID_FK">
-            <End Role="usertype" EntitySet="usertypes" />
-            <End Role="user" EntitySet="users" />
-          </AssociationSet>
-          <AssociationSet Name="usertask_usertask_userID_FK" Association="Self.usertask_usertask_userID_FK">
-            <End Role="user" EntitySet="users" />
+          <AssociationSet Name="FK_usertask_Users" Association="Self.FK_usertask_Users">
+            <End Role="Users" EntitySet="Users" />
             <End Role="usertask" EntitySet="usertasks" />
           </AssociationSet>
           <AssociationSet Name="usertaskprompt_usertaskprompt_userid_FK" Association="Self.usertaskprompt_usertaskprompt_userid_FK">
-            <End Role="user" EntitySet="users" />
+            <End Role="Users" EntitySet="Users" />
             <End Role="usertaskprompt" EntitySet="usertaskprompts" />
           </AssociationSet>
           <AssociationSet Name="jobtask" Association="Self.jobtask">
@@ -848,204 +939,73 @@
           </AssociationSet>
           <AssociationSet Name="userjob" Association="Self.userjob">
             <End Role="job" EntitySet="jobs" />
-            <End Role="user" EntitySet="users" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <EntitySet Name="Applications" EntityType="pjcModel.Application" />
-          <EntitySet Name="Memberships" EntityType="pjcModel.Membership" />
-          <EntitySet Name="Profiles" EntityType="pjcModel.Profile" />
-          <EntitySet Name="Roles" EntityType="pjcModel.Role" />
-          <EntitySet Name="UserProfiles" EntityType="pjcModel.UserProfile" />
-          <EntitySet Name="Users1" EntityType="pjcModel.User" />
-          <AssociationSet Name="MembershipEntity_Application" Association="pjcModel.MembershipEntity_Application">
-            <End Role="Application" EntitySet="Applications" />
-            <End Role="Membership" EntitySet="Memberships" />
+          <AssociationSet Name="userrelationship" Association="Self.userrelationship">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Users1" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="RoleEntity_Application" Association="pjcModel.RoleEntity_Application">
-            <End Role="Application" EntitySet="Applications" />
-            <End Role="Role" EntitySet="Roles" />
-          </AssociationSet>
-          <AssociationSet Name="User_Application" Association="pjcModel.User_Application">
-            <End Role="Application" EntitySet="Applications" />
-            <End Role="User" EntitySet="Users1" />
-          </AssociationSet>
-          <AssociationSet Name="MembershipEntity_User" Association="pjcModel.MembershipEntity_User">
-            <End Role="User" EntitySet="Users1" />
-            <End Role="Membership" EntitySet="Memberships" />
-          </AssociationSet>
-          <AssociationSet Name="ProfileEntity_User" Association="pjcModel.ProfileEntity_User">
-            <End Role="User" EntitySet="Users1" />
-            <End Role="Profile" EntitySet="Profiles" />
-          </AssociationSet>
-          <AssociationSet Name="userrelationship" Association="pjcModel.userrelationship">
-            <End Role="User" EntitySet="Users1" />
-            <End Role="User1" EntitySet="Users1" />
-          </AssociationSet>
-          <AssociationSet Name="UsersInRoles" Association="pjcModel.UsersInRoles">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="User" EntitySet="Users1" />
+          <AssociationSet Name="UsersInRoles" Association="Self.UsersInRoles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Application">
-          <Key>
-            <PropertyRef Name="ApplicationId" />
-          </Key>
-          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
-          <Property Name="ApplicationName" Type="String" Nullable="false" MaxLength="235" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Memberships" Relationship="pjcModel.MembershipEntity_Application" FromRole="Application" ToRole="Membership" />
-          <NavigationProperty Name="Roles" Relationship="pjcModel.RoleEntity_Application" FromRole="Application" ToRole="Role" />
-          <NavigationProperty Name="Users" Relationship="pjcModel.User_Application" FromRole="Application" ToRole="User" />
-        </EntityType>
-        <EntityType Name="Membership">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Guid" Nullable="false" />
-          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="PasswordFormat" Type="Int32" Nullable="false" />
-          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="PasswordQuestion" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="PasswordAnswer" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
-          <Property Name="IsLockedOut" Type="Boolean" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastLoginDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastPasswordChangedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastLockoutDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="FailedPasswordAttemptCount" Type="Int32" Nullable="false" />
-          <Property Name="FailedPasswordAttemptWindowStart" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="FailedPasswordAnswerAttemptCount" Type="Int32" Nullable="false" />
-          <Property Name="FailedPasswordAnswerAttemptWindowsStart" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Comment" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Application" Relationship="pjcModel.MembershipEntity_Application" FromRole="Membership" ToRole="Application" />
-          <NavigationProperty Name="User" Relationship="pjcModel.MembershipEntity_User" FromRole="Membership" ToRole="User" />
-        </EntityType>
-        <EntityType Name="Profile">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Guid" Nullable="false" />
-          <Property Name="PropertyNames" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PropertyValueStrings" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PropertyValueBinary" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="User" Relationship="pjcModel.ProfileEntity_User" FromRole="Profile" ToRole="User" />
-        </EntityType>
-        <EntityType Name="Role">
-          <Key>
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="RoleId" Type="Guid" Nullable="false" />
-          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
-          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Application" Relationship="pjcModel.RoleEntity_Application" FromRole="Role" ToRole="Application" />
-          <NavigationProperty Name="Users" Relationship="pjcModel.UsersInRoles" FromRole="Role" ToRole="User" />
-        </EntityType>
-        <EntityType Name="UserProfile">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="56" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Guid" Nullable="false" />
-          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
-          <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Application" Relationship="pjcModel.User_Application" FromRole="User" ToRole="Application" />
-          <NavigationProperty Name="Membership" Relationship="pjcModel.MembershipEntity_User" FromRole="User" ToRole="Membership" />
-          <NavigationProperty Name="Profile" Relationship="pjcModel.ProfileEntity_User" FromRole="User" ToRole="Profile" />
-          <NavigationProperty Name="Users1" Relationship="pjcModel.userrelationship" FromRole="User" ToRole="User1" />
-          <NavigationProperty Name="Users" Relationship="pjcModel.userrelationship" FromRole="User1" ToRole="User" />
-          <NavigationProperty Name="Roles" Relationship="pjcModel.UsersInRoles" FromRole="User" ToRole="Role" />
-        </EntityType>
-        <Association Name="MembershipEntity_Application">
-          <End Type="pjcModel.Application" Role="Application" Multiplicity="1" />
-          <End Type="pjcModel.Membership" Role="Membership" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Application">
-              <PropertyRef Name="ApplicationId" />
-            </Principal>
-            <Dependent Role="Membership">
-              <PropertyRef Name="ApplicationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="RoleEntity_Application">
-          <End Type="pjcModel.Application" Role="Application" Multiplicity="1" />
-          <End Type="pjcModel.Role" Role="Role" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Application">
-              <PropertyRef Name="ApplicationId" />
-            </Principal>
-            <Dependent Role="Role">
-              <PropertyRef Name="ApplicationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="User_Application">
-          <End Type="pjcModel.Application" Role="Application" Multiplicity="1" />
-          <End Type="pjcModel.User" Role="User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Application">
-              <PropertyRef Name="ApplicationId" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="ApplicationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="MembershipEntity_User">
-          <End Type="pjcModel.User" Role="User" Multiplicity="1" />
-          <End Type="pjcModel.Membership" Role="Membership" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Membership">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ProfileEntity_User">
-          <End Type="pjcModel.User" Role="User" Multiplicity="1" />
-          <End Type="pjcModel.Profile" Role="Profile" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Profile">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="userrelationship">
-          <End Type="pjcModel.User" Role="User" Multiplicity="*" />
-          <End Type="pjcModel.User" Role="User1" Multiplicity="*" />
-        </Association>
-        <Association Name="UsersInRoles">
-          <End Type="pjcModel.Role" Role="Role" Multiplicity="*" />
-          <End Type="pjcModel.User" Role="User" Multiplicity="*" />
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="pjcModelStoreContainer" CdmEntityContainer="pjcEntities1">
+        <EntityContainerMapping StorageEntityContainer="pjcModelStoreContainer" CdmEntityContainer="pjcEntities">
+          <EntitySetMapping Name="Applications">
+            <EntityTypeMapping TypeName="pjcModel.Application">
+              <MappingFragment StoreEntitySet="Applications">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="ApplicationName" ColumnName="ApplicationName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="jobs">
             <EntityTypeMapping TypeName="pjcModel.job">
               <MappingFragment StoreEntitySet="job">
                 <ScalarProperty Name="jobID" ColumnName="jobID" />
                 <ScalarProperty Name="jobTitle" ColumnName="jobTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Memberships">
+            <EntityTypeMapping TypeName="pjcModel.Membership">
+              <MappingFragment StoreEntitySet="Memberships">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordFormat" ColumnName="PasswordFormat" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+                <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="IsLockedOut" ColumnName="IsLockedOut" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="LastPasswordChangedDate" ColumnName="LastPasswordChangedDate" />
+                <ScalarProperty Name="LastLockoutDate" ColumnName="LastLockoutDate" />
+                <ScalarProperty Name="FailedPasswordAttemptCount" ColumnName="FailedPasswordAttemptCount" />
+                <ScalarProperty Name="FailedPasswordAttemptWindowStart" ColumnName="FailedPasswordAttemptWindowStart" />
+                <ScalarProperty Name="FailedPasswordAnswerAttemptCount" ColumnName="FailedPasswordAnswerAttemptCount" />
+                <ScalarProperty Name="FailedPasswordAnswerAttemptWindowsStart" ColumnName="FailedPasswordAnswerAttemptWindowsStart" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profiles">
+            <EntityTypeMapping TypeName="pjcModel.Profile">
+              <MappingFragment StoreEntitySet="Profiles">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PropertyNames" ColumnName="PropertyNames" />
+                <ScalarProperty Name="PropertyValueStrings" ColumnName="PropertyValueStrings" />
+                <ScalarProperty Name="PropertyValueBinary" ColumnName="PropertyValueBinary" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1068,6 +1028,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="pjcModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tasks">
             <EntityTypeMapping TypeName="pjcModel.task">
               <MappingFragment StoreEntitySet="task">
@@ -1086,21 +1056,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="pjcModel.user">
-              <MappingFragment StoreEntitySet="user">
-                <ScalarProperty Name="userID" ColumnName="userID" />
-                <ScalarProperty Name="firstName" ColumnName="firstName" />
-                <ScalarProperty Name="lastName" ColumnName="lastName" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="state" ColumnName="state" />
-                <ScalarProperty Name="homePhone" ColumnName="homePhone" />
-                <ScalarProperty Name="mobilePhone" ColumnName="mobilePhone" />
-                <ScalarProperty Name="workPhone" ColumnName="workPhone" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="userTypeID" ColumnName="userTypeID" />
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="pjcModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="pjcModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
+                <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1127,14 +1098,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="usertypes">
-            <EntityTypeMapping TypeName="pjcModel.usertype">
-              <MappingFragment StoreEntitySet="usertype">
-                <ScalarProperty Name="userTypeID" ColumnName="userTypeID" />
-                <ScalarProperty Name="typeName" ColumnName="typeName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="jobtask" TypeName="pjcModel.jobtask" StoreEntitySet="jobtask">
             <EndProperty Name="job">
               <ScalarProperty Name="jobID" ColumnName="jobID" />
@@ -1147,98 +1110,24 @@
             <EndProperty Name="job">
               <ScalarProperty Name="jobID" ColumnName="jobID" />
             </EndProperty>
-            <EndProperty Name="user">
-              <ScalarProperty Name="userID" ColumnName="userID" />
+            <EndProperty Name="Users">
+              <ScalarProperty Name="UserId" ColumnName="userID" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Applications">
-            <EntityTypeMapping TypeName="pjcModel.Application">
-              <MappingFragment StoreEntitySet="Applications">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ApplicationName" ColumnName="ApplicationName" />
-                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Memberships">
-            <EntityTypeMapping TypeName="pjcModel.Membership">
-              <MappingFragment StoreEntitySet="Memberships">
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="FailedPasswordAnswerAttemptWindowsStart" ColumnName="FailedPasswordAnswerAttemptWindowsStart" />
-                <ScalarProperty Name="FailedPasswordAnswerAttemptCount" ColumnName="FailedPasswordAnswerAttemptCount" />
-                <ScalarProperty Name="FailedPasswordAttemptWindowStart" ColumnName="FailedPasswordAttemptWindowStart" />
-                <ScalarProperty Name="FailedPasswordAttemptCount" ColumnName="FailedPasswordAttemptCount" />
-                <ScalarProperty Name="LastLockoutDate" ColumnName="LastLockoutDate" />
-                <ScalarProperty Name="LastPasswordChangedDate" ColumnName="LastPasswordChangedDate" />
-                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="IsLockedOut" ColumnName="IsLockedOut" />
-                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-                <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
-                <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
-                <ScalarProperty Name="PasswordFormat" ColumnName="PasswordFormat" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Profiles">
-            <EntityTypeMapping TypeName="pjcModel.Profile">
-              <MappingFragment StoreEntitySet="Profiles">
-                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
-                <ScalarProperty Name="PropertyValueBinary" ColumnName="PropertyValueBinary" />
-                <ScalarProperty Name="PropertyValueStrings" ColumnName="PropertyValueStrings" />
-                <ScalarProperty Name="PropertyNames" ColumnName="PropertyNames" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="pjcModel.Role">
-              <MappingFragment StoreEntitySet="Roles">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserProfiles">
-            <EntityTypeMapping TypeName="pjcModel.UserProfile">
-              <MappingFragment StoreEntitySet="UserProfile">
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users1">
-            <EntityTypeMapping TypeName="pjcModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
-                <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="userrelationship" TypeName="pjcModel.userrelationship" StoreEntitySet="userrelationship">
-            <EndProperty Name="User1">
-              <ScalarProperty Name="UserId" ColumnName="useridParent" />
-            </EndProperty>
-            <EndProperty Name="User">
+            <EndProperty Name="Users">
               <ScalarProperty Name="UserId" ColumnName="useridChild" />
+            </EndProperty>
+            <EndProperty Name="Users1">
+              <ScalarProperty Name="UserId" ColumnName="useridParent" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="UsersInRoles" TypeName="pjcModel.UsersInRoles" StoreEntitySet="UsersInRoles">
-            <EndProperty Name="User">
-              <ScalarProperty Name="UserId" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="Role">
+            <EndProperty Name="Roles">
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="Users">
+              <ScalarProperty Name="UserId" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

@@ -144,6 +144,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Application.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -157,16 +160,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Application.cs">
-      <DependentUpon>PJCModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\job.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Membership.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\PJCModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -191,32 +191,26 @@
     <Compile Include="Models\prompttype.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Role.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\User1.cs">
-      <DependentUpon>PJCModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserProfile.cs">
-      <DependentUpon>PJCModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\task.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\taskcategory.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\user.cs">
+    <Compile Include="Models\User.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserProfile.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\usertask.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\usertaskprompt.cs">
-      <DependentUpon>PJCModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\usertype.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -291,6 +285,11 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <EntityDeploy Include="Models\PJCModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>PJCModel.Designer.cs</LastGenOutput>
@@ -308,11 +307,6 @@
       <DependentUpon>PJCModel.edmx</DependentUpon>
       <LastGenOutput>PJCModel.cs</LastGenOutput>
     </Content>
-    <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.woff" />
-    <Content Include="fonts\fontawesome-webfont.woff2" />
-    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\PJC Mobile.pubxml" />
     <None Include="Properties\PublishProfiles\pjc-mobile - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\pjc-mobile - Web Deploy.pubxml" />
@@ -368,7 +362,7 @@
     <Content Include="Views\Task\Edit.cshtml" />
     <Content Include="Views\Task\Delete.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
-    <Content Include="Views\Alerts\AlertsIndex.cshtml" />
+    <Content Include="Views\Task\AlertsIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

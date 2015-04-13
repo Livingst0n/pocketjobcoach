@@ -11,7 +11,7 @@ namespace PJCMobile.Controllers
 {
     public class TaskController : Controller
     {
-        private pjcEntities1 db = new pjcEntities1();
+        private pjcEntities db = new pjcEntities();
 
         //
         // GET: /Task/
@@ -143,6 +143,10 @@ namespace PJCMobile.Controllers
 
         public ActionResult AlertsIndex()
         {
+            var usersTaskDayOfWeek = db.usertasks.Include(t => t.daysOfWeek);
+            var usersTaskStartTime = db.usertasks.Include(t => t.startTime);
+            var usersTaskEndTime = db.usertasks.Include(t => t.endTime);
+
             var tasks = db.tasks.Include(t => t.taskcategory);
             if (tasks.Count() == 0)
             {
@@ -150,6 +154,7 @@ namespace PJCMobile.Controllers
                 temp.Add(new task { taskName = "No tasks have been assigned.", description = "Oops!" });
                 return View(temp);
             }
+            
             return View(tasks.ToList());
         }
 

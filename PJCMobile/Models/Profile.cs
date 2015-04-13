@@ -12,18 +12,14 @@ namespace PJCMobile.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class job
+    public partial class Profile
     {
-        public job()
-        {
-            this.tasks = new HashSet<task>();
-            this.Users = new HashSet<User>();
-        }
+        public System.Guid UserId { get; set; }
+        public string PropertyNames { get; set; }
+        public string PropertyValueStrings { get; set; }
+        public byte[] PropertyValueBinary { get; set; }
+        public System.DateTime LastUpdatedDate { get; set; }
     
-        public int jobID { get; set; }
-        public string jobTitle { get; set; }
-    
-        public virtual ICollection<task> tasks { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        public virtual User User { get; set; }
     }
 }

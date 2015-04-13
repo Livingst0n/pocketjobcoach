@@ -12,31 +12,32 @@ namespace PJCMobile.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class user
+    public partial class User
     {
-        public user()
+        public User()
         {
             this.usertasks = new HashSet<usertask>();
             this.usertaskprompts = new HashSet<usertaskprompt>();
             this.jobs = new HashSet<job>();
+            this.Users1 = new HashSet<User>();
+            this.Users = new HashSet<User>();
+            this.Roles = new HashSet<Role>();
         }
     
-        public int userID { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string address { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string homePhone { get; set; }
-        public string mobilePhone { get; set; }
-        public string workPhone { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
-        public int userTypeID { get; set; }
+        public System.Guid UserId { get; set; }
+        public System.Guid ApplicationId { get; set; }
+        public string UserName { get; set; }
+        public bool IsAnonymous { get; set; }
+        public System.DateTime LastActivityDate { get; set; }
     
-        public virtual usertype usertype { get; set; }
+        public virtual Application Application { get; set; }
+        public virtual Membership Membership { get; set; }
+        public virtual Profile Profile { get; set; }
         public virtual ICollection<usertask> usertasks { get; set; }
         public virtual ICollection<usertaskprompt> usertaskprompts { get; set; }
         public virtual ICollection<job> jobs { get; set; }
+        public virtual ICollection<User> Users1 { get; set; }
+        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
     }
 }

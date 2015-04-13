@@ -13,10 +13,10 @@ namespace PJCMobile.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class pjcEntities1 : DbContext
+    public partial class pjcEntities : DbContext
     {
-        public pjcEntities1()
-            : base("name=pjcEntities1")
+        public pjcEntities()
+            : base("name=pjcEntities")
         {
         }
     
@@ -25,20 +25,18 @@ namespace PJCMobile.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<job> jobs { get; set; }
-        public DbSet<prompt> prompts { get; set; }
-        public DbSet<prompttype> prompttypes { get; set; }
-        public DbSet<task> tasks { get; set; }
-        public DbSet<taskcategory> taskcategories { get; set; }
-        public DbSet<user> users { get; set; }
-        public DbSet<usertask> usertasks { get; set; }
-        public DbSet<usertaskprompt> usertaskprompts { get; set; }
-        public DbSet<usertype> usertypes { get; set; }
         public DbSet<Application> Applications { get; set; }
+        public DbSet<job> jobs { get; set; }
         public DbSet<Membership> Memberships { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<prompt> prompts { get; set; }
+        public DbSet<prompttype> prompttypes { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<task> tasks { get; set; }
+        public DbSet<taskcategory> taskcategories { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
-        public DbSet<User> Users1 { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<usertask> usertasks { get; set; }
+        public DbSet<usertaskprompt> usertaskprompts { get; set; }
     }
 }
