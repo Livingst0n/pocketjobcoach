@@ -21,10 +21,10 @@
 
 <h2>Wage Calculator</h2>
 <div>
-    <form method="post">    
+    <form method="post" style="width:18%" >    
         
-        Enter number of hours worked: <input name="hoursWorked" type="text"  onkeypress="return isNumberKey(event)"/>
-        Enter hourly wage: <input name="hourlyWage" type="text" onkeypress="return isNumberKey(event)" />
+        Enter number of hours worked: <input name="hoursWorked" type="text" onkeypress="return isNumberKey(event)" /> 
+        Enter hourly wage: <input name="hourlyWage" type="text" onkeypress="return isNumberKey(event)"  /> 
         <input id="CalculateButton" type="submit" value="Calculate"  />
         <b></b>
         
@@ -35,12 +35,12 @@
               double wage = Double.Parse(Request.Form["hourlyWage"]);
 
               double total = hours* wage;
-              string.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", total);
+              
              
-            <text> Money Earned:$ @Math.Round(total,2)</text>
-             
+            <text> Money Earned: @string.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}",total)</text>
+
           }
-    }  
+}  
                 
     </form>
 </div>

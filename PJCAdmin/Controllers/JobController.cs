@@ -53,12 +53,12 @@ namespace PJCAdmin.Controllers
         {
             if (ModelState.IsValid)
             {
-                
-                
+
+
 
                 foreach (var item in taskList)
                 {
-                    if(item != "false")
+                    if (item != "false")
                         job.tasks.Add(db.tasks.Find(Convert.ToInt32(item)));
                 }
 
@@ -92,16 +92,27 @@ namespace PJCAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(job job, string[] taskList)
+        public ActionResult Edit(job job, string[] taskList, string[] taskListRemove)
         {
             if (ModelState.IsValid)
             {
-
-                foreach (var item in taskList)
+                if (taskList != null)
                 {
-                    if (item != "false")
-                        db.jobs.Find(job.jobID).tasks.Add((db.tasks.Find(Convert.ToInt32(item))));
-                        
+                    foreach (var item in taskList)
+                    {
+                        if (item != "false")
+                            db.jobs.Find(job.jobID).tasks.Add((db.tasks.Find(Convert.ToInt32(item))));
+
+                    }
+                }
+
+                if (taskListRemove != null)
+                {
+                    foreach (var item in taskListRemove)
+                    {
+                        if (item != "false")
+                            db.jobs.Find(job.jobID).tasks.Remove((db.tasks.Find(Convert.ToInt32(item))));
+                    }
                 }
 
                 //db.Entry(job).State = EntityState.Modified;

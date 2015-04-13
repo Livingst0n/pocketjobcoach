@@ -6,12 +6,11 @@
 
 <h2>@ViewBag.Title: @Model.taskName</h2>
 <hr />
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)   
-  
+    @Html.ValidationSummary(true)
+
     <fieldset>
         <legend>task</legend>
         @*--------------------Task----------------------*@
@@ -40,7 +39,7 @@
             @Html.EditorFor(model => model.description)
             @Html.ValidationMessageFor(model => model.description)
         </div>
-    <br />
+        <br />
         @Html.ActionLink("Manage Prompts", "Index", "Prompt", new { id = Model.taskID }, null)
 
     </fieldset>
