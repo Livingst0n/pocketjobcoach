@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Edit";
+    int taskListCount = 0;
 }
 
 <h2>Edit Job</h2>
@@ -29,29 +30,31 @@
         </div>
         <h3>Assigned Tasks:</h3>
         <div style="margin-left:50px;">
-@****************************WORK ON THIS HERE*******************************@
-            @foreach (var item in Model.tasks)
-            {
-                for (int i = 0; i < ((List<PJCAdmin.Models.task>)ViewData["Tasks"]).Count(); i++)
+            @****************************WORK ON THIS HERE*******************************@
+            <table>
+
+                @foreach (var item in Model.tasks)
                 {
-                    <table>
-                        <tr>
-                            <td>
-                                @item.taskName
-                            </td>
-                            @*<td>
-                                    @Html.ActionLink("Edit", "Edit", "Edit") |
-                                    @Html.ActionLink("Details", "Details", "Edit") |
-                                    @Html.ActionLink("Delete", "Delete", "Edit")
-                                </td>*@
-                            <td>
-                                <button class="task" data-taskid="@((List<PJCAdmin.Models.task>)ViewData["Tasks"]).ElementAt(i).taskID" data-selected="false">Remove</button>
-                                @Html.CheckBox("taskList[" + i + "]", false, new Dictionary<string, object> { { "value", ((List<PJCAdmin.Models.task>)ViewData["Tasks"]).ElementAt(i).taskID }, { "style", "display:none;" } })
-                            </td>
-                        </tr>
-                    </table>
+
+                    <tr>
+                        <td>
+                            @item.taskName
+                        </td>
+
+                        @*<td>
+                                @Html.ActionLink("Edit", "Edit", "Edit") |
+                                @Html.ActionLink("Details", "Details", "Edit") |
+                                @Html.ActionLink("Delete", "Delete", "Edit")
+                            </td>*@
+                        <td>
+                            <button class="taskRemove" data-taskid="@item.taskID" data-selected="false">Remove</button>
+                            @Html.CheckBox("taskListRemove[" + taskListCount + "]", false, new Dictionary<string, object> { { "value", @item.taskID }, { "style", "display:none;" } })
+                            @{taskListCount++;}
+                        </td>
+                        
+                    </tr>
                 }
-            }
+            </table>
         </div>
         <br />
         <fieldset>
@@ -107,6 +110,20 @@
             } else {
                 $(this).data("selected", "true");
                 $(this).html("Remove");
+                $('input[type="checkbox"]', $(this).parent()).attr("checked", true);
+            }
+        })
+
+        $('button.taskRemove').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if ($(this).data("selected") == "true") {
+                $(this).data("selected", "false");
+                $(this).html("Remove");
+                $('input[type="checkbox"]', $(this).parent()).attr("checked", false);
+            } else {
+                $(this).data("selected", "true");
+                $(this).html("Add");
                 $('input[type="checkbox"]', $(this).parent()).attr("checked", true);
             }
         })

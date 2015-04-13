@@ -17,15 +17,6 @@
         <li>@Html.DisplayFor(modelItem => item.title)</li>
         <li>
             @if(item.typeID == 1){
-                @*<object width="425" height="350">
-                    <param name="movie" value="@Html.DisplayFor(modelItem => item.description)" />
-                    <embed src="@Html.DisplayFor(modelItem => item.description)" type="application/x-shockwave-flash" width="425" height="350" />
-                </object>
-                <embed width="420" height="315" src="@Html.DisplayFor(modelItem => item.description)">
-                <object width="420" height="315"
-                    data="@Html.DisplayFor(modelItem => item.description)">
-                </object>*@
-                
                 <iframe width="560" height="315" src="@Html.DisplayFor(modelItem => item.description)" frameborder="0" allowfullscreen></iframe>
             }
             else if (item.typeID == 2)
@@ -35,6 +26,7 @@
                   <source src="@Html.DisplayFor(modelItem => item.description)" type="audio/mpeg">
                   Your browser does not support the audio element.
                 </audio>
+               @*<iframe width="560" height="20" src="@Html.DisplayFor(modelItem => item.description)" frameborder="0"></iframe>*@
             }
             else if (item.typeID == 3)
             {
@@ -42,7 +34,12 @@
             }
             else if (item.typeID == 4)
             {
-                @*<img src="@Html.DisplayFor(modelItem => item.description)" />*@
+                string[] list = item.description.Split('\n');
+                <ul>
+                    @foreach(var i in list){
+                        <li style="padding:10px;">@i</li>
+                    }
+                </ul>
             }
         </li>
             
