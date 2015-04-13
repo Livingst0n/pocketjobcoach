@@ -14,15 +14,16 @@
 {
     <p>
         Find by Task Name: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
+        <input type="submit" value="Search" id="search" />
+        @Html.ActionLink("Reset","Index")
     </p>
 }
 <hr />
 
 @if (Model.Count() > 0)
 {
-    <table class="tablestyle1">
-
+    @*<table class="tablestyle1">*@
+    <table>
         <tr>
             <th>
                 @*@Html.DisplayNameFor(model => model.taskcategory.categoryName)*@
@@ -67,11 +68,10 @@ else
 }
 
 <hr />
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "actionlinkasbutton" })
+</p>
 <div style="align-content:center;">
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 </div>
-<p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "actionlinkasbutton" })
-</p>
-

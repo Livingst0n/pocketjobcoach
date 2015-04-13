@@ -10,6 +10,7 @@
     <p>
         Filter by Prompt Type:@Html.DropDownList("selectedValue", (SelectList)ViewBag.promptTypeList, String.Empty)
         <input type="submit" value="Filter" />
+        @Html.ActionLink("Reset", "Index", new { id = ViewBag.Task.taskID }, null)
     </p>
 }
 <hr />
