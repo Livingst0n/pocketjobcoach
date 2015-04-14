@@ -5,58 +5,96 @@
 }
 
 <h2>Details</h2>
-<br />
 <hr />
-<h3 style="text-decoration:underline">Task</h3>
-<br />
-<fieldset>
+<h3>Task</h3>
+<fieldset style="padding-left:20px">
     <legend>task</legend>
     @*--------------------Task----------------------*@
-    <div class="display-label" style="font-style:oblique;">
-        <b>
+    <div class="display-label">
+        <i>
             @Html.DisplayNameFor(model => model.taskcategory.categoryName)
-        </b>
+        </i>
     </div>
     <div class="display-field">
-
-        @Html.DisplayFor(model => model.taskcategory.categoryName)
+        @*@Html.DisplayFor(model => model.taskcategory.categoryName)*@
+        @Html.TextBoxFor(model => model.taskcategory.categoryName, new { @readonly = "readonly" })
     </div>
 
-    <div class="display-label" style="font-style:oblique;">
-        <b>
+    <div class="display-label">
+        <i>
             @Html.DisplayNameFor(model => model.taskName)
-        </b>
+        </i>
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.taskName)
+        @*@Html.DisplayFor(model => model.taskName)*@
+        @Html.TextBoxFor(model => model.taskName, new { @readonly = "readonly" })
     </div>
 
-    <div class="display-label" style="font-style:oblique;">
-        <b>
+    <div class="display-label">
+        <i>
             @Html.DisplayNameFor(model => model.description)
-        </b>
+        </i>
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.description)
+        @*@Html.DisplayFor(model => model.description)*@
+        @Html.TextBoxFor(model => model.description, new { @readonly = "readonly" })
     </div>
-    @*--------------------Prompt----------------------*@
-    <h3 style="text-decoration:underline">Media</h3>
-    <div>
-        <ul style="list-style-type: none; padding: 0; ">
-            @foreach (var item in Model.prompts)
-            {
-                <li>@Html.DisplayFor(modelItem => item.title)</li>
-                <li>@Html.DisplayFor(modelItem => item.prompttype.typeName)</li>
-                <li>@Html.DisplayFor(modelItem => item.description)</li>
-                <li> <img style="width: 50px;height:50px;" src=@Html.DisplayFor(modelItem => item.description) /></li>
-            }
-        </ul>
-    </div>
-    @*---------------------------------------------------*@
-
 </fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.taskID }, new { @class = "actionlinkasbutton" })
-    <br />
-    @Html.ActionLink("<< Back to List", "Index")
-</p>
+@*--------------------Prompt----------------------*@
+<h3>Prompts</h3>
+<fieldset>
+    <div>
+        @if (Model.prompts.Count > 0)
+        {
+            <ul style="list-style-type: none;">
+                @foreach (var item in Model.prompts)
+                {
+                    <li>@Html.DisplayFor(modelItem => item.title)</li>
+                    @*<li>@Html.DisplayFor(modelItem => item.prompttype.typeName)</li>*@
+                    @*<li>@Html.DisplayFor(modelItem => item.description)</li>*@
+                    @*<li> <img style="width: 50px;height:50px;" src=@Html.DisplayFor(modelItem => item.description) /></li>*@
+                    <li style="padding:10px;">
+                        @if (item.typeID == 1)
+                        {
+                            <iframe width="560" height="315" src="@Html.DisplayFor(modelItem => item.description)" frameborder="0" allowfullscreen></iframe>
+                        }
+                        else if (item.typeID == 2)
+                        {
+                            <audio controls>
+                                <source src="@Html.DisplayFor(modelItem => item.description)" type="audio/ogg">
+                                <source src="@Html.DisplayFor(modelItem => item.description)" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                            @*<iframe width="560" height="20" src="@Html.DisplayFor(modelItem => item.description)" frameborder="0"></iframe>*@
+                        }
+                        else if (item.typeID == 3)
+                        {
+                            <a href=@Html.DisplayFor(modelItem => item.description) target="_blank"><img width="75" height="100" src="@Html.DisplayFor(modelItem => item.description)" /></a>
+                        }
+                        else if (item.typeID == 4)
+                        {
+                            string[] list = item.description.Split('\n');
+                            <ul>
+                                @foreach (var i in list)
+                                {
+                                    <li style="padding:10px;">@i</li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div>-No Prompts were found for this task-</div>
+
+        }
+        @Html.ActionLink("Manage Prompts", "Index", "Prompt", new { id = Model.taskID }, null)
+    </div>
+</fieldset>
+@*---------------------------------------------------*@
+<hr />
+        @Html.ActionLink("Edit Task", "Edit", new { id = Model.taskID }, new { @class = "actionlinkasbutton" })
+<br />
+@Html.ActionLink("<< Back to List", "Index")

@@ -17,8 +17,6 @@
 }
 </script>
 
-    
-
 <h2>Wage Calculator</h2>
 <div>
     <form method="post" style="width:18%" >    
@@ -30,18 +28,18 @@
         
       @{
           if (IsPost)
-          {
+          {             
               double hours = Double.Parse(Request.Form["hoursWorked"]);
               double wage = Double.Parse(Request.Form["hourlyWage"]);
-
               double total = hours* wage;
-              
-             
-            <text> Money Earned: @string.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}",total)</text>
-
+                      
+            <text> 
+                Hours Worked: @hours  <br />
+                Wage Entered: @string.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", wage)  <br />
+                Total Money Earned: @string.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}",total)
+            </text>
           }
 }  
-                
     </form>
 </div>
 

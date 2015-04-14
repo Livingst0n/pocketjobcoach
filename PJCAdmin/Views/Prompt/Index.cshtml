@@ -46,7 +46,14 @@
                     @Html.DisplayFor(modelItem => item.title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.description)
+                    @if (item.prompttype.typeName != "List")
+                    {
+                        <i><a href="@Html.DisplayFor(modelItem => item.description)" target="_blank">Link</a></i>
+                        }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.description)
+                    }
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.promptID })
