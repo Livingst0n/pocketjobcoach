@@ -321,6 +321,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery-ui-timepicker-addon.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -411,6 +412,9 @@
     <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
     <Content Include="Views\Account\AssignedTasks.cshtml" />
     <Content Include="Views\Account\RemoveAssignedTask.cshtml" />
+    <Content Include="Views\Account\EditAssignedTask.cshtml" />
+    <Content Include="Views\Account\AddAssignedTask.cshtml" />
+    <Content Include="Views\Account\ManagePrompts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

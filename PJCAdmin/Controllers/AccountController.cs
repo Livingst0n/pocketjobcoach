@@ -398,55 +398,135 @@ namespace PJCMobile.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RemoveAssignedTask(string username, int taskid, int nothing)
+        public ActionResult RemoveAssignedTask(string username, int taskid, int nothing = 0)
         {
-            db.Users.Find(username).usertasks.Remove(db.usertasks.Find(new {user = db.Users.Find(username), task = db.tasks.Find(taskid)}));
-            Response.Redirect("~/Account/AssignedTasks");
+            db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertaskprompts.ToList().RemoveAll(delegate(usertaskprompt p)
+            {
+                return p.taskID == taskid;
+            });
+            db.usertasks.Remove(db.usertasks.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey,taskid));
+            db.SaveChanges();
+            Response.Redirect("~/Account/AssignedTasks?user=" + username);
             //Will Never Get Here
             return View();
         }
 
-        public ActionResult EditAssignedTask(string username, int taskid)
+        public ActionResult ManagePrompts(string username, int taskid)
         {
-            ViewData["Username"] = username;
-            ViewData["task"] = db.usertaskprompts.Find(taskid);
+            ViewBag.Task = db.tasks.Find(taskid).taskName;
+            ViewBag.Username = username;
             ViewData["Prompts"] = db.tasks.Find(taskid).prompts.ToList();
-            ViewData["SelectedPrompts"] = db.Users.Find(username).usertaskprompts.ToList().FindAll(delegate(usertaskprompt prompt){
+            List<prompt> selectedPrompts = new List<prompt>();
+            foreach( usertaskprompt p in db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertaskprompts.ToList().FindAll(delegate(usertaskprompt prompt)
+            {
                 return prompt.taskID == taskid;
-            }).ToList();
-
+            }).ToList()){
+                selectedPrompts.Add(p.prompt);
+            }
+            ViewData["SelectedPrompts"] = selectedPrompts;
             return View();
         }
 
         [HttpPost]
-        public ActionResult EditAssignedTask(string username, int taskid, string[] selectedPrompts)
+        public ActionResult ManagePrompts(string username, int taskid, string[] prompts)
         {
-            User u = db.Users.Find(username);
-            task t = db.tasks.Find(taskid);
-            usertaskprompt task = db.usertaskprompts.Find(new {t, u});
-
-            db.Users.Find(username).usertaskprompts.ToList().RemoveAll(delegate(usertaskprompt p){
+            db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertaskprompts.ToList().RemoveAll(delegate(usertaskprompt p)
+            {
                 return p.taskID == taskid;
             });
 
-            foreach (string id in selectedPrompts)
+            foreach (string id in prompts)
             {
-                //
-                //db.usertaskprompts
+                //Create a new UserTaskPrompt
+                if (id != "false")
+                {
+                    usertaskprompt utp = new usertaskprompt();
+                    utp.prompt = db.prompts.Find(Convert.ToInt32(id));
+                    utp.task = db.tasks.Find(Convert.ToInt32(taskid));
+                    utp.User = db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey);
+                    db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertaskprompts.Add(utp);
+                }
             }
 
+            db.SaveChanges();
+            Response.Redirect("~/Account/AssignedTasks?user=" + username);
+            return View();
+        }
+
+        public ActionResult EditAssignedTask(string username, int taskID)
+        {
+            Guid userid = (Guid) System.Web.Security.Membership.GetUser(username).ProviderUserKey;
+            int taskid = Convert.ToInt32(taskID);
+            usertask ut = db.usertasks.Find(userid,taskid);
+            return View("EditAssignedTask", ut);
+        }
+
+        [HttpPost]
+        public ActionResult EditAssignedTask(string userid, int taskID, string[] daysofweek, string starttime, string endtime, string feedback)
+        {
+            Guid user = Guid.Parse(userid);
+            int taskid = Convert.ToInt32(taskID);
+            usertask ut = db.usertasks.Find(user, taskid);
+            string schedule = "";
+            foreach (string day in daysofweek)
+            {
+                if (day != "false")
+                    schedule = schedule + day;
+            }
+            ut.daysOfWeek = schedule;
+            if (starttime != "")
+            {
+                ut.startTime = Convert.ToDateTime(starttime);
+            }
+            if (endtime != "")
+            {
+                ut.endTime = Convert.ToDateTime(endtime);
+            }
+            ut.feedbackMessage = feedback;
+
+            db.SaveChanges();
+            Response.Redirect("~/Account/AssignedTasks?user=" + ut.User.UserName);
             return View();
         }
 
         public ActionResult AddAssignedTask(string username)
         {
             ViewData["Username"] = username;
+            List<task> t = new List<task>();
+            foreach (usertask ut in db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertasks)
+            {
+                t.Add(ut.task);
+            }
+            ViewData["Tasks"] = db.tasks.ToList().Except(t).ToList();
             return View();
         }
 
         [HttpPost]
-        public ActionResult AddAssignedTask(string username, int taskid)
+        public ActionResult AddAssignedTask(string username, int taskID, string[] daysofweek, string starttime, string endtime, string feedback)
         {
+            usertask ut = new usertask();
+            string schedule = "";
+            foreach (string day in daysofweek)
+            {
+                if (day != "false")
+                    schedule = schedule + day;
+            }
+            ut.daysOfWeek = schedule;
+            if (starttime != "")
+            {
+                ut.startTime = Convert.ToDateTime(starttime);
+            }
+            if (endtime != "")
+            {
+                ut.endTime = Convert.ToDateTime(endtime);
+            }
+            ut.feedbackMessage = feedback;
+            ut.User = db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey);
+            ut.task = db.tasks.Find(Convert.ToInt32(taskID));
+
+            db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertasks.Add(ut);
+            db.SaveChanges();
+            Response.Redirect("~/Account/AssignedTasks?user=" + username);
             return View();
         }
 

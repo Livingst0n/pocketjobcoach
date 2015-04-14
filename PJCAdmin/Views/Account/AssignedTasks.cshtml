@@ -1,6 +1,7 @@
 ﻿
 @{
-    ViewBag.Title = "AssignedTasks";
+    string user = ((MembershipUser)ViewData["User"]).UserName;
+    ViewBag.Title = user + "'s Assigned Tasks";
 }
 
 <h2>Assigned Tasks for @(((MembershipUser)ViewData["User"]).UserName)</h2>
@@ -18,8 +19,15 @@
             {
                 <tr>
                     <td>@ut.task.taskName</td>
-                    <td>@ut.daysOfWeek<br /> @ut.startTime - @ut.endTime</td>
-                    <td>@Html.ActionLink("Edit", "EditAssignedTask", new { user = ((MembershipUser)ViewData["User"]).UserName, task = ut.taskID }) | @Html.ActionLink("Remove", "RemoveAssignedTask", new { user = ((MembershipUser)ViewData["User"]).UserName, task = ut.taskID })</td>
+                    <td>@ut.daysOfWeek.Replace("S", " Sun. /").Replace("M", " Mon. /").Replace("T", " Tue. /").Replace("W", " Wed. /").Replace("R", " Thu. /").Replace("F", " Fri. /").Replace("A", " Sat.").Trim('/').Trim()
+                    @if(ut.startTime != null || ut.endTime != null){
+                        <br /> 
+                        @(((DateTime)ut.startTime).ToString("t"));
+                        @Html.Raw("-");
+                        @(((DateTime)ut.endTime).ToString("t"));
+                    }
+                    </td>
+                    <td>@Html.ActionLink("Manage Prompts", "ManagePrompts", new { username = ((MembershipUser)ViewData["User"]).UserName, taskID = ut.taskID }) | @Html.ActionLink("Edit", "EditAssignedTask", new { username = ((MembershipUser)ViewData["User"]).UserName, taskID = ut.taskID }) | @Html.ActionLink("Remove", "RemoveAssignedTask", new { username = ((MembershipUser)ViewData["User"]).UserName, taskid = ut.taskID })</td>
                 </tr>
             }
     </tbody>
@@ -30,4 +38,4 @@ else
     <p>No Tasks are Assigned to this User</p>
 }
 <br />
-@Html.ActionLink("Assign New Task", "AssignNewTask", new { user = ((MembershipUser)ViewData["User"]).UserName }) | @Html.ActionLink("Back to Details", "Details", new { user = ((MembershipUser)ViewData["User"]).UserName }) 
+@Html.ActionLink("Assign New Task", "AddAssignedTask", new { username = ((MembershipUser)ViewData["User"]).UserName }) | @Html.ActionLink("Back to User Details", "Details", new { user = ((MembershipUser)ViewData["User"]).UserName }) 

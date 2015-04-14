@@ -1,0 +1,57 @@
+﻿@model PJCAdmin.Models.usertask
+@{
+    ViewBag.Title = "Edit Assigned Task for " + Model.User.UserName;
+}
+
+<h2>Edit Assigned Task for @Model.User.UserName</h2>
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        @Html.Hidden("userid", Model.userID)
+        <label>Task</label>
+        <h3>@Model.task.taskName</h3>
+        @Html.Hidden("taskID",Model.task.taskID)
+        <br /><br />
+        <label>Date\Time Settings</label>
+        <table cellpadding="15">
+            <thead>
+                <tr style="border-bottom:solid 1px black;">
+                    <th style="text-align:center;padding-left:15px;">Sunday</th>
+                    <th style="text-align:center;padding-left:15px;">Monday</th>
+                    <th style="text-align:center;padding-left:15px;">Tuesday</th>
+                    <th style="text-align:center;padding-left:15px;">Wednesday</th>
+                    <th style="text-align:center;padding-left:15px;">Thursday</th>
+                    <th style="text-align:center;padding-left:15px;">Friday</th>
+                    <th style="text-align:center;padding-left:15px;">Saturday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align:center;border-right:solid black 1px;padding:5px;">@Html.CheckBox("daysofweek[0]", Model.daysOfWeek.Contains('S'), new { value = "S" })</td>
+                    <td style="text-align:center;border-right:solid black 1px;padding:5px;">@Html.CheckBox("daysofweek[1]", Model.daysOfWeek.Contains('M'), new { value = "M" })</td>
+                    <td style="text-align:center;border-right:solid black 1px;padding:5px;">@Html.CheckBox("daysofweek[2]", Model.daysOfWeek.Contains('T'), new { value = "T" })</td>
+                    <td style="text-align:center;border-right:solid black 1px;padding:5px;">@Html.CheckBox("daysofweek[3]", Model.daysOfWeek.Contains('W'), new { value = "W" })</td>
+                    <td style="text-align:center;border-right:solid black 1px;padding:5px;">@Html.CheckBox("daysofweek[4]", Model.daysOfWeek.Contains('R'), new { value = "R" })</td>
+                    <td style="text-align:center;border-right:solid black 1px;padding:5px;">@Html.CheckBox("daysofweek[5]", Model.daysOfWeek.Contains('F'), new { value = "F" })</td>
+                    <td style="text-align:center;padding-left:15px;">@Html.CheckBox("daysofweek[6]", Model.daysOfWeek.Contains('A'), new { value = "A" })</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <label>Start Time</label>
+        <input type="text" name="starttime" value="@if (Model.startTime != null) { ((DateTime)Model.startTime).ToString("t"); }" rel="timepicker" />
+        <br />
+        <label>End Time</label>
+        <input type="text" name="endtime" value="@if (Model.endTime != null) { ((DateTime)Model.endTime).ToString("t"); }" rel="timepicker" />
+        <br />
+        <label>Feedback Message</label>
+        <input type="text" name="feedback" value="@Model.feedbackMessage" />
+        <br />
+        <input type="submit" value="Update Assigned Task" />
+    </fieldset>
+}

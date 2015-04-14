@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "ManagePrompts";
+    List<PJCAdmin.Models.prompt> prompts = (List<PJCAdmin.Models.prompt>)ViewData["Prompts"];
+    List<PJCAdmin.Models.prompt> selectedprompts = (List<PJCAdmin.Models.prompt>)ViewData["SelectedPrompts"];
+
+    int count = 0;
+}
+
+<h2>
+    Manage Prompts
+    <br />
+    <small style="margin-left:10px;font-size:14px;color:#666;">
+        @(ViewBag.Task) for @(ViewBag.Username)
+    </small>
+</h2>
+@using (Html.BeginForm())
+            {
+@Html.AntiForgeryToken()
+@Html.ValidationSummary()
+<fieldset>
+    <table>
+        @if (prompts.Count() > 0)
+        {
+                <tr>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Contents
+                    </th>
+                    <th></th>
+                </tr>
+
+                foreach (var item in prompts)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.prompttype.typeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.task.taskName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.description)
+                        </td>
+                        <td>
+                            @if (selectedprompts.Contains(item))
+                            {
+                                <input type="checkbox" name="prompts[@count]" id="prompts[@count]" data-count="@count" value="@item.promptID" checked style="display:none;" />
+                                <button class="prompttoggle" data-count="@count">Remove</button>
+                            }
+                            else
+                            {
+                                <input type="checkbox" name="prompts[@count]" id="prompts[@count]" data-count="@count" value="@item.promptID" style="display:none;" />
+                                <button class="prompttoggle" data-count="@count">Add</button>
+                            }
+                            @{count++;}
+                        </td>
+                    </tr>
+                }
+        }
+        else
+        {
+            <tr>No prompts have been created for this task.</tr>
+        }
+    </table>
+    @if (prompts.Count() > 0)
+    {
+        <br/>
+        <input type="submit" value="Save" style="float:right;" />
+    }
+</fieldset>
+}
+<br />
+@Html.ActionLink("Back to Assigned Task List", "AssignedTasks", new {user = ViewBag.Username })
+
+<script>
+    $(function () {
+        $('button.prompttoggle').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var countClicked = $(this).data('count');
+            $('input[type="checkbox"]').filter(function () {
+                return $(this).data('count') == countClicked;
+            }).click();
+
+            if ($(this).html() == "Add")
+                $(this).html("Remove");
+            else
+                $(this).html("Add");
+        });
+    });
+</script>

@@ -6,16 +6,17 @@
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/themes/base/css")
         @Styles.Render("~/Content/font-awesome.css")
         @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
         @Scripts.Render("~/bundles/modernizr")
     </head>
     <body>
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <!--<p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>-->
-                    <a href="http://pjc.somee.com"><img src="~/Content/pjclogo.png" /></a>
+                    <a href="http://pjc.gear.host"><img src="~/Content/pjclogo.png" /></a>
                 </div>
                 <div class="float-right">
                     <section id="login">
@@ -43,12 +44,19 @@
         <footer>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                    <p>&copy; @DateTime.Now.Year - PARC Pocket Job Coach</p>
                 </div>
             </div>
         </footer>
 
         
         @RenderSection("scripts", required: false)
+        <script>
+            $(function () {
+                $('[rel="timepicker"]').timepicker({
+                    timeFormat: "hh:mm tt"
+                });
+            });
+        </script>
     </body>
 </html>
