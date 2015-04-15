@@ -430,10 +430,15 @@ namespace PJCMobile.Controllers
         [HttpPost]
         public ActionResult ManagePrompts(string username, int taskid, string[] prompts)
         {
-            db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertaskprompts.ToList().RemoveAll(delegate(usertaskprompt p)
+            List<usertaskprompt> p = db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertaskprompts.ToList().FindAll(delegate(usertaskprompt prompt)
             {
-                return p.taskID == taskid;
-            });
+                return prompt.taskID == taskid;
+            }).ToList();
+            foreach (usertaskprompt utp in p)
+            {
+                db.usertaskprompts.Remove(db.usertaskprompts.Find(utp.userID,utp.taskID,utp.promptID));
+            }
+            db.SaveChanges();
 
             foreach (string id in prompts)
             {
