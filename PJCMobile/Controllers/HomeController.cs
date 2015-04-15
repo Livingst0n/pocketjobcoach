@@ -8,13 +8,13 @@ namespace PJCMobile.Controllers
 {
     public class HomeController : Controller
     {
-        //[Authorize]
+        [Authorize]
         public ActionResult Index()
         {
            return View();
         }
 
-        //[Authorize]
+        [Authorize]
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";
@@ -22,7 +22,7 @@ namespace PJCMobile.Controllers
             return View();
         }
 
-        //[Authorize]
+        [Authorize]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
