@@ -65,15 +65,16 @@
 <script>
     $(document).ready(function () {
         if ($('select[name="typeID"]').val() == "4") {
-            $("#fieldURL:first input").remove()
-            $("#fieldURL:first").append("<textarea name='description' id='description'></textarea>");
+            $("#fieldURL:first input").remove();
+            var data = "@Model.description.Replace("\r\n", "#")";
+            $("#fieldURL:first").append("<textarea name='description' id='description'>" + data.replace(/#/g, "\n") + "</textarea>");
             $("#labelURL").html("<label>List</label>");
         }
 
         $('select[name="typeID"]').change(function(){
             if ($(this).val() == "4"){
                 $("#fieldURL:first input").remove()
-                $("#fieldURL:first").append("<textarea name='description' id='description'></textarea>");
+                $("#fieldURL:first").append("<textarea name='description' id='description'>" + data.replace(/#/g, "\n") + "</textarea>");
                 $("#labelURL").html("<label>List</label>");
             }
             else{
