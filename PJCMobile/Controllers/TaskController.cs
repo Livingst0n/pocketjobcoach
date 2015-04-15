@@ -143,19 +143,30 @@ namespace PJCMobile.Controllers
 
         public ActionResult AlertsIndex()
         {
-            var usersTaskDayOfWeek = db.usertasks.Include(t => t.daysOfWeek);
-            var usersTaskStartTime = db.usertasks.Include(t => t.startTime);
-            var usersTaskEndTime = db.usertasks.Include(t => t.endTime);
 
-            var tasks = db.tasks.Include(t => t.taskcategory);
-            if (tasks.Count() == 0)
+            //var userTasks = db.tasks.Include(t => t.usertasks);
+            var userTasks = db.Users.Find(System.Web.Security.Membership.GetUser().ProviderUserKey).usertasks;
+            if (userTasks.Count() == 0)
             {
+                List<task> tasks = new List<task>();
                 List<task> temp = tasks.ToList();
                 temp.Add(new task { taskName = "No tasks have been assigned.", description = "Oops!" });
                 return View(temp);
             }
+
+            List<task> alertTasks = new List<task>();
+            string dayOfWeek = System.DateTime.Now.DayOfWeek.ToString();
+
+            foreach(var item in userTasks)
+            {
+                foreach(char c in item.daysOfWeek)
+                {
+                    if(c == dayOfWeek[0])
+                        alertTasks.Add(item.task);
+                }
+            }
             
-            return View(tasks.ToList());
+            return View("Index", alertTasks);
         }
 
         //
