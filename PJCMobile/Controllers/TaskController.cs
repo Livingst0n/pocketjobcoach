@@ -19,13 +19,15 @@ namespace PJCMobile.Controllers
         public ActionResult Index()
         {
             var tasks = db.tasks.Include(t => t.taskcategory);
-            if (tasks.Count() == 0)
-            {
-                List<task> temp = tasks.ToList();
-                temp.Add(new task { taskName = "No tasks have been assigned.", description = "Oops!" });
-                return View(temp);
-            }
-            return View(tasks.ToList());
+            var userTasks = db.Users.Find(System.Web.Security.Membership.GetUser().ProviderUserKey).usertasks;
+           
+            //if (tasks.Count() == 0)
+            //{
+            //    List<usertask> temp = userTasks.ToList();
+            //    temp.Add(new task { taskName = "No tasks have been assigned.", description = "Oops!" });
+            //    return View(temp);
+            //}
+            return View(userTasks.ToList());
         }
 
         //
