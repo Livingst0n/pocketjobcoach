@@ -1,9 +1,12 @@
-﻿@{
+﻿@model PJCMobile.Models.User
+@{
     ViewBag.Title = "Job Coach";
 }
 
+
+
 <hgroup class="title">
-    <h1>Trevor Anderson</h1>
+    <h1>@Model.UserName</h1>
 </hgroup>
 
 <table style="width: 100%">
@@ -11,34 +14,34 @@
         <td>
             <ul data-role="listview" data-inset="true">
                 <li style="height: 150px;">
-                    <a href="tel:8015293887">Call</a>  
+                    <a href="tel:0000000000">Call</a>
                     <i class="fa fa-phone fa-5x btn-icon"></i>
                 </li>
             </ul>
         </td>
     </tr>
- </table>
+</table>
 
 <table style="width: 100%">
-        <tr>
-            <td style="width: 50%">
-                <ul data-role="listview" data-inset="true">
-                    <li style="height: 150px;">
-                        <a href="mailto:trevor.c.anderson@gmail.com">Email</a>
-                        <i class="fa fa-envelope-o fa-5x btn-icon"></i>
-                    </li>
-                </ul>
-            </td>
-            <td style="width: 50%">
-                <ul data-role="listview" data-inset="true">
-                    <li style="height: 150px;">
-                        <a href="sms:8015293887">Text</a>
-                        <i class="fa fa-comment fa-5x btn-icon"></i>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    </table>
+    <tr>
+        <td style="width: 50%">
+            <ul data-role="listview" data-inset="true">
+                <li style="height: 150px;">
+                    <a href="mailto:@System.Web.Security.Membership.GetUser(Model.UserId).Email">Email</a>
+                    <i class="fa fa-envelope-o fa-5x btn-icon"></i>
+                </li>
+            </ul>
+        </td>
+        <td style="width: 50%">
+            <ul data-role="listview" data-inset="true">
+                <li style="height: 150px;">
+                    <a href="sms:0000000000">Text</a>
+                    <i class="fa fa-comment fa-5x btn-icon"></i>
+                </li>
+            </ul>
+        </td>
+    </tr>
+</table>
 
 
 
