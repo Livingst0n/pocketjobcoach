@@ -890,8 +890,8 @@ a.ui-link-inherit {
 }
 .ui-disabled,
 .ui-disabled a {
-	/*cursor: default !important;
-	pointer-events: none;*/
+	cursor: default !important;
+	pointer-events: none;
 }
 
 /* Icons
