@@ -156,7 +156,7 @@ namespace PJCMobile.Controllers
                 return View(temp);
             }
 
-            List<task> alertTasks = new List<task>();
+            List<usertask> alertTasks = new List<usertask>();
             string dayOfWeek = System.DateTime.Now.DayOfWeek.ToString();
 
             foreach(var item in userTasks)
@@ -164,7 +164,7 @@ namespace PJCMobile.Controllers
                 foreach(char c in item.daysOfWeek)
                 {
                     if(c == dayOfWeek[0])
-                        alertTasks.Add(item.task);
+                        alertTasks.Add(item);
                 }
             }
             

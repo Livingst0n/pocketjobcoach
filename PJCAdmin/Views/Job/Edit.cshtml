@@ -9,7 +9,7 @@
 <br />
 <br />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "taskForm" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -30,7 +30,6 @@
         </div>
         <h3>Assigned Tasks:</h3>
         <div style="margin-left:50px;">
-            @****************************WORK ON THIS HERE*******************************@
             <table>
 
                 @foreach (var item in Model.tasks)
@@ -51,7 +50,7 @@
                             @Html.CheckBox("taskListRemove[" + taskListCount + "]", false, new Dictionary<string, object> { { "value", @item.taskID }, { "style", "display:none;" } })
                             @{taskListCount++;}
                         </td>
-                        
+
                     </tr>
                 }
             </table>
@@ -61,15 +60,6 @@
             <h3>Available Tasks:</h3>
             <div style="margin-left:50px;">
                 <table>
-                    @*@for (int i = 0; i < ((List<PJCAdmin.Models.task>)ViewData["Tasks"]).RemoveAll(item => !Model.tasks.Contains(item)).Count; i++)
-                        foreach (var item in Model.tasks)
-                        {
-                            if ((((List<PJCAdmin.Models.task>)ViewData["Tasks"]).ElementAt(i).taskName) != @item.taskName)
-                            {
-                                        }
-                                    }*@
-
-
 
                     @for (int i = 0; i < ((List<PJCAdmin.Models.task>)ViewData["Tasks"]).Except(Model.tasks).Count(); i++)
                     {
@@ -112,6 +102,21 @@
                 $(this).html("Remove");
                 $('input[type="checkbox"]', $(this).parent()).attr("checked", true);
             }
+            //document.getElementById("taskForm").reload();
+            var thisForm = $(e.currentTarget);
+            $.ajax({
+                // simulate form submission
+                type: thisForm.attr('method') || 'POST',
+                url: thisForm.attr('action') || window.location.href,
+                data: $.serialize(thisForm.data()),
+                success: function () {
+                    always();
+                }
+            })
+            .always(function () {
+                // when it is done submitting data to the server, redirect
+                window.location.reload();
+            });
         })
 
         $('button.taskRemove').on('click', function (e) {
@@ -126,6 +131,21 @@
                 $(this).html("Add");
                 $('input[type="checkbox"]', $(this).parent()).attr("checked", true);
             }
+            //document.getElementById("taskForm").reload();
+            var thisForm = $(e.currentTarget);
+            $.ajax({
+                // simulate form submission
+                type: thisForm.attr('method') || 'POST',
+                url: thisForm.attr('action') || window.location.href,
+                data: $.serialize(thisForm.data()),
+                success: function () {
+                    always();
+                }
+            })
+            .always(function () {
+                // when it is done submitting data to the server, redirect
+                window.location.reload();
+            });
         })
     })
 </script>
