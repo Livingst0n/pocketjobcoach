@@ -20,7 +20,16 @@ namespace PJCMobile.Controllers
         {
             var tasks = db.tasks.Include(t => t.taskcategory);
             var userTasks = db.Users.Find(System.Web.Security.Membership.GetUser().ProviderUserKey).usertasks;
-           
+            List<DateTime> array = new List<DateTime>();
+
+            foreach (usertask ut in userTasks)
+            {
+                if(ut.lastCompleted == null)
+                    array.Add(DateTime.Parse("01/01/2000"));
+                else
+                    array.Add((DateTime)ut.lastCompleted);
+            }
+            ViewData["taskDate"] = array;
             //if (tasks.Count() == 0)
             //{
             //    List<usertask> temp = userTasks.ToList();
@@ -28,6 +37,14 @@ namespace PJCMobile.Controllers
             //    return View(temp);
             //}
             return View(userTasks.ToList());
+        }
+
+        public ActionResult Finish(int taskID)
+        {
+            db.usertasks.Find(System.Web.Security.Membership.GetUser().ProviderUserKey, taskID).lastCompleted = DateTime.Now;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         //
@@ -131,14 +148,6 @@ namespace PJCMobile.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
-        }
-
-        [HttpPost, ActionName("Finish")]
-        public ActionResult completeTask(int id)
-        {
-            task task = db.tasks.Find(id);
-            
-            return RedirectToAction("Index");
         }
 
         // GET: /Task/Alert
