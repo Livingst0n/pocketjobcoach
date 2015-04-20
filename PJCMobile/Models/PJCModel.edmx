@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="pjcModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="pjcModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Applications">
           <Key>
             <PropertyRef Name="ApplicationId" />
@@ -155,6 +155,7 @@
           <Property Name="startTime" Type="datetime2" Precision="0" />
           <Property Name="endTime" Type="datetime2" Precision="0" />
           <Property Name="daysOfWeek" Type="nvarchar" MaxLength="7" />
+          <Property Name="lastCompleted" Type="datetime2" Precision="0" />
           <Property Name="sendNotification" Type="smallint" Nullable="false" />
           <Property Name="feedbackMessage" Type="nvarchar" MaxLength="255" />
         </EntityType>
@@ -524,8 +525,7 @@
             <End Role="usertaskprompt" EntitySet="usertaskprompt" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="pjcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -680,6 +680,7 @@
           <Property Name="feedbackMessage" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="task" Relationship="Self.usertask_usertask_taskID_FK" FromRole="usertask" ToRole="task" />
           <NavigationProperty Name="User" Relationship="Self.FK_usertask_Users" FromRole="usertask" ToRole="Users" />
+          <Property Name="lastCompleted" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="usertaskprompt">
           <Key>
@@ -1078,6 +1079,7 @@
           <EntitySetMapping Name="usertasks">
             <EntityTypeMapping TypeName="pjcModel.usertask">
               <MappingFragment StoreEntitySet="usertask">
+                <ScalarProperty Name="lastCompleted" ColumnName="lastCompleted" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="taskID" ColumnName="taskID" />
                 <ScalarProperty Name="startTime" ColumnName="startTime" />
