@@ -258,7 +258,13 @@ namespace PJCMobile.Controllers
             return View();
         }
 
-
+        [HttpPost]
+        public ActionResult Unlock(string username)
+        {
+            System.Web.Security.Membership.GetUser(username).UnlockUser();
+            Response.Redirect("~/Account/List");
+            return View();
+        }
 
         //
         // GET: /Account/Login

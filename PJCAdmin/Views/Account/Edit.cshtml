@@ -133,7 +133,7 @@
                 $('#nousers').remove();
             var id = $('#selectAddUsers').val();
             var name = $('#selectAddUsers option:selected').html();
-            $('#assignedUsersList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="selectedUsers[' + ($('#assignedUsersList').size()).toString() + ']"  value="' + id + '" /></li>')
+            $('#assignedUsersList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="selectedUsers[' + ($('#assignedUsersList').size()-1).toString() + ']"  value="' + id + '" /></li>')
         });
 
         $('#assignedUsersList').on('click', '.remove-user', function (e) {
