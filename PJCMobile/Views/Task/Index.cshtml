@@ -18,7 +18,7 @@
         <ul data-role="listview" data-inset="true">
             <li>
                 @Html.ActionLink(item.task.taskName, "Details", new { id = item.task.taskID, @class = "task-links" })
-                @if (((List<DateTime>)ViewData["taskDate"]).ElementAt(i).ToString("MM/dd/yyyy") != DateTime.Now.ToString("MM/dd/yyyy"))
+                @if (item.lastCompleted == null || ((DateTime)item.lastCompleted).ToString("MM/dd/yyyy") != DateTime.Now.ToString("MM/dd/yyyy"))
                 {
                     <i class="fa fa-square-o fa-2x task-icon"></i>
                 }
