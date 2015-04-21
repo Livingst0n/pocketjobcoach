@@ -23,7 +23,14 @@ ViewBag.Title = "Users";
             @Html.ActionLink("Details", "Details", new { user = user.UserName }) |
             @Html.ActionLink("Edit", "Edit", new { user = user.UserName }) |
             @Html.ActionLink("Reset Password", "AdminResetPassword", new { user = user.UserName })
-            @if (Roles.IsUserInRole("Administrator")) { 
+            @if (Roles.IsUserInRole("Administrator"))
+            {
+                <span>|</span>
+                if(user.IsLockedOut){
+                    Html.ActionLink("Unlock", "Unlock", new { username = user.UserName });
+                }else{
+                    <span>Active</span>
+                }
                <span>|</span>
             @Html.ActionLink("Delete", "Delete", new { username = user.UserName })
             }

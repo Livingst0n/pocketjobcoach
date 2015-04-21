@@ -1,6 +1,8 @@
 ﻿@model MembershipUser
 @{
     ViewBag.Title = "Edit";
+
+    ProfileCommon userProfile = (ProfileCommon) ProfileCommon.Create(Model.UserName, true);
 }
 
 <h2>Edit User</h2>
@@ -18,21 +20,6 @@
                 @Html.HiddenFor(m => m.UserName)
             </li>
             <li>
-                <label>Account Status</label>
-                <select name="accountStatus" @if (Model.IsLockedOut == false) { @Html.Raw("disabled") }>
-                    @if (Model.IsLockedOut == true)
-                    {
-                        <option value="true" selected>Locked</option>
-                        <option value="false">Active</option>
-                    }
-                    else
-                    {
-                        <option value="true">Locked</option>
-                        <option value="false" selected>Active</option>
-                    }
-                </select>
-            </li>
-            <li>
                 @Html.LabelFor(m => m.Email)
                 @if (Roles.IsUserInRole("Administrator"))
                 {
@@ -43,6 +30,10 @@
                     @Model.Email
                     @Html.HiddenFor(m => m.Email)
                 }
+            </li>
+            <li>
+                <label>Phone Number</label>
+                <input type="text" name="phonenumber" value="@userProfile.PhoneNumber" />
             </li>
             <li>
                 <label>User Type</label>
