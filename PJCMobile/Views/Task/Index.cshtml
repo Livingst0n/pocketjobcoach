@@ -2,6 +2,13 @@
 @model IEnumerable<PJCMobile.Models.usertask>
 @{
     ViewBag.Title = "Tasks";
+    int i = 0;
+}
+
+@section Header {
+    @Html.ActionLink(User.Identity.Name, "Index", "Account", routeValues: null, htmlAttributes: new { @class="ui-btn-right", data_icon = "gear" })
+    @Html.ActionLink("Back", "Index", "Home", routeValues: null, htmlAttributes: new { @class="ui-btn-left", data_icon = "arrow-l" })
+    <h1>@ViewBag.Title</h1>
 }
 
 @if (Model.Count() > 0)
@@ -11,7 +18,7 @@
         <ul data-role="listview" data-inset="true">
             <li>
                 @Html.ActionLink(item.task.taskName, "Details", new { id = item.task.taskID, @class = "task-links" })
-                @if (1 == 2)
+                @if (item.lastCompleted == null || ((DateTime)item.lastCompleted).ToString("MM/dd/yyyy") != DateTime.Now.ToString("MM/dd/yyyy"))
                 {
                     <i class="fa fa-square-o fa-2x task-icon"></i>
                 }
