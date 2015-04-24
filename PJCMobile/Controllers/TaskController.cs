@@ -22,13 +22,6 @@ namespace PJCMobile.Controllers
             var userTasks = db.Users.Find(System.Web.Security.Membership.GetUser().ProviderUserKey).usertasks;
             List<DateTime> array = new List<DateTime>();
 
-            foreach (usertask ut in userTasks)
-            {
-                if(ut.lastCompleted == null)
-                    array.Add(DateTime.Parse("01/01/2000"));
-                else
-                    array.Add((DateTime)ut.lastCompleted);
-            }
             ViewData["taskDate"] = array;
             //if (tasks.Count() == 0)
             //{

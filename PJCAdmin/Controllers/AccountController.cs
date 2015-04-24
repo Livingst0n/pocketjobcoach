@@ -8,6 +8,7 @@ using System.Web.Security;
 using PJCAdmin.Models;
 using System.Data;
 using PJCAdmin.Classes;
+using System.Web.Profile;
 
 namespace PJCMobile.Controllers
 {
@@ -93,18 +94,16 @@ namespace PJCMobile.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string UserName, string Email, string usertype, string[] selectedUsers, string accountStatus, string job, string applyJobTemplate)
+        public ActionResult Edit(string UserName, string Email, string usertype, string[] selectedUsers, string job, string applyJobTemplate, string phonenumber)
         {
             if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
             {
                 MembershipUser user = System.Web.Security.Membership.GetUser(UserName);
-                //Unlocked Frozen Users
-                if (user.IsLockedOut != Convert.ToBoolean(accountStatus))
-                {
-                    if (user.IsLockedOut)
-                        user.UnlockUser();
 
-                }
+                ProfileBase profile = ProfileBase.Create(UserName,true);
+                profile.SetPropertyValue("PhoneNumber", phonenumber);
+                profile.Save();
+                
                 //Assigned Users
                 db.Users.Find(user.ProviderUserKey).Users.Clear();
                 if (selectedUsers != null)
@@ -195,6 +194,10 @@ namespace PJCMobile.Controllers
             if (createStatus == MembershipCreateStatus.Success)
             {
                 MembershipUser user = System.Web.Security.Membership.GetUser(model.UserName);
+
+                ProfileBase profile = ProfileBase.Create(model.UserName,true);
+                profile.SetPropertyValue("PhoneNumber", model.PhoneNumber);
+                profile.Save();
 
                 db.Users.Find(user.ProviderUserKey).Users.Clear();
                 if (selectedUsers != null)
