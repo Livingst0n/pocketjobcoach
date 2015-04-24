@@ -102,21 +102,6 @@
                 $(this).html("Remove");
                 $('input[type="checkbox"]', $(this).parent()).attr("checked", true);
             }
-            //document.getElementById("taskForm").reload();
-            var thisForm = $(e.currentTarget);
-            $.ajax({
-                // simulate form submission
-                type: thisForm.attr('method') || 'POST',
-                url: thisForm.attr('action') || window.location.href,
-                data: $.serialize(thisForm.data()),
-                success: function () {
-                    always();
-                }
-            })
-            .always(function () {
-                // when it is done submitting data to the server, redirect
-                window.location.reload();
-            });
         })
 
         $('button.taskRemove').on('click', function (e) {
@@ -131,21 +116,7 @@
                 $(this).html("Add");
                 $('input[type="checkbox"]', $(this).parent()).attr("checked", true);
             }
-            //document.getElementById("taskForm").reload();
-            var thisForm = $(e.currentTarget);
-            $.ajax({
-                // simulate form submission
-                type: thisForm.attr('method') || 'POST',
-                url: thisForm.attr('action') || window.location.href,
-                data: $.serialize(thisForm.data()),
-                success: function () {
-                    always();
-                }
-            })
-            .always(function () {
-                // when it is done submitting data to the server, redirect
-                window.location.reload();
-            });
+
         })
     })
 </script>
