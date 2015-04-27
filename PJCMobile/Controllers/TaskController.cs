@@ -45,6 +45,10 @@ namespace PJCMobile.Controllers
 
         public ActionResult Details(int id = 0)
         {
+            List<usertaskprompt> utp = db.Users.Find(System.Web.Security.Membership.GetUser().ProviderUserKey).usertaskprompts.ToList().FindAll(delegate(usertaskprompt prompt){
+                    return prompt.taskID == id;
+                }).ToList();
+            ViewData["prompts"] = utp;
             task task = db.tasks.Find(id);
             if (task == null)
             {

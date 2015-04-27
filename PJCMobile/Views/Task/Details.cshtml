@@ -11,30 +11,29 @@
 </div>
 
 <ul style="list-style-type: none;">
-    @foreach (var item in Model.prompts)
+    @foreach (var item in (List<PJCMobile.Models.usertaskprompt>)ViewData["prompts"])
     {
-
-        <li>@Html.DisplayFor(modelItem => item.title)</li>
+        <li>@Html.DisplayFor(modelItem => item.prompt.title)</li>
         <li>
-            @if(item.typeID == 1){
-                <iframe width="560" height="315" src="@Html.DisplayFor(modelItem => item.description)" frameborder="0" allowfullscreen></iframe>
+            @if(item.prompt.typeID == 1){
+                <iframe width="560" height="315" src="@Html.DisplayFor(modelItem => item.prompt.description)" frameborder="0" allowfullscreen></iframe>
             }
-            else if (item.typeID == 2)
+            else if (item.prompt.typeID == 2)
             {
                 <audio controls>
-                  <source src="@Html.DisplayFor(modelItem => item.description)" type="audio/ogg">
-                  <source src="@Html.DisplayFor(modelItem => item.description)" type="audio/mpeg">
-                  Your browser does not support the audio element.
+                    <source src="@Html.DisplayFor(modelItem => item.prompt.description)" type="audio/ogg">
+                    <source src="@Html.DisplayFor(modelItem => item.prompt.description)" type="audio/mpeg">
+                    Your browser does not support the audio element.
                 </audio>
-               @*<iframe width="560" height="20" src="@Html.DisplayFor(modelItem => item.description)" frameborder="0"></iframe>*@
+                @*<iframe width="560" height="20" src="@Html.DisplayFor(modelItem => item.description)" frameborder="0"></iframe>*@
             }
-            else if (item.typeID == 3)
+            else if (item.prompt.typeID == 3)
             {
-                <img src="@Html.DisplayFor(modelItem => item.description)" />
+                <img src="@Html.DisplayFor(modelItem => item.prompt.description)" />
             }
-            else if (item.typeID == 4)
+            else if (item.prompt.typeID == 4)
             {
-                string[] list = item.description.Split('\n');
+                string[] list = item.prompt.description.Split('\n');
                 <ul>
                     @foreach(var i in list){
                         <li style="padding:10px;">@i</li>
