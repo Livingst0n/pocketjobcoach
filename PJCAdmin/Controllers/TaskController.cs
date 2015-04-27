@@ -28,7 +28,7 @@ namespace PJCAdmin.Controllers
             }
 
             tasks = tasks.OrderBy(t => t.taskName);
-            int pageSize = 10;
+            int pageSize = 25;
             int pageNumber = (page ?? 1); //if page is null, pageNumber= 1
 
             ViewBag.searchString = searchString;
