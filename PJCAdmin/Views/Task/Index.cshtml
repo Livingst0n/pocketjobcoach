@@ -73,3 +73,6 @@
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
     </div>
 </div>
+<div class="pull-right">
+    @Html.ActionLink("Manage Task Categories", "Index", "TaskCategory")
+</div>
