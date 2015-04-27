@@ -59,6 +59,15 @@
                             {
                                 <a href="@item.description">@item.description</a>
                             }
+                            else if (item.prompttype.typeName == "List")
+                            {
+                                string[] list = item.description.Split('\n');
+                                <ul>
+                                    @foreach(var i in list){
+                                        <li>@i</li>
+                                    }
+                                </ul>
+                            }
                             else
                             {
                                 @Html.DisplayFor(modelItem => item.description)

@@ -10,68 +10,58 @@
 <fieldset style="padding-left:20px">
     <legend>task</legend>
     @*--------------------Task----------------------*@
-    <div class="display-label">
-        <i>
-            @Html.DisplayNameFor(model => model.taskcategory.categoryName)
-        </i>
-    </div>
-    <div class="display-field">
-        @*@Html.DisplayFor(model => model.taskcategory.categoryName)*@
-        @Html.TextBoxFor(model => model.taskcategory.categoryName, new { @readonly = "readonly" })
-    </div>
-
-    <div class="display-label">
-        <i>
-            @Html.DisplayNameFor(model => model.taskName)
-        </i>
-    </div>
-    <div class="display-field">
-        @*@Html.DisplayFor(model => model.taskName)*@
-        @Html.TextBoxFor(model => model.taskName, new { @readonly = "readonly" })
-    </div>
-
-    <div class="display-label">
-        <i>
-            @Html.DisplayNameFor(model => model.description)
-        </i>
-    </div>
-    <div class="display-field">
-        @*@Html.DisplayFor(model => model.description)*@
-        @Html.TextBoxFor(model => model.description, new { @readonly = "readonly" })
-    </div>
+    <table>
+        <tr>
+            <td>
+               <i> @Html.DisplayNameFor(model => model.taskcategory.categoryName)</i>
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.taskcategory.categoryName)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <i>@Html.DisplayNameFor(model => model.taskName)</i>
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.taskName)
+            </td>
+        </tr>
+        <tr>
+            <td>
+               <i>@Html.DisplayNameFor(model => model.description)</i>
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.description)
+            </td>
+        </tr>
+    </table>
 </fieldset>
 @*--------------------Prompt----------------------*@
 <h3>Prompts</h3>
 <fieldset>
-    <div>
-        @if (Model.prompts.Count > 0)
+    <table>
+        @if (Model.prompts.Count() > 0)
         {
-            <ul style="list-style-type: none;">
-                @foreach (var item in Model.prompts)
-                {
-                    <li>@Html.DisplayFor(modelItem => item.title)</li>
-                    @*<li>@Html.DisplayFor(modelItem => item.prompttype.typeName)</li>*@
-                    @*<li>@Html.DisplayFor(modelItem => item.description)</li>*@
-                    @*<li> <img style="width: 50px;height:50px;" src=@Html.DisplayFor(modelItem => item.description) /></li>*@
-                    <li style="padding:10px;">
-                        @if (item.typeID == 1)
+            <tr></tr>
+
+            foreach (var item in Model.prompts)
+            {
+                <tr>
+                    <td>
+                        @if (item.prompttype.typeName == "Picture")
                         {
-                            <iframe width="560" height="315" src="@Html.DisplayFor(modelItem => item.description)" frameborder="0" allowfullscreen></iframe>
+                            <a href=@item.description target="_blank"><img src="@item.description" style="max-height:100px;" /></a>
                         }
-                        else if (item.typeID == 2)
+                        else if (item.prompttype.typeName == "Video")
                         {
-                            <audio controls>
-                                <source src="@Html.DisplayFor(modelItem => item.description)" type="audio/ogg">
-                                <source src="@Html.DisplayFor(modelItem => item.description)" type="audio/mpeg">
-                                Your browser does not support the audio element.
-                            </audio>
-                            @*<iframe width="560" height="20" src="@Html.DisplayFor(modelItem => item.description)" frameborder="0"></iframe>*@
+                             <a href=@item.description target="_blank"><img src="http://img.youtube.com/vi/@item.description.Split('/').Last()/default.jpg" style="max-width:200px;" /></a>
                         }
-                        else if (item.typeID == 3)
+                        else if (item.prompttype.typeName == "Audio")
                         {
-                            <a href=@Html.DisplayFor(modelItem => item.description) target="_blank"><img width="75" height="100" src="@Html.DisplayFor(modelItem => item.description)" /></a>
+                            <a href="@item.description">Audio</a>
                         }
-                        else if (item.typeID == 4)
+                        else if (item.prompttype.typeName == "List")
                         {
                             string[] list = item.description.Split('\n');
                             <ul>
@@ -81,20 +71,32 @@
                                 }
                             </ul>
                         }
-                    </li>
-                }
-            </ul>
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.description)
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.title)
+                        <br />
+                        @Html.DisplayFor(modelItem => item.prompttype.typeName)
+
+
+                    </td>
+
+                </tr>
+            }
         }
         else
         {
-            <div>-No Prompts were found for this task-</div>
-
+            <tr>No prompts have been created for this task.</tr>
         }
-        @Html.ActionLink("Manage Prompts", "Index", "Prompt", new { id = Model.taskID }, null)
-    </div>
+    </table>
+    @Html.ActionLink("Manage Prompts", "Index", "Prompt", new { id = Model.taskID }, null)
 </fieldset>
+
 @*---------------------------------------------------*@
 <hr />
-        @Html.ActionLink("Edit Task", "Edit", new { id = Model.taskID }, new { @class = "actionlinkasbutton" })
+@Html.ActionLink("Edit Task", "Edit", new { id = Model.taskID }, new { @class = "actionlinkasbutton" })
 <br />
 @Html.ActionLink("<< Back to List", "Index")
