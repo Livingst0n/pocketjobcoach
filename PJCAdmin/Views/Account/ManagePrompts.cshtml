@@ -68,12 +68,14 @@
                             @if (selectedprompts.Contains(item))
                             {
                                 <input type="checkbox" name="prompts[@count]" id="prompts[@count]" data-count="@count" value="@item.promptID" checked style="display:none;" />
-                                <button class="prompttoggle" data-count="@count">Remove</button>
+                                <input type="hidden" name="promptsh[@count]" id="prompts[@count]" data-count="@count" value="0" />
+                                <button class="prompttoggle" data-count="@count" data-value="@item.promptID">Remove</button>
                             }
                             else
                             {
                                 <input type="checkbox" name="prompts[@count]" id="prompts[@count]" data-count="@count" value="@item.promptID" style="display:none;" />
-                                <button class="prompttoggle" data-count="@count">Add</button>
+                                <input type="hidden" name="promptsh[@count]" id="prompts[@count]" data-count="@count" value="@item.promptID" />
+                                <button class="prompttoggle" data-count="@count" data-value="@item.promptID">Add</button>
                             }
                             @{count++;}
                         </td>
@@ -102,14 +104,18 @@
             e.stopPropagation();
 
             var countClicked = $(this).data('count');
-            $('input[type="checkbox"]').filter(function () {
-                return $(this).data('count') == countClicked;
-            }).click();
 
-            if ($(this).html() == "Add")
+            if ($(this).html() == "Add") {
                 $(this).html("Remove");
-            else
+                $('input[type="hidden"]').filter(function () {
+                    return $(this).data('count') == countClicked;
+                }).val("0");
+            } else {
                 $(this).html("Add");
+                $('input[type="hidden"]').filter(function () {
+                    return $(this).data('count') == countClicked;
+                }).val($(this).data('value'));
+            }
         });
     });
 </script>

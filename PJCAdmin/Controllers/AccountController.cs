@@ -437,22 +437,24 @@ namespace PJCMobile.Controllers
         }
 
         [HttpPost]
-        public ActionResult ManagePrompts(string username, int taskid, string[] prompts)
+        public ActionResult ManagePrompts(string username, int taskid, string[] prompts, string[] promptsh)
         {
             List<usertaskprompt> p = db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertaskprompts.ToList().FindAll(delegate(usertaskprompt prompt)
             {
                 return prompt.taskID == taskid;
             }).ToList();
+
             foreach (usertaskprompt utp in p)
             {
                 db.usertaskprompts.Remove(db.usertaskprompts.Find(utp.userID,utp.taskID,utp.promptID));
             }
+
             db.SaveChanges();
 
-            foreach (string id in prompts)
+            foreach (string id in promptsh)
             {
                 //Create a new UserTaskPrompt
-                if (id != "false")
+                if (id != "0")
                 {
                     usertaskprompt utp = new usertaskprompt();
                     utp.prompt = db.prompts.Find(Convert.ToInt32(id));

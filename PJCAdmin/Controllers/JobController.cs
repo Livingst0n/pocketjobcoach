@@ -92,10 +92,12 @@ namespace PJCAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(job job, string[] taskList, string[] taskListRemove)
+        public ActionResult Edit(job job, string[] taskList)
         {
             if (ModelState.IsValid)
             {
+                db.jobs.Find(job.jobID).tasks.Clear();
+                db.SaveChanges();
                 if (taskList != null)
                 {
                     foreach (var item in taskList)
@@ -105,19 +107,7 @@ namespace PJCAdmin.Controllers
 
                     }
                 }
-
-                if (taskListRemove != null)
-                {
-                    foreach (var item in taskListRemove)
-                    {
-                        if (item != "false")
-                            db.jobs.Find(job.jobID).tasks.Remove((db.tasks.Find(Convert.ToInt32(item))));
-                    }
-                }
-
-                //db.Entry(job).State = EntityState.Modified;
                 db.SaveChanges();
-                //return RedirectToAction("Index");
             }
             //return View(job);
             return RedirectToAction("Index");
