@@ -1,10 +1,11 @@
 ﻿@model PJCMobile.Models.User
 @{
     ViewBag.Title = "Job Coach";
+    ProfileCommon userProfile = (ProfileCommon)ProfileCommon.Create(Model.UserName, true);
 }
 
 
-
+@if (Model.UserName != null) { 
 <hgroup class="title">
     <h1>@Model.UserName</h1>
 </hgroup>
@@ -14,7 +15,7 @@
         <td>
             <ul data-role="listview" data-inset="true">
                 <li style="height: 150px;">
-                    <a href="tel:0000000000">Call</a>
+                    <a href="tel:@userProfile.PhoneNumber">Call</a>
                     <i class="fa fa-phone fa-5x btn-icon"></i>
                 </li>
             </ul>
@@ -35,13 +36,17 @@
         <td style="width: 50%">
             <ul data-role="listview" data-inset="true">
                 <li style="height: 150px;">
-                    <a href="sms:0000000000">Text</a>
+                    <a href="sms:@userProfile.PhoneNumber">Text</a>
                     <i class="fa fa-comment fa-5x btn-icon"></i>
                 </li>
             </ul>
         </td>
     </tr>
 </table>
-
+}
+else
+{
+    <h2>You don't have a job coach. Contact your system administrator.</h2>
+}
 
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.Profile;
 
 namespace PJCMobile.Controllers
 {
@@ -18,10 +19,15 @@ namespace PJCMobile.Controllers
 
         public ActionResult Index()
         {
-            User user = db.Users.Find(System.Web.Security.Membership.GetUser().ProviderUserKey).Users1.ToList().FindAll(delegate(User u)
+            User user = new User();
+            if (db.Users.Find(System.Web.Security.Membership.GetUser().ProviderUserKey).Users1.Count > 0)
             {
-                return Roles.GetRolesForUser(u.UserName).ToList().Contains("Job Coach");
-            }).First();
+                user = db.Users.Find(System.Web.Security.Membership.GetUser().ProviderUserKey).Users1.ToList().FindAll(delegate(User u)
+                {
+                    return Roles.GetRolesForUser(u.UserName).ToList().Contains("Job Coach");
+                }).First();
+            }
+
 
             return View("Index", user);
         }

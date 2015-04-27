@@ -307,8 +307,6 @@
       <DependentUpon>PJCModel.edmx</DependentUpon>
       <LastGenOutput>PJCModel.cs</LastGenOutput>
     </Content>
-    <None Include="Properties\PublishProfiles\PJC Mobile.pubxml" />
-    <None Include="Properties\PublishProfiles\pjc-mobile - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\pjc-mobile - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />

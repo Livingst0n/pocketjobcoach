@@ -20,7 +20,9 @@ namespace PJCMobile.Controllers
         {
             var tasks = db.tasks.Include(t => t.taskcategory);
             var userTasks = db.Users.Find(System.Web.Security.Membership.GetUser().ProviderUserKey).usertasks;
-           
+            List<DateTime> array = new List<DateTime>();
+
+            ViewData["taskDate"] = array;
             //if (tasks.Count() == 0)
             //{
             //    List<usertask> temp = userTasks.ToList();
@@ -28,6 +30,14 @@ namespace PJCMobile.Controllers
             //    return View(temp);
             //}
             return View(userTasks.ToList());
+        }
+
+        public ActionResult Finish(int taskID)
+        {
+            db.usertasks.Find(System.Web.Security.Membership.GetUser().ProviderUserKey, taskID).lastCompleted = DateTime.Now;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         //
@@ -133,14 +143,6 @@ namespace PJCMobile.Controllers
             base.Dispose(disposing);
         }
 
-        [HttpPost, ActionName("Finish")]
-        public ActionResult completeTask(int id)
-        {
-            task task = db.tasks.Find(id);
-            
-            return RedirectToAction("Index");
-        }
-
         // GET: /Task/Alert
 
         public ActionResult AlertsIndex()
@@ -156,7 +158,7 @@ namespace PJCMobile.Controllers
                 return View(temp);
             }
 
-            List<task> alertTasks = new List<task>();
+            List<usertask> alertTasks = new List<usertask>();
             string dayOfWeek = System.DateTime.Now.DayOfWeek.ToString();
 
             foreach(var item in userTasks)
@@ -164,7 +166,7 @@ namespace PJCMobile.Controllers
                 foreach(char c in item.daysOfWeek)
                 {
                     if(c == dayOfWeek[0])
-                        alertTasks.Add(item.task);
+                        alertTasks.Add(item);
                 }
             }
             

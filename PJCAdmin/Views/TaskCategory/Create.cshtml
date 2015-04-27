@@ -1,0 +1,37 @@
+﻿@model PJCAdmin.Models.taskcategory
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>New Task Category</legend>
+
+            @Html.HiddenFor(model => model.categoryID)
+        <div class="editor-label">
+            Category Name
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.categoryName)
+            @Html.ValidationMessageFor(model => model.categoryName)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

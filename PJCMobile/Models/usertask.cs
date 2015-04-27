@@ -21,6 +21,7 @@ namespace PJCMobile.Models
         public string daysOfWeek { get; set; }
         public short sendNotification { get; set; }
         public string feedbackMessage { get; set; }
+        public Nullable<System.DateTime> lastCompleted { get; set; }
     
         public virtual task task { get; set; }
         public virtual User User { get; set; }

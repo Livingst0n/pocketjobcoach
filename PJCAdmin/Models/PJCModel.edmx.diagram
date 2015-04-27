@@ -7,7 +7,7 @@
       <Diagram DiagramId="3a51e45cc80243c599b06fe31443fdcf" Name="Diagram1">
         <EntityTypeShape EntityType="pjcModel.Application" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.job" Width="1.5" PointX="3" PointY="18.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="pjcModel.Membership" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="pjcModel.Membership" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.Profile" Width="1.5" PointX="7.5" PointY="12" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.prompt" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.prompttype" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />

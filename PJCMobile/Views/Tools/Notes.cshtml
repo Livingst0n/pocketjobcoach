@@ -2,6 +2,12 @@
     ViewBag.Title = "Notes";
 }
 
+@section Header {
+    @Html.ActionLink(User.Identity.Name, "Index", "Account", routeValues: null, htmlAttributes: new { @class="ui-btn-right", data_icon = "gear" })
+    @Html.ActionLink("Back", "Index", "Tools", routeValues: null, htmlAttributes: new { @class="ui-btn-left", data_icon = "arrow-l" })
+    <h1>@ViewBag.Title</h1>
+}
+
 <h2>Note Taker</h2>
 <div id="noteTaking">
     <form>

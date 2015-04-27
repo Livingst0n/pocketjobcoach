@@ -162,6 +162,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\TaskCategoryController.cs" />
     <Compile Include="Models\Application.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
@@ -237,6 +238,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\pjclogo.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -294,6 +297,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <EntityDeploy Include="Models\PJCModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -312,9 +316,12 @@
       <DependentUpon>PJCModel.edmx</DependentUpon>
       <LastGenOutput>PJCModel.cs</LastGenOutput>
     </Content>
-    <None Include="Properties\PublishProfiles\pjc - FTP.pubxml" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\pjc - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\PJC.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -415,6 +422,10 @@
     <Content Include="Views\Account\EditAssignedTask.cshtml" />
     <Content Include="Views\Account\AddAssignedTask.cshtml" />
     <Content Include="Views\Account\ManagePrompts.cshtml" />
+    <Content Include="Views\TaskCategory\Index.cshtml" />
+    <Content Include="Views\TaskCategory\Create.cshtml" />
+    <Content Include="Views\TaskCategory\Edit.cshtml" />
+    <Content Include="Views\TaskCategory\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

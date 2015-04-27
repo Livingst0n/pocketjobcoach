@@ -11,8 +11,7 @@ namespace PJCAdmin.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-
+    
     public partial class task
     {
         public task()
@@ -22,17 +21,12 @@ namespace PJCAdmin.Models
             this.usertaskprompts = new HashSet<usertaskprompt>();
             this.jobs = new HashSet<job>();
         }
-
+    
         public int taskID { get; set; }
-
         public int taskCategoryID { get; set; }
-
-        [DisplayName("Task Name")]
         public string taskName { get; set; }
-        
-        [DisplayName("Task Description")]
         public string description { get; set; }
-
+    
         public virtual ICollection<prompt> prompts { get; set; }
         public virtual taskcategory taskcategory { get; set; }
         public virtual ICollection<usertask> usertasks { get; set; }

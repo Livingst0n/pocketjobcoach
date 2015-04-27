@@ -47,7 +47,22 @@
                             @Html.DisplayFor(modelItem => item.title)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.description)
+                            @if (item.prompttype.typeName == "Picture")
+                            {
+                                <img src="@item.description" style="max-height:100px;"/>
+                            }
+                            else if (item.prompttype.typeName == "Video")
+                            {
+                                <img src="http://img.youtube.com/vi/@item.description.Split('/').Last()/default.jpg" style="max-width:200px;" />
+                            }
+                            else if (item.prompttype.typeName == "Audio")
+                            {
+                                <a href="@item.description">@item.description</a>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.description)
+                            }
                         </td>
                         <td>
                             @if (selectedprompts.Contains(item))
