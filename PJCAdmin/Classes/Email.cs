@@ -23,23 +23,34 @@ namespace PJCAdmin.Classes
             try
             {
                 SmtpClient smtp = new SmtpClient();
+                smtp.UseDefaultCredentials = false;
                 smtp.Credentials = new NetworkCredential(fromEmailAddress, gmailPassword);
-                smtp.Port = 587;
+                smtp.Port = 587; //587 sends TLS error, 465 sends general failure error (implicit vs explicit ssl), 25 sends TLS error
                 smtp.Host = "smtp.gmail.com";
-                smtp.EnableSsl = true;
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
 
                 MailMessage message = new MailMessage();
                 message.From = new MailAddress(fromEmailAddress);
                 message.To.Add(toEmailAddress);
                 message.Subject = subject;
                 message.Body = messageBody;
-                smtp.Send(message);
+                smtp.EnableSsl = true;
+                smtp.Send(message); //SmtpException is generated here...
                 return true;
             }
-            catch
+            catch (SmtpException e) 
             {
-                return false;
+                if (e.StatusCode == SmtpStatusCode.MustIssueStartTlsFirst)
+                    return false;
+                
+                else
+                    return false;
             }
+            //catch (SmtpFailedRecipientsException) { return true;}
+            //catch
+            //{
+               // return false;
+            //}
         }
     }
 }
