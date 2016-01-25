@@ -158,10 +158,24 @@ namespace PJCMobile.Controllers
                 MembershipUser currentUser = System.Web.Security.Membership.GetUser(user);
                 string newpassword = currentUser.ResetPassword();
                 //Send email to user with new password
-                Email.viaGmail("wsuparcmen@gmail.com", currentUser.Email, "Pocket Job Coach Password Reset", "Your password for the Pocket Job Coach has been reset to the temporary password '" + newpassword + "'. Please login and change your password now at http://pjc.gear.host", "Parcmen!");
+                try
+                {
+                    string fromAddress = "higgsch@yahoo.com"; //"wsuparcmen@gmail.com";
+                    string fromName = "Pocket Job Coach";
+                    string password = "my Yahoo Password"; //"Parcmen!";
+                    string emailBody = "Your password for the Pocket Job Coach has been reset to the temporary password '" + newpassword + "'. Please login and change your password now at http://pjc.gear.host";
+                    string server = "smtp.mail.yahoo.com"; //"smtp.gmail.com";
+                    int port = 465;
+                    int timeout = 400;
+                    int sent = Email.send(fromAddress, fromName, currentUser.Email, "Pocket Job Coach Password Reset", emailBody, password, server, port, timeout);
+                    Response.Redirect("~/Account/List");
+                }
+                catch (Exception e)
+                {
+                    Response.Redirect("~/Unauthorized");
+                }
                 ModelState.AddModelError("", "Password has been reset for " + currentUser.UserName);
-                Response.Redirect("~/Account/List");
-                return View();
+
             }
             else
                 Response.Redirect("~/Unauthorized");

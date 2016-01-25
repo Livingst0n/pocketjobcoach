@@ -16,41 +16,43 @@ namespace PJCAdmin.Classes
         /// <param name="toEmailAddress"></param>
         /// <param name="subject"></param>
         /// <param name="messageBody"></param>
-        /// <param name="gmailPassword"></param>
+        /// <param name="password"></param>
         /// <returns></returns>
-        public static Boolean viaGmail(string fromEmailAddress, string toEmailAddress, string subject, string messageBody, string gmailPassword)
+        public static int send(string fromEmailAddress, string fromName, string toEmailAddress, string subject, string messageBody, string password, string server, int port, int timeout)
         {
-            try
-            {
-                SmtpClient smtp = new SmtpClient();
-                smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential(fromEmailAddress, gmailPassword);
-                smtp.Port = 587; //587 sends TLS error, 465 sends general failure error (implicit vs explicit ssl), 25 sends TLS error
-                smtp.Host = "smtp.gmail.com";
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            CDO.Message smtp = new CDO.Message();
+            CDO.Configuration smtpConfig = new CDO.Configuration();
 
-                MailMessage message = new MailMessage();
-                message.From = new MailAddress(fromEmailAddress);
-                message.To.Add(toEmailAddress);
-                message.Subject = subject;
-                message.Body = messageBody;
-                smtp.EnableSsl = true;
-                smtp.Send(message); //SmtpException is generated here...
-                return true;
-            }
-            catch (SmtpException e) 
-            {
-                if (e.StatusCode == SmtpStatusCode.MustIssueStartTlsFirst)
-                    return false;
-                
-                else
-                    return false;
-            }
-            //catch (SmtpFailedRecipientsException) { return true;}
-            //catch
-            //{
-               // return false;
-            //}
+            ADODB.Fields fieldCollection = smtpConfig.Fields;
+            ADODB.Field serverField = fieldCollection["http://schemas.microsoft.com/cdo/configuration/smtpserver"];
+            serverField.Value = server; 
+            ADODB.Field usernameField = fieldCollection["http://schemas.microsoft.com/cdo/configuration/sendusername"];
+            usernameField.Value = fromEmailAddress;
+            ADODB.Field passwordField = fieldCollection["http://schemas.microsoft.com/cdo/configuration/sendpassword"];
+            passwordField.Value = password;
+            ADODB.Field authField = fieldCollection["http://schemas.microsoft.com/cdo/configuration/smtpauthenticate"];
+            authField.Value = 1;
+            ADODB.Field timeoutField = fieldCollection["http://schemas.microsoft.com/cdo/configuration/smtpconnectiontimeout"];
+            timeoutField.Value = timeout;
+            ADODB.Field serverPortField = fieldCollection["http://schemas.microsoft.com/cdo/configuration/smtpserverport"];
+            serverPortField.Value = port;
+            ADODB.Field sendUsingField = fieldCollection["http://schemas.microsoft.com/cdo/configuration/sendusing"];
+            sendUsingField.Value = 2;
+            ADODB.Field useSSLField = fieldCollection["http://schemas.microsoft.com/cdo/configuration/smtpusessl"];
+            useSSLField.Value = 1;
+            fieldCollection.Update();
+
+            smtp.Configuration = smtpConfig;
+            smtp.Subject = subject;
+            smtp.From = fromEmailAddress;
+            smtp.To = toEmailAddress;
+            smtp.Sender = fromName;
+            smtp.Organization = fromName;
+            smtp.ReplyTo = fromEmailAddress;
+            smtp.TextBody = messageBody;
+            smtp.Send();
+
+            return 1;
         }
     }
 }
