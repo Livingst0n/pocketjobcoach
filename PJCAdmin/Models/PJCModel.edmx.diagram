@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3a51e45cc80243c599b06fe31443fdcf" Name="Diagram1">
+      <Diagram DiagramId="3a51e45cc80243c599b06fe31443fdcf" Name="Diagram1" ZoomLevel="55">
         <EntityTypeShape EntityType="pjcModel.Application" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.job" Width="1.5" PointX="3" PointY="18.125" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.Membership" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="pjcModel.Role" Width="1.5" PointX="3" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.task" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.taskcategory" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="pjcModel.UserProfile" Width="1.5" PointX="7.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.User" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.usertask" Width="1.5" PointX="10.5" PointY="11.625" IsExpanded="true" />
         <EntityTypeShape EntityType="pjcModel.usertaskprompt" Width="1.5" PointX="7.5" PointY="8.875" IsExpanded="true" />
@@ -35,6 +34,7 @@
         <AssociationConnector Association="pjcModel.userjob" ManuallyRouted="false" />
         <AssociationConnector Association="pjcModel.userrelationship" ManuallyRouted="false" />
         <AssociationConnector Association="pjcModel.UsersInRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="pjcModel.Debug" Width="1.5" PointX="12.375" PointY="9.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

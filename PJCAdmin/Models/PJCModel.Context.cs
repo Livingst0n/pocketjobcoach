@@ -34,9 +34,9 @@ namespace PJCAdmin.Models
         public DbSet<Role> Roles { get; set; }
         public DbSet<task> tasks { get; set; }
         public DbSet<taskcategory> taskcategories { get; set; }
-        public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<usertask> usertasks { get; set; }
         public DbSet<usertaskprompt> usertaskprompts { get; set; }
+        public DbSet<Debug> Debugs { get; set; }
     }
 }

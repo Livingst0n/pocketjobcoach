@@ -172,6 +172,9 @@ namespace PJCMobile.Controllers
                 }
                 catch (Exception e)
                 {
+                    db.Debugs.Add(new Debug() { debugMessage = e.ToString().Substring(0, 199) });
+                    db.SaveChanges();
+                    
                     Response.Redirect("~/Unauthorized");
                 }
                 ModelState.AddModelError("", "Password has been reset for " + currentUser.UserName);

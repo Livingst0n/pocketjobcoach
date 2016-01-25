@@ -178,6 +178,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Debug.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\job.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
@@ -221,9 +224,6 @@
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>PJCModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserProfile.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\usertask.cs">

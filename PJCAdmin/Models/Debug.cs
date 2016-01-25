@@ -12,9 +12,9 @@ namespace PJCAdmin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class UserProfile
+    public partial class Debug
     {
-        public int UserId { get; set; }
-        public string UserName { get; set; }
+        public int debugID { get; set; }
+        public string debugMessage { get; set; }
     }
 }
