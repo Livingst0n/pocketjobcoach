@@ -169,7 +169,7 @@ namespace PJCMobile.Controllers
                     string server = outEmail.smtpServerName; //"smtp.gmail.com";
                     int port = outEmail.portNumber;
                     int timeout = outEmail.smtpTimeout;
-                    int sent = Email.send(fromAddress, fromName, currentUser.Email, "Pocket Job Coach Password Reset", emailBody, password, server, port, timeout);
+                    Email.send(fromAddress, fromName, currentUser.Email, "Pocket Job Coach Password Reset", emailBody, password, server, port, timeout);
                     Response.Redirect("~/Account/List");
                 }
                 catch (Exception e)

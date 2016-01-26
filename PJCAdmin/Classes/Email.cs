@@ -18,7 +18,7 @@ namespace PJCAdmin.Classes
         /// <param name="messageBody"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static int send(string fromEmailAddress, string fromName, string toEmailAddress, string subject, string messageBody, string password, string server, int port, int timeout)
+        public static void send(string fromEmailAddress, string fromName, string toEmailAddress, string subject, string messageBody, string password, string server, int port, int timeout)
         {
             CDO.Message smtp = new CDO.Message();
             CDO.Configuration smtpConfig = new CDO.Configuration();
@@ -51,8 +51,6 @@ namespace PJCAdmin.Classes
             smtp.ReplyTo = fromEmailAddress;
             smtp.TextBody = messageBody;
             smtp.Send();
-
-            return 1;
         }
     }
 }
