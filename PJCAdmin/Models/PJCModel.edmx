@@ -8,6 +8,7 @@
         <EntityContainer Name="pjcModelStoreContainer">
           <EntitySet Name="Applications" EntityType="pjcModel.Store.Applications" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Debug" EntityType="pjcModel.Store.Debug" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EmailOutbox" EntityType="pjcModel.Store.EmailOutbox" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="job" EntityType="pjcModel.Store.job" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="jobtask" EntityType="pjcModel.Store.jobtask" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Memberships" EntityType="pjcModel.Store.Memberships" store:Type="Tables" Schema="dbo" />
@@ -120,8 +121,21 @@
           <Key>
             <PropertyRef Name="debugID" />
           </Key>
-          <Property Name="debugID" Type="int" Nullable="false" />
+          <Property Name="debugID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="debugMessage" Type="varchar" Nullable="false" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="EmailOutbox">
+          <Key>
+            <PropertyRef Name="emailOutboxID" />
+          </Key>
+          <Property Name="emailOutboxID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="emailAddress" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="emailName" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="emailPassword" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="smtpServerName" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="portNumber" Type="int" Nullable="false" />
+          <Property Name="smtpTimeout" Type="int" Nullable="false" />
+          <Property Name="purpose" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <EntityType Name="job">
           <Key>
@@ -942,13 +956,27 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="EmailOutboxes" EntityType="pjcModel.EmailOutbox" />
           <EntitySet Name="Debugs" EntityType="pjcModel.Debug" />
         </EntityContainer>
+        <EntityType Name="EmailOutbox">
+          <Key>
+            <PropertyRef Name="emailOutboxID" />
+          </Key>
+          <Property Type="Int32" Name="emailOutboxID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="emailAddress" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emailName" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emailPassword" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="smtpServerName" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="portNumber" Nullable="false" />
+          <Property Type="Int32" Name="smtpTimeout" Nullable="false" />
+          <Property Type="String" Name="purpose" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="Debug">
           <Key>
             <PropertyRef Name="debugID" />
           </Key>
-          <Property Type="Int32" Name="debugID" Nullable="false" />
+          <Property Type="Int32" Name="debugID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="debugMessage" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
@@ -1124,6 +1152,20 @@
               <ScalarProperty Name="UserId" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="EmailOutboxes">
+            <EntityTypeMapping TypeName="pjcModel.EmailOutbox">
+              <MappingFragment StoreEntitySet="EmailOutbox">
+                <ScalarProperty Name="purpose" ColumnName="purpose" />
+                <ScalarProperty Name="smtpTimeout" ColumnName="smtpTimeout" />
+                <ScalarProperty Name="portNumber" ColumnName="portNumber" />
+                <ScalarProperty Name="smtpServerName" ColumnName="smtpServerName" />
+                <ScalarProperty Name="emailPassword" ColumnName="emailPassword" />
+                <ScalarProperty Name="emailName" ColumnName="emailName" />
+                <ScalarProperty Name="emailAddress" ColumnName="emailAddress" />
+                <ScalarProperty Name="emailOutboxID" ColumnName="emailOutboxID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Debugs">
             <EntityTypeMapping TypeName="pjcModel.Debug">
               <MappingFragment StoreEntitySet="Debug">

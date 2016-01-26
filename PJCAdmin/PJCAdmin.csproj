@@ -181,6 +181,9 @@
     <Compile Include="Models\Debug.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmailOutbox.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\job.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>

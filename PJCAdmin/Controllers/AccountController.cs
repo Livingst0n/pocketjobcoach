@@ -160,13 +160,15 @@ namespace PJCMobile.Controllers
                 //Send email to user with new password
                 try
                 {
-                    string fromAddress = "higgsch@yahoo.com"; //"wsuparcmen@gmail.com";
-                    string fromName = "Pocket Job Coach";
-                    string password = "my Yahoo Password"; //"Parcmen!";
+                    EmailOutbox outEmail = db.EmailOutboxes.Where(s => s.purpose == "password reset").FirstOrDefault();
+
+                    string fromAddress = outEmail.emailAddress; //"wsuparcmen@gmail.com";
+                    string fromName = outEmail.emailName;
+                    string password = outEmail.emailPassword; //"Parcmen!";
                     string emailBody = "Your password for the Pocket Job Coach has been reset to the temporary password '" + newpassword + "'. Please login and change your password now at http://pjc.gear.host";
-                    string server = "smtp.mail.yahoo.com"; //"smtp.gmail.com";
-                    int port = 465;
-                    int timeout = 400;
+                    string server = outEmail.smtpServerName; //"smtp.gmail.com";
+                    int port = outEmail.portNumber;
+                    int timeout = outEmail.smtpTimeout;
                     int sent = Email.send(fromAddress, fromName, currentUser.Email, "Pocket Job Coach Password Reset", emailBody, password, server, port, timeout);
                     Response.Redirect("~/Account/List");
                 }
