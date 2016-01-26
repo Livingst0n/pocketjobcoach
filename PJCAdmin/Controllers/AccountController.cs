@@ -261,6 +261,12 @@ namespace PJCMobile.Controllers
         {
             if (username != "")
             {
+                if (System.Web.Security.Membership.GetUser().UserName.Equals(username))
+                {
+                    Response.Redirect("~/Unauthorized");
+                    return View();
+                }
+
                 ViewData["user"] = username;
                 return View();
             }
