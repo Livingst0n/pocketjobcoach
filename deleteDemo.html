@@ -1,0 +1,49 @@
+<html>
+<head><title>Hello Delete Demo</title></head>
+<body>
+  <div>
+    <ul id="records" />
+  </div>
+  <div>
+    ID: <input type="text" id="helloID"><br />
+    <input type="submit" value="Delete" onclick="find();">
+  </div>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+  <script>
+    var uri = 'http://localhost:43393/api/Hello';
+
+    $(document).ready(function () {
+      // Send an AJAX request
+      $.getJSON(uri)
+          .done(function (data) {
+            // On success, 'data' contains a list of products.
+            $.each(data, function (key, item) {
+              // Add a list item for the record.
+              $('<li>', { text: formatItem(item) }).appendTo($('#records'));
+            });
+          });
+    });
+
+    function formatItem(item) {
+      return item.helloID + ': ' + item.helloLanguage + '- "' + item.helloMessage + '"';
+    }
+
+    function find() {
+      var id = $('#helloID').val();
+      $.ajax({
+        type: 'DELETE',
+        url: uri + "/5",
+	data: id,
+        success: function(data){
+          alert('success');
+        },
+        error: function(){
+          alert('Failure');
+        }
+      });
+    }
+      
+  </script>
+</body>
+</html>

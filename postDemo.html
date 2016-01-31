@@ -1,0 +1,33 @@
+<html>
+<head><title>Hello Post Demo</title></head>
+<body>
+  Language: <input type="text" id="lang"><br />
+  Message:  <input type="text" id="message"><br />
+  <input type="submit" value="Submit" onclick="find();">
+</form>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+  <script>
+    var uri = 'http://pjc.gear.host/api/Hello';
+
+    function find() {
+      var hello = {
+        'helloLanguage':$('#lang').val(), 
+        'helloMessage':$('#message').val()};
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data: hello,
+        url: uri,
+        success: function(data){
+          alert('success');
+        },
+        error: function(){
+          alert('Failure');
+        }
+      });
+    }
+      
+  </script>
+</body>
+</html>
