@@ -9,6 +9,7 @@
           <EntitySet Name="Applications" EntityType="pjcModel.Store.Applications" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Debug" EntityType="pjcModel.Store.Debug" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="EmailOutbox" EntityType="pjcModel.Store.EmailOutbox" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Hello" EntityType="pjcModel.Store.Hello" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="job" EntityType="pjcModel.Store.job" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="jobtask" EntityType="pjcModel.Store.jobtask" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Memberships" EntityType="pjcModel.Store.Memberships" store:Type="Tables" Schema="dbo" />
@@ -129,13 +130,21 @@
             <PropertyRef Name="emailOutboxID" />
           </Key>
           <Property Name="emailOutboxID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="emailAddress" Type="varchar" Nullable="false" MaxLength="255" />
-          <Property Name="emailName" Type="varchar" Nullable="false" MaxLength="255" />
-          <Property Name="emailPassword" Type="varchar" Nullable="false" MaxLength="255" />
-          <Property Name="smtpServerName" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="emailAddress" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="emailName" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="emailPassword" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="smtpServerName" Type="nvarchar" Nullable="false" MaxLength="255" />
           <Property Name="portNumber" Type="int" Nullable="false" />
           <Property Name="smtpTimeout" Type="int" Nullable="false" />
-          <Property Name="purpose" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="purpose" Type="nvarchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Hello">
+          <Key>
+            <PropertyRef Name="helloID" />
+          </Key>
+          <Property Name="helloID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="helloLanguage" Type="varchar" Nullable="false" MaxLength="2" />
+          <Property Name="helloMessage" Type="nvarchar" Nullable="false" MaxLength="255" />
         </EntityType>
         <EntityType Name="job">
           <Key>
@@ -958,19 +967,20 @@
           </AssociationSet>
           <EntitySet Name="EmailOutboxes" EntityType="pjcModel.EmailOutbox" />
           <EntitySet Name="Debugs" EntityType="pjcModel.Debug" />
+          <EntitySet Name="Helloes" EntityType="pjcModel.Hello" />
         </EntityContainer>
         <EntityType Name="EmailOutbox">
           <Key>
             <PropertyRef Name="emailOutboxID" />
           </Key>
           <Property Type="Int32" Name="emailOutboxID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="emailAddress" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="emailName" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="emailPassword" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="smtpServerName" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emailAddress" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="emailName" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="emailPassword" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="smtpServerName" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="portNumber" Nullable="false" />
           <Property Type="Int32" Name="smtpTimeout" Nullable="false" />
-          <Property Type="String" Name="purpose" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="purpose" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Debug">
           <Key>
@@ -978,6 +988,14 @@
           </Key>
           <Property Type="Int32" Name="debugID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="debugMessage" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Hello">
+          <Key>
+            <PropertyRef Name="helloID" />
+          </Key>
+          <Property Type="Int32" Name="helloID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="helloLanguage" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="helloMessage" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1171,6 +1189,15 @@
               <MappingFragment StoreEntitySet="Debug">
                 <ScalarProperty Name="debugMessage" ColumnName="debugMessage" />
                 <ScalarProperty Name="debugID" ColumnName="debugID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Helloes">
+            <EntityTypeMapping TypeName="pjcModel.Hello">
+              <MappingFragment StoreEntitySet="Hello">
+                <ScalarProperty Name="helloMessage" ColumnName="helloMessage" />
+                <ScalarProperty Name="helloLanguage" ColumnName="helloLanguage" />
+                <ScalarProperty Name="helloID" ColumnName="helloID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

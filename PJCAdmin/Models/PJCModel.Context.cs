@@ -39,5 +39,6 @@ namespace PJCAdmin.Models
         public DbSet<usertaskprompt> usertaskprompts { get; set; }
         public DbSet<EmailOutbox> EmailOutboxes { get; set; }
         public DbSet<Debug> Debugs { get; set; }
+        public DbSet<Hello> Helloes { get; set; }
     }
 }

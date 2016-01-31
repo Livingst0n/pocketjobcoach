@@ -158,7 +158,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\TaskCategoryController.cs" />
+    <Compile Include="Controllers\UserTypeController.cs" />
     <Compile Include="Models\Application.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
@@ -174,7 +176,6 @@
     <Compile Include="Controllers\PromptController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
-    <Compile Include="Controllers\UserTypeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -182,6 +183,9 @@
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EmailOutbox.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Hello.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\job.cs">
