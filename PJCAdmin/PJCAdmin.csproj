@@ -158,6 +158,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DeleteHelloController.cs" />
     <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\TaskCategoryController.cs" />
     <Compile Include="Controllers\UserTypeController.cs" />
