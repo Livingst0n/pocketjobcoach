@@ -11,11 +11,11 @@
 
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
   <script>
-    var uri = 'http://pjc.gear.host/api/Hello';
+    var uri = 'http://pjc.gear.host/api/';
 
     $(document).ready(function () {
       // Send an AJAX request
-      $.getJSON(uri)
+      $.getJSON(uri + '/Hello')
           .done(function (data) {
             // On success, 'data' contains a list of products.
             $.each(data, function (key, item) {
@@ -32,9 +32,8 @@
     function find() {
       var id = $('#helloID').val();
       $.ajax({
-        type: 'DELETE',
-        url: uri + "/5",
-	data: id,
+        type: 'GET',
+        url: uri + "/DeleteHello/" + id,
         success: function(data){
           alert('success');
         },
