@@ -7,6 +7,7 @@
     <Schema Namespace="pjcModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="pjcModelStoreContainer">
           <EntitySet Name="Applications" EntityType="pjcModel.Store.Applications" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AuthToken" EntityType="pjcModel.Store.AuthToken" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Debug" EntityType="pjcModel.Store.Debug" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="EmailOutbox" EntityType="pjcModel.Store.EmailOutbox" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Hello" EntityType="pjcModel.Store.Hello" store:Type="Tables" Schema="dbo" />
@@ -25,6 +26,10 @@
           <EntitySet Name="UsersInRoles" EntityType="pjcModel.Store.UsersInRoles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="usertask" EntityType="pjcModel.Store.usertask" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="usertaskprompt" EntityType="pjcModel.Store.usertaskprompt" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__AuthToken__UserI__45DE573A" Association="pjcModel.Store.FK__AuthToken__UserI__45DE573A">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AuthToken" EntitySet="AuthToken" />
+          </AssociationSet>
           <AssociationSet Name="FK_userjob_job" Association="pjcModel.Store.FK_userjob_job">
             <End Role="job" EntitySet="job" />
             <End Role="userjob" EntitySet="userjob" />
@@ -117,6 +122,15 @@
           <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ApplicationName" Type="nvarchar" Nullable="false" MaxLength="235" />
           <Property Name="Description" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="AuthToken">
+          <Key>
+            <PropertyRef Name="AuthTokenID" />
+          </Key>
+          <Property Name="AuthTokenID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Token" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Debug">
           <Key>
@@ -296,6 +310,18 @@
           <Property Name="promptID" Type="int" Nullable="false" />
           <Property Name="promptLengthMin" Type="int" />
         </EntityType>
+        <Association Name="FK__AuthToken__UserI__45DE573A">
+          <End Role="Users" Type="pjcModel.Store.Users" Multiplicity="1" />
+          <End Role="AuthToken" Type="pjcModel.Store.AuthToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AuthToken">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_userjob_job">
           <End Role="job" Type="pjcModel.Store.job" Multiplicity="1" />
           <End Role="userjob" Type="pjcModel.Store.userjob" Multiplicity="*" />
@@ -681,6 +707,7 @@
           <NavigationProperty Name="Users1" Relationship="Self.userrelationship" FromRole="Users" ToRole="Users1" />
           <NavigationProperty Name="Users" Relationship="Self.userrelationship" FromRole="Users1" ToRole="Users" />
           <NavigationProperty Name="Roles" Relationship="Self.UsersInRoles" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="AuthTokens" Relationship="pjcModel.FK__AuthToken__UserI__45DE573A" FromRole="User" ToRole="AuthToken" />
         </EntityType>
         <EntityType Name="usertask">
           <Key>
@@ -968,6 +995,11 @@
           <EntitySet Name="EmailOutboxes" EntityType="pjcModel.EmailOutbox" />
           <EntitySet Name="Debugs" EntityType="pjcModel.Debug" />
           <EntitySet Name="Helloes" EntityType="pjcModel.Hello" />
+          <EntitySet Name="AuthTokens" EntityType="pjcModel.AuthToken" />
+          <AssociationSet Name="FK__AuthToken__UserI__45DE573A" Association="pjcModel.FK__AuthToken__UserI__45DE573A">
+            <End Role="User" EntitySet="Users" />
+            <End Role="AuthToken" EntitySet="AuthTokens" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="EmailOutbox">
           <Key>
@@ -997,6 +1029,28 @@
           <Property Type="String" Name="helloLanguage" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="helloMessage" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="AuthToken">
+          <Key>
+            <PropertyRef Name="AuthTokenID" />
+          </Key>
+          <Property Type="Int32" Name="AuthTokenID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Guid" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="Token" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ExpirationDate" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="pjcModel.FK__AuthToken__UserI__45DE573A" FromRole="AuthToken" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__AuthToken__UserI__45DE573A">
+          <End Type="pjcModel.User" Role="User" Multiplicity="1" />
+          <End Type="pjcModel.AuthToken" Role="AuthToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AuthToken">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1198,6 +1252,16 @@
                 <ScalarProperty Name="helloMessage" ColumnName="helloMessage" />
                 <ScalarProperty Name="helloLanguage" ColumnName="helloLanguage" />
                 <ScalarProperty Name="helloID" ColumnName="helloID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthTokens">
+            <EntityTypeMapping TypeName="pjcModel.AuthToken">
+              <MappingFragment StoreEntitySet="AuthToken">
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="AuthTokenID" ColumnName="AuthTokenID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

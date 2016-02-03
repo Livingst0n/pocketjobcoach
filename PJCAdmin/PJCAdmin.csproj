@@ -160,6 +160,7 @@
   <ItemGroup>
     <Compile Include="Controllers\DeleteHelloController.cs" />
     <Compile Include="Controllers\HelloController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TaskCategoryController.cs" />
     <Compile Include="Controllers\UserTypeController.cs" />
     <Compile Include="Models\Application.cs">
@@ -179,6 +180,9 @@
     <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AuthToken.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Debug.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>

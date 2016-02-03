@@ -37,6 +37,8 @@
         <EntityTypeShape EntityType="pjcModel.EmailOutbox" Width="1.5" PointX="6.625" PointY="15.875" />
         <EntityTypeShape EntityType="pjcModel.Debug" Width="1.5" PointX="8.75" PointY="16" />
         <EntityTypeShape EntityType="pjcModel.Hello" Width="1.5" PointX="11.875" PointY="2.625" />
+        <EntityTypeShape EntityType="pjcModel.AuthToken" Width="1.5" PointX="3" PointY="20.125" />
+        <AssociationConnector Association="pjcModel.FK__AuthToken__UserI__45DE573A" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
