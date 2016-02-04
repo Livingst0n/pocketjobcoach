@@ -166,7 +166,6 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TaskCategoryController.cs" />
     <Compile Include="Controllers\UserTypeController.cs" />
-    <Compile Include="Filters\AuthenticateAttribute.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -448,6 +447,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Filters\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

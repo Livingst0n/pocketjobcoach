@@ -61,6 +61,16 @@ namespace PJCAdmin.Classes
             {
                 throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized));
             }
+
+            int id = Int32.Parse(token.Substring(37));
+            AuthToken authToken = db.AuthTokens.Find(id);
+
+            //update expiration, 10 minutes of inactivity
+            authToken.ExpirationDate = DateTime.Now.AddMinutes(10);
+
+            db.Entry(authToken).State = System.Data.EntityState.Modified;
+            db.SaveChanges();
+
         }
     }
 }
