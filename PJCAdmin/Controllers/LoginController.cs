@@ -12,9 +12,9 @@ namespace PJCAdmin.Controllers
     {
         private pjcEntities db = new pjcEntities();
 
+        //POST .../api/Login
         public HttpResponseMessage Post(LoginModel model)
         {
-
             if (System.Web.Security.Membership.ValidateUser(model.UserName, model.Password))
             {
                 Guid userID = db.Users.Where<User>(a => a.UserName.Equals(model.UserName)).FirstOrDefault().UserId;

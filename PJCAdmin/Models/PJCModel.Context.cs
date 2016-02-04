@@ -41,5 +41,6 @@ namespace PJCAdmin.Models
         public DbSet<Debug> Debugs { get; set; }
         public DbSet<Hello> Helloes { get; set; }
         public DbSet<AuthToken> AuthTokens { get; set; }
+        public DbSet<AuthTest> AuthTests { get; set; }
     }
 }

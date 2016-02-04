@@ -7,6 +7,7 @@
     <Schema Namespace="pjcModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="pjcModelStoreContainer">
           <EntitySet Name="Applications" EntityType="pjcModel.Store.Applications" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AuthTest" EntityType="pjcModel.Store.AuthTest" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="AuthToken" EntityType="pjcModel.Store.AuthToken" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Debug" EntityType="pjcModel.Store.Debug" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="EmailOutbox" EntityType="pjcModel.Store.EmailOutbox" store:Type="Tables" Schema="dbo" />
@@ -26,7 +27,11 @@
           <EntitySet Name="UsersInRoles" EntityType="pjcModel.Store.UsersInRoles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="usertask" EntityType="pjcModel.Store.usertask" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="usertaskprompt" EntityType="pjcModel.Store.usertaskprompt" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK__AuthToken__UserI__45DE573A" Association="pjcModel.Store.FK__AuthToken__UserI__45DE573A">
+          <AssociationSet Name="FK__AuthTest__UserID__5EAA0504" Association="pjcModel.Store.FK__AuthTest__UserID__5EAA0504">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AuthTest" EntitySet="AuthTest" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AuthToken__UserI__57FD0775" Association="pjcModel.Store.FK__AuthToken__UserI__57FD0775">
             <End Role="Users" EntitySet="Users" />
             <End Role="AuthToken" EntitySet="AuthToken" />
           </AssociationSet>
@@ -122,6 +127,14 @@
           <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ApplicationName" Type="nvarchar" Nullable="false" MaxLength="235" />
           <Property Name="Description" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="AuthTest">
+          <Key>
+            <PropertyRef Name="AuthTestID" />
+          </Key>
+          <Property Name="AuthTestID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TestMessage" Type="nvarchar" Nullable="false" MaxLength="255" />
         </EntityType>
         <EntityType Name="AuthToken">
           <Key>
@@ -310,7 +323,19 @@
           <Property Name="promptID" Type="int" Nullable="false" />
           <Property Name="promptLengthMin" Type="int" />
         </EntityType>
-        <Association Name="FK__AuthToken__UserI__45DE573A">
+        <Association Name="FK__AuthTest__UserID__5EAA0504">
+          <End Role="Users" Type="pjcModel.Store.Users" Multiplicity="1" />
+          <End Role="AuthTest" Type="pjcModel.Store.AuthTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AuthTest">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AuthToken__UserI__57FD0775">
           <End Role="Users" Type="pjcModel.Store.Users" Multiplicity="1" />
           <End Role="AuthToken" Type="pjcModel.Store.AuthToken" Multiplicity="*" />
           <ReferentialConstraint>
@@ -708,6 +733,7 @@
           <NavigationProperty Name="Users" Relationship="Self.userrelationship" FromRole="Users1" ToRole="Users" />
           <NavigationProperty Name="Roles" Relationship="Self.UsersInRoles" FromRole="Users" ToRole="Roles" />
           <NavigationProperty Name="AuthTokens" Relationship="pjcModel.FK__AuthToken__UserI__45DE573A" FromRole="User" ToRole="AuthToken" />
+          <NavigationProperty Name="AuthTests" Relationship="pjcModel.FK__AuthTest__UserID__5EAA0504" FromRole="User" ToRole="AuthTest" />
         </EntityType>
         <EntityType Name="usertask">
           <Key>
@@ -1000,6 +1026,11 @@
             <End Role="User" EntitySet="Users" />
             <End Role="AuthToken" EntitySet="AuthTokens" />
           </AssociationSet>
+          <EntitySet Name="AuthTests" EntityType="pjcModel.AuthTest" />
+          <AssociationSet Name="FK__AuthTest__UserID__5EAA0504" Association="pjcModel.FK__AuthTest__UserID__5EAA0504">
+            <End Role="User" EntitySet="Users" />
+            <End Role="AuthTest" EntitySet="AuthTests" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="EmailOutbox">
           <Key>
@@ -1047,6 +1078,27 @@
               <PropertyRef Name="UserId" />
             </Principal>
             <Dependent Role="AuthToken">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AuthTest">
+          <Key>
+            <PropertyRef Name="AuthTestID" />
+          </Key>
+          <Property Type="Int32" Name="AuthTestID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Guid" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="TestMessage" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="pjcModel.FK__AuthTest__UserID__5EAA0504" FromRole="AuthTest" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__AuthTest__UserID__5EAA0504">
+          <End Type="pjcModel.User" Role="User" Multiplicity="1" />
+          <End Type="pjcModel.AuthTest" Role="AuthTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AuthTest">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1262,6 +1314,15 @@
                 <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="AuthTokenID" ColumnName="AuthTokenID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthTests">
+            <EntityTypeMapping TypeName="pjcModel.AuthTest">
+              <MappingFragment StoreEntitySet="AuthTest">
+                <ScalarProperty Name="TestMessage" ColumnName="TestMessage" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="AuthTestID" ColumnName="AuthTestID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -23,6 +23,7 @@ namespace PJCAdmin.Models
             this.Users = new HashSet<User>();
             this.Roles = new HashSet<Role>();
             this.AuthTokens = new HashSet<AuthToken>();
+            this.AuthTests = new HashSet<AuthTest>();
         }
     
         public System.Guid UserId { get; set; }
@@ -41,5 +42,6 @@ namespace PJCAdmin.Models
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<Role> Roles { get; set; }
         public virtual ICollection<AuthToken> AuthTokens { get; set; }
+        public virtual ICollection<AuthTest> AuthTests { get; set; }
     }
 }

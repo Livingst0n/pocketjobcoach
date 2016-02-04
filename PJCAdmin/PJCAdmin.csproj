@@ -158,14 +158,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\APIAuth.cs" />
+    <Compile Include="Classes\TokenIsInvalidException.cs" />
+    <Compile Include="Controllers\AuthTestController.cs" />
     <Compile Include="Controllers\DeleteHelloController.cs" />
     <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TaskCategoryController.cs" />
     <Compile Include="Controllers\UserTypeController.cs" />
-    <Compile Include="Models\Application.cs">
-      <DependentUpon>PJCModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Filters\AuthenticateAttribute.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -181,6 +182,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Application.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AuthTest.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AuthToken.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
@@ -190,6 +197,8 @@
     <Compile Include="Models\EmailOutbox.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GenericToken.cs" />
+    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Hello.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
@@ -199,7 +208,15 @@
     <Compile Include="Models\Membership.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Profile.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\prompt.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\prompttype.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PromptTypeController.cs" />
     <Compile Include="Models\PJCModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -216,16 +233,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PJCModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Profile.cs">
-      <DependentUpon>PJCModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\prompt.cs">
-      <DependentUpon>PJCModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\prompttype.cs">
-      <DependentUpon>PJCModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Role.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
@@ -244,6 +251,7 @@
     <Compile Include="Models\usertaskprompt.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\font-awesome.css" />
@@ -437,7 +445,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Filters\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
