@@ -23,9 +23,13 @@ namespace PJCAdmin.Controllers
             return db.AuthTests.Where(a => a.UserName.Equals(userName));
         }
 
-        // POST api/AuthTest
+        // POST api/AuthTest?token=<token>
+        //public HttpResponseMessage Post(Token<AuthTest> packet)
         public HttpResponseMessage Post(string token, AuthTest test)
         {
+            //string token = packet.token;
+            //AuthTest test = packet.obj;
+
             APIAuth.authorizeToken(token);
 
             test.UserName = APIAuth.getUserNameFromToken(token);
