@@ -29,7 +29,10 @@
           },
           function (data) {
             // On success, 'data' contains a list of products.
-		$('<li>', {text: data}).appendTo($('#records'));
+	    $.each(data, function (key, item) {
+              // Add a list item for the record.
+              $('<li>', { text: formatItem(item) }).appendTo($('#records'));
+            });
           });
     }
       
