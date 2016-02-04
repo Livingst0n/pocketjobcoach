@@ -47,7 +47,12 @@ namespace PJCAdmin.Classes
                 return false;
 
             if (!authToken.Token.Equals(token))
-                return false;
+            {
+                db.Entry(authToken).Reload();
+
+                if (!authToken.Token.Equals(token))
+                    return false;
+            }
 
             if (isExpired(authToken.ExpirationDate))
                 return false;
