@@ -12,7 +12,7 @@ namespace PJCAdmin.Classes
     {
         private static pjcEntities db = new pjcEntities();
 
-        public static Guid getUserIDFromToken(string token)
+        public static string getUserNameFromToken(string token)
         {
             if (! isTokenValid(token))
             {
@@ -22,7 +22,7 @@ namespace PJCAdmin.Classes
             int id = Int32.Parse(token.Substring(37));
             AuthToken authToken = db.AuthTokens.Find(id);
 
-            return authToken.UserID;
+            return authToken.UserName;
         }
 
         private static bool isExpired(DateTime expirationDate)

@@ -17,11 +17,12 @@ namespace PJCAdmin.Controllers
         {
             if (System.Web.Security.Membership.ValidateUser(model.UserName, model.Password))
             {
-                Guid userID = db.Users.Where<User>(a => a.UserName.Equals(model.UserName)).FirstOrDefault().UserId;
+                //verify that the userName exists
+                string userName = db.UserNames.Where<UserName>(a => a.UserName1.Equals(model.UserName)).FirstOrDefault().UserName1;
                 AuthToken token;
                 try
                 {
-                    token = db.AuthTokens.Where<AuthToken>(t => t.UserID.Equals(userID)).First();
+                    token = db.AuthTokens.Where<AuthToken>(t => t.UserName.Equals(userName)).First();
                     //User already has a token -> update token
                     token.Token = Guid.NewGuid().ToString() + ":" + token.AuthTokenID;
                     token.ExpirationDate = DateTime.Now.AddMinutes(10); //Expires in 10 minutes
@@ -33,7 +34,7 @@ namespace PJCAdmin.Controllers
                 {
                     //Token does not already exist for the user -> create token
                     token = new AuthToken();
-                    token.UserID = userID;
+                    token.UserName = userName;
 
                     token.Token = Guid.NewGuid().ToString();
                     token.ExpirationDate = DateTime.Now.AddMinutes(10); //Expires in 10 minutes

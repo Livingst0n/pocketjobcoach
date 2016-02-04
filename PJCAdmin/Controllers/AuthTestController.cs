@@ -14,21 +14,13 @@ namespace PJCAdmin.Controllers
         private pjcEntities db = new pjcEntities();
 
         // GET api/AuthTest
-        public string Get(string token)
+        public IEnumerable<AuthTest> Get(string token)
         {
             APIAuth.authorizeToken(token);
 
-            Guid userID = APIAuth.getUserIDFromToken(token);
+            string userName = APIAuth.getUserNameFromToken(token);
 
-            IEnumerable<AuthTest> results = db.AuthTests.Where(a => a.UserID.Equals(userID)).AsEnumerable();
-
-            string result = "";
-
-            if (results.Count() > 0 )
-                 result = results.First().TestMessage;
-
-            //UserID as a Guid is causing an internal 500 error when serializing for http response.
-            return result;
+            return db.AuthTests.Where(a => a.UserName.Equals(userName));
         }
 
         // POST api/AuthTest
@@ -36,7 +28,7 @@ namespace PJCAdmin.Controllers
         {
             APIAuth.authorizeToken(token);
 
-            test.UserID = APIAuth.getUserIDFromToken(token);
+            test.UserName = APIAuth.getUserNameFromToken(token);
 
             db.AuthTests.Add(test);
             db.SaveChanges();

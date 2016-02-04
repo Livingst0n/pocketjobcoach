@@ -6,18 +6,22 @@
 //    Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System.Runtime.Serialization;
 namespace PJCAdmin.Models
 {
     using System;
     using System.Collections.Generic;
     
+    [DataContract]
     public partial class AuthTest
     {
+        [DataMember]
         public int AuthTestID { get; set; }
-        public System.Guid UserID { get; set; }
+        [DataMember]
+        public string UserName { get; set; }
+        [DataMember]
         public string TestMessage { get; set; }
     
-        public virtual User User { get; set; }
+        public virtual UserName UserName1 { get; set; }
     }
 }

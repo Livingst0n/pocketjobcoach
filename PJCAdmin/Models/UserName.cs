@@ -12,13 +12,19 @@ namespace PJCAdmin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AuthToken
+    public partial class UserName
     {
-        public int AuthTokenID { get; set; }
-        public string UserName { get; set; }
-        public string Token { get; set; }
-        public System.DateTime ExpirationDate { get; set; }
+        public UserName()
+        {
+            this.AuthTests = new HashSet<AuthTest>();
+            this.AuthTokens = new HashSet<AuthToken>();
+        }
     
-        public virtual UserName UserName1 { get; set; }
+        public string UserName1 { get; set; }
+        public System.Guid UserID { get; set; }
+    
+        public virtual User User { get; set; }
+        public virtual ICollection<AuthTest> AuthTests { get; set; }
+        public virtual ICollection<AuthToken> AuthTokens { get; set; }
     }
 }

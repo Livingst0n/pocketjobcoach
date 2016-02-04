@@ -40,7 +40,8 @@ namespace PJCAdmin.Models
         public DbSet<EmailOutbox> EmailOutboxes { get; set; }
         public DbSet<Debug> Debugs { get; set; }
         public DbSet<Hello> Helloes { get; set; }
-        public DbSet<AuthToken> AuthTokens { get; set; }
+        public DbSet<UserName> UserNames { get; set; }
         public DbSet<AuthTest> AuthTests { get; set; }
+        public DbSet<AuthToken> AuthTokens { get; set; }
     }
 }
