@@ -2,7 +2,6 @@
 <head><title>AuthPost Demo</title></head>
 <body>
   <input type="text" value="token" id="token"><br />
-  <input type="text" value="AuthTestID" id="id"><br />
   <input type="text" value="TestMessage" id="message"><br />
   <input type="submit" value="Submit" onclick="find();">
 </form>
@@ -12,8 +11,7 @@
     var uri = 'http://localhost:43393/api/AuthTest/';
 
     function find() {
-      var auth = {
-        'AuthTestID':$('#id').val(), 
+      var auth = { 
         'TestMessage':$('#message').val()};
       $.ajax({
         type: 'POST',

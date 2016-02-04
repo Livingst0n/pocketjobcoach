@@ -19,7 +19,7 @@
     });
 
     function formatItem(item) {
-      return item.AuthTestID + ': ' + item.UserID + '- "' + item.TestMessage + '"';
+      return item.AuthTestID + ': ' + item.UserName + '- "' + item.TestMessage + '"';
     }
 
     function find() {
@@ -28,6 +28,7 @@
             token: $('#token').val()
           },
           function (data) {
+            $('#records').empty();
             // On success, 'data' contains a list of products.
 	    $.each(data, function (key, item) {
               // Add a list item for the record.
