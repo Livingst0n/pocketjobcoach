@@ -1,0 +1,38 @@
+<html>
+<head><title>AuthGet Demo</title></head>
+<body>
+  <div>
+    <ul id="records" />
+  </div>
+  <div>
+    <input type="text" value="token" id="token"><br />
+    <input type="submit" value="Get" onclick="find();">
+  </div>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+  <script>
+    var uri = 'http://localhost:43393/api/AuthTest';
+
+    $(document).ready(function () {
+      // Send an AJAX request
+      
+    });
+
+    function formatItem(item) {
+      return item.AuthTestID + ': ' + item.UserID + '- "' + item.TestMessage + '"';
+    }
+
+    function find() {
+        $.getJSON(uri,
+          {
+            token: $('#token').val()
+          },
+          function (data) {
+            // On success, 'data' contains a list of products.
+		$('<li>', {text: data}).appendTo($('#records'));
+          });
+    }
+      
+  </script>
+</body>
+</html>
