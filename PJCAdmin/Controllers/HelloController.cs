@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -42,6 +44,57 @@ namespace PJCAdmin.Controllers
             string uri = Url.Link("DefaultApi", new { id = hello.helloID });
             response.Headers.Location = new Uri(uri);
             return response;
+        }
+
+        // PUT
+        // POST api/Hello?put=true
+        [HttpPost]
+        public HttpResponseMessage Put(string put, Hello hello)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(hello).State = EntityState.Modified;
+
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        // DELETE
+        // GET api/Hello/<id>?delete=true
+        [HttpGet]
+        public HttpResponseMessage Delete(string delete, int id)
+        {
+            Hello hello = db.Helloes.Find(id);
+            if (hello == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+
+            db.Helloes.Remove(hello);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, hello);
         }
     }
 }

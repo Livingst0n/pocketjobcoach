@@ -9,7 +9,7 @@
 
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
   <script>
-    var uri = 'http://pjc.gear.host/api/DeleteHello';
+    var uri = 'http://pjc.gear.host/api/Hello?put=true';
 
     function find() {
       var hello = {
@@ -20,7 +20,7 @@
         type: 'POST',
         dataType: 'json',
         data: hello,
-        url: uri + '/' + $('#id').val(),
+        url: uri,
         success: function(data){
           alert('success');
         },

@@ -33,7 +33,7 @@
       var id = $('#helloID').val();
       $.ajax({
         type: 'GET',
-        url: uri + "/DeleteHello/" + id,
+        url: uri + "/Hello/" + id + "?delete=true",
         success: function(data){
           alert('success');
         },
