@@ -64,7 +64,7 @@ namespace PJCAdmin.Controllers
                     return Request.CreateResponse(HttpStatusCode.NotFound);
                 }
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse<Hello>(HttpStatusCode.OK,hello);
             }
             else
             {
