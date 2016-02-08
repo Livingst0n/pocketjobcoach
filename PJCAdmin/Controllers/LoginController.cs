@@ -17,8 +17,20 @@ namespace PJCAdmin.Controllers
         {
             if (System.Web.Security.Membership.ValidateUser(model.UserName, model.Password))
             {
-                //verify that the userName exists
+                IQueryable<UserName> matchingUserNames = db.UserNames.Where<UserName>(a => a.UserName1.Equals(model.UserName));
+
+                if (matchingUserNames.Count() == 0)
+                {
+                    //This is user's first Web API login; create API record
+                    UserName userNameRecord = new UserName() { UserName1 = model.UserName };
+                    userNameRecord.UserID = (Guid)System.Web.Security.Membership.FindUsersByName(model.UserName).Cast<System.Web.Security.MembershipUser>().FirstOrDefault().ProviderUserKey;
+
+                    db.UserNames.Add(userNameRecord);
+                    db.SaveChanges();
+                }
+
                 string userName = db.UserNames.Where<UserName>(a => a.UserName1.Equals(model.UserName)).FirstOrDefault().UserName1;
+               
                 AuthToken token;
                 try
                 {
