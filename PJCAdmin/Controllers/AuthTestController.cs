@@ -41,5 +41,19 @@ namespace PJCAdmin.Controllers
             //var response = Request.CreateResponse(HttpStatusCode.Created);
             return response;
         }
+
+        // POST api/AuthTest/put?token=<token>&id=<id>
+        [HttpPost]
+        public HttpResponseMessage Put(bool put, string token, int id, AuthTest test)
+        {
+            return new HttpResponseMessage();
+        }
+
+        // GET api/AuthTest/delete?token=<token>&id=<id>
+        [HttpGet]
+        public HttpResponseMessage Delete(bool get, string token, int id)
+        {
+            return new HttpResponseMessage();
+        }
     }
 }
