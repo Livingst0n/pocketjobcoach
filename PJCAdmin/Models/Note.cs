@@ -12,15 +12,15 @@ namespace PJCAdmin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class usertaskprompt
+    public partial class Note
     {
-        public System.Guid userID { get; set; }
-        public int taskID { get; set; }
-        public int promptID { get; set; }
-        public Nullable<int> promptLengthMin { get; set; }
+        public int noteID { get; set; }
+        public int jobID { get; set; }
+        public int routineID { get; set; }
+        public Nullable<byte> stepNo { get; set; }
+        public string noteTitle { get; set; }
+        public string noteMessage { get; set; }
     
-        public virtual prompt prompt { get; set; }
-        public virtual task task { get; set; }
-        public virtual User User { get; set; }
+        public virtual Job Job { get; set; }
     }
 }

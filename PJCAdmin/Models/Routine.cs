@@ -12,29 +12,34 @@ namespace PJCAdmin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Task
+    public partial class Routine
     {
+        public Routine()
+        {
+            this.Jobs = new HashSet<Job>();
+            this.Tasks = new HashSet<Task>();
+        }
+    
         public int routineID { get; set; }
-        public byte sequenceNo { get; set; }
-        public byte taskCategoryID { get; set; }
-        public string taskName { get; set; }
-        public string taskDescription { get; set; }
+        public string creatorUserName { get; set; }
+        public string userName { get; set; }
+        public string routineTitle { get; set; }
         public bool isTimed { get; set; }
         public Nullable<System.TimeSpan> expectedDuration { get; set; }
-        public Nullable<byte> promptTypeID { get; set; }
-        public string promptTitle { get; set; }
-        public string promptMessage { get; set; }
+        public bool isNotifiable { get; set; }
         public Nullable<byte> positiveFeedbackTypeID { get; set; }
         public string positiveFeedbackTitle { get; set; }
         public string positiveFeedbackMessage { get; set; }
         public Nullable<byte> negativeFeedbackTypeID { get; set; }
         public string negativeFeedbackTitle { get; set; }
         public string negativeFeedbackMessage { get; set; }
+        public System.DateTime assignedOrUpdatedDate { get; set; }
     
+        public virtual ICollection<Job> Jobs { get; set; }
         public virtual MessageType MessageType { get; set; }
         public virtual MessageType MessageType1 { get; set; }
-        public virtual MessageType MessageType2 { get; set; }
-        public virtual Routine Routine { get; set; }
-        public virtual TaskCategory TaskCategory { get; set; }
+        public virtual UserName UserName1 { get; set; }
+        public virtual UserName UserName2 { get; set; }
+        public virtual ICollection<Task> Tasks { get; set; }
     }
 }

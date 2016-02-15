@@ -22,7 +22,7 @@ namespace PJCAdmin.Classes
             int id = Int32.Parse(token.Substring(37));
             AuthToken authToken = db.AuthTokens.Find(id);
 
-            return authToken.UserName;
+            return authToken.userName;
         }
 
         private static bool isExpired(DateTime expirationDate)
@@ -46,15 +46,15 @@ namespace PJCAdmin.Classes
             if (authToken == null)
                 return false;
 
-            if (!authToken.Token.Equals(token))
+            if (!authToken.token.Equals(token))
             {
                 db.Entry(authToken).Reload();
 
-                if (!authToken.Token.Equals(token))
+                if (!authToken.token.Equals(token))
                     return false;
             }
 
-            if (isExpired(authToken.ExpirationDate))
+            if (isExpired(authToken.expirationDate))
                 return false;
 
             return true;
@@ -71,7 +71,7 @@ namespace PJCAdmin.Classes
             AuthToken authToken = db.AuthTokens.Find(id);
 
             //update expiration, 10 minutes of inactivity
-            authToken.ExpirationDate = DateTime.Now.AddMinutes(10);
+            authToken.expirationDate = DateTime.Now.AddMinutes(10);
 
             db.Entry(authToken).State = System.Data.EntityState.Modified;
             db.SaveChanges();

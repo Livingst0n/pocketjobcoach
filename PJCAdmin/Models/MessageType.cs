@@ -12,16 +12,24 @@ namespace PJCAdmin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TaskCategory
+    public partial class MessageType
     {
-        public TaskCategory()
+        public MessageType()
         {
+            this.Routines = new HashSet<Routine>();
+            this.Routines1 = new HashSet<Routine>();
             this.Tasks = new HashSet<Task>();
+            this.Tasks1 = new HashSet<Task>();
+            this.Tasks2 = new HashSet<Task>();
         }
     
-        public byte taskCategoryID { get; set; }
-        public string categoryName { get; set; }
+        public byte messageTypeID { get; set; }
+        public string messageTypeName { get; set; }
     
+        public virtual ICollection<Routine> Routines { get; set; }
+        public virtual ICollection<Routine> Routines1 { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }
+        public virtual ICollection<Task> Tasks1 { get; set; }
+        public virtual ICollection<Task> Tasks2 { get; set; }
     }
 }

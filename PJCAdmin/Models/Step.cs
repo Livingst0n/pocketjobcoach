@@ -12,16 +12,13 @@ namespace PJCAdmin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class prompttype
+    public partial class Step
     {
-        public prompttype()
-        {
-            this.prompts = new HashSet<prompt>();
-        }
+        public int jobID { get; set; }
+        public int routineID { get; set; }
+        public byte sequenceNo { get; set; }
+        public Nullable<System.DateTime> endTime { get; set; }
     
-        public int typeID { get; set; }
-        public string typeName { get; set; }
-    
-        public virtual ICollection<prompt> prompts { get; set; }
+        public virtual Job Job { get; set; }
     }
 }

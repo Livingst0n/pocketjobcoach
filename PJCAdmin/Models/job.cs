@@ -12,18 +12,20 @@ namespace PJCAdmin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class job
+    public partial class Job
     {
-        public job()
+        public Job()
         {
-            this.tasks = new HashSet<task>();
-            this.Users = new HashSet<User>();
+            this.Notes = new HashSet<Note>();
+            this.Steps = new HashSet<Step>();
         }
     
         public int jobID { get; set; }
-        public string jobTitle { get; set; }
+        public int routineID { get; set; }
+        public System.DateTime startTime { get; set; }
     
-        public virtual ICollection<task> tasks { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        public virtual Routine Routine { get; set; }
+        public virtual ICollection<Note> Notes { get; set; }
+        public virtual ICollection<Step> Steps { get; set; }
     }
 }

@@ -17,14 +17,26 @@ namespace PJCAdmin.Models
         public UserName()
         {
             this.AuthTests = new HashSet<AuthTest>();
+            this.Routines = new HashSet<Routine>();
+            this.Routines1 = new HashSet<Routine>();
+            this.UserName11 = new HashSet<UserName>();
+            this.UserName12 = new HashSet<UserName>();
             this.AuthTokens = new HashSet<AuthToken>();
         }
     
-        public string UserName1 { get; set; }
-        public System.Guid UserID { get; set; }
+        public string userName1 { get; set; }
+        public System.Guid userID { get; set; }
+        public string jobCoachUserName { get; set; }
+        public string guardianUserName { get; set; }
     
-        public virtual User User { get; set; }
         public virtual ICollection<AuthTest> AuthTests { get; set; }
+        public virtual ICollection<Routine> Routines { get; set; }
+        public virtual ICollection<Routine> Routines1 { get; set; }
+        public virtual ICollection<UserName> UserName11 { get; set; }
+        public virtual UserName UserName2 { get; set; }
+        public virtual ICollection<UserName> UserName12 { get; set; }
+        public virtual UserName UserName3 { get; set; }
+        public virtual User User { get; set; }
         public virtual ICollection<AuthToken> AuthTokens { get; set; }
     }
 }

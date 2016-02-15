@@ -16,13 +16,8 @@ namespace PJCAdmin.Models
     {
         public User()
         {
-            this.usertasks = new HashSet<usertask>();
-            this.usertaskprompts = new HashSet<usertaskprompt>();
-            this.jobs = new HashSet<job>();
-            this.Users1 = new HashSet<User>();
-            this.Users = new HashSet<User>();
-            this.Roles = new HashSet<Role>();
             this.UserNames = new HashSet<UserName>();
+            this.Roles = new HashSet<Role>();
         }
     
         public System.Guid UserId { get; set; }
@@ -34,12 +29,7 @@ namespace PJCAdmin.Models
         public virtual Application Application { get; set; }
         public virtual Membership Membership { get; set; }
         public virtual Profile Profile { get; set; }
-        public virtual ICollection<usertask> usertasks { get; set; }
-        public virtual ICollection<usertaskprompt> usertaskprompts { get; set; }
-        public virtual ICollection<job> jobs { get; set; }
-        public virtual ICollection<User> Users1 { get; set; }
-        public virtual ICollection<User> Users { get; set; }
-        public virtual ICollection<Role> Roles { get; set; }
         public virtual ICollection<UserName> UserNames { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
     }
 }

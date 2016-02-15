@@ -14,10 +14,10 @@ namespace PJCAdmin.Models
     
     public partial class AuthToken
     {
-        public int AuthTokenID { get; set; }
-        public string UserName { get; set; }
-        public string Token { get; set; }
-        public System.DateTime ExpirationDate { get; set; }
+        public int authTokenID { get; set; }
+        public string userName { get; set; }
+        public string token { get; set; }
+        public System.DateTime expirationDate { get; set; }
     
         public virtual UserName UserName1 { get; set; }
     }
