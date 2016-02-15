@@ -16,8 +16,8 @@ namespace PJCAdmin.Models
     {
         public User()
         {
-            this.UserNames = new HashSet<UserName>();
             this.Roles = new HashSet<Role>();
+            this.UserNames = new HashSet<UserName>();
         }
     
         public System.Guid UserId { get; set; }
@@ -29,7 +29,7 @@ namespace PJCAdmin.Models
         public virtual Application Application { get; set; }
         public virtual Membership Membership { get; set; }
         public virtual Profile Profile { get; set; }
-        public virtual ICollection<UserName> UserNames { get; set; }
         public virtual ICollection<Role> Roles { get; set; }
+        public virtual ICollection<UserName> UserNames { get; set; }
     }
 }

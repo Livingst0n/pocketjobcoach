@@ -201,19 +201,24 @@
     <Compile Include="Models\Hello.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\job.cs">
+    <Compile Include="Models\Job.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Membership.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MessageType.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Note.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PJCModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Profile.cs">
-      <DependentUpon>PJCModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\prompt.cs">
-      <DependentUpon>PJCModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\prompttype.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PromptTypeController.cs" />
@@ -221,11 +226,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PJCModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PJCModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PJCModel.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -235,22 +235,22 @@
     <Compile Include="Models\Role.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\task.cs">
+    <Compile Include="Models\Routine.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\taskcategory.cs">
+    <Compile Include="Models\Step.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Task.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaskCategory.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserName.cs">
-      <DependentUpon>PJCModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\usertask.cs">
-      <DependentUpon>PJCModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\usertaskprompt.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

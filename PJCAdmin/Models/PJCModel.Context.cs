@@ -27,7 +27,6 @@ namespace PJCAdmin.Models
     
         public DbSet<Application> Applications { get; set; }
         public DbSet<AuthTest> AuthTests { get; set; }
-        public DbSet<AuthToken> AuthTokens { get; set; }
         public DbSet<Debug> Debugs { get; set; }
         public DbSet<EmailOutbox> EmailOutboxes { get; set; }
         public DbSet<Hello> Helloes { get; set; }
@@ -40,8 +39,9 @@ namespace PJCAdmin.Models
         public DbSet<Routine> Routines { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<TaskCategory> TaskCategories { get; set; }
-        public DbSet<UserName> UserNames { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Step> Steps { get; set; }
+        public DbSet<AuthToken> AuthTokens { get; set; }
+        public DbSet<UserName> UserNames { get; set; }
     }
 }

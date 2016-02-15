@@ -38,8 +38,8 @@ namespace PJCAdmin.Models
         public virtual ICollection<Job> Jobs { get; set; }
         public virtual MessageType MessageType { get; set; }
         public virtual MessageType MessageType1 { get; set; }
+        public virtual ICollection<Task> Tasks { get; set; }
         public virtual UserName UserName1 { get; set; }
         public virtual UserName UserName2 { get; set; }
-        public virtual ICollection<Task> Tasks { get; set; }
     }
 }

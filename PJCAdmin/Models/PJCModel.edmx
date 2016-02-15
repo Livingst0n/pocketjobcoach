@@ -647,7 +647,6 @@
           <EntitySet Name="Routines" EntityType="pjcModel.Routine" />
           <EntitySet Name="Tasks" EntityType="pjcModel.Task" />
           <EntitySet Name="TaskCategories" EntityType="pjcModel.TaskCategory" />
-          <EntitySet Name="UserNames" EntityType="pjcModel.UserName" />
           <EntitySet Name="Users" EntityType="pjcModel.User" />
           <AssociationSet Name="MembershipEntity_Application" Association="pjcModel.MembershipEntity_Application">
             <End Role="Application" EntitySet="Applications" />
@@ -660,10 +659,6 @@
           <AssociationSet Name="User_Application" Association="pjcModel.User_Application">
             <End Role="Application" EntitySet="Applications" />
             <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK__AuthTest__UserNa__04CFADEC" Association="pjcModel.FK__AuthTest__UserNa__04CFADEC">
-            <End Role="UserName" EntitySet="UserNames" />
-            <End Role="AuthTest" EntitySet="AuthTests" />
           </AssociationSet>
           <AssociationSet Name="FK__Job__routineID__53F76C67" Association="pjcModel.FK__Job__routineID__53F76C67">
             <End Role="Routine" EntitySet="Routines" />
@@ -701,14 +696,6 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
-          <AssociationSet Name="FK__Routine__creator__3FF073BA" Association="pjcModel.FK__Routine__creator__3FF073BA">
-            <End Role="UserName" EntitySet="UserNames" />
-            <End Role="Routine" EntitySet="Routines" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Routine__userNam__40E497F3" Association="pjcModel.FK__Routine__userNam__40E497F3">
-            <End Role="UserName" EntitySet="UserNames" />
-            <End Role="Routine" EntitySet="Routines" />
-          </AssociationSet>
           <AssociationSet Name="FK__Task__routineID__45A94D10" Association="pjcModel.FK__Task__routineID__45A94D10">
             <End Role="Routine" EntitySet="Routines" />
             <End Role="Task" EntitySet="Tasks" />
@@ -716,6 +703,33 @@
           <AssociationSet Name="FK__Task__taskCatego__469D7149" Association="pjcModel.FK__Task__taskCatego__469D7149">
             <End Role="TaskCategory" EntitySet="TaskCategories" />
             <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="UsersInRoles" Association="pjcModel.UsersInRoles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Steps" EntityType="pjcModel.Step" />
+          <AssociationSet Name="FK__Step__5F691F13" Association="pjcModel.FK__Step__5F691F13">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="Step" EntitySet="Steps" />
+          </AssociationSet>
+          <EntitySet Name="AuthTokens" EntityType="pjcModel.AuthToken" />
+          <EntitySet Name="UserNames" EntityType="pjcModel.UserName" />
+          <AssociationSet Name="FK__AuthTest__UserNa__04CFADEC" Association="pjcModel.FK__AuthTest__UserNa__04CFADEC">
+            <End Role="UserName" EntitySet="UserNames" />
+            <End Role="AuthTest" EntitySet="AuthTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AuthToken__UserN__07AC1A97" Association="pjcModel.FK__AuthToken__UserN__07AC1A97">
+            <End Role="UserName" EntitySet="UserNames" />
+            <End Role="AuthToken" EntitySet="AuthTokens" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Routine__creator__3FF073BA" Association="pjcModel.FK__Routine__creator__3FF073BA">
+            <End Role="UserName" EntitySet="UserNames" />
+            <End Role="Routine" EntitySet="Routines" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Routine__userNam__40E497F3" Association="pjcModel.FK__Routine__userNam__40E497F3">
+            <End Role="UserName" EntitySet="UserNames" />
+            <End Role="Routine" EntitySet="Routines" />
           </AssociationSet>
           <AssociationSet Name="FK__UserName__guardi__3572E547" Association="pjcModel.FK__UserName__guardi__3572E547">
             <End Role="UserName" EntitySet="UserNames" />
@@ -729,21 +743,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserName" EntitySet="UserNames" />
           </AssociationSet>
-          <AssociationSet Name="UsersInRoles" Association="pjcModel.UsersInRoles">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <EntitySet Name="Steps" EntityType="pjcModel.Step" />
-          <AssociationSet Name="FK__Step__5F691F13" Association="pjcModel.FK__Step__5F691F13">
-            <End Role="Job" EntitySet="Jobs" />
-            <End Role="Step" EntitySet="Steps" />
-          </AssociationSet>
-          <EntitySet Name="AuthTokens" EntityType="pjcModel.AuthToken" />
-          <AssociationSet Name="FK__AuthToken__UserN__07AC1A97" Association="pjcModel.FK__AuthToken__UserN__07AC1A97">
-            <End Role="UserName" EntitySet="UserNames" />
-            <End Role="AuthToken" EntitySet="AuthTokens" />
-          </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Application">
           <Key>
             <PropertyRef Name="ApplicationId" />
@@ -899,9 +899,9 @@
           <NavigationProperty Name="Jobs" Relationship="pjcModel.FK__Job__routineID__53F76C67" FromRole="Routine" ToRole="Job" />
           <NavigationProperty Name="MessageType" Relationship="pjcModel.FK__Routine__negativ__42CCE065" FromRole="Routine" ToRole="MessageType" />
           <NavigationProperty Name="MessageType1" Relationship="pjcModel.FK__Routine__positiv__41D8BC2C" FromRole="Routine" ToRole="MessageType" />
+          <NavigationProperty Name="Tasks" Relationship="pjcModel.FK__Task__routineID__45A94D10" FromRole="Routine" ToRole="Task" />
           <NavigationProperty Name="UserName1" Relationship="pjcModel.FK__Routine__creator__3FF073BA" FromRole="Routine" ToRole="UserName" />
           <NavigationProperty Name="UserName2" Relationship="pjcModel.FK__Routine__userNam__40E497F3" FromRole="Routine" ToRole="UserName" />
-          <NavigationProperty Name="Tasks" Relationship="pjcModel.FK__Task__routineID__45A94D10" FromRole="Routine" ToRole="Task" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -938,24 +938,6 @@
           <Property Type="String" Name="categoryName" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tasks" Relationship="pjcModel.FK__Task__taskCatego__469D7149" FromRole="TaskCategory" ToRole="Task" />
         </EntityType>
-        <EntityType Name="UserName">
-          <Key>
-            <PropertyRef Name="userName1" />
-          </Key>
-          <Property Type="String" Name="userName1" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Guid" Name="userID" Nullable="false" />
-          <Property Type="String" Name="jobCoachUserName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="guardianUserName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AuthTests" Relationship="pjcModel.FK__AuthTest__UserNa__04CFADEC" FromRole="UserName" ToRole="AuthTest" />
-          <NavigationProperty Name="Routines" Relationship="pjcModel.FK__Routine__creator__3FF073BA" FromRole="UserName" ToRole="Routine" />
-          <NavigationProperty Name="Routines1" Relationship="pjcModel.FK__Routine__userNam__40E497F3" FromRole="UserName" ToRole="Routine" />
-          <NavigationProperty Name="UserName11" Relationship="pjcModel.FK__UserName__guardi__3572E547" FromRole="UserName" ToRole="UserName1" />
-          <NavigationProperty Name="UserName2" Relationship="pjcModel.FK__UserName__guardi__3572E547" FromRole="UserName1" ToRole="UserName" />
-          <NavigationProperty Name="UserName12" Relationship="pjcModel.FK__UserName__jobCoa__347EC10E" FromRole="UserName" ToRole="UserName1" />
-          <NavigationProperty Name="UserName3" Relationship="pjcModel.FK__UserName__jobCoa__347EC10E" FromRole="UserName1" ToRole="UserName" />
-          <NavigationProperty Name="User" Relationship="pjcModel.FK__UserName__UserID__7869D707" FromRole="UserName" ToRole="User" />
-          <NavigationProperty Name="AuthTokens" Relationship="pjcModel.FK__AuthToken__UserN__07AC1A97" FromRole="UserName" ToRole="AuthToken" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
@@ -968,8 +950,8 @@
           <NavigationProperty Name="Application" Relationship="pjcModel.User_Application" FromRole="User" ToRole="Application" />
           <NavigationProperty Name="Membership" Relationship="pjcModel.MembershipEntity_User" FromRole="User" ToRole="Membership" />
           <NavigationProperty Name="Profile" Relationship="pjcModel.ProfileEntity_User" FromRole="User" ToRole="Profile" />
-          <NavigationProperty Name="UserNames" Relationship="pjcModel.FK__UserName__UserID__7869D707" FromRole="User" ToRole="UserName" />
           <NavigationProperty Name="Roles" Relationship="pjcModel.UsersInRoles" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="UserNames" Relationship="pjcModel.FK__UserName__UserID__7869D707" FromRole="User" ToRole="UserName" />
         </EntityType>
         <Association Name="MembershipEntity_Application">
           <End Type="pjcModel.Application" Role="Application" Multiplicity="1" />
@@ -1004,18 +986,6 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="ApplicationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__AuthTest__UserNa__04CFADEC">
-          <End Type="pjcModel.UserName" Role="UserName" Multiplicity="1" />
-          <End Type="pjcModel.AuthTest" Role="AuthTest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserName">
-              <PropertyRef Name="userName1" />
-            </Principal>
-            <Dependent Role="AuthTest">
-              <PropertyRef Name="UserName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1129,30 +1099,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Routine__creator__3FF073BA">
-          <End Type="pjcModel.UserName" Role="UserName" Multiplicity="1" />
-          <End Type="pjcModel.Routine" Role="Routine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserName">
-              <PropertyRef Name="userName1" />
-            </Principal>
-            <Dependent Role="Routine">
-              <PropertyRef Name="creatorUserName" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Routine__userNam__40E497F3">
-          <End Type="pjcModel.UserName" Role="UserName" Multiplicity="1" />
-          <End Type="pjcModel.Routine" Role="Routine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserName">
-              <PropertyRef Name="userName1" />
-            </Principal>
-            <Dependent Role="Routine">
-              <PropertyRef Name="userName" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Task__routineID__45A94D10">
           <End Type="pjcModel.Routine" Role="Routine" Multiplicity="1" />
           <End Type="pjcModel.Task" Role="Task" Multiplicity="*" />
@@ -1174,42 +1120,6 @@
             </Principal>
             <Dependent Role="Task">
               <PropertyRef Name="taskCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__UserName__guardi__3572E547">
-          <End Type="pjcModel.UserName" Role="UserName" Multiplicity="0..1" />
-          <End Type="pjcModel.UserName" Role="UserName1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserName">
-              <PropertyRef Name="userName1" />
-            </Principal>
-            <Dependent Role="UserName1">
-              <PropertyRef Name="guardianUserName" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__UserName__jobCoa__347EC10E">
-          <End Type="pjcModel.UserName" Role="UserName" Multiplicity="0..1" />
-          <End Type="pjcModel.UserName" Role="UserName1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserName">
-              <PropertyRef Name="userName1" />
-            </Principal>
-            <Dependent Role="UserName1">
-              <PropertyRef Name="jobCoachUserName" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__UserName__UserID__7869D707">
-          <End Type="pjcModel.User" Role="User" Multiplicity="1" />
-          <End Type="pjcModel.UserName" Role="UserName" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="UserName">
-              <PropertyRef Name="userID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1253,6 +1163,36 @@
           <Property Type="DateTime" Name="expirationDate" Nullable="false" Precision="3" />
           <NavigationProperty Name="UserName1" Relationship="pjcModel.FK__AuthToken__UserN__07AC1A97" FromRole="AuthToken" ToRole="UserName" />
         </EntityType>
+        <EntityType Name="UserName">
+          <Key>
+            <PropertyRef Name="userName1" />
+          </Key>
+          <Property Type="String" Name="userName1" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="userID" Nullable="false" />
+          <Property Type="String" Name="jobCoachUserName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="guardianUserName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AuthTests" Relationship="pjcModel.FK__AuthTest__UserNa__04CFADEC" FromRole="UserName" ToRole="AuthTest" />
+          <NavigationProperty Name="AuthTokens" Relationship="pjcModel.FK__AuthToken__UserN__07AC1A97" FromRole="UserName" ToRole="AuthToken" />
+          <NavigationProperty Name="Routines" Relationship="pjcModel.FK__Routine__creator__3FF073BA" FromRole="UserName" ToRole="Routine" />
+          <NavigationProperty Name="Routines1" Relationship="pjcModel.FK__Routine__userNam__40E497F3" FromRole="UserName" ToRole="Routine" />
+          <NavigationProperty Name="UserName11" Relationship="pjcModel.FK__UserName__guardi__3572E547" FromRole="UserName" ToRole="UserName1" />
+          <NavigationProperty Name="UserName2" Relationship="pjcModel.FK__UserName__guardi__3572E547" FromRole="UserName1" ToRole="UserName" />
+          <NavigationProperty Name="UserName12" Relationship="pjcModel.FK__UserName__jobCoa__347EC10E" FromRole="UserName" ToRole="UserName1" />
+          <NavigationProperty Name="UserName3" Relationship="pjcModel.FK__UserName__jobCoa__347EC10E" FromRole="UserName1" ToRole="UserName" />
+          <NavigationProperty Name="User" Relationship="pjcModel.FK__UserName__UserID__7869D707" FromRole="UserName" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__AuthTest__UserNa__04CFADEC">
+          <End Type="pjcModel.UserName" Role="UserName" Multiplicity="1" />
+          <End Type="pjcModel.AuthTest" Role="AuthTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserName">
+              <PropertyRef Name="userName1" />
+            </Principal>
+            <Dependent Role="AuthTest">
+              <PropertyRef Name="UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__AuthToken__UserN__07AC1A97">
           <End Type="pjcModel.UserName" Role="UserName" Multiplicity="1" />
           <End Type="pjcModel.AuthToken" Role="AuthToken" Multiplicity="*" />
@@ -1265,7 +1205,67 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK__Routine__creator__3FF073BA">
+          <End Type="pjcModel.UserName" Role="UserName" Multiplicity="1" />
+          <End Type="pjcModel.Routine" Role="Routine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserName">
+              <PropertyRef Name="userName1" />
+            </Principal>
+            <Dependent Role="Routine">
+              <PropertyRef Name="creatorUserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Routine__userNam__40E497F3">
+          <End Type="pjcModel.UserName" Role="UserName" Multiplicity="1" />
+          <End Type="pjcModel.Routine" Role="Routine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserName">
+              <PropertyRef Name="userName1" />
+            </Principal>
+            <Dependent Role="Routine">
+              <PropertyRef Name="userName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserName__guardi__3572E547">
+          <End Type="pjcModel.UserName" Role="UserName" Multiplicity="0..1" />
+          <End Type="pjcModel.UserName" Role="UserName1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserName">
+              <PropertyRef Name="userName1" />
+            </Principal>
+            <Dependent Role="UserName1">
+              <PropertyRef Name="guardianUserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserName__jobCoa__347EC10E">
+          <End Type="pjcModel.UserName" Role="UserName" Multiplicity="0..1" />
+          <End Type="pjcModel.UserName" Role="UserName1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserName">
+              <PropertyRef Name="userName1" />
+            </Principal>
+            <Dependent Role="UserName1">
+              <PropertyRef Name="jobCoachUserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserName__UserID__7869D707">
+          <End Type="pjcModel.User" Role="User" Multiplicity="1" />
+          <End Type="pjcModel.UserName" Role="UserName" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserName">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1445,16 +1445,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserNames">
-            <EntityTypeMapping TypeName="pjcModel.UserName">
-              <MappingFragment StoreEntitySet="UserName">
-                <ScalarProperty Name="guardianUserName" ColumnName="guardianUserName" />
-                <ScalarProperty Name="jobCoachUserName" ColumnName="jobCoachUserName" />
-                <ScalarProperty Name="userID" ColumnName="userID" />
-                <ScalarProperty Name="userName1" ColumnName="userName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="pjcModel.User">
               <MappingFragment StoreEntitySet="Users">
@@ -1491,6 +1481,16 @@
                 <ScalarProperty Name="token" ColumnName="token" />
                 <ScalarProperty Name="userName" ColumnName="userName" />
                 <ScalarProperty Name="authTokenID" ColumnName="authTokenID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserNames">
+            <EntityTypeMapping TypeName="pjcModel.UserName">
+              <MappingFragment StoreEntitySet="UserName">
+                <ScalarProperty Name="guardianUserName" ColumnName="guardianUserName" />
+                <ScalarProperty Name="jobCoachUserName" ColumnName="jobCoachUserName" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userName1" ColumnName="userName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
