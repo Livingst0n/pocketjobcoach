@@ -19,7 +19,8 @@ namespace PJCAdmin.Controllers
 
         public ActionResult Index()
         {
-            return View(db.taskcategories.ToList());
+            //return View(db.taskcategories.ToList());
+            return View();
         }
 
 
@@ -36,11 +37,14 @@ namespace PJCAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(taskcategory taskcategory)
+        //public ActionResult Create(taskcategory taskcategory)
+        public ActionResult Create(string taskcategory)
         {
-            db.taskcategories.Add(taskcategory);
+            /*db.taskcategories.Add(taskcategory);
             db.SaveChanges();
             return RedirectToAction("Index");
+             */
+            return View();
         }
 
         //
@@ -48,12 +52,14 @@ namespace PJCAdmin.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            taskcategory taskcategory = db.taskcategories.Find(id);
+            /*taskcategory taskcategory = db.taskcategories.Find(id);
             if (taskcategory == null)
             {
                 return HttpNotFound();
             }
             return View(taskcategory);
+             */
+            return View();
         }
 
         //
@@ -61,15 +67,18 @@ namespace PJCAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(taskcategory taskcategory)
+        //public ActionResult Edit(taskcategory taskcategory)
+        public ActionResult Edit(string taskcategory)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.Entry(taskcategory).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(taskcategory);
+             */
+            return View();
         }
 
         //
@@ -77,12 +86,14 @@ namespace PJCAdmin.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            taskcategory taskcategory = db.taskcategories.Find(id);
+            /*taskcategory taskcategory = db.taskcategories.Find(id);
             if (taskcategory == null)
             {
                 return HttpNotFound();
             }
             return View(taskcategory);
+             */
+            return View();
         }
 
         //
@@ -92,10 +103,12 @@ namespace PJCAdmin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            taskcategory taskcategory = db.taskcategories.Find(id);
+            /*taskcategory taskcategory = db.taskcategories.Find(id);
             db.taskcategories.Remove(taskcategory);
             db.SaveChanges();
             return RedirectToAction("Index");
+             */
+            return View();
         }
 
         protected override void Dispose(bool disposing)

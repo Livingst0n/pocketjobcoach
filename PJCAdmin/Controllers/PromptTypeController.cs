@@ -17,7 +17,8 @@ namespace PJCAdmin.Models
 
         public ActionResult Index()
         {
-            return View(db.prompttypes.ToList());
+            //return View(db.prompttypes.ToList());
+            return View();
         }
 
         //
@@ -25,12 +26,14 @@ namespace PJCAdmin.Models
 
         public ActionResult Details(int id = 0)
         {
-            prompttype prompttype = db.prompttypes.Find(id);
+            /*prompttype prompttype = db.prompttypes.Find(id);
             if (prompttype == null)
             {
                 return HttpNotFound();
             }
             return View(prompttype);
+             */
+            return View();
         }
 
         //
@@ -46,9 +49,10 @@ namespace PJCAdmin.Models
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(prompttype prompttype)
+        //public ActionResult Create(prompttype prompttype)
+        public ActionResult Create(string prompttype)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.prompttypes.Add(prompttype);
                 db.SaveChanges();
@@ -56,6 +60,8 @@ namespace PJCAdmin.Models
             }
 
             return View(prompttype);
+             */
+            return View();
         }
 
         //
@@ -63,12 +69,14 @@ namespace PJCAdmin.Models
 
         public ActionResult Edit(int id = 0)
         {
-            prompttype prompttype = db.prompttypes.Find(id);
+            /*prompttype prompttype = db.prompttypes.Find(id);
             if (prompttype == null)
             {
                 return HttpNotFound();
             }
             return View(prompttype);
+             */
+            return View();
         }
 
         //
@@ -76,15 +84,18 @@ namespace PJCAdmin.Models
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(prompttype prompttype)
+        //public ActionResult Edit(prompttype prompttype)
+        public ActionResult Edit(string prompttype)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.Entry(prompttype).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(prompttype);
+             */
+            return View();
         }
 
         //
@@ -92,12 +103,14 @@ namespace PJCAdmin.Models
 
         public ActionResult Delete(int id = 0)
         {
-            prompttype prompttype = db.prompttypes.Find(id);
+            /*prompttype prompttype = db.prompttypes.Find(id);
             if (prompttype == null)
             {
                 return HttpNotFound();
             }
             return View(prompttype);
+             */
+            return View();
         }
 
         //
@@ -107,10 +120,12 @@ namespace PJCAdmin.Models
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            prompttype prompttype = db.prompttypes.Find(id);
+            /*prompttype prompttype = db.prompttypes.Find(id);
             db.prompttypes.Remove(prompttype);
             db.SaveChanges();
             return RedirectToAction("Index");
+             */
+            return View();
         }
 
         protected override void Dispose(bool disposing)

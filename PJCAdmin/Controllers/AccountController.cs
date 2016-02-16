@@ -27,25 +27,44 @@ namespace PJCMobile.Controllers
 
         public ActionResult List(int id = 0)
         {
-            if (Roles.IsUserInRole("Administrator"))
+            /*if (Roles.IsUserInRole("Administrator"))
                 return View(System.Web.Security.Membership.GetAllUsers());
             else if (Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
             {
                 List<MembershipUser> lstUsers = new List<MembershipUser>();
-                foreach (PJCAdmin.Models.User usr in db.Users.Find(System.Web.Security.Membership.GetUser().ProviderUserKey).Users)
+                string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+                
+                if (Roles.IsUserInRole("Job Coach"))
                 {
-                    lstUsers.Add(System.Web.Security.Membership.GetUser(usr.UserName));
+                    //foreach (PJCAdmin.Models.UserName usr in db.UserNames.Where(u => u.jobCoachUserName.Equals(thisUsername)))
+                    //UserName12 is collection where self is jobcoach
+                    foreach (PJCAdmin.Models.UserName usr in db.UserNames.Find(thisUsername).UserName12) 
+                    {
+                        lstUsers.Add(System.Web.Security.Membership.GetUser(usr.userName1));
+                    }
                 }
+                
+                if (Roles.IsUserInRole("Parent"))
+                { 
+                    //foreach (PJCAdmin.Models.UserName usr in db.UserNames.Where(u => u.guardianUserName.Equals(thisUsername)))
+                    //UserName11 is collection where self is guardian
+                    foreach (PJCAdmin.Models.UserName usr in db.UserNames.Find(thisUsername).UserName11)
+                    {
+                        lstUsers.Add(System.Web.Security.Membership.GetUser(usr.userName1));
+                    }
+                } //What if the user is both a parent and job coach of their own child? Duplicate entry here.
+
                 return View(lstUsers);
             }
             else
                 Response.Redirect("~/Unauthorized");
+             */
             return View();
         }
 
         public ActionResult Details(string user = "")
         {
-            if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
+            /*if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
             {
                 MembershipUser account = System.Web.Security.Membership.GetUser(user);
                 if (account == null)
@@ -53,34 +72,38 @@ namespace PJCMobile.Controllers
                     return HttpNotFound();
                 }
                 List<MembershipUser> lstUsers = new List<MembershipUser>();
-                foreach (PJCAdmin.Models.User usr in db.Users.Find(System.Web.Security.Membership.GetUser(user).ProviderUserKey).Users)
+                
+                //foreach (PJCAdmin.Models.UserName usr in db.UserNames.Where(u => u.jobCoachUserName.Equals(user)))
+                foreach (PJCAdmin.Models.UserName usr in db.UserNames.Find(user).UserName12) //user is jobcoach
                 {
-                    lstUsers.Add(System.Web.Security.Membership.GetUser(usr.UserName));
+                    lstUsers.Add(System.Web.Security.Membership.GetUser(usr.userName1));
                 }
+
                 ViewData["AssignedUsers"] = lstUsers;
-                if (db.Users.Find(account.ProviderUserKey).jobs.Count > 0)
-                    ViewData["SelectedJob"] = db.Users.Find(account.ProviderUserKey).jobs.ElementAt(0);
+                if (db.Users.Find(account.ProviderUserKey).UserNames.FirstOrDefault().Routines.Count > 0)
+                    ViewData["SelectedRoutine"] = db.UserNames.Find(user).Routines1.ElementAt(0); //routines assigned to user
                 else
-                    ViewData["SelectedJob"] = new PJCAdmin.Models.job();
+                    ViewData["SelectedRoutine"] = new PJCAdmin.Models.Routine();
                 return View(account);
             }
             else
                 Response.Redirect("~/Unauthorized");
+             */
             return View();
         }
 
         public ActionResult Edit(string user = "")
         {
-            if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
+            /*if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
             {
                 MembershipUser account = System.Web.Security.Membership.GetUser(user);
-                ViewData["SelectedUsers"] = db.Users.Find(account.ProviderUserKey).Users.ToList();
+                ViewData["SelectedUsers"] = db.Users.Find(account.ProviderUserKey);
                 ViewData["Users"] = db.Users.ToList();
-                ViewData["Jobs"] = db.jobs.ToList();
-                if (db.Users.Find(account.ProviderUserKey).jobs.Count > 0)
-                    ViewData["SelectedJob"] = db.Users.Find(account.ProviderUserKey).jobs.ElementAt(0);
+                ViewData["Jobs"] = db.Routines.ToList();
+                if (db.Users.Find(account.ProviderUserKey).UserNames.FirstOrDefault().Routines1.Count > 0)
+                    ViewData["SelectedJob"] = db.Users.Find(account.ProviderUserKey).UserNames.FirstOrDefault().Routines1.ElementAt(0);
                 else
-                    ViewData["SelectedJob"] = new PJCAdmin.Models.job();
+                    ViewData["SelectedJob"] = new PJCAdmin.Models.Routine();
                 if (account == null)
                 {
                     return HttpNotFound();
@@ -89,6 +112,7 @@ namespace PJCMobile.Controllers
             }
             else
                 Response.Redirect("~/Unauthorized");
+             */
             return View();
         }
 
@@ -98,7 +122,7 @@ namespace PJCMobile.Controllers
         {
             if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
             {
-                MembershipUser user = System.Web.Security.Membership.GetUser(UserName);
+                /*MembershipUser user = System.Web.Security.Membership.GetUser(UserName);
 
                 ProfileBase profile = ProfileBase.Create(UserName,true);
                 profile.SetPropertyValue("PhoneNumber", phonenumber);
@@ -115,7 +139,7 @@ namespace PJCMobile.Controllers
                 }
                 //Jobs
                 db.Users.Find(user.ProviderUserKey).jobs.Clear();
-                if (job != "")
+                if (job != "") { }
                 db.Users.Find(user.ProviderUserKey).jobs.Add(db.jobs.Find(Convert.ToInt32(job)));
 
 
@@ -143,6 +167,7 @@ namespace PJCMobile.Controllers
                     }
                 }
                 Roles.AddUserToRole(user.UserName, usertype);
+                 */
                 return RedirectToAction("List");
             }
             else
@@ -192,8 +217,8 @@ namespace PJCMobile.Controllers
         {
             if (ModelState.IsValid && Roles.IsUserInRole("Administrator"))
             {
-                ViewData["Users"] = db.Users.ToList();
-                ViewData["Jobs"] = db.jobs.ToList();
+                //ViewData["Users"] = db.Users.ToList();
+                //ViewData["Jobs"] = db.jobs.ToList();
 
                 return View();
             }
@@ -207,7 +232,7 @@ namespace PJCMobile.Controllers
         public ActionResult Create(RegisterModel model, string usertype, string[] selectedUsers, string job)
         {
             // Attempt to register the user
-            MembershipCreateStatus createStatus;
+            /*MembershipCreateStatus createStatus;
             System.Web.Security.Membership.CreateUser(model.UserName, model.Password, model.Email, passwordQuestion: null, passwordAnswer: null, isApproved: true, providerUserKey: null, status: out createStatus);
 
             if (createStatus == MembershipCreateStatus.Success)
@@ -231,7 +256,6 @@ namespace PJCMobile.Controllers
                 db.Users.Find(user.ProviderUserKey).jobs.Clear();
                 if (job != "")
                     db.Users.Find(user.ProviderUserKey).jobs.Add(db.jobs.Find(Convert.ToInt32(job)));
-
                 db.SaveChanges();
 
                 foreach (string aRole in Roles.GetAllRoles())
@@ -254,6 +278,7 @@ namespace PJCMobile.Controllers
                 ModelState.AddModelError("", "Unable to create user!");
             }
             // If we got this far, something failed, redisplay form
+             */
             return View();
         }
 
@@ -410,15 +435,15 @@ namespace PJCMobile.Controllers
 
         public ActionResult AssignedTasks(string user)
         {
-            ViewData["User"] = System.Web.Security.Membership.GetUser(user);
-            ViewData["Tasks"] = db.Users.Find(System.Web.Security.Membership.GetUser(user).ProviderUserKey).usertasks.ToList();
+            //ViewData["User"] = System.Web.Security.Membership.GetUser(user);
+            //ViewData["Tasks"] = db.Users.Find(System.Web.Security.Membership.GetUser(user).ProviderUserKey).usertasks.ToList();
 
             return View();
         }
 
         public ActionResult RemoveAssignedTask(string username, int taskid)
         {
-            if (username != "")
+            /*if (username != "")
             {
                 ViewData["user"] = username;
                 ViewData["task"] = db.tasks.Find(taskid);
@@ -427,6 +452,7 @@ namespace PJCMobile.Controllers
             else
                 Response.Redirect("~/Account/AssignedTasks");
             //Will Never Get here
+             */
             return View();
         }
 
@@ -434,7 +460,7 @@ namespace PJCMobile.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RemoveAssignedTask(string username, int taskid, int nothing = 0)
         {
-            db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertaskprompts.ToList().RemoveAll(delegate(usertaskprompt p)
+            /*db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertaskprompts.ToList().RemoveAll(delegate(usertaskprompt p)
             {
                 return p.taskID == taskid;
             });
@@ -442,12 +468,13 @@ namespace PJCMobile.Controllers
             db.SaveChanges();
             Response.Redirect("~/Account/AssignedTasks?user=" + username);
             //Will Never Get Here
+             */
             return View();
         }
 
         public ActionResult ManagePrompts(string username, int taskid)
         {
-            ViewBag.Task = db.tasks.Find(taskid).taskName;
+            /*ViewBag.Task = db.tasks.Find(taskid).taskName;
             ViewBag.Username = username;
             ViewData["Prompts"] = db.tasks.Find(taskid).prompts.ToList();
             List<prompt> selectedPrompts = new List<prompt>();
@@ -458,13 +485,14 @@ namespace PJCMobile.Controllers
                 selectedPrompts.Add(p.prompt);
             }
             ViewData["SelectedPrompts"] = selectedPrompts;
+             * */
             return View();
         }
 
         [HttpPost]
         public ActionResult ManagePrompts(string username, int taskid, string[] prompts, string[] promptsh)
         {
-            List<usertaskprompt> p = db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertaskprompts.ToList().FindAll(delegate(usertaskprompt prompt)
+            /*List<usertaskprompt> p = db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertaskprompts.ToList().FindAll(delegate(usertaskprompt prompt)
             {
                 return prompt.taskID == taskid;
             }).ToList();
@@ -491,21 +519,24 @@ namespace PJCMobile.Controllers
 
             db.SaveChanges();
             Response.Redirect("~/Account/AssignedTasks?user=" + username);
+             */
             return View();
         }
 
         public ActionResult EditAssignedTask(string username, int taskID)
         {
-            Guid userid = (Guid) System.Web.Security.Membership.GetUser(username).ProviderUserKey;
+            /*Guid userid = (Guid) System.Web.Security.Membership.GetUser(username).ProviderUserKey;
             int taskid = Convert.ToInt32(taskID);
             usertask ut = db.usertasks.Find(userid,taskid);
             return View("EditAssignedTask", ut);
+             */
+            return View();
         }
 
         [HttpPost]
         public ActionResult EditAssignedTask(string userid, int taskID, string[] daysofweek, string starttime, string endtime, string feedback)
         {
-            Guid user = Guid.Parse(userid);
+            /*Guid user = Guid.Parse(userid);
             int taskid = Convert.ToInt32(taskID);
             usertask ut = db.usertasks.Find(user, taskid);
             string schedule = "";
@@ -527,25 +558,27 @@ namespace PJCMobile.Controllers
 
             db.SaveChanges();
             Response.Redirect("~/Account/AssignedTasks?user=" + ut.User.UserName);
+             * */
             return View();
         }
 
         public ActionResult AddAssignedTask(string username)
         {
-            ViewData["Username"] = username;
+            /*ViewData["Username"] = username;
             List<task> t = new List<task>();
             foreach (usertask ut in db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertasks)
             {
                 t.Add(ut.task);
             }
             ViewData["Tasks"] = db.tasks.ToList().Except(t).ToList();
+             */
             return View();
         }
 
         [HttpPost]
         public ActionResult AddAssignedTask(string username, int taskID, string[] daysofweek, string starttime, string endtime, string feedback)
         {
-            usertask ut = new usertask();
+            /*usertask ut = new usertask();
             string schedule = "";
             foreach (string day in daysofweek)
             {
@@ -568,6 +601,7 @@ namespace PJCMobile.Controllers
             db.Users.Find(System.Web.Security.Membership.GetUser(username).ProviderUserKey).usertasks.Add(ut);
             db.SaveChanges();
             Response.Redirect("~/Account/AssignedTasks?user=" + username);
+             */
             return View();
         }
 

@@ -18,7 +18,8 @@ namespace PJCAdmin.Controllers
 
         public ActionResult Index()
         {
-            return View(db.jobs.ToList());
+            //return View(db.jobs.ToList());
+            return View();
         }
 
         //
@@ -26,12 +27,14 @@ namespace PJCAdmin.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            job job = db.jobs.Find(id);
+            /*job job = db.jobs.Find(id);
             if (job == null)
             {
                 return HttpNotFound();
             }
             return View(job);
+             */
+            return View();
         }
 
         //
@@ -39,7 +42,7 @@ namespace PJCAdmin.Controllers
 
         public ActionResult Create()
         {
-            ViewData["Tasks"] = db.tasks.ToList();
+            //ViewData["Tasks"] = db.tasks.ToList();
 
             return View();
         }
@@ -49,9 +52,9 @@ namespace PJCAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(job job, string[] taskList)
+        public ActionResult Create(Routine job, string[] taskList)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
 
 
@@ -70,6 +73,8 @@ namespace PJCAdmin.Controllers
             }
 
             return View(job);
+             */
+            return View();
         }
 
         //
@@ -77,7 +82,7 @@ namespace PJCAdmin.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            ViewData["Tasks"] = db.tasks.ToList();
+            /*ViewData["Tasks"] = db.tasks.ToList();
 
             job job = db.jobs.Find(id);
             if (job == null)
@@ -85,6 +90,8 @@ namespace PJCAdmin.Controllers
                 return HttpNotFound();
             }
             return View(job);
+             */
+            return View();
         }
 
         //
@@ -92,9 +99,9 @@ namespace PJCAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(job job, string[] taskList)
+        public ActionResult Edit(Routine job, string[] taskList)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.jobs.Find(job.jobID).tasks.Clear();
                 db.SaveChanges();
@@ -111,6 +118,8 @@ namespace PJCAdmin.Controllers
             }
             //return View(job);
             return RedirectToAction("Index");
+             */
+            return View();
         }
 
         //
@@ -118,12 +127,14 @@ namespace PJCAdmin.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            job job = db.jobs.Find(id);
+            /*job job = db.jobs.Find(id);
             if (job == null)
             {
                 return HttpNotFound();
             }
             return View(job);
+             */
+            return View();
         }
 
         //
@@ -133,10 +144,12 @@ namespace PJCAdmin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            job job = db.jobs.Find(id);
+            /*job job = db.jobs.Find(id);
             db.jobs.Remove(job);
             db.SaveChanges();
             return RedirectToAction("Index");
+             */
+            return View();
         }
 
         protected override void Dispose(bool disposing)

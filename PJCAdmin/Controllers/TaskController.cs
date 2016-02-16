@@ -18,7 +18,7 @@ namespace PJCAdmin.Controllers
         // GET: /Task/
         public ActionResult Index(string searchString, int? page)
         {
-            //Retrieve tasks and related taskcategory, a reference of the list of associated prompts is already in each task
+            /*//Retrieve tasks and related taskcategory, a reference of the list of associated prompts is already in each task
             var tasks = db.tasks.Include(t => t.taskcategory);//before pagination
 
             if(!String.IsNullOrEmpty(searchString))
@@ -34,6 +34,8 @@ namespace PJCAdmin.Controllers
             ViewBag.searchString = searchString;
             //return View(tasks.ToList());  //before adding pagination
             return View(tasks.ToPagedList(pageNumber, pageSize));
+             */
+            return View();
         }
 
         //public ActionResult Index(int?)
@@ -46,30 +48,34 @@ namespace PJCAdmin.Controllers
         // GET: /Task/Details/5
         public ActionResult Details(int id = 0)
         {
-            var task = db.tasks.Find(id);
+            /*var task = db.tasks.Find(id);
             if (task == null)
             {
                 return HttpNotFound();
             }
             return View(task);
+             */
+            return View();
         }
 
 
         // GET: /Task/Create
         public ActionResult Create()
         {
-            ViewBag.taskCategoryID = new SelectList(db.taskcategories, "categoryID", "categoryName");
+            /*ViewBag.taskCategoryID = new SelectList(db.taskcategories, "categoryID", "categoryName");
             //ViewBag.prompt = new SelectList(db.prompts, "prompt", "prompt");
             ViewBag.promptTypeID = new SelectList(db.prompttypes, "typeID", "typeName");
+             */
             return View();
         }
 
         // POST: /Task/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(task task, List<prompt> prompts)
+        //public ActionResult Create(task task, List<prompt> prompts)
+        public ActionResult Create(string task, List<string> prompts)
         {
-            //validate
+            /*//validate
             if (ModelState.IsValid)
             {
                 db.tasks.Add(task);
@@ -81,12 +87,14 @@ namespace PJCAdmin.Controllers
 
             ViewBag.taskCategoryID = new SelectList(db.taskcategories, "categoryID", "categoryName", task.taskCategoryID);
             return View(task);
+             */
+            return View();
         }
 
         // GET: /Task/Edit/5
         public ActionResult Edit(int id = 0)
         {
-            task task = db.tasks.Find(id);
+            /*task task = db.tasks.Find(id);
             if (task == null)
             {
                 return HttpNotFound();
@@ -94,14 +102,17 @@ namespace PJCAdmin.Controllers
             ViewBag.taskCategoryID = new SelectList(db.taskcategories, "categoryID", "categoryName", task.taskCategoryID);
             
             return View(task);
+             */
+            return View();
         }
 
         // POST: /Task/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(task task)
+        //public ActionResult Edit(task task)
+        public ActionResult Edit(string task)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.Entry(task).State = EntityState.Modified;
                 //db.Entry(task.prompts).State = EntityState.Modified;
@@ -110,17 +121,21 @@ namespace PJCAdmin.Controllers
             }
             ViewBag.taskCategoryID = new SelectList(db.taskcategories, "categoryID", "categoryName", task.taskCategoryID);
             return View(task);
+             */
+            return View();
         }
 
         // GET: /Task/Delete/5
         public ActionResult Delete(int id = 0)
         {
-            task task = db.tasks.Find(id);
+            /*task task = db.tasks.Find(id);
             if (task == null)
             {
                 return HttpNotFound();
             }
             return View(task);
+             */
+            return View();
         }
 
         // POST: /Task/Delete/5
@@ -128,7 +143,7 @@ namespace PJCAdmin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var prompts = db.prompts.Where(p => p.taskID == id);
+            /*var prompts = db.prompts.Where(p => p.taskID == id);
             
             task task = db.tasks.Find(id);
             db.tasks.Remove(task);
@@ -138,6 +153,8 @@ namespace PJCAdmin.Controllers
             }
             db.SaveChanges();
             return RedirectToAction("Index");
+             */
+            return View();
         }
 
         protected override void Dispose(bool disposing)
