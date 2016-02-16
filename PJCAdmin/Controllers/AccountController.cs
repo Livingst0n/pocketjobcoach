@@ -80,7 +80,7 @@ namespace PJCMobile.Controllers
                 }
 
                 ViewData["AssignedUsers"] = lstUsers;
-                if (db.Users.Find(account.ProviderUserKey).UserNames.FirstOrDefault().Routines1.Count > 0)
+                if (db.UserNames.Find(user).Routines1.Count > 0)
                     ViewData["SelectedRoutine"] = db.UserNames.Find(user).Routines1.ElementAt(0); //routines assigned to user
                 else
                     ViewData["SelectedRoutine"] = new PJCAdmin.Models.Routine();
@@ -94,14 +94,22 @@ namespace PJCMobile.Controllers
 
         public ActionResult Edit(string user = "")
         {
-            /*if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
+            if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
             {
+                string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+
                 MembershipUser account = System.Web.Security.Membership.GetUser(user);
-                ViewData["SelectedUsers"] = db.Users.Find(account.ProviderUserKey);
+
+                List<PJCAdmin.Models.User> selectedUsers = new List<PJCAdmin.Models.User>();
+                foreach (PJCAdmin.Models.UserName usr in db.UserNames.Find(user).UserName12) //Only users for which this user is JC
+                {
+                    selectedUsers.Add(db.Users.Find(usr.userID));
+                }
+                ViewData["SelectedUsers"] = selectedUsers;
                 ViewData["Users"] = db.Users.ToList();
-                ViewData["Jobs"] = db.Routines.ToList();
-                if (db.Users.Find(account.ProviderUserKey).UserNames.FirstOrDefault().Routines1.Count > 0)
-                    ViewData["SelectedJob"] = db.Users.Find(account.ProviderUserKey).UserNames.FirstOrDefault().Routines1.ElementAt(0);
+                ViewData["Jobs"] = db.UserNames.Find(thisUsername).Routines.ToList(); //Only able to assign routines the current user has created
+                if (db.UserNames.Find(user).Routines1.Count > 0)
+                    ViewData["SelectedJob"] = db.UserNames.Find(user).Routines1.ElementAt(0);
                 else
                     ViewData["SelectedJob"] = new PJCAdmin.Models.Routine();
                 if (account == null)
@@ -112,7 +120,6 @@ namespace PJCMobile.Controllers
             }
             else
                 Response.Redirect("~/Unauthorized");
-             */
             return View();
         }
 
@@ -122,34 +129,35 @@ namespace PJCMobile.Controllers
         {
             if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
             {
-                /*MembershipUser user = System.Web.Security.Membership.GetUser(UserName);
+                MembershipUser user = System.Web.Security.Membership.GetUser(UserName);
 
                 ProfileBase profile = ProfileBase.Create(UserName,true);
                 profile.SetPropertyValue("PhoneNumber", phonenumber);
                 profile.Save();
                 
                 //Assigned Users
-                db.Users.Find(user.ProviderUserKey).Users.Clear();
+                db.UserNames.Find(UserName).UserName12.Clear(); //Only JC
                 if (selectedUsers != null)
                 {
                     foreach (string id in selectedUsers)
                     {
-                        db.Users.Find(user.ProviderUserKey).Users.Add(db.Users.Find(Guid.Parse(id)));
+                        string selectedUserName = db.Users.Find(Guid.Parse(id)).UserName;
+                        db.UserNames.Find(UserName).UserName12.Add(db.UserNames.Find(selectedUserName)); //Add user in JC collection
                     }
                 }
                 //Jobs
-                db.Users.Find(user.ProviderUserKey).jobs.Clear();
+                db.UserNames.Find(UserName).Routines1.Clear(); //Currently allows removal of non-self routines
                 if (job != "") { }
-                db.Users.Find(user.ProviderUserKey).jobs.Add(db.jobs.Find(Convert.ToInt32(job)));
+                db.UserNames.Find(UserName).Routines1.Add(db.Routines.Find(Convert.ToInt32(job)));
 
 
-                if (Convert.ToBoolean(applyJobTemplate))
+                /*if (Convert.ToBoolean(applyJobTemplate))
                 {
-                    foreach (PJCAdmin.Models.task t in db.jobs.Find(Convert.ToInt32(job)).tasks)
+                    foreach (PJCAdmin.Models.Task t in db.Routines.Find(Convert.ToInt32(job)).Tasks)
                     {
                         db.Users.Find(user.ProviderUserKey).usertasks.Add(new usertask { task = t, User = db.Users.Find(user.ProviderUserKey), daysOfWeek = "" });
                     }
-                }
+                }*/ //Not using usertask, tasks are associated with the Routine itself.
 
                 db.SaveChanges();
                 user.Email = Email;
@@ -167,7 +175,6 @@ namespace PJCMobile.Controllers
                     }
                 }
                 Roles.AddUserToRole(user.UserName, usertype);
-                 */
                 return RedirectToAction("List");
             }
             else
@@ -187,11 +194,11 @@ namespace PJCMobile.Controllers
                 {
                     EmailOutbox outEmail = db.EmailOutboxes.Where(s => s.purpose == "password reset").FirstOrDefault();
 
-                    string fromAddress = outEmail.emailAddress; //"wsuparcmen@gmail.com";
+                    string fromAddress = outEmail.emailAddress;;
                     string fromName = outEmail.emailName;
-                    string password = outEmail.emailPassword; //"Parcmen!";
+                    string password = outEmail.emailPassword;;
                     string emailBody = "Your password for the Pocket Job Coach has been reset to the temporary password '" + newpassword + "'. Please login and change your password now at http://pjc.gear.host";
-                    string server = outEmail.smtpServerName; //"smtp.gmail.com";
+                    string server = outEmail.smtpServerName;
                     int port = outEmail.portNumber;
                     int timeout = outEmail.smtpTimeout;
                     Email.send(fromAddress, fromName, currentUser.Email, "Pocket Job Coach Password Reset", emailBody, password, server, port, timeout);

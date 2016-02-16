@@ -63,11 +63,11 @@
                 <label>Job</label>
                 <select name="job" id="selectjob">
                     <option value="">None</option>
-                    @for (int i = 0; i < ((List<PJCAdmin.Models.job>)ViewData["Jobs"]).Count; i++)
+                    @for (int i = 0; i < ((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).Count; i++)
                     {
                         
-                        <option value="@(((List<PJCAdmin.Models.job>)ViewData["Jobs"]).ElementAt(i).jobID)" @if (((PJCAdmin.Models.job)ViewData["SelectedJob"]).jobID == ((List<PJCAdmin.Models.job>)ViewData["Jobs"]).ElementAt(i).jobID) { @Html.Raw("selected")} >
-                            @Html.Label(((List<PJCAdmin.Models.job>)ViewData["Jobs"]).ElementAt(i).jobTitle)
+                        <option value="@(((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineID)" @if (((PJCAdmin.Models.Routine)ViewData["SelectedJob"]).routineID == ((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineID) { @Html.Raw("selected")} >
+                            @Html.Label(((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineTitle)
                         </option>
                     }
                 </select>
