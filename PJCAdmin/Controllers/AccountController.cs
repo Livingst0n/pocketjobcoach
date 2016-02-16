@@ -27,7 +27,7 @@ namespace PJCMobile.Controllers
 
         public ActionResult List(int id = 0)
         {
-            /*if (Roles.IsUserInRole("Administrator"))
+            if (Roles.IsUserInRole("Administrator"))
                 return View(System.Web.Security.Membership.GetAllUsers());
             else if (Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
             {
@@ -58,13 +58,13 @@ namespace PJCMobile.Controllers
             }
             else
                 Response.Redirect("~/Unauthorized");
-             */
+             
             return View();
         }
 
         public ActionResult Details(string user = "")
         {
-            /*if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
+            if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
             {
                 MembershipUser account = System.Web.Security.Membership.GetUser(user);
                 if (account == null)
@@ -80,7 +80,7 @@ namespace PJCMobile.Controllers
                 }
 
                 ViewData["AssignedUsers"] = lstUsers;
-                if (db.Users.Find(account.ProviderUserKey).UserNames.FirstOrDefault().Routines.Count > 0)
+                if (db.Users.Find(account.ProviderUserKey).UserNames.FirstOrDefault().Routines1.Count > 0)
                     ViewData["SelectedRoutine"] = db.UserNames.Find(user).Routines1.ElementAt(0); //routines assigned to user
                 else
                     ViewData["SelectedRoutine"] = new PJCAdmin.Models.Routine();
@@ -88,7 +88,7 @@ namespace PJCMobile.Controllers
             }
             else
                 Response.Redirect("~/Unauthorized");
-             */
+             
             return View();
         }
 
