@@ -224,8 +224,9 @@ namespace PJCMobile.Controllers
         {
             if (ModelState.IsValid && Roles.IsUserInRole("Administrator"))
             {
-                //ViewData["Users"] = db.Users.ToList();
-                //ViewData["Jobs"] = db.jobs.ToList();
+                string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+                ViewData["Users"] = db.Users.ToList();
+                ViewData["Jobs"] = db.UserNames.Find(thisUsername).Routines.ToList();
 
                 return View();
             }
@@ -239,7 +240,7 @@ namespace PJCMobile.Controllers
         public ActionResult Create(RegisterModel model, string usertype, string[] selectedUsers, string job)
         {
             // Attempt to register the user
-            /*MembershipCreateStatus createStatus;
+            MembershipCreateStatus createStatus;
             System.Web.Security.Membership.CreateUser(model.UserName, model.Password, model.Email, passwordQuestion: null, passwordAnswer: null, isApproved: true, providerUserKey: null, status: out createStatus);
 
             if (createStatus == MembershipCreateStatus.Success)
@@ -250,19 +251,22 @@ namespace PJCMobile.Controllers
                 profile.SetPropertyValue("PhoneNumber", model.PhoneNumber);
                 profile.Save();
 
-                db.Users.Find(user.ProviderUserKey).Users.Clear();
+                db.UserNames.Add(new UserName() {userID = db.Users.Find(user.ProviderUserKey).UserId, userName1 = user.UserName });
+
+                db.UserNames.Find(model.UserName).UserName12.Clear(); //only JC
                 if (selectedUsers != null)
                 {
                     foreach (string id in selectedUsers)
                     {
-                        db.Users.Find(user.ProviderUserKey).Users.Add(db.Users.Find(Guid.Parse(id)));
+                        string selectedUserName = db.Users.Find(Guid.Parse(id)).UserName;
+                        db.UserNames.Find(model.UserName).UserName12.Add(db.UserNames.Find(selectedUserName));
                     }
                 }
                 //Job Management
                 
-                db.Users.Find(user.ProviderUserKey).jobs.Clear();
+                db.UserNames.Find(model.UserName).Routines1.Clear();
                 if (job != "")
-                    db.Users.Find(user.ProviderUserKey).jobs.Add(db.jobs.Find(Convert.ToInt32(job)));
+                    db.UserNames.Find(model.UserName).Routines1.Add(db.Routines.Find(Convert.ToInt32(job)));
                 db.SaveChanges();
 
                 foreach (string aRole in Roles.GetAllRoles())
@@ -285,7 +289,6 @@ namespace PJCMobile.Controllers
                 ModelState.AddModelError("", "Unable to create user!");
             }
             // If we got this far, something failed, redisplay form
-             */
             return View();
         }
 
@@ -312,6 +315,10 @@ namespace PJCMobile.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(string username, int nothing = 0)
         {
+            //Need to delete all references to this user
+            db.UserNames.Remove(db.UserNames.Find(username));
+            db.SaveChanges();
+
             System.Web.Security.Membership.DeleteUser(username);
             Response.Redirect("~/Account/List");
             //Will Never Get Here
