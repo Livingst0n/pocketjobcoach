@@ -7,7 +7,7 @@ using System.Web.Http;
 using PJCAdmin.Models;
 using PJCAdmin.Classes;
 
-namespace PJCAdmin.Controllers
+namespace PJCAdmin.ControllersAPI
 {
     public class AuthTestController : ApiController
     {

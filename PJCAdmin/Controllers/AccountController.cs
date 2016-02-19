@@ -487,6 +487,7 @@ namespace PJCMobile.Controllers
             return View();
         }
 
+        //Below Here
         public ActionResult AssignedTasks(string user)
         {
             //ViewData["User"] = System.Web.Security.Membership.GetUser(user);
@@ -705,6 +706,7 @@ namespace PJCMobile.Controllers
             return System.Web.Security.Membership.GetUser(parentUserName);
         }
 
+        //TODO move to Routine controller
         private List<Routine> getListOfCreatedRoutines(string creatorUserName)
         {//TODO check if duplicated routines show up. They probably will and will need to be restricted to unique routine names
             List<Routine> createdRoutines = new List<Routine>();
@@ -716,6 +718,7 @@ namespace PJCMobile.Controllers
             return createdRoutines;
         }
 
+        //TODO move to Routine controller
         private List<Routine> getListOfAssignedRoutines(string assigneeUserName)
         {//TODO check if previous versions of routines show up. They probably will and will need to be restricted to unique routine names
             List<Routine> assignedRoutines = new List<Routine>();
