@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using PJCAdmin.Models;
 
-namespace PJCAdmin.Controllers
+namespace PJCAdmin.ControllersAPI
 {
     public class LoginController : ApiController
     {
