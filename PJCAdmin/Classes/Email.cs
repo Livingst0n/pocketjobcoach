@@ -9,6 +9,11 @@ namespace PJCAdmin.Classes
 {
     public class Email
     {
+        public static void send(PJCAdmin.Models.EmailOutbox outbox, string toEmailAddress, string subject, string messageBody)
+        {
+            send(outbox.emailAddress, outbox.emailName, toEmailAddress, subject, messageBody, outbox.emailPassword, outbox.smtpServerName, outbox.portNumber, outbox.smtpTimeout);
+        }
+
         /// <summary>
         /// Sends an email via G-Mail with the provided email settings.
         /// </summary>
