@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using PJCAdmin.Models;
 
-namespace PJCAdmin.Classes.APIModelHelpers
+namespace PJCAdmin.Classes.Helpers.APIModelHelpers
 {
     public class ModelCopier
     {
