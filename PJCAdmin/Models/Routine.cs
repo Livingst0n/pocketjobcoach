@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+
 namespace PJCAdmin.Models
 {
-    using System;
-    using System.Collections.Generic;
-    
+    [DataContract]
     public partial class Routine
     {
         public Routine()
@@ -19,27 +21,47 @@ namespace PJCAdmin.Models
             this.Jobs = new HashSet<Job>();
             this.Tasks = new HashSet<Task>();
         }
-    
+
+        [IgnoreDataMember]
         public int routineID { get; set; }
+        [DataMember]
         public string creatorUserName { get; set; }
+        [DataMember]
         public string userName { get; set; }
+        [DataMember]
         public string routineTitle { get; set; }
+        [DataMember]
         public bool isTimed { get; set; }
+        [DataMember]
         public Nullable<System.TimeSpan> expectedDuration { get; set; }
+        [DataMember]
         public bool isNotifiable { get; set; }
+        [IgnoreDataMember]
         public Nullable<byte> positiveFeedbackTypeID { get; set; }
+        [DataMember]
         public string positiveFeedbackTitle { get; set; }
+        [DataMember]
         public string positiveFeedbackMessage { get; set; }
+        [IgnoreDataMember]
         public Nullable<byte> negativeFeedbackTypeID { get; set; }
+        [DataMember]
         public string negativeFeedbackTitle { get; set; }
+        [DataMember]
         public string negativeFeedbackMessage { get; set; }
+        [IgnoreDataMember]
         public System.DateTime assignedOrUpdatedDate { get; set; }
-    
+
+        [IgnoreDataMember]
         public virtual ICollection<Job> Jobs { get; set; }
+        [DataMember]
         public virtual MessageType MessageType { get; set; }
+        [DataMember]
         public virtual MessageType MessageType1 { get; set; }
+        [DataMember]
         public virtual ICollection<Task> Tasks { get; set; }
+        [IgnoreDataMember]
         public virtual UserName UserName1 { get; set; }
+        [IgnoreDataMember]
         public virtual UserName UserName2 { get; set; }
     }
 }

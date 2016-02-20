@@ -7,34 +7,57 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Runtime.Serialization;
 namespace PJCAdmin.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
+    [DataContract]
     public partial class Task
     {
+        [IgnoreDataMember]
         public int routineID { get; set; }
+        [DataMember]
         public byte sequenceNo { get; set; }
+        [IgnoreDataMember]
         public byte taskCategoryID { get; set; }
+        [DataMember]
         public string taskName { get; set; }
+        [DataMember]
         public string taskDescription { get; set; }
+        [DataMember]
         public bool isTimed { get; set; }
+        [DataMember]
         public Nullable<System.TimeSpan> expectedDuration { get; set; }
+        [IgnoreDataMember]
         public Nullable<byte> promptTypeID { get; set; }
+        [DataMember]
         public string promptTitle { get; set; }
+        [DataMember]
         public string promptMessage { get; set; }
+        [IgnoreDataMember]
         public Nullable<byte> positiveFeedbackTypeID { get; set; }
+        [DataMember]
         public string positiveFeedbackTitle { get; set; }
+        [DataMember]
         public string positiveFeedbackMessage { get; set; }
+        [IgnoreDataMember]
         public Nullable<byte> negativeFeedbackTypeID { get; set; }
+        [DataMember]
         public string negativeFeedbackTitle { get; set; }
+        [DataMember]
         public string negativeFeedbackMessage { get; set; }
     
+        [DataMember]
         public virtual MessageType MessageType { get; set; }
+        [DataMember]
         public virtual MessageType MessageType1 { get; set; }
+        [DataMember]
         public virtual MessageType MessageType2 { get; set; }
+        [IgnoreDataMember]
         public virtual Routine Routine { get; set; }
+        [DataMember]
         public virtual TaskCategory TaskCategory { get; set; }
     }
 }

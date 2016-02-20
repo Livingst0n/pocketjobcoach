@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Runtime.Serialization;
 namespace PJCAdmin.Models
 {
     using System;
     using System.Collections.Generic;
     
+    [DataContract]
     public partial class MessageType
     {
         public MessageType()
@@ -23,13 +25,20 @@ namespace PJCAdmin.Models
             this.Tasks2 = new HashSet<Task>();
         }
     
+        [IgnoreDataMember]
         public byte messageTypeID { get; set; }
+        [DataMember]
         public string messageTypeName { get; set; }
     
+        [IgnoreDataMember]
         public virtual ICollection<Routine> Routines { get; set; }
+        [IgnoreDataMember]
         public virtual ICollection<Routine> Routines1 { get; set; }
+        [IgnoreDataMember]
         public virtual ICollection<Task> Tasks { get; set; }
+        [IgnoreDataMember]
         public virtual ICollection<Task> Tasks1 { get; set; }
+        [IgnoreDataMember]
         public virtual ICollection<Task> Tasks2 { get; set; }
     }
 }
