@@ -385,6 +385,12 @@ namespace PJCMobile.Controllers
         [HttpPost]
         public ActionResult Unlock(string username)
         {
+            if (!(Roles.IsUserInRole("Administrator")))
+            {
+                Response.Redirect("~/Unauthorized");
+                return View();
+            }
+
             System.Web.Security.Membership.GetUser(username).UnlockUser();
             Response.Redirect("~/Account/List");
             return View();
