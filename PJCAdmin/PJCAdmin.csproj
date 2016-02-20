@@ -160,6 +160,7 @@
   <ItemGroup>
     <Compile Include="Classes\APIAuth.cs" />
     <Compile Include="Classes\TokenIsInvalidException.cs" />
+    <Compile Include="ControllersAPI\TestController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="ControllersAPI\AuthTestController.cs" />
     <Compile Include="ControllersAPI\DeleteHelloController.cs" />
