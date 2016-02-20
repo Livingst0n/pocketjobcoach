@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using PJCAdmin.Models;
+using PJCAdmin.Classes.APIModelHelpers;
 
 namespace PJCAdmin.ControllersAPI
 {
@@ -12,9 +13,24 @@ namespace PJCAdmin.ControllersAPI
     {
         private pjcEntities db = new pjcEntities();
 
-        public string Get()
+        public IEnumerable<Routine> Get()
         {
-            return "";
+            List<Routine> routines = new List<Routine>();
+
+            foreach (Routine r in db.Routines)
+            {
+                //routines.Add(r); //Does not work
+                routines.Add(ModelCopier.copyRoutine(r)); //Works
+            }
+
+            return routines;
+
+            /*List<Task> tasks = new List<Task>();
+            foreach (Task t in db.Tasks)
+            {
+                tasks.Add(copyTask(t));
+            }
+            return tasks;*/
         }
     }
 }
