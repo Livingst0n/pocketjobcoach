@@ -6,9 +6,9 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using PJCAdmin.Models;
-using System.Data;
 using PJCAdmin.Classes;
-using System.Web.Profile;
+using PJCAdmin.Classes.Helpers;
+using PJCAdmin.Classes.Helpers.MVCModelHelpers;
 
 namespace PJCMobile.Controllers
 {
@@ -17,6 +17,8 @@ namespace PJCMobile.Controllers
     public class AccountController : Controller
     {
         private pjcEntities db = new pjcEntities();
+        private AccountHelper helper = new AccountHelper();
+        private DebugHelper debug = new DebugHelper();
         //
         // GET: /Account/Index
 
@@ -35,11 +37,11 @@ namespace PJCMobile.Controllers
 
             if (Roles.IsUserInRole("Administrator"))
             {
-                ViewData["Admins"] = getListOfUsersInRole("Administrator");
-                ViewData["Job Coaches"] = getListOfUsersInRole("Job Coach");
-                ViewData["Parents"] = getListOfUsersInRole("Parent");
-                ViewData["Users"] = getListOfUsersInRole("User");
-
+                ViewData["Admins"] = helper.getListOfUsersInRole("Administrator");
+                ViewData["Job Coaches"] = helper.getListOfUsersInRole("Job Coach");
+                ViewData["Parents"] = helper.getListOfUsersInRole("Parent");
+                ViewData["Users"] = helper.getListOfUsersInRole("User");
+                
                 return View(System.Web.Security.Membership.GetAllUsers());
             }
 
@@ -48,13 +50,13 @@ namespace PJCMobile.Controllers
             
             if (Roles.IsUserInRole("Job Coach"))
             {
-                lstUsers = getListOfUsersAssignedToJobCoach(thisUsername);
+                lstUsers = helper.getListOfUsersAssignedToJobCoach(thisUsername);
                 ViewData["AssignedUsers"] = lstUsers;
             }
 
             if (Roles.IsUserInRole("Parent"))
             {
-                lstUsers = getListOfUsersChildOfParent(thisUsername);
+                lstUsers = helper.getListOfUsersChildOfParent(thisUsername);
                 ViewData["Children"] = lstUsers;
             }
             
@@ -69,7 +71,7 @@ namespace PJCMobile.Controllers
                 return View();
             }
 
-            if (!userExists(user))
+            if (!helper.userExists(user))
                 return HttpNotFound();
 
             if (Roles.IsUserInRole(user,"Administrator")){
@@ -77,18 +79,18 @@ namespace PJCMobile.Controllers
             }
             else if (Roles.IsUserInRole(user,"Job Coach")){
                 ViewData["Role"] = "Job Coach";
-                ViewData["AssignedUsers"] = getListOfUsersAssignedToJobCoach(user);
+                ViewData["AssignedUsers"] = helper.getListOfUsersAssignedToJobCoach(user);
                 //ViewData["CreatedRoutines"] = getListOfCreatedRoutines(user);
             }
             else if (Roles.IsUserInRole(user,"Parent")){
                 ViewData["Role"] = "Parent";
-                ViewData["Children"] = getListOfUsersChildOfParent(user);
+                ViewData["Children"] = helper.getListOfUsersChildOfParent(user);
                 //ViewData["CreatedRoutines"] = getListOfCreatedRoutines(user);
             }
             else if (Roles.IsUserInRole(user,"User")){
                 ViewData["Role"] = "User";
-                ViewData["Job Coach"] = getUsersJobCoach(user);
-                ViewData["Parent"] = getUsersParent(user);
+                ViewData["Job Coach"] = helper.getUsersJobCoach(user);
+                ViewData["Parent"] = helper.getUsersParent(user);
                 //ViewData["AssignedRoutines"] = getListOfAssignedRoutines(user);
             }
 
@@ -110,14 +112,14 @@ namespace PJCMobile.Controllers
 
             string thisUsername = System.Web.Security.Membership.GetUser().UserName;
 
-            if (!userExists(user))
+            if (!helper.userExists(user))
                 return HttpNotFound();
 
             if (Roles.IsUserInRole("Administrator")){
-                ViewData["AvailableJobCoaches"] = getListOfUsersInRole("Job Coach");
-                ViewData["AvailableParents"] = getListOfUsersInRole("Parent");
-                ViewData["AvailableUsers"] = getListOfUnassignedUsers();
-                ViewData["AvailableChildren"] = getListOfUnassignedChildren();
+                ViewData["AvailableJobCoaches"] = helper.getListOfUsersInRole("Job Coach");
+                ViewData["AvailableParents"] = helper.getListOfUsersInRole("Parent");
+                ViewData["AvailableUsers"] = helper.getListOfUnassignedUsers();
+                ViewData["AvailableChildren"] = helper.getListOfUnassignedChildren();
             }
             else if (Roles.IsUserInRole("Job Coach")){
                 //ViewData["AvailableRoutines"] = getListOfCreatedRoutines(thisUsername);
@@ -132,18 +134,18 @@ namespace PJCMobile.Controllers
             else if (Roles.IsUserInRole(user, "Job Coach"))
             {
                 ViewData["Role"] = "Job Coach";
-                ViewData["AssignedUsers"] = getListOfUsersAssignedToJobCoach(user);
+                ViewData["AssignedUsers"] = helper.getListOfUsersAssignedToJobCoach(user);
             }
             else if (Roles.IsUserInRole(user, "Parent"))
             {
                 ViewData["Role"] = "Parent";
-                ViewData["Children"] = getListOfUsersChildOfParent(user);
+                ViewData["Children"] = helper.getListOfUsersChildOfParent(user);
             }
             else if (Roles.IsUserInRole(user, "User"))
             {
                 ViewData["Role"] = "User";
-                ViewData["JobCoach"] = getUsersJobCoach(user);
-                ViewData["Parent"] = getUsersParent(user);
+                ViewData["JobCoach"] = helper.getUsersJobCoach(user);
+                ViewData["Parent"] = helper.getUsersParent(user);
             }
 
             //Below Here
@@ -174,15 +176,15 @@ namespace PJCMobile.Controllers
                 return View();
             }
 
-            updatePhoneNumber(userName, phoneNumber);
-            updateEmail(userName, email);
+            helper.updatePhoneNumber(userName, phoneNumber);
+            helper.updateEmail(userName, email);
             
             if (Roles.IsUserInRole("Administrator"))
             {
                 string userRole = userType;
-                updateUserRole(userName, userRole);
+                helper.updateUserRole(userName, userRole);
 
-                updateAssignedUsers(userName, null);
+                helper.updateAssignedUsers(userName, null);
                 //updateAssignedChildren(userName, null);
                 //updateJobCoach(userName, null);
                 //updateParent(userName, null);
@@ -192,7 +194,7 @@ namespace PJCMobile.Controllers
                 }
                 else if (Roles.IsUserInRole(userName, "Job Coach")){
                     string[] assignedUsers = selectedUsers;
-                    updateAssignedUsers(userName, assignedUsers);
+                    helper.updateAssignedUsers(userName, assignedUsers);
                 }
                 else if (Roles.IsUserInRole(userName, "Parent")){
                     //updateAssignedChildren(userName, assignedChildren);
@@ -235,7 +237,7 @@ namespace PJCMobile.Controllers
             //Send email to user with new password
             try
             {
-                EmailOutbox outEmail = db.EmailOutboxes.Where(s => s.purpose == "password reset").FirstOrDefault();
+                EmailOutbox outEmail = helper.getEmailOutboxForPurpose("password reset");
 
                 string emailBody = "Your password for the Pocket Job Coach has been reset to the temporary password '" + newpassword + "'. Please login and change your password now at http://pjc.gear.host";
                 Email.send(outEmail, currentUser.Email, "Pocket Job Coach Password Reset", emailBody);
@@ -244,8 +246,7 @@ namespace PJCMobile.Controllers
             }
             catch (Exception e)
             {
-                db.Debugs.Add(new Debug() { debugMessage = e.ToString().Substring(0, 199) });
-                db.SaveChanges();
+                debug.createDebugMessageInDatabase(e.ToString());
                     
                 Response.Redirect("~/Unauthorized");
             }
@@ -262,10 +263,10 @@ namespace PJCMobile.Controllers
                 return View();
             }
 
-            ViewData["AvailableJobCoaches"] = getListOfUsersInRole("Job Coach");
-            ViewData["AvailableParents"] = getListOfUsersInRole("Parent");
-            ViewData["AvailableUsers"] = getListOfUnassignedUsers();
-            ViewData["AvailableChildren"] = getListOfUnassignedChildren();
+            ViewData["AvailableJobCoaches"] = helper.getListOfUsersInRole("Job Coach");
+            ViewData["AvailableParents"] = helper.getListOfUsersInRole("Parent");
+            ViewData["AvailableUsers"] = helper.getListOfUnassignedUsers();
+            ViewData["AvailableChildren"] = helper.getListOfUnassignedChildren();
 
             //Below Here
             string thisUsername = System.Web.Security.Membership.GetUser().UserName;
@@ -300,11 +301,10 @@ namespace PJCMobile.Controllers
                 
             MembershipUser user = System.Web.Security.Membership.GetUser(model.UserName);
 
-            //Create UserName record
-            db.UserNames.Add(new UserName() {userID = db.Users.Find(user.ProviderUserKey).UserId, userName1 = user.UserName });
-            updatePhoneNumber(model.UserName, model.PhoneNumber);
+            helper.createUserNameRecord(user.ProviderUserKey);
+            helper.updatePhoneNumber(model.UserName, model.PhoneNumber);
             string userRole = usertype;
-            updateUserRole(model.UserName, userRole);
+            helper.updateUserRole(model.UserName, userRole);
                 
             if (Roles.IsUserInRole(model.UserName, "Administrator"))
             {
@@ -313,7 +313,7 @@ namespace PJCMobile.Controllers
             else if (Roles.IsUserInRole(model.UserName, "Job Coach"))
             {
                 string[] assignedUsers = selectedUsers;
-                updateAssignedUsers(model.UserName, assignedUsers);
+                helper.updateAssignedUsers(model.UserName, assignedUsers);
             }
             else if (Roles.IsUserInRole(model.UserName, "Parent"))
             {
@@ -370,13 +370,8 @@ namespace PJCMobile.Controllers
                 return View();
             }
 
-            //Need to delete all references to this user
-            //deleteAllReferencesToUser(username);
+            helper.deleteUser(username);
 
-            db.UserNames.Remove(db.UserNames.Find(username));
-            db.SaveChanges();
-
-            System.Web.Security.Membership.DeleteUser(username);
             Response.Redirect("~/Account/List");
             //Will Never Get Here
             return View();
@@ -664,211 +659,6 @@ namespace PJCMobile.Controllers
             Response.Redirect("~/Account/AssignedTasks?user=" + username);
              */
             return View();
-        }
-
-        private List<MembershipUser> getListOfUsersInRole(string role)
-        {
-            List<MembershipUser> lstUsers = new List<MembershipUser>();
-            foreach (string userName in Roles.GetUsersInRole(role))
-            {
-                lstUsers.Add(System.Web.Security.Membership.GetUser(userName));
-            }
-            return lstUsers;
-        }
-        
-        private List<MembershipUser> getListOfUsersAssignedToJobCoach(string jobCoachUserName)
-        {
-            List<MembershipUser> lstUsers = new List<MembershipUser>();
-
-            //UserName12 is collection where self is jobcoach
-            foreach (PJCAdmin.Models.UserName usr in db.UserNames.Find(jobCoachUserName).UserName12)
-            {
-                lstUsers.Add(System.Web.Security.Membership.GetUser(usr.userName1));
-            }
-            return lstUsers;
-        }
-
-        private List<MembershipUser> getListOfUsersChildOfParent(string parentUserName)
-        {
-            List<MembershipUser> lstUsers = new List<MembershipUser>();
-
-            //UserName11 is collection where self is guardian
-            foreach (PJCAdmin.Models.UserName usr in db.UserNames.Find(parentUserName).UserName11)
-            {
-                lstUsers.Add(System.Web.Security.Membership.GetUser(usr.userName1));
-            }
-            return lstUsers;
-        }
-
-        private MembershipUser getUsersJobCoach(string userUserName)
-        {
-            string jobCoachUserName = db.UserNames.Find(userUserName).jobCoachUserName;
-            return System.Web.Security.Membership.GetUser(jobCoachUserName);
-        }
-
-        private MembershipUser getUsersParent(string userUserName)
-        {
-            string parentUserName = db.UserNames.Find(userUserName).guardianUserName;
-            return System.Web.Security.Membership.GetUser(parentUserName);
-        }
-
-        //TODO move to Routine controller
-        private List<Routine> getListOfCreatedRoutines(string creatorUserName)
-        {//TODO check if duplicated routines show up. They probably will and will need to be restricted to unique routine names
-            List<Routine> createdRoutines = new List<Routine>();
-            //Routines is routines username has created
-            foreach (Routine r in db.UserNames.Find(creatorUserName).Routines)
-            {
-                createdRoutines.Add(r);
-            }
-            return createdRoutines;
-        }
-
-        //TODO move to Routine controller
-        private List<Routine> getListOfAssignedRoutines(string assigneeUserName)
-        {//TODO check if previous versions of routines show up. They probably will and will need to be restricted to unique routine names
-            List<Routine> assignedRoutines = new List<Routine>();
-            //Routines1 is routines username has been assigned
-            foreach (Routine r in db.UserNames.Find(assigneeUserName).Routines1)
-            {
-                assignedRoutines.Add(r);
-            }
-            return assignedRoutines;
-        }
-
-        private bool userExists(string userName)
-        {
-            MembershipUser targetUser = System.Web.Security.Membership.GetUser(userName);
-            if (targetUser == null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private List<MembershipUser> getListOfUnassignedUsers()
-        {
-            List<MembershipUser> users = getListOfUsersInRole("User");
-            List<MembershipUser> unassignedUsers = new List<MembershipUser>();
-
-            foreach (MembershipUser usr in users)
-            {
-                if (!isUserAssigned(usr))
-                    unassignedUsers.Add(usr);
-            }
-            return unassignedUsers;
-        }
-
-        private List<MembershipUser> getListOfUnassignedChildren()
-        {
-            List<MembershipUser> users = getListOfUsersInRole("User");
-            List<MembershipUser> unassignedChildren = new List<MembershipUser>();
-
-            foreach (MembershipUser usr in users)
-            {
-                if (!isChildAssigned(usr))
-                    unassignedChildren.Add(usr);
-            }
-            return unassignedChildren;
-        }
-
-        private bool isUserAssigned(MembershipUser usr)
-        {
-            string jobCoachUserName = db.UserNames.Find(usr.UserName).jobCoachUserName;
-            if (jobCoachUserName == null)
-                return false;
-            if (!userExists(jobCoachUserName))
-                return false;
-            return true;
-        }
-
-        private bool isChildAssigned(MembershipUser usr)
-        {
-            string parentUserName = db.UserNames.Find(usr.UserName).guardianUserName;
-            if (parentUserName == null)
-                return false;
-            if (!userExists(parentUserName))
-                return false;
-            return true;
-        }
-
-        private void updateParent(string userName, string parent)
-        {
-            if (parent == null)
-                db.UserNames.Find(userName).UserName2 = null;
-            else
-                //UserName2 is the guardian
-                db.UserNames.Find(userName).UserName2 = db.UserNames.Find(parent);
-        }
-
-        private void updateJobCoach(string userName, string jobCoach)
-        {
-            if (jobCoach == null)
-                db.UserNames.Find(userName).UserName3 = null;
-            else
-                //UserName3 is the job coach
-                db.UserNames.Find(userName).UserName3 = db.UserNames.Find(jobCoach);
-        }
-
-        private void updateAssignedChildren(string userName, string[] assignedChildren)
-        {
-            //UserName11 is all children of the selected username
-            db.UserNames.Find(userName).UserName11.Clear();
-            if (assignedChildren != null)
-            {
-                foreach (string id in assignedChildren)
-                {
-                    string selectedUserName = db.Users.Find(Guid.Parse(id)).UserName;
-                    db.UserNames.Find(userName).UserName11.Add(db.UserNames.Find(selectedUserName));
-                }
-            }
-        }
-
-        private void updateAssignedUsers(string userName, string[] assignedUsers)
-        {
-            //UserName12 is all usernames assigned to the selected username
-            db.UserNames.Find(userName).UserName12.Clear();
-            if (assignedUsers != null)
-            {
-                foreach (string id in assignedUsers)
-                {
-                    string selectedUserName = db.Users.Find(Guid.Parse(id)).UserName;
-                    db.UserNames.Find(userName).UserName12.Add(db.UserNames.Find(selectedUserName));
-                }
-            }
-        }
-
-        private void updateUserRole(string userName, string userRole)
-        {
-            MembershipUser user = System.Web.Security.Membership.GetUser(userName);
-            foreach (string aRole in Roles.GetAllRoles())
-            {
-                //Only Let the user be in one role
-                try
-                {
-                    Roles.RemoveUserFromRole(user.UserName, aRole);
-                }
-                catch
-                {
-                    // Don't Worry About It.... :)
-                }
-            }
-            Roles.AddUserToRole(user.UserName, userRole);
-        }
-
-        private void updateEmail(string userName, string emailAddress)
-        {
-            MembershipUser user = System.Web.Security.Membership.GetUser(userName);
-            user.Email = emailAddress;
-            System.Web.Security.Membership.UpdateUser(user);
-        }
-
-        private void updatePhoneNumber(string userName, string phoneNumber)
-        {
-            ProfileBase profile = ProfileBase.Create(userName, true);
-            profile.SetPropertyValue("PhoneNumber", phoneNumber);
-            profile.Save();
         }
 
         #region Status Codes
