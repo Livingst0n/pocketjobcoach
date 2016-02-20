@@ -159,7 +159,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\APIAuth.cs" />
-    <Compile Include="Classes\APIModelHelpers\ModelCopier.cs" />
+    <Compile Include="Classes\Helpers\APIModelHelpers\ModelCopier.cs" />
+    <Compile Include="Classes\Helpers\DebugHelper.cs" />
+    <Compile Include="Classes\Helpers\MVCModelHelpers\AccountHelper.cs" />
     <Compile Include="Classes\TokenIsInvalidException.cs" />
     <Compile Include="ControllersAPI\TestController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
