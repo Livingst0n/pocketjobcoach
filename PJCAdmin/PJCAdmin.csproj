@@ -160,11 +160,17 @@
   <ItemGroup>
     <Compile Include="Classes\APIAuth.cs" />
     <Compile Include="Classes\TokenIsInvalidException.cs" />
-    <Compile Include="Controllers\AuthTestController.cs" />
-    <Compile Include="Controllers\DeleteHelloController.cs" />
-    <Compile Include="Controllers\HelloController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="ControllersAPI\AuthTestController.cs" />
+    <Compile Include="ControllersAPI\DeleteHelloController.cs" />
+    <Compile Include="ControllersAPI\HelloController.cs" />
+    <Compile Include="Controllers\JobController.cs" />
+    <Compile Include="ControllersAPI\LoginController.cs" />
+    <Compile Include="Controllers\PromptController.cs" />
+    <Compile Include="Controllers\PromptTypeController.cs" />
+    <Compile Include="ControllersAPI\RoutineController.cs" />
     <Compile Include="Controllers\TaskCategoryController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\UserTypeController.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -172,11 +178,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Classes\Email.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\JobController.cs" />
-    <Compile Include="Controllers\PromptController.cs" />
-    <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -221,7 +223,6 @@
     <Compile Include="Models\Profile.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PromptTypeController.cs" />
     <Compile Include="Models\PJCModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
