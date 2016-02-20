@@ -27,12 +27,12 @@ ViewBag.Title = "Users";
             {
                 <span>|</span>
                 if(user.IsLockedOut){
-                    Html.ActionLink("Unlock", "Unlock", new { username = user.UserName });
+                    @Html.ActionLink("Unlock", "Unlock", new { username = user.UserName });
                 }else{
                     <span>Active</span>
                 }
-               <span>|</span>
-            @Html.ActionLink("Delete", "Delete", new { username = user.UserName })
+                <span>|</span>
+                @Html.ActionLink("Delete", "Delete", new { username = user.UserName })
             }
         </td>
     </tr>
