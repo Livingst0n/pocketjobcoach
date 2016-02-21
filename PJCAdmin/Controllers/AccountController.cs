@@ -79,7 +79,7 @@ namespace PJCMobile.Controllers
             }
             else if (Roles.IsUserInRole(user,"Job Coach")){
                 ViewData["Role"] = "Job Coach";
-                ViewData["AssignedUsers"] = helper.getListOfUsersAssignedToJobCoach(user);
+                ViewData["AssignedUsersNew"] = helper.getListOfUsersAssignedToJobCoach(user);
                 //ViewData["CreatedRoutines"] = getListOfCreatedRoutines(user);
             }
             else if (Roles.IsUserInRole(user,"Parent")){
@@ -95,6 +95,8 @@ namespace PJCMobile.Controllers
             }
 
             //Below Here
+            ViewData["AssignedUsers"] = helper.getListOfUsersAssignedToJobCoach(user);
+
             if (db.UserNames.Find(user).Routines1.Count > 0)
                 ViewData["SelectedRoutine"] = db.UserNames.Find(user).Routines1.ElementAt(0); //routines assigned to user
             else
