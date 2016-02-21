@@ -1,0 +1,116 @@
+<html>
+<head><title>Routine Retrieval Unit Test</title></head>
+<body>
+  <div>
+    <h4>Login's Routines<h4>
+    <ul id="getAllRoutinesResults"></ul>
+    <p id="getAllRoutinesPF" style="color:limegreen;"></p>
+    <h4>Login's Parent's Routines<h4>
+    <ul id="getAllParentRoutinesResults"></ul>
+    <p id="getAllParentRoutinesPF" style="color:limegreen;"></p>
+    <h4>Login's JobCoach's Routines<h4>
+    <ul id="getAllCoachRoutinesResults"></ul>
+    <p id="getAllCoachRoutinesPF" style="color:limegreen;"></p>
+  </div>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+  <script>
+    var uri = 'http://localhost:43393/api/';
+    var loginToken = "";
+    var uName = 'UnitTesterChild';
+    var uPass = 'password';
+    
+    $(document).ready(function () {
+      login();
+    });
+
+    function login() {
+      var login = {
+        'UserName':uName,
+        'Password':uPass};
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data: login,
+        url: uri + "Login",
+        success: function(data){
+          loginToken = data;
+          $('#data').html(data);
+          getAllRoutines();
+        },
+        error: function(){
+          alert('Login Failure');
+        }
+      });
+    }
+    
+    function getAllRoutines() {
+      $.getJSON(uri + "Routine",
+        {token: loginToken},
+        function (data) {
+          // On success, 'data' contains a list of Routines.
+          $.each(data, function (key, item) {
+            // Add a list item for the record.
+            $('<li>', { text: formatItem(item) }).appendTo($('#getAllRoutinesResults'));
+          });
+        }
+      ).always(function(){
+        if ($('#getAllRoutinesResults li').length == 3){
+          $('#getAllRoutinesPF').html('Success!');
+        } else {
+          $('#getAllRoutinesPF').html('Failure: No Routines Returned');
+          $('#getAllRoutinesPF').css('color','red');
+        }
+
+        getParentRoutines();
+      });
+    }
+
+    function getParentRoutines() {
+      $.getJSON(uri + "Routine",
+        {token: loginToken,assignedBy: "Parent"},
+        function (data) {
+          // On success, 'data' contains a list of Routines.
+          $.each(data, function (key, item) {
+            // Add a list item for the record.
+            $('<li>', { text: formatItem(item) }).appendTo($('#getAllParentRoutinesResults'));
+          });
+        }
+      ).always(function(){
+        if ($('#getAllParentRoutinesResults li').length == 1){
+          $('#getAllParentRoutinesPF').html('Success!');
+        } else {
+          $('#getAllParentRoutinesPF').html('Failure: No Routines Returned');
+          $('#getAllParentRoutinesPF').css('color','red');
+        }
+
+        getJobCoachRoutines();
+      });
+    }
+
+    function getJobCoachRoutines() {
+      $.getJSON(uri + "Routine",
+        {token: loginToken,assignedBy: "Job Coach"},
+        function (data) {
+          // On success, 'data' contains a list of Routines.
+          $.each(data, function (key, item) {
+            // Add a list item for the record.
+            $('<li>', { text: formatItem(item) }).appendTo($('#getAllCoachRoutinesResults'));
+          });
+        }
+      ).always(function(){
+        if ($('#getAllCoachRoutinesResults li').length == 2){
+          $('#getAllCoachRoutinesPF').html('Success!');
+        } else {
+          $('#getAllCoachRoutinesPF').html('Failure: No Routines Returned');
+          $('#getAllCoachRoutinesPF').css('color','red');
+        }
+
+
+      });
+    }
+
+    function formatItem(item) {
+      return item.routineTitle + ': ' + item.userName + "'s Routine assigned by - " + item.creatorUserName;
+    }
+  </script>

@@ -1,0 +1,209 @@
+<html>
+<head><title>Authentication And Validation Unit Test</title></head>
+<body>
+  <div>
+    <h4>Invalid Login</h4>
+    <p id="ILoginPF" style="color:limegreen;"></p>
+
+    <h4>Valid Login</h4>
+    <ul id="VLoginResults"></ul>
+    <p id="VLoginPF" style="color:limegreen;"></p>
+
+    <h4>Invalid Token</h4>
+    <ul id="ITokenResults"></ul>
+    <p id="ITokenPF" style="color:limegreen;"></p>
+
+    <h4>Expired Token</h4>
+    <ul id="ETokenResults"></ul>
+    <p id="ETokenPF" style="color:limegreen;"></p>
+
+    <h4>Valid Token</h4>
+    <ul id="VTokenResults"></ul>
+    <p id="VTokenPF" style="color:limegreen;"></p>
+
+    <h4>Second Valid Token</h4>
+    <ul id="SecondVTokenResults"></ul>
+    <p id="SecondVTokenPF" style="color:limegreen;"></p>
+
+  </div>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+  <script>
+    var uri = 'http://pjcdbrebuild.gear.host/api/';
+    var newToken = "";
+    var VResultCount = 0;
+    var secondNewToken = "";
+
+    $(document).ready(function () {
+      //Start
+      InvalidLogin();
+      //ValidLogin();
+      //InvalidToken();
+      //ExpiredToken();
+      //ValidToken();
+    });
+
+
+    function InvalidLogin(){
+      var login = {
+        'UserName':'UnitTester',
+        'Password':'password'};
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data: login,
+        url: uri + "Login",
+        success: function(data){
+          $('#ILoginPF').html('Failure: Invalid Credentials Accepted');
+          $('#ILoginPF').css('color','red');
+          ValidLogin();
+        },
+        error: function(){
+          $('#ILoginPF').html('Success!');
+          ValidLogin();
+        }
+      });
+    }
+
+    function ValidLogin(){
+      var login = {
+        'UserName':'UnitTester',
+        'Password':'testpassword'};
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data: login,
+        url: uri + "Login",
+        success: function(data){
+          $('#VLoginPF').html('Success!');
+          newToken = data;
+          InvalidToken();
+        },
+        error: function(){
+          $('#VLoginPF').html('Failure: Not Allowed');
+          $('#VLoginPF').css('color','red');
+          InvalidToken();
+        }
+      });
+    }
+    
+    function InvalidToken(){
+      $.getJSON(uri + "AuthTest",
+        {token: '5d4acb08-ffc2-47e1-b3b9-e66e109542a9:0'},
+        function (data) {
+          // On success, 'data' contains a list of products.
+          $.each(data, function (key, item) {
+            // Add a list item for the record.
+            $('<li>', { text: formatItem(item) }).appendTo($('#ITokenResults'));
+          });
+        }
+      ).always(function(){
+        if ($('#ITokenResults li').length == 0){
+          $('#ITokenPF').html('Success!');
+        } else {
+          $('#ITokenPF').html('Failure: Results Returned On Invalid Token');
+          $('#ITokenPF').css('color','red');
+        }
+
+        ExpiredToken();
+      });
+    }
+
+    function ExpiredToken(){
+      $.getJSON(uri + "AuthTest",
+        {token: 'e6ee040e-dc94-421f-b6d9-614b80c7f709:4'},
+        function (data) {
+          // On success, 'data' contains a list of products.
+          $.each(data, function (key, item) {
+            // Add a list item for the record.
+            $('<li>', { text: formatItem(item) }).appendTo($('#ETokenResults'));
+          });
+        }
+      ).always(function(){
+        if ($('#ETokenResults li').length == 0){
+          $('#ETokenPF').html('Success!');
+        } else {
+          $('#ETokenPF').html('Failure: Results Returned On Expired Token');
+          $('#ETokenPF').css('color','red');
+        }
+
+        ValidToken();
+      });
+    }
+
+    function ValidToken(){
+      $.getJSON(uri + "AuthTest",
+        {token: newToken},
+        function (data) {
+          // On success, 'data' contains a list of products.
+          $.each(data, function (key, item) {
+            // Add a list item for the record.
+            $('<li>', { text: formatItem(item) }).appendTo($('#VTokenResults'));
+          });
+        }
+      ).always(function(){
+        VResultCount = $('#VTokenResults li').length;
+
+        if (VResultCount == 0){
+          $('#VTokenPF').html('Failure: Not Accepted');
+          $('#VTokenPF').css('color','red');
+        } else {
+          $('#VTokenPF').html('Success!');
+        }
+
+        SecondLogin();
+      });
+    }
+
+    function SecondLogin(){
+      var login = {
+        'UserName':'testAdmin',
+        'Password':'password'};
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data: login,
+        url: uri + "Login",
+        success: function(data){
+          secondNewToken = data;
+          SecondValidToken();
+        },
+        error: function(){
+          $('#SecondVLoginPF').html('Failure: Not Allowed');
+          $('#SecondVLoginPF').css('color','red');
+        }
+      });
+    }
+
+    function SecondValidToken(){
+      $.getJSON(uri + "AuthTest",
+        {token: secondNewToken},
+        function (data) {
+          // On success, 'data' contains a list of products.
+          $.each(data, function (key, item) {
+            // Add a list item for the record.
+            $('<li>', { text: formatItem(item) }).appendTo($('#SecondVTokenResults'));
+          });
+        }
+      ).always(function(){
+        SecondVResultCount = $('#SecondVTokenResults li').length;
+
+        if (SecondVResultCount == 0){
+          $('#SecondVTokenPF').html('Failure: Not Accepted');
+          $('#SecondVTokenPF').css('color','red');
+        } else if (SecondVResultCount == VResultCount) {
+          $('#SecondVTokenPF').html('Possible Failure: Same Number of Results');
+          $('#SecondVTokenPF').css('color','orange');
+        } else {
+          $('#SecondVTokenPF').html('Success!');
+        }
+      });
+    }
+
+    function formatItem(item) {
+      return item.AuthTestID + ': ' + item.UserName + '- "' + item.TestMessage + '"';
+    }
+ 
+  </script>
+</body>
+</html>
