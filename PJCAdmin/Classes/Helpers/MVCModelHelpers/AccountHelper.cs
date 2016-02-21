@@ -76,12 +76,16 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         public MembershipUser getUsersJobCoach(string userUserName)
         {
             string jobCoachUserName = db.UserNames.Find(userUserName).jobCoachUserName;
+            if (jobCoachUserName == null)
+                return null;
             return System.Web.Security.Membership.GetUser(jobCoachUserName);
         }
 
         public MembershipUser getUsersParent(string userUserName)
         {
             string parentUserName = db.UserNames.Find(userUserName).guardianUserName;
+            if (parentUserName == null)
+                return null;
             return System.Web.Security.Membership.GetUser(parentUserName);
         }
 
