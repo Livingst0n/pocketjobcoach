@@ -9,12 +9,14 @@
 
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
   <script>
-    var uri = 'http://pjc.gear.host/api/Login';
+    var uri = 'http://pjcdbrebuild.gear.host/api/Login';
 
     function find() {
       var login = {
         'UserName':$('#UN').val(),
-        'Password':$('#PW').val()};
+        'Password':$('#PW').val(),
+        'RememberMe':false}; //for 10 minutes til expiration
+        //'RememberMe':true}; //for 50 years til expiration
       $.ajax({
         type: 'POST',
         dataType: 'json',
