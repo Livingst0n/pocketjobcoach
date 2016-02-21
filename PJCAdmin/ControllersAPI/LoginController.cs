@@ -25,7 +25,11 @@ namespace PJCAdmin.ControllersAPI
                     token = db.AuthTokens.Where<AuthToken>(t => t.userName.Equals(userName)).First();
                     //User already has a token -> update token
                     token.token = Guid.NewGuid().ToString() + ":" + token.authTokenID;
-                    token.expirationDate = DateTime.Now.AddMinutes(10); //Expires in 10 minutes
+
+                    if (model.RememberMe)
+                        token.expirationDate = DateTime.Now.AddYears(50); //Expires in 50 years
+                    else
+                        token.expirationDate = DateTime.Now.AddMinutes(10); //Expires in 10 minutes
 
                     db.Entry(token).State = System.Data.EntityState.Modified;
                     db.SaveChanges();
@@ -37,7 +41,11 @@ namespace PJCAdmin.ControllersAPI
                     token.userName = userName;
 
                     token.token = Guid.NewGuid().ToString();
-                    token.expirationDate = DateTime.Now.AddMinutes(10); //Expires in 10 minutes
+
+                    if (model.RememberMe)
+                        token.expirationDate = DateTime.Now.AddYears(50); //Expires in 50 years
+                    else
+                        token.expirationDate = DateTime.Now.AddMinutes(10); //Expires in 10 minutes
 
                     token = db.AuthTokens.Add(token);
                     db.SaveChanges();
