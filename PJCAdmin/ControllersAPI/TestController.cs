@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using PJCAdmin.Models;
-using PJCAdmin.Classes.APIModelHelpers;
+using PJCAdmin.Classes.Helpers.APIModelHelpers;
 
 namespace PJCAdmin.ControllersAPI
 {
