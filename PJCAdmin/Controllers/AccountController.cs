@@ -71,6 +71,12 @@ namespace PJCMobile.Controllers
                 return View();
             }
 
+            if (!(Roles.IsUserInRole("Administrator") || helper.isThisUserUsersParent(user) || helper.isThisUserUsersJobCoach(user)))
+            {
+                Response.Redirect("~/Unauthorized");
+                return View();
+            }
+
             if (!helper.userExists(user))
                 return HttpNotFound();
 
@@ -107,6 +113,12 @@ namespace PJCMobile.Controllers
         public ActionResult Edit(string user = "")
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent")))
+            {
+                Response.Redirect("~/Unauthorized");
+                return View();
+            }
+
+            if (!(Roles.IsUserInRole("Administrator") || helper.isThisUserUsersParent(user) || helper.isThisUserUsersJobCoach(user)))
             {
                 Response.Redirect("~/Unauthorized");
                 return View();
@@ -173,6 +185,12 @@ namespace PJCMobile.Controllers
         public ActionResult Edit(string userName, string email, string userType, string[] selectedUsers, string job, string applyJobTemplate, string phoneNumber)
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent")))
+            {
+                Response.Redirect("~/Unauthorized");
+                return View();
+            }
+
+            if (!(Roles.IsUserInRole("Administrator") || helper.isThisUserUsersParent(userName) || helper.isThisUserUsersJobCoach(userName)))
             {
                 Response.Redirect("~/Unauthorized");
                 return View();

@@ -149,6 +149,26 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             return true;
         }
 
+        public bool isThisUserUsersParent(string user)
+        {
+            string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+            MembershipUser parent = getUsersParent(user);
+            if (parent != null && parent.UserName.Equals(thisUsername))
+                return true;
+            else
+                return false;
+        }
+
+        public bool isThisUserUsersJobCoach(string user)
+        {
+            string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+            MembershipUser jobCoach = getUsersJobCoach(user);
+            if (jobCoach != null && jobCoach.UserName.Equals(thisUsername))
+                return true;
+            else
+                return false;
+        }
+
         public void updateParent(string userName, string parent)
         {
             if (parent == null)
