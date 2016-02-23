@@ -163,6 +163,7 @@
     <Compile Include="Classes\Helpers\APIModelHelpers\RoutineHelper.cs" />
     <Compile Include="Classes\Helpers\DebugHelper.cs" />
     <Compile Include="Classes\Helpers\MVCModelHelpers\AccountHelper.cs" />
+    <Compile Include="Classes\Helpers\MVCModelHelpers\RoutineHelper.cs" />
     <Compile Include="Classes\TokenIsInvalidException.cs" />
     <Compile Include="ControllersAPI\TestController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Controllers\PromptController.cs" />
     <Compile Include="Controllers\PromptTypeController.cs" />
     <Compile Include="ControllersAPI\RoutineController.cs" />
+    <Compile Include="Controllers\RoutineController.cs" />
     <Compile Include="Controllers\TaskCategoryController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\UserTypeController.cs" />
@@ -244,6 +246,7 @@
     <Compile Include="Models\Routine.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RoutineModels.cs" />
     <Compile Include="Models\Step.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
