@@ -16,8 +16,8 @@ namespace PJCAdmin.Models
     {
         public Job()
         {
-            this.Notes = new HashSet<Note>();
             this.Steps = new HashSet<Step>();
+            this.Notes = new HashSet<Note>();
         }
     
         public int jobID { get; set; }
@@ -25,7 +25,7 @@ namespace PJCAdmin.Models
         public System.DateTime startTime { get; set; }
     
         public virtual Routine Routine { get; set; }
-        public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<Step> Steps { get; set; }
+        public virtual ICollection<Note> Notes { get; set; }
     }
 }

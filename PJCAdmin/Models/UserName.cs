@@ -18,10 +18,11 @@ namespace PJCAdmin.Models
         {
             this.AuthTests = new HashSet<AuthTest>();
             this.AuthTokens = new HashSet<AuthToken>();
-            this.Routines = new HashSet<Routine>();
-            this.Routines1 = new HashSet<Routine>();
             this.UserName11 = new HashSet<UserName>();
             this.UserName12 = new HashSet<UserName>();
+            this.Routines = new HashSet<Routine>();
+            this.Routines1 = new HashSet<Routine>();
+            this.Notes = new HashSet<Note>();
         }
     
         public string userName1 { get; set; }
@@ -31,12 +32,13 @@ namespace PJCAdmin.Models
     
         public virtual ICollection<AuthTest> AuthTests { get; set; }
         public virtual ICollection<AuthToken> AuthTokens { get; set; }
-        public virtual ICollection<Routine> Routines { get; set; }
-        public virtual ICollection<Routine> Routines1 { get; set; }
         public virtual ICollection<UserName> UserName11 { get; set; }
         public virtual UserName UserName2 { get; set; }
         public virtual ICollection<UserName> UserName12 { get; set; }
         public virtual UserName UserName3 { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<Routine> Routines { get; set; }
+        public virtual ICollection<Routine> Routines1 { get; set; }
+        public virtual ICollection<Note> Notes { get; set; }
     }
 }

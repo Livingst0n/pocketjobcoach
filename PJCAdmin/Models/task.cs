@@ -7,15 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Runtime.Serialization;
 namespace PJCAdmin.Models
 {
     using System;
     using System.Collections.Generic;
-
+    using System.Runtime.Serialization;
+    
     [DataContract]
     public partial class Task
     {
+        public Task()
+        {
+            this.Feedbacks = new HashSet<Feedback>();
+        }
+    
         [IgnoreDataMember]
         public int routineID { get; set; }
         [DataMember]
@@ -31,33 +36,13 @@ namespace PJCAdmin.Models
         [DataMember]
         public Nullable<System.TimeSpan> expectedDuration { get; set; }
         [IgnoreDataMember]
-        public Nullable<byte> promptTypeID { get; set; }
-        [DataMember]
-        public string promptTitle { get; set; }
-        [DataMember]
-        public string promptMessage { get; set; }
-        [IgnoreDataMember]
-        public Nullable<byte> positiveFeedbackTypeID { get; set; }
-        [DataMember]
-        public string positiveFeedbackTitle { get; set; }
-        [DataMember]
-        public string positiveFeedbackMessage { get; set; }
-        [IgnoreDataMember]
-        public Nullable<byte> negativeFeedbackTypeID { get; set; }
-        [DataMember]
-        public string negativeFeedbackTitle { get; set; }
-        [DataMember]
-        public string negativeFeedbackMessage { get; set; }
+        public int taskID { get; set; }
     
-        [DataMember]
-        public virtual MessageType MessageType { get; set; }
-        [DataMember]
-        public virtual MessageType MessageType1 { get; set; }
-        [DataMember]
-        public virtual MessageType MessageType2 { get; set; }
         [IgnoreDataMember]
         public virtual Routine Routine { get; set; }
         [DataMember]
         public virtual TaskCategory TaskCategory { get; set; }
+        [DataMember]
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
     }
 }

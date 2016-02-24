@@ -6,11 +6,12 @@
 //    Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using System.Runtime.Serialization;
+
 namespace PJCAdmin.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
     
     [DataContract]
     public partial class AuthTest

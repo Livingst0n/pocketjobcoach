@@ -11,20 +11,22 @@ namespace PJCAdmin.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Step
+    using System.Runtime.Serialization;
+
+    [DataContract]
+    public partial class MediaType
     {
-        public Step()
+        public MediaType()
         {
-            this.Notes = new HashSet<Note>();
+            this.Feedbacks = new HashSet<Feedback>();
         }
     
-        public int jobID { get; set; }
-        public byte sequenceNo { get; set; }
-        public Nullable<System.DateTime> endTime { get; set; }
-        public int stepID { get; set; }
+        [IgnoreDataMember]
+        public byte mediaTypeID { get; set; }
+        [DataMember]
+        public string mediaTypeName { get; set; }
     
-        public virtual Job Job { get; set; }
-        public virtual ICollection<Note> Notes { get; set; }
+        [IgnoreDataMember]
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
     }
 }

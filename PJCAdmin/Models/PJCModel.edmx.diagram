@@ -4,48 +4,55 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3a51e45cc80243c599b06fe31443fdcf" Name="Diagram1" ZoomLevel="59">
+      <Diagram DiagramId="3a51e45cc80243c599b06fe31443fdcf" Name="Diagram1" ZoomLevel="72">
         <EntityTypeShape EntityType="pjcModel.Application" Width="1.5" PointX="6.125" PointY="4.125" />
         <EntityTypeShape EntityType="pjcModel.AuthTest" Width="1.5" PointX="11.625" PointY="6.125" />
-        <EntityTypeShape EntityType="pjcModel.Debug" Width="1.5" PointX="17.125" PointY="0.75" />
-        <EntityTypeShape EntityType="pjcModel.EmailOutbox" Width="1.5" PointX="19.25" PointY="0.625" />
-        <EntityTypeShape EntityType="pjcModel.Hello" Width="1.5" PointX="21.25" PointY="0.75" />
-        <EntityTypeShape EntityType="pjcModel.Job" Width="1.5" PointX="9.75" PointY="8.625" />
+        <EntityTypeShape EntityType="pjcModel.Debug" Width="1.5" PointX="14" PointY="6" />
+        <EntityTypeShape EntityType="pjcModel.EmailOutbox" Width="1.5" PointX="12.5" PointY="1.125" />
+        <EntityTypeShape EntityType="pjcModel.Hello" Width="1.5" PointX="13.75" PointY="7.875" />
         <EntityTypeShape EntityType="pjcModel.Membership" Width="1.5" PointX="0.625" PointY="0.5" />
-        <EntityTypeShape EntityType="pjcModel.MessageType" Width="1.5" PointX="9" PointY="15" />
-        <EntityTypeShape EntityType="pjcModel.Note" Width="1.5" PointX="14.375" PointY="8.75" />
         <EntityTypeShape EntityType="pjcModel.Profile" Width="1.5" PointX="6.125" PointY="1.375" />
         <EntityTypeShape EntityType="pjcModel.Role" Width="1.5" PointX="8.875" PointY="0.5" />
-        <EntityTypeShape EntityType="pjcModel.Routine" Width="1.5" PointX="2.75" PointY="7.875" />
-        <EntityTypeShape EntityType="pjcModel.Task" Width="1.5" PointX="0.875" PointY="13" />
-        <EntityTypeShape EntityType="pjcModel.TaskCategory" Width="1.5" PointX="5.625" PointY="12.875" />
         <EntityTypeShape EntityType="pjcModel.User" Width="1.5" PointX="3.5" PointY="0.5" />
         <AssociationConnector Association="pjcModel.MembershipEntity_Application" />
         <AssociationConnector Association="pjcModel.RoleEntity_Application" />
         <AssociationConnector Association="pjcModel.User_Application" ></AssociationConnector>
-        <AssociationConnector Association="pjcModel.FK__Job__routineID__53F76C67" />
-        <AssociationConnector Association="pjcModel.FK__Note__5B988E2F" />
         <AssociationConnector Association="pjcModel.MembershipEntity_User" />
-        <AssociationConnector Association="pjcModel.FK__Routine__negativ__42CCE065" />
-        <AssociationConnector Association="pjcModel.FK__Routine__positiv__41D8BC2C" />
-        <AssociationConnector Association="pjcModel.FK__Task__negativeFe__4979DDF4" />
-        <AssociationConnector Association="pjcModel.FK__Task__positiveFe__4885B9BB" />
-        <AssociationConnector Association="pjcModel.FK__Task__promptType__47919582" />
         <AssociationConnector Association="pjcModel.ProfileEntity_User" />
-        <AssociationConnector Association="pjcModel.FK__Task__routineID__45A94D10" />
-        <AssociationConnector Association="pjcModel.FK__Task__taskCatego__469D7149" />
         <AssociationConnector Association="pjcModel.UsersInRoles" />
-        <EntityTypeShape EntityType="pjcModel.Step" Width="1.5" PointX="11.875" PointY="10.625" />
-        <AssociationConnector Association="pjcModel.FK__Step__5F691F13" />
         <EntityTypeShape EntityType="pjcModel.AuthToken" Width="1.5" PointX="9.125" PointY="5" />
         <EntityTypeShape EntityType="pjcModel.UserName" Width="1.5" PointX="5" PointY="6.5" />
         <AssociationConnector Association="pjcModel.FK__AuthTest__UserNa__04CFADEC" />
         <AssociationConnector Association="pjcModel.FK__AuthToken__UserN__07AC1A97" />
-        <AssociationConnector Association="pjcModel.FK__Routine__creator__3FF073BA" />
-        <AssociationConnector Association="pjcModel.FK__Routine__userNam__40E497F3" />
         <AssociationConnector Association="pjcModel.FK__UserName__guardi__3572E547" />
         <AssociationConnector Association="pjcModel.FK__UserName__jobCoa__347EC10E" />
         <AssociationConnector Association="pjcModel.FK__UserName__UserID__7869D707" />
+        <EntityTypeShape EntityType="pjcModel.Feedback" Width="1.5" PointX="1.625" PointY="12" />
+        <EntityTypeShape EntityType="pjcModel.FeedbackType" Width="1.5" PointX="2.125" PointY="9.25" />
+        <EntityTypeShape EntityType="pjcModel.Job" Width="1.5" PointX="8" PointY="12" />
+        <EntityTypeShape EntityType="pjcModel.MediaType" Width="1.5" PointX="0.5" PointY="9.625" />
+        <EntityTypeShape EntityType="pjcModel.Note" Width="1.5" PointX="11.5" PointY="13.375" />
+        <EntityTypeShape EntityType="pjcModel.Routine" Width="1.5" PointX="3.75" PointY="11.375" />
+        <EntityTypeShape EntityType="pjcModel.Step" Width="1.5" PointX="8.125" PointY="14.875" />
+        <EntityTypeShape EntityType="pjcModel.Task" Width="1.5" PointX="2.75" PointY="15.625" />
+        <EntityTypeShape EntityType="pjcModel.TaskCategory" Width="1.5" PointX="5.25" PointY="16.375" />
+        <AssociationConnector Association="pjcModel.FK__Feedback__feedba__438BFA74" />
+        <AssociationConnector Association="pjcModel.FK__Feedback__mediaT__4297D63B" />
+        <AssociationConnector Association="pjcModel.FK__Job__routineID__53F76C67" />
+        <AssociationConnector Association="pjcModel.FK__Step__jobID__29CC2871" />
+        <AssociationConnector Association="pjcModel.FK__Routine__creator__3FF073BA" />
+        <AssociationConnector Association="pjcModel.FK__Routine__userNam__40E497F3" ManuallyRouted="true" >
+          <ConnectorPoint PointX="5.4871839594755727" PointY="10.210999348958334" />
+          <ConnectorPoint PointX="5.4871839594755727" PointY="12.27149783723959" />
+          <ConnectorPoint PointX="5.25" PointY="12.27149783723959" />
+        </AssociationConnector>
+        <AssociationConnector Association="pjcModel.FK__Task__routineID__45A94D10" />
+        <AssociationConnector Association="pjcModel.FK__Task__taskCatego__469D7149" />
+        <AssociationConnector Association="pjcModel.JobNote" />
+        <AssociationConnector Association="pjcModel.RoutineFeedback" />
+        <AssociationConnector Association="pjcModel.StepNote" />
+        <AssociationConnector Association="pjcModel.TaskFeedback" />
+        <AssociationConnector Association="pjcModel.UserNote" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

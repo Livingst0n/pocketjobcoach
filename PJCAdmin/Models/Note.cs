@@ -14,13 +14,19 @@ namespace PJCAdmin.Models
     
     public partial class Note
     {
+        public Note()
+        {
+            this.Jobs = new HashSet<Job>();
+            this.Steps = new HashSet<Step>();
+            this.UserNames = new HashSet<UserName>();
+        }
+    
         public int noteID { get; set; }
-        public int jobID { get; set; }
-        public int routineID { get; set; }
-        public Nullable<byte> stepNo { get; set; }
         public string noteTitle { get; set; }
         public string noteMessage { get; set; }
     
-        public virtual Job Job { get; set; }
+        public virtual ICollection<Job> Jobs { get; set; }
+        public virtual ICollection<Step> Steps { get; set; }
+        public virtual ICollection<UserName> UserNames { get; set; }
     }
 }

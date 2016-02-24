@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Runtime.Serialization;
 namespace PJCAdmin.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
     
     [DataContract]
     public partial class TaskCategory
@@ -20,12 +20,12 @@ namespace PJCAdmin.Models
         {
             this.Tasks = new HashSet<Task>();
         }
-        
+    
         [IgnoreDataMember]
         public byte taskCategoryID { get; set; }
         [DataMember]
         public string categoryName { get; set; }
-
+    
         [IgnoreDataMember]
         public virtual ICollection<Task> Tasks { get; set; }
     }

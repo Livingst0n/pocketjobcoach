@@ -7,38 +7,39 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Runtime.Serialization;
 namespace PJCAdmin.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
     
     [DataContract]
-    public partial class MessageType
+    public partial class Feedback
     {
-        public MessageType()
+        public Feedback()
         {
             this.Routines = new HashSet<Routine>();
-            this.Routines1 = new HashSet<Routine>();
             this.Tasks = new HashSet<Task>();
-            this.Tasks1 = new HashSet<Task>();
-            this.Tasks2 = new HashSet<Task>();
         }
     
         [IgnoreDataMember]
-        public byte messageTypeID { get; set; }
+        public int feedbackID { get; set; }
+        [IgnoreDataMember]
+        public byte mediaTypeID { get; set; }
+        [IgnoreDataMember]
+        public byte feedbackTypeID { get; set; }
         [DataMember]
-        public string messageTypeName { get; set; }
+        public string feedbackTitle { get; set; }
+        [DataMember]
+        public string feedbackMessage { get; set; }
     
+        [DataMember]
+        public virtual FeedbackType FeedbackType { get; set; }
+        [DataMember]
+        public virtual MediaType MediaType { get; set; }
         [IgnoreDataMember]
         public virtual ICollection<Routine> Routines { get; set; }
         [IgnoreDataMember]
-        public virtual ICollection<Routine> Routines1 { get; set; }
-        [IgnoreDataMember]
         public virtual ICollection<Task> Tasks { get; set; }
-        [IgnoreDataMember]
-        public virtual ICollection<Task> Tasks1 { get; set; }
-        [IgnoreDataMember]
-        public virtual ICollection<Task> Tasks2 { get; set; }
     }
 }
