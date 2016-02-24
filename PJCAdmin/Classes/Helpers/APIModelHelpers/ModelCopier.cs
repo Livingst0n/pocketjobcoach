@@ -15,32 +15,26 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
 
             Routine newRoutine = new Routine()
             {
-                assignedOrUpdatedDate = r.assignedOrUpdatedDate,
+                updatedDate = r.updatedDate,
                 creatorUserName = r.creatorUserName,
                 expectedDuration = r.expectedDuration,
                 isNotifiable = r.isNotifiable,
                 isTimed = r.isTimed,
                 Jobs = r.Jobs, //Not copied; not serialized from Routine
-                MessageType = copyMessageType(r.MessageType),
-                MessageType1 = copyMessageType(r.MessageType1),
-                negativeFeedbackMessage = r.negativeFeedbackMessage,
-                negativeFeedbackTitle = r.negativeFeedbackTitle,
-                negativeFeedbackTypeID = r.negativeFeedbackTypeID,
-                positiveFeedbackMessage = r.positiveFeedbackMessage,
-                positiveFeedbackTitle = r.positiveFeedbackTitle,
-                positiveFeedbackTypeID = r.positiveFeedbackTypeID,
                 routineID = r.routineID,
                 routineTitle = r.routineTitle,
-                userName = r.userName,
+                assigneeUserName = r.assigneeUserName,
+                UserName = r.UserName, //Not copied; not serialized from Routine
                 UserName1 = r.UserName1, //Not copied; not serialized from Routine
-                UserName2 = r.UserName2 //Not copied; not serialized from Routine
+                isDisabled = r.isDisabled,
             };
 
             foreach (Task t in r.Tasks)
-            {
                 newRoutine.Tasks.Add(copyTask(t));
-            }
 
+            foreach (Feedback f in r.Feedbacks)
+                newRoutine.Feedbacks.Add(copyFeedback(f));
+            
             return newRoutine;
         }
 
@@ -53,48 +47,43 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
             {
                 expectedDuration = t.expectedDuration,
                 isTimed = t.isTimed,
-                MessageType = copyMessageType(t.MessageType),
-                MessageType1 = copyMessageType(t.MessageType1),
-                MessageType2 = copyMessageType(t.MessageType2),
-                negativeFeedbackMessage = t.negativeFeedbackMessage,
-                negativeFeedbackTitle = t.negativeFeedbackTitle,
-                negativeFeedbackTypeID = t.negativeFeedbackTypeID,
-                positiveFeedbackMessage = t.positiveFeedbackMessage,
-                positiveFeedbackTitle = t.positiveFeedbackTitle,
-                positiveFeedbackTypeID = t.positiveFeedbackTypeID,
-                promptMessage = t.promptMessage,
-                promptTitle = t.promptTitle,
-                promptTypeID = t.promptTypeID,
                 Routine = t.Routine, //Not copied; not serialized from Task
                 routineID = t.routineID,
                 sequenceNo = t.sequenceNo,
                 taskCategoryID = t.taskCategoryID,
                 taskDescription = t.taskDescription,
-                taskName = t.taskName
+                taskName = t.taskName,
+                taskID = t.taskID
             };
 
             newTask.TaskCategory = copyTaskCategory(t.TaskCategory);
 
+            foreach (Feedback f in t.Feedbacks)
+                newTask.Feedbacks.Add(copyFeedback(f));
+
             return newTask;
         }
 
-        public static MessageType copyMessageType(MessageType mt)
+        public static Feedback copyFeedback(Feedback f)
         {
-            if (mt == null)
+            if (f == null)
                 return null;
 
-            MessageType newMT = new MessageType()
+            Feedback newFeedback = new Feedback()
             {
-                messageTypeID = mt.messageTypeID,
-                messageTypeName = mt.messageTypeName,
-                Routines = mt.Routines, //Not copied; not serialized from MessageType
-                Routines1 = mt.Routines1, //Not copied; not serialized from MessageType
-                Tasks = mt.Tasks, //Not copied; not serialized from MessageType
-                Tasks1 = mt.Tasks1, //Not copied; not serialized from MessageType
-                Tasks2 = mt.Tasks2 //Not copied; not serialized from MessageType
+                feedbackID = f.feedbackID,
+                feedbackMessage = f.feedbackMessage,
+                feedbackTitle = f.feedbackTitle,
+                feedbackTypeID = f.feedbackTypeID,
+                mediaTypeID = f.mediaTypeID,
+                Routines = f.Routines, //Not copied; not serialized from Feedback
+                Tasks = f.Tasks //Not copied; not serialized from Feedback
             };
 
-            return newMT;
+            newFeedback.FeedbackType = copyFeedbackType(f.FeedbackType);
+            newFeedback.MediaType = copyMediaType(f.MediaType);
+
+            return newFeedback;
         }
 
         public static TaskCategory copyTaskCategory(TaskCategory tc)
@@ -109,6 +98,34 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
                 Tasks = tc.Tasks //Not copied; not serialized from TaskCategory
             };
             return newTC;
+        }
+
+        public static FeedbackType copyFeedbackType(FeedbackType ft)
+        {
+            if (ft == null)
+                return null;
+
+            FeedbackType newFT = new FeedbackType()
+            {
+                Feedbacks = ft.Feedbacks, //Not copied; not serialized from FeedbackType
+                feedbackTypeID = ft.feedbackTypeID,
+                feedbackTypeName = ft.feedbackTypeName
+            };
+            return newFT;
+        }
+
+        public static MediaType copyMediaType(MediaType mt)
+        {
+            if (mt == null)
+                return null;
+
+            MediaType newMT = new MediaType()
+            {
+                Feedbacks = mt.Feedbacks, //Not copied; not serialized from MediaType
+                mediaTypeID = mt.mediaTypeID,
+                mediaTypeName = mt.mediaTypeName
+            };
+            return newMT;
         }
     }
 }

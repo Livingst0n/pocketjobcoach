@@ -30,18 +30,20 @@ namespace PJCAdmin.Models
         public DbSet<Debug> Debugs { get; set; }
         public DbSet<EmailOutbox> EmailOutboxes { get; set; }
         public DbSet<Hello> Helloes { get; set; }
-        public DbSet<Job> Jobs { get; set; }
         public DbSet<Membership> Memberships { get; set; }
-        public DbSet<MessageType> MessageTypes { get; set; }
-        public DbSet<Note> Notes { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Routine> Routines { get; set; }
-        public DbSet<Task> Tasks { get; set; }
-        public DbSet<TaskCategory> TaskCategories { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Step> Steps { get; set; }
         public DbSet<AuthToken> AuthTokens { get; set; }
         public DbSet<UserName> UserNames { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<FeedbackType> FeedbackTypes { get; set; }
+        public DbSet<Job> Jobs { get; set; }
+        public DbSet<MediaType> MediaTypes { get; set; }
+        public DbSet<Note> Notes { get; set; }
+        public DbSet<Routine> Routines { get; set; }
+        public DbSet<Step> Steps { get; set; }
+        public DbSet<Task> Tasks { get; set; }
+        public DbSet<TaskCategory> TaskCategories { get; set; }
     }
 }

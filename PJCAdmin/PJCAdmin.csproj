@@ -205,6 +205,12 @@
     <Compile Include="Models\EmailOutbox.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Feedback.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FeedbackType.cs">
+      <DependentUpon>PJCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GenericToken.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Hello.cs">
@@ -213,10 +219,10 @@
     <Compile Include="Models\Job.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Membership.cs">
+    <Compile Include="Models\MediaType.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MessageType.cs">
+    <Compile Include="Models\Membership.cs">
       <DependentUpon>PJCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Note.cs">
