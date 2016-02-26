@@ -37,12 +37,12 @@ namespace PJCAdmin.Controllers
                 }
                 else
                 {
-                    ViewData["RoutineNames"] = helper.getRoutineNamesCreatedByUser(mockUser);
+                    ViewData["RoutineNames"] = helper.getRoutineNames(mockUser);
                 }
             }
             else //user is jobcoach or parent
             {
-                ViewData["RoutineNames"] = helper.getRoutineNamesCreatedByUser(thisUsername);
+                ViewData["RoutineNames"] = helper.getRoutineNames();
             }
 
             return View();
@@ -65,10 +65,10 @@ namespace PJCAdmin.Controllers
                 }
                 else
                 {
-                    if (!helper.adminRoutineExists(mockUser, routineName))
+                    if (!helper.routineExists(mockUser, routineName))
                         return HttpNotFound();
 
-                    ViewData["RoutineDetails"] = helper.adminGetRoutineByName(mockUser, routineName);
+                    ViewData["RoutineDetails"] = helper.getActiveRoutineByName(mockUser, routineName);
                 }
             }
             else //User is JobCoach or Parent
@@ -76,7 +76,7 @@ namespace PJCAdmin.Controllers
                 if (!helper.routineExists(routineName))
                     return HttpNotFound();
 
-                ViewData["RoutineDetails"] = helper.getRoutineByName(routineName);
+                ViewData["RoutineDetails"] = helper.getActiveRoutineByName(routineName);
             }
             return View();
         }
@@ -144,13 +144,13 @@ namespace PJCAdmin.Controllers
                 }
                 else
                 {
-                    if (helper.adminRoutineExists(mockUser, model.routineTitle))
+                    if (helper.routineExists(mockUser, model.routineTitle))
                     {
                         ModelState.AddModelError("", "Routine must have a unique name");
                         return View();
                     }
 
-                    helper.adminCreateRoutine(mockUser, model);
+                    helper.createRoutine(mockUser, model);
                     return RedirectToAction("Index", "Routine", mockUser);
                 }
             }
@@ -183,10 +183,10 @@ namespace PJCAdmin.Controllers
                 }
                 else
                 {
-                    if (!helper.adminRoutineExists(mockUser, routineName))
+                    if (!helper.routineExists(mockUser, routineName))
                         return HttpNotFound();
 
-                    ViewData["Routine"] = helper.adminGetRoutineByName(mockUser, routineName);
+                    ViewData["Routine"] = helper.getActiveRoutineByName(mockUser, routineName);
                     return View();
                 }
             }
@@ -194,7 +194,7 @@ namespace PJCAdmin.Controllers
             if (!helper.routineExists(routineName))
                 return HttpNotFound();
 
-            ViewData["Routine"] = helper.getRoutineByName(routineName);
+            ViewData["Routine"] = helper.getActiveRoutineByName(routineName);
             return View();
         }
 
@@ -217,10 +217,10 @@ namespace PJCAdmin.Controllers
                 }
                 else
                 {
-                    if (!helper.adminRoutineExists(mockUser, routineName))
+                    if (!helper.routineExists(mockUser, routineName))
                         return HttpNotFound();
 
-                    helper.adminUpdateRoutine(mockUser, routineName, model);
+                    helper.updateRoutine(mockUser, routineName, model);
                     return RedirectToAction("Index", "Routine", mockUser);
                 }
             }
@@ -273,7 +273,7 @@ namespace PJCAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string routineName, string mockUser = "", int nothing = 0)
+        public ActionResult Delete(string routineName, string mockUser = "", bool deleteAll = false, int nothing = 0)
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent")))
             {
@@ -290,14 +290,14 @@ namespace PJCAdmin.Controllers
                 }
                 else
                 {
-                    helper.adminDeleteRoutine(mockUser, routineName);
+                    helper.deleteRoutine(mockUser, routineName, deleteAll);
 
                     Response.Redirect("~/Routine?mockUser=" + mockUser);
                     return View();
                 }
             }
 
-            helper.deleteRoutine(routineName);
+            helper.deleteRoutine(routineName, deleteAll);
 
             Response.Redirect("~/Routine");
             return View();
