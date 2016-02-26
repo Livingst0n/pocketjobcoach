@@ -37,5 +37,11 @@ namespace PJCAdmin.ControllersAPI
             //assignedBy is not a valid string
             throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest));
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            helper.dispose();
+            base.Dispose(disposing);
+        }
     }
 }

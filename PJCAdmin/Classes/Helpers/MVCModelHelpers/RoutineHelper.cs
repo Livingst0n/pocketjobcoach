@@ -362,5 +362,13 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         {
             deleteRoutine(getMostRecentRoutineByName(creatorUsername, routineName));
         }
+
+        public void dispose()
+        {
+            db.Dispose();
+            feedbackHelper.dispose();
+            jobHelper.dispose();
+            taskHelper.dispose();
+        }
     }
 }

@@ -55,5 +55,11 @@ namespace PJCAdmin.ControllersAPI
         {
             return new HttpResponseMessage();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

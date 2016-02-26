@@ -51,5 +51,10 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
 
             return assignedRoutines;
         }
+
+        public void dispose()
+        {
+            db.Dispose();
+        }
     }
 }

@@ -122,5 +122,11 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.Tasks.Remove(task);
             db.SaveChanges();
         }
+
+        public void dispose()
+        {
+            db.Dispose();
+            feedbackHelper.dispose();
+        }
     }
 }

@@ -720,5 +720,13 @@ namespace PJCMobile.Controllers
             }
         }
         #endregion
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            helper.dispose();
+            debug.dispose();
+            base.Dispose(disposing);
+        }
     }
 }

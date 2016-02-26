@@ -172,5 +172,10 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         }
 
         //TODO delete processes if .Remove function doesn't remove orphaned children
+
+        public void dispose()
+        {
+            db.Dispose();
+        }
     }
 }

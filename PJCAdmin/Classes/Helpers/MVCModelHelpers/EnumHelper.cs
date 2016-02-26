@@ -213,5 +213,10 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             return getFeedbackType(typeName).Feedbacks.Count() > 0;
         }
         #endregion
+
+        public void dispose()
+        {
+            db.Dispose();
+        }
     }
 }

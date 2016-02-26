@@ -303,5 +303,11 @@ namespace PJCAdmin.Controllers
             return View();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            helper.dispose();
+            accountHelper.dispose();
+            base.Dispose(disposing);
+        }
     }
 }

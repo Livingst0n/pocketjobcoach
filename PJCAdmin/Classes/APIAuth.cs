@@ -77,5 +77,10 @@ namespace PJCAdmin.Classes
             db.SaveChanges();
 
         }
+
+        public void dispose()
+        {
+            db.Dispose();
+        }
     }
 }

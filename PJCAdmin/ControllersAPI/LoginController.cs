@@ -63,5 +63,11 @@ namespace PJCAdmin.ControllersAPI
             else
                 return Request.CreateResponse(HttpStatusCode.Forbidden);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

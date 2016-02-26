@@ -274,5 +274,10 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         {
             return System.Web.Security.Membership.GetUser().UserName;
         }
+
+        public void dispose()
+        {
+            db.Dispose();
+        }
     }
 }

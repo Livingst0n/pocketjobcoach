@@ -91,7 +91,7 @@ namespace PJCAdmin.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            //db.Dispose();
+            enumHelper.dispose();
             base.Dispose(disposing);
         }
     }

@@ -96,5 +96,11 @@ namespace PJCAdmin.ControllersAPI
 
             return Request.CreateResponse(HttpStatusCode.OK, hello);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

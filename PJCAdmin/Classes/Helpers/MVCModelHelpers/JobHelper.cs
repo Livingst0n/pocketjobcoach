@@ -14,5 +14,10 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         {
             return db.Routines.Find(routineID).Jobs.Count() > 0;
         }
+
+        public void dispose()
+        {
+            db.Dispose();
+        }
     }
 }

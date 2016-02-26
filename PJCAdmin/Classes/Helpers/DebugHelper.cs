@@ -14,5 +14,10 @@ namespace PJCAdmin.Classes.Helpers
             db.Debugs.Add(new Debug() { debugMessage = message.Substring(0, 199) });
             db.SaveChanges();
         }
+
+        public void dispose()
+        {
+            db.Dispose();
+        }
     }
 }
