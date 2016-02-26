@@ -163,7 +163,11 @@
     <Compile Include="Classes\Helpers\APIModelHelpers\RoutineHelper.cs" />
     <Compile Include="Classes\Helpers\DebugHelper.cs" />
     <Compile Include="Classes\Helpers\MVCModelHelpers\AccountHelper.cs" />
+    <Compile Include="Classes\Helpers\MVCModelHelpers\FeedbackHelper.cs" />
+    <Compile Include="Classes\Helpers\MVCModelHelpers\JobHelper.cs" />
+    <Compile Include="Classes\Helpers\MVCModelHelpers\ModelCopier.cs" />
     <Compile Include="Classes\Helpers\MVCModelHelpers\RoutineHelper.cs" />
+    <Compile Include="Classes\Helpers\MVCModelHelpers\TaskHelper.cs" />
     <Compile Include="Classes\TokenIsInvalidException.cs" />
     <Compile Include="ControllersAPI\TestController.cs" />
     <Compile Include="Controllers\AccountController.cs" />

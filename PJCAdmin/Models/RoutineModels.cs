@@ -12,10 +12,11 @@ namespace PJCAdmin.Models
         public RoutineModel()
         {
             this.Tasks = new HashSet<TaskModel>();
+            this.Feedbacks = new HashSet<FeedbackModel>();
         }
 
         [Display(Name="Assigned user")]
-        public string userName { get; set; }
+        public string assigneeUserName { get; set; }
         [Required]
         [Display(Name="Routine Name")]
         public string routineTitle { get; set; }
@@ -23,34 +24,31 @@ namespace PJCAdmin.Models
         [Display(Name="Timed?")]
         public bool isTimed { get; set; }
         [Display(Name="Expected Duration")]
-        public System.TimeSpan expectedDuration { get; set; }
+        public Nullable<System.TimeSpan> expectedDuration { get; set; }
+        [Required]
         [Display(Name="Notify me on completion?")]
         public bool isNotifiable { get; set; }
-        [Display(Name="Title for Positive Feedback")]
-        public string positiveFeedbackTitle { get; set; }
-        [Display(Name="Message for Positive Feedback")]
-        public string positiveFeedbackMessage { get; set; }
-        [Display(Name="Title for Negative Feedback")]
-        public string negativeFeedbackTitle { get; set; }
-        [Display(Name="Message for Negative Feedback")]
-        public string negativeFeedbackMessage { get; set; }
-        [Display(Name="Message type for Negative Feedback")]
-        public virtual MessageTypeModel MessageType { get; set; }
-        [Display(Name="Message type for Positive Feedback")]
-        public virtual MessageTypeModel MessageType1 { get; set; }
+        [Display(Name="Disabled?")]
+        public bool isDisabled { get; set; }
         [Required]
         [Display(Name="Tasks")]
         public virtual ICollection<TaskModel> Tasks { get; set; }
+        [Display(Name = "Routine Feedback")]
+        public virtual ICollection<FeedbackModel> Feedbacks { get; set; }
     }
 
     public class TaskModel
     {
+        public TaskModel()
+        {
+            this.Feedbacks = new HashSet<FeedbackModel>();
+        }
         [Required]
         [Display(Name="Sequence number")]
         public byte sequenceNo { get; set; }
         [Required]
         [Display(Name="Task name")]
-        public string taskNam { get; set; }
+        public string taskName { get; set; }
         [Required]
         [Display(Name="Task description")]
         public string taskDescription { get; set; }
@@ -58,28 +56,12 @@ namespace PJCAdmin.Models
         [Display(Name="Timed?")]
         public bool isTimed { get; set; }
         [Display(Name="Expected duration")]
-        public System.TimeSpan expectedDuration { get; set; }
-        [Display(Name="Prompt title")]
-        public string promptTitle { get; set; }
-        [Display(Name="Prompt message")]
-        public string promptMessage { get; set; }
-        [Display(Name="Title for Positive Feedback")]
-        public string positiveFeedbackTitle { get; set; }
-        [Display(Name="Message for Positive Feedback")]
-        public string positiveFeedbackMessage { get; set; }
-        [Display(Name="Title for Negative Feedback")]
-        public string negativeFeedbackTitle { get; set; }
-        [Display(Name="Message for Negative Feedback")]
-        public string negativeFeedbackMessage { get; set; }
-        [Display(Name="Message type for Negative Feedback")]
-        public virtual MessageTypeModel MessageType { get; set; }
-        [Display(Name="Message type for Positive Feedback")]
-        public virtual MessageTypeModel MessageType1 { get; set; }
-        [Display(Name="Message type for Prompt")]
-        public virtual MessageTypeModel MessageType2 { get; set; }
+        public Nullable<System.TimeSpan> expectedDuration { get; set; }
         [Required]
         [Display(Name="Category of Task")]
         public virtual TaskCategoryModel TaskCategory { get; set; }
+        [Display(Name = "Task Feedback")]
+        public virtual ICollection<FeedbackModel> Feedbacks { get; set; }
     }
 
     public class TaskCategoryModel
@@ -88,11 +70,34 @@ namespace PJCAdmin.Models
         [Display(Name = "Task category")]
         public string categoryName { get; set; }
     }
-    
-    public class MessageTypeModel
+
+    public class FeedbackModel
     {
         [Required]
-        [Display(Name = "Message type")]
-        public string messageTypeName { get; set; }
+        [Display(Name="Title")]
+        public string feedbackTitle { get; set; }
+        [Required]
+        [Display(Name="Content")]
+        public string feedbackMessage { get; set; }
+        [Required]
+        [Display(Name="Feedback Media")]
+        public virtual MediaTypeModel MediaType { get; set; }
+        [Required]
+        [Display(Name = "Feedback Type")]
+        public virtual FeedbackTypeModel FeedbackType { get; set; }
+    }
+
+    public class MediaTypeModel
+    {
+        [Required]
+        [Display(Name="Type")]
+        public string mediaTypeName { get; set; }
+    }
+
+    public class FeedbackTypeModel
+    {
+        [Required]
+        [Display(Name = "Type")]
+        public string feedbackTypeName { get; set; }
     }
 }

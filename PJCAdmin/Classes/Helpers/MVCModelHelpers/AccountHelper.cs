@@ -269,5 +269,10 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             System.Web.Security.Membership.DeleteUser(userName);
         }
+
+        public static string getCurrentUsername()
+        {
+            return System.Web.Security.Membership.GetUser().UserName;
+        }
     }
 }
