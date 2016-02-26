@@ -18,6 +18,11 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         private pjcEntities db = new pjcEntities();
 
         #region TaskCategory
+        /* Creates a new TaskCategory enum for the
+         * given category. Noop if the category 
+         * already exists.
+         * @param category: The new category name.
+         */
         public void createTaskCategory(string category)
         {
             if (taskCategoryExists(category))
@@ -31,10 +36,17 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.TaskCategories.Add(tc);
             db.SaveChanges();
         }
+        /* Returns a list of all categories in the 
+         * TaskCategory enum.
+         */
         public List<TaskCategory> getAllTaskCategories()
         {
             return db.TaskCategories.ToList();
         }
+        /* Returns the TaskCategory record for the given
+         * category.
+         * @param category: The category name.
+         */
         public TaskCategory getTaskCategory(string category)
         {
             if (!taskCategoryExists(category))
@@ -42,16 +54,22 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             return db.TaskCategories.Where(c => c.categoryName.Equals(category)).First();
         }
+        /* Changes the category name of the existing
+         * enum record. Noop if the new category exists.
+         * @param oldCategory: The category name of the 
+         * existing TaskCategory.
+         * @param newCategory: The new category name.
+         */
         public void updateTaskCategory(string oldCategory, string newCategory)
         {
+            if (taskCategoryExists(newCategory))
+                return; //TODO model error
+
             if (!taskCategoryExists(oldCategory))
             {
                 createTaskCategory(newCategory);
                 return;
             }
-
-            if (taskCategoryExists(newCategory))
-                return; //TODO model error
 
             TaskCategory tc = getTaskCategory(oldCategory);
             tc.categoryName = newCategory;
@@ -59,6 +77,12 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.Entry<TaskCategory>(tc).State = System.Data.EntityState.Modified;
             db.SaveChanges();
         }
+        /* Removes the TaskCategory record for the
+         * given category. Noop if tasks exist for
+         * the TaskCategory enum.
+         * @param categoryName: The category name of 
+         * the TaskCategory enum record to be deleted.
+         */
         public void deleteTaskCategory(string categoryName)
         {
             if (!taskCategoryExists(categoryName))
@@ -70,10 +94,19 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.TaskCategories.Remove(getTaskCategory(categoryName));
             db.SaveChanges();
         }
+        /* Returns whether the TaskCategory enum contains
+         * the given category.
+         * @param categoryName: The category to be searched for.
+         */
         public bool taskCategoryExists(string categoryName)
         {
             return db.TaskCategories.Where(c => c.categoryName.Equals(categoryName)).Count() > 0;
         }
+        /* Returns whether the given category has been 
+         * associated with any Tasks.
+         * @param categoryName: The desired category to
+         * be checked.
+         */
         private bool taskCategoryHasTasks(string categoryName)
         {
             if (!taskCategoryExists(categoryName))
@@ -83,8 +116,8 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         }
         #endregion
         #region MediaType
-        /* create MediaType is managed in code
-         * public void createMediaType(string type) 
+        /* create MediaType is code-managed*/
+        /* public void createMediaType(string type) 
         {
             if (mediaTypeExists(type))
                 return; //TODO model error
@@ -97,10 +130,17 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.MediaTypes.Add(mt);
             db.SaveChanges();
         }*/
+        /* Returns a list of all types in the 
+         * MediaType enum.
+         */
         public List<MediaType> getAllMediaTypes() 
         {
             return db.MediaTypes.ToList();
         }
+        /* Returns the MediaType record for the given
+         * type.
+         * @param type: The type name.
+         */
         public MediaType getMediaType(string type) 
         {
             if (!mediaTypeExists(type))
@@ -108,8 +148,8 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             return db.MediaTypes.Where(t => t.mediaTypeName.Equals(type)).First();
         }
-        /* update MediaType is managed in code
-         * public void updateMediaType(string oldType, string newType) 
+        /* update MediaType is code-managed*/
+        /* public void updateMediaType(string oldType, string newType) 
         {
             if (!mediaTypeExists(oldType))
             {
@@ -126,8 +166,8 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.Entry<MediaType>(mt).State = System.Data.EntityState.Modified;
             db.SaveChanges();
         }*/
-        /* delete MediaType is managed in code
-         * public void deleteMediaType(string typeName) 
+        /* delete MediaType is managed in code*/
+        /* public void deleteMediaType(string typeName) 
         {
             if (!mediaTypeExists(typeName))
                 return;
@@ -138,10 +178,18 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.MediaTypes.Remove(getMediaType(typeName));
             db.SaveChanges();
         }*/
+        /* Returns whether the MediaType enum contains
+         * the given type.
+         * @param typeName: The type to be searched for.
+         */
         public bool mediaTypeExists(string typeName) 
         {
             return db.MediaTypes.Where(t => t.mediaTypeName.Equals(typeName)).Count() > 0;
         }
+        /* Returns whether the given type has been
+         * associated with any Feedbacks.
+         * @param typeName: The desired type to be checked.
+         */
         public bool mediaTypeHasFeedbacks(string typeName) 
         {
             if (!mediaTypeExists(typeName))
@@ -151,8 +199,8 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         }
         #endregion
         #region FeedbackType
-        /* create FeedbackType is managed in code
-         * public void createFeedbackType(string type) 
+        /* create FeedbackType is code-managed*/
+        /* public void createFeedbackType(string type) 
         { 
             if (feedbackTypeExists(type))
                 return; //TODO model error
@@ -165,10 +213,17 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.FeedbackTypes.Add(ft);
             db.SaveChanges();
         }*/
+        /* Returns a list of all types in the 
+         * FeedbackType enum.
+         */
         public List<FeedbackType> getAllFeedbackTypes() 
         {
             return db.FeedbackTypes.ToList();
         }
+        /* Returns the FeedbackType record for the given
+         * type.
+         * @param type: The type name.
+         */
         public FeedbackType getFeedbackType(string type) 
         { 
             if (!feedbackTypeExists(type))
@@ -176,8 +231,8 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             return db.FeedbackTypes.Where(t => t.feedbackTypeName.Equals(type)).First();
         }
-        /* update FeedbackType is managed in code
-         * public void updateFeedbackType(string oldType, string newType) 
+        /* update FeedbackType is managed in code*/
+        /* public void updateFeedbackType(string oldType, string newType) 
         {
             if (!feedbackTypeExists(oldType))
             {
@@ -194,8 +249,8 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.Entry<FeedbackType>(ft).State = System.Data.EntityState.Modified;
             db.SaveChanges();
         }*/
-        /* delete FeedbackType is managed in code
-         * public void deleteFeedbackType(string typeName) 
+        /* delete FeedbackType is managed in code*/
+        /* public void deleteFeedbackType(string typeName) 
         {
             if (!feedbackTypeExists(typeName))
                 return;
@@ -206,10 +261,18 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.FeedbackTypes.Remove(getFeedbackType(typeName));
             db.SaveChanges();
         }*/
+        /* Returns whether the FeedbackType enum contains
+         * the given type.
+         * @param typeName: The type to be searched for.
+         */
         public bool feedbackTypeExists(string typeName) 
         {
             return db.FeedbackTypes.Where(t => t.feedbackTypeName.Equals(typeName)).Count() > 0;
         }
+        /* Returns whether the given type has been
+         * associated with any Feedbacks.
+         * @param typeName: The desired type to be checked.
+         */
         public bool feedbackTypeHasFeedbacks(string typeName) 
         {
             if (!feedbackTypeExists(typeName))

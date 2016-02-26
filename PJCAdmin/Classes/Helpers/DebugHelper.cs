@@ -16,6 +16,9 @@ namespace PJCAdmin.Classes.Helpers
     {
         private pjcEntities db = new pjcEntities();
 
+        /* Saves the given debug message into the database.
+         * @param message: The debug message to save.
+         */
         public void createDebugMessageInDatabase(string message){
             db.Debugs.Add(new Debug() { debugMessage = message.Substring(0, 199) });
             db.SaveChanges();

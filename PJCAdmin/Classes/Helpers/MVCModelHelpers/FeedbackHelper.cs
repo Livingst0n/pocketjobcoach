@@ -16,6 +16,11 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         private pjcEntities db = new pjcEntities();
 
         #region Feedback
+        /* Returns the matching Feedback record.
+         * Returns null if no matching record exists.
+         * @param model: The model of the Feedback record
+         * desired.
+         */
         private Feedback getMatchingFeedback(FeedbackModel model)
         {
             byte mediaTypeID = getMatchingMediaType(model.MediaType.mediaTypeName).mediaTypeID;
@@ -30,6 +35,11 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             return null;
         }
+        /* Creates a new Feedback record matching
+         * the given model.
+         * @param model: The model of the Feedback record
+         * to create.
+         */
         private Feedback createFeedback(FeedbackModel model)
         {
             Feedback feedback = new Feedback()
@@ -47,6 +57,15 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         }
         #endregion
         #region RoutineFeedback
+        /* Creates a new RoutineFeedback connection
+         * between the given feedback and the given 
+         * routine. Creates a new feedback record if
+         * no match exists.
+         * Returns the matching feedback that has been
+         * connected.
+         * @param routineID: The unique ID for the routine.
+         * @param model: The feedback model to match.
+         */
         public Feedback createRoutineFeedback(int routineID, FeedbackModel model)
         {
             Feedback feedback = getMatchingFeedback(model);
@@ -59,6 +78,12 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             return feedback;
         }
+        /* Returns whether a RoutineFeedback connection
+         * already exists between the given feedback and 
+         * the given routine.
+         * @param routineID: The unique ID for the routine.
+         * @param model: The feedback model to match.
+         */
         private bool routineFeedbackExists(int routineID, FeedbackModel model)
                 {
                     Feedback feedback = getMatchingFeedback(model);
@@ -72,15 +97,26 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                     }
                     return false;
                 }
+        /* Updates the feedbacks connected to the given routine.
+         * @param routineID: The unique ID for the routine.
+         * @param models: The feedback models to match.
+         */
         public void updateRoutineFeedbacks(int routineID, List<FeedbackModel> models)
         {
+            //TODO check for old Feedback associations
             foreach (FeedbackModel model in models)
             {
                 updateRoutineFeedback(routineID, model);
             }
         }
+        /* Updates the given feedback connected to the given 
+         * routine.
+         * @param routineID: The unique ID for the routine.
+         * @param model: The feedback model to match.
+         */
         public void updateRoutineFeedback(int routineID, FeedbackModel model)
         {
+            //TODO need oldModel and newModel?
             if (routineFeedbackExists(routineID, model))
                 return; //No changes are needed
             
@@ -95,6 +131,11 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.Entry<Feedback>(feedback).State = System.Data.EntityState.Modified;
             db.SaveChanges();
         }
+        /* Creates a RoutineFeedback connection for each 
+         * given feedback to the given routine.
+         * @param routineID: The unique ID for the routine.
+         * @param models: The feedbacks to create connections to.
+         */
         public void createRoutineFeedbacks(int routineID, List<FeedbackModel> models)
         {
             foreach (FeedbackModel model in models)
@@ -104,6 +145,15 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         }
         #endregion
         #region TaskFeedback
+        /* Creates a new TaskFeedback connection
+         * between the given task and the given 
+         * routine. Creates a new feedback record if 
+         * no match exists.
+         * Returns the matching feedback that has been
+         * connected.
+         * @param taskID: The unique ID for the task.
+         * @param model: The feedback model to match.
+         */
         public Feedback createTaskFeedback(int taskID, FeedbackModel model)
         {
             Feedback feedback = getMatchingFeedback(model);
@@ -116,6 +166,12 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             return feedback;
         }
+        /* Returns whether a TaskFeedback connection
+         * already exists between the given feedback and
+         * the given task.
+         * @param taskID: The unique ID for the task.
+         * @param model: The feedback model to match.
+         */
         private bool taskFeedbackExists(int taskID, FeedbackModel model)
         {
             Feedback feedback = getMatchingFeedback(model);
@@ -129,6 +185,10 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             }
             return false;
         }
+        /* Updates the feedbacks connected to the given task.
+         * @param taskID: The unique ID for the task.
+         * @param models: The feedback models to match.
+         */
         public void updateTaskFeedbacks(int taskID, List<FeedbackModel> models)
         {
             foreach (FeedbackModel model in models)
@@ -136,8 +196,14 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 updateTaskFeedback(taskID, model);
             }
         }
+        /* Updates the given feedback connected to the given
+         * task.
+         * @param taskID: The unique ID for the task.
+         * @param model: The feedback model to match.
+         */
         public void updateTaskFeedback(int taskID, FeedbackModel model)
         {
+            //TODO need old and new model?
             if (taskFeedbackExists(taskID, model))
                 return; //No changes are needed
 
@@ -152,6 +218,11 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.Entry<Feedback>(feedback).State = System.Data.EntityState.Modified;
             db.SaveChanges();
         }
+        /* Creates a TaskFeedback connection for each
+         * given feedback to the given task.
+         * @param taskID: The unique ID for the task.
+         * @param models: The feedbacks to create connections to.
+         */
         public void createTaskFeedbacks(int taskID, List<FeedbackModel> models)
         {
             foreach (FeedbackModel model in models)
@@ -161,6 +232,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         }
         #endregion
 
+        //TODO move to EnumHelper?
         private MediaType getMatchingMediaType(string typeName)
         {
             return db.MediaTypes.Where(t => t.mediaTypeName.Equals(typeName)).First();

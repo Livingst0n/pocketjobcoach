@@ -15,6 +15,10 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
     {
         private pjcEntities db = new pjcEntities();
 
+        /* Returns whether or not jobs have been created
+         * for the given routine.
+         * @param routineID: The unique ID for the routine.
+         */
         public bool jobsExistForRoutine(int routineID)
         {
             return db.Routines.Find(routineID).Jobs.Count() > 0;
