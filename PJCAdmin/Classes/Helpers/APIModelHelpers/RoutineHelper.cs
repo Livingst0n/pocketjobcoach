@@ -6,10 +6,23 @@ using PJCAdmin.Models;
 
 namespace PJCAdmin.Classes.Helpers.APIModelHelpers
 {
+    /* --------------------------------------------------------
+     * The RoutineHelper class provides common methods relating 
+     * to Routines for the WebAPI service.
+     * --------------------------------------------------------
+     */
     public class RoutineHelper
     {
         private pjcEntities db = new pjcEntities();
 
+        #region Getters
+        /*Returns a list of all routines assigned to the given 
+         * user by the user listed as their parent. Returned
+         * routines have been passed through the modelcopier
+         * and are valid for serialization.
+         * @param userName: The username for the child who is 
+         * assigned the routines by their parent.
+         */
         public List<Routine> getRoutinesAssignedByParentForSerialization(string userName)
         {
             string parentUserName = db.UserNames.Find(userName).guardianUserName;
@@ -24,7 +37,13 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
 
             return routinesByParent;
         }
-
+        /*Returns a list of all routines assigned to the given 
+         * user by the user listed as their job coach. Returned
+         * routines have been passed through the modelcopier
+         * and are valid for serialization.
+         * @param userName: The username for the user who is 
+         * assigned the routines by their job coach.
+         */
         public List<Routine> getRoutinesAssignedByJobCoachForSerialization(string userName)
         {
             string jobCoachUserName = db.UserNames.Find(userName).jobCoachUserName;
@@ -39,7 +58,13 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
 
             return routinesByJobCoach;
         }
-
+        /*Returns a list of all routines assigned to the given 
+         * user by both job coach and parent. Returned routines 
+         * have been passed through the modelcopier and are 
+         * valid for serialization.
+         * @param userName: The username for the user who is 
+         * assigned the routines by their job coach and parent.
+         */
         public List<Routine> getAllRoutinesAssignedToUserForSerialization(string userName)
         {
             List<Routine> assignedRoutines = new List<Routine>();
@@ -51,6 +76,7 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
 
             return assignedRoutines;
         }
+        #endregion
 
         public void dispose()
         {
