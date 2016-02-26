@@ -163,6 +163,7 @@
     <Compile Include="Classes\Helpers\APIModelHelpers\RoutineHelper.cs" />
     <Compile Include="Classes\Helpers\DebugHelper.cs" />
     <Compile Include="Classes\Helpers\MVCModelHelpers\AccountHelper.cs" />
+    <Compile Include="Classes\Helpers\MVCModelHelpers\EnumHelper.cs" />
     <Compile Include="Classes\Helpers\MVCModelHelpers\FeedbackHelper.cs" />
     <Compile Include="Classes\Helpers\MVCModelHelpers\JobHelper.cs" />
     <Compile Include="Classes\Helpers\MVCModelHelpers\ModelCopier.cs" />
@@ -524,6 +525,10 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>call "$(ProjectDir)buildPJCAdminFix_1.bat" "$(ProjectDir)"
+call "$(ProjectDir)buildPJCAdminFix_2.bat" "$(ProjectDir)"</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
