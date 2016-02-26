@@ -6,21 +6,21 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PJCAdmin.Models;
+using PJCAdmin.Classes.Helpers.MVCModelHelpers;
 
 namespace PJCAdmin.Controllers
 {
     [Authorize]
     public class TaskCategoryController : Controller
     {
-        private pjcEntities db = new pjcEntities();
+        private EnumHelper enumHelper = new EnumHelper();
 
         //
         // GET: /TaskCategory/
 
         public ActionResult Index()
         {
-            //return View(db.taskcategories.ToList());
-            return View();
+            return View(enumHelper.getAllTaskCategories());
         }
 
 
@@ -37,29 +37,22 @@ namespace PJCAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Create(taskcategory taskcategory)
-        public ActionResult Create(string taskcategory)
+        public ActionResult Create(string taskCategory)
         {
-            /*db.taskcategories.Add(taskcategory);
-            db.SaveChanges();
+            enumHelper.createTaskCategory(taskCategory);
             return RedirectToAction("Index");
-             */
-            return View();
         }
 
         //
         // GET: /TaskCategory/Edit/5
 
-        public ActionResult Edit(int id = 0)
+        public ActionResult Edit(string taskCategory)
         {
-            /*taskcategory taskcategory = db.taskcategories.Find(id);
-            if (taskcategory == null)
-            {
+            if (!enumHelper.taskCategoryExists(taskCategory))
                 return HttpNotFound();
-            }
-            return View(taskcategory);
-             */
-            return View();
+
+            TaskCategory tc = enumHelper.getTaskCategory(taskCategory);
+            return View(tc);
         }
 
         //
@@ -67,33 +60,22 @@ namespace PJCAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Edit(taskcategory taskcategory)
-        public ActionResult Edit(string taskcategory)
+        public ActionResult Edit(string oldCategory, string newCategory)
         {
-            /*if (ModelState.IsValid)
-            {
-                db.Entry(taskcategory).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(taskcategory);
-             */
-            return View();
+            enumHelper.updateTaskCategory(oldCategory, newCategory);
+            return RedirectToAction("Index");
         }
 
         //
         // GET: /TaskCategory/Delete/5
 
-        public ActionResult Delete(int id = 0)
+        public ActionResult Delete(string taskCategory)
         {
-            /*taskcategory taskcategory = db.taskcategories.Find(id);
-            if (taskcategory == null)
-            {
+            if (!enumHelper.taskCategoryExists(taskCategory))
                 return HttpNotFound();
-            }
-            return View(taskcategory);
-             */
-            return View();
+
+            TaskCategory tc = enumHelper.getTaskCategory(taskCategory);
+            return View(tc);
         }
 
         //
@@ -101,19 +83,15 @@ namespace PJCAdmin.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string taskCategory)
         {
-            /*taskcategory taskcategory = db.taskcategories.Find(id);
-            db.taskcategories.Remove(taskcategory);
-            db.SaveChanges();
+            enumHelper.deleteTaskCategory(taskCategory);
             return RedirectToAction("Index");
-             */
-            return View();
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            //db.Dispose();
             base.Dispose(disposing);
         }
     }
