@@ -6,6 +6,13 @@ using PJCAdmin.Models;
 
 namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 {
+    /* --------------------------------------------------------
+     * The EnumHelper class provides common methods relating 
+     * to enumerated type and category objects from the 
+     * database for the MVC service.
+     * Namely the TaskCategory, MediaType, and FeedbackType.
+     * --------------------------------------------------------
+     */
     public class EnumHelper
     {
         private pjcEntities db = new pjcEntities();
@@ -75,7 +82,6 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             return getTaskCategory(categoryName).Tasks.Count() > 0;
         }
         #endregion
-
         #region MediaType
         /* create MediaType is managed in code
          * public void createMediaType(string type) 
@@ -144,7 +150,6 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             return getMediaType(typeName).Feedbacks.Count() > 0;
         }
         #endregion
-
         #region FeedbackType
         /* create FeedbackType is managed in code
          * public void createFeedbackType(string type) 

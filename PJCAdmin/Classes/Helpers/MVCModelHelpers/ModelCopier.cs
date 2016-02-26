@@ -6,8 +6,17 @@ using PJCAdmin.Models;
 
 namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 {
+    /* ---------------------------------------------------------
+     * The ModelCopier class provides common methods for copying 
+     * database model objects to MVC user display compatable
+     * model objects. Objects obtained directly from the db
+     * do not have display parameters for User Interface. 
+     * This class remedies that problem.
+     * ---------------------------------------------------------
+     */
     public class ModelCopier
     {
+        #region Non-Enum Models
         public static RoutineModel copyRoutineToModel(Routine r)
         {
             if (r == null)
@@ -31,7 +40,6 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             return newRoutine;
         }
-
         public static TaskModel copyTaskToModel(Task t)
         {
             if (t == null)
@@ -53,7 +61,6 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             return newTask;
         }
-
         public static FeedbackModel copyFeedbackToModel(Feedback f)
         {
             if (f == null)
@@ -70,7 +77,8 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             return newFeedback;
         }
-
+        #endregion
+        #region Enum Models
         public static TaskCategoryModel copyTaskCategoryToModel(TaskCategory tc)
         {
             if (tc == null)
@@ -82,7 +90,6 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             };
             return newTC;
         }
-
         public static FeedbackTypeModel copyFeedbackTypeToModel(FeedbackType ft)
         {
             if (ft == null)
@@ -94,7 +101,6 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             };
             return newFT;
         }
-
         public static MediaTypeModel copyMediaTypeToModel(MediaType mt)
         {
             if (mt == null)
@@ -106,5 +112,6 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             };
             return newMT;
         }
+        #endregion
     }
 }

@@ -6,8 +6,17 @@ using PJCAdmin.Models;
 
 namespace PJCAdmin.Classes.Helpers.APIModelHelpers
 {
+    /* ---------------------------------------------------------
+     * The ModelCopier class provides common methods for copying 
+     * database model objects to WebAPI serialization compatable
+     * model objects. Most object obtained directly from the db
+     * have object overhead that causes serialization errors. 
+     * This class remedies that problem.
+     * ---------------------------------------------------------
+     */
     public class ModelCopier
     {
+        #region Non-Enum Models
         public static Routine copyRoutine(Routine r)
         {
             if (r == null)
@@ -37,7 +46,6 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
             
             return newRoutine;
         }
-
         public static Task copyTask(Task t)
         {
             if (t == null)
@@ -63,7 +71,6 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
 
             return newTask;
         }
-
         public static Feedback copyFeedback(Feedback f)
         {
             if (f == null)
@@ -85,7 +92,8 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
 
             return newFeedback;
         }
-
+        #endregion
+        #region Enum Models
         public static TaskCategory copyTaskCategory(TaskCategory tc)
         {
             if (tc == null)
@@ -99,7 +107,6 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
             };
             return newTC;
         }
-
         public static FeedbackType copyFeedbackType(FeedbackType ft)
         {
             if (ft == null)
@@ -113,7 +120,6 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
             };
             return newFT;
         }
-
         public static MediaType copyMediaType(MediaType mt)
         {
             if (mt == null)
@@ -127,5 +133,6 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
             };
             return newMT;
         }
+        #endregion
     }
 }

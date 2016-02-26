@@ -6,6 +6,11 @@ using PJCAdmin.Models;
 
 namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 {
+    /* --------------------------------------------------------
+     * The JobHelper class provides common methods relating 
+     * to Jobs for the MVC service.
+     * --------------------------------------------------------
+     */
     public class JobHelper
     {
         private pjcEntities db = new pjcEntities();

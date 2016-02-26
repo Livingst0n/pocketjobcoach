@@ -6,6 +6,12 @@ using PJCAdmin.Models;
 
 namespace PJCAdmin.Classes.Helpers
 {
+    /* --------------------------------------------------------
+     * The DebugHelper class provides a method to debug through
+     * the database bypassing the User Interface for debug 
+     * output.
+     * --------------------------------------------------------
+     */
     public class DebugHelper
     {
         private pjcEntities db = new pjcEntities();
