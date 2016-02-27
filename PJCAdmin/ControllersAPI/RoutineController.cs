@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using PJCAdmin.Models;
-using PJCAdmin.Classes;
 using PJCAdmin.Classes.Helpers.APIModelHelpers;
 
 namespace PJCAdmin.ControllersAPI
@@ -17,8 +16,8 @@ namespace PJCAdmin.ControllersAPI
         // GET api/Routine?token=<token>
         public IEnumerable<Routine> Get(string token)
         {
-            APIAuth.authorizeToken(token);
-            string userName = APIAuth.getUserNameFromToken(token);
+            Auth.authorizeToken(token);
+            string userName = Auth.getUserNameFromToken(token);
             
             return helper.getAllRoutinesAssignedToUserForSerialization(userName);
         }
@@ -26,8 +25,8 @@ namespace PJCAdmin.ControllersAPI
         // GET api/Routine?token=<token>&assignedBy=<"Parent" or "Job Coach">
         public IEnumerable<Routine> Get(string token, string assignedBy)
         {
-            APIAuth.authorizeToken(token);
-            string userName = APIAuth.getUserNameFromToken(token);
+            Auth.authorizeToken(token);
+            string userName = Auth.getUserNameFromToken(token);
 
             if (assignedBy.Equals("Parent"))
                 return helper.getRoutinesAssignedByParentForSerialization(userName);

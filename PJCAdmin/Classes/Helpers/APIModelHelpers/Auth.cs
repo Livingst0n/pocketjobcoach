@@ -6,14 +6,14 @@ using System.Web.Http;
 using System.Net.Http;
 using PJCAdmin.Models;
 
-namespace PJCAdmin.Classes
+namespace PJCAdmin.Classes.Helpers.APIModelHelpers
 {
     /* --------------------------------------------------------
      * The APIAuth class provides common methods relating 
      * to Authentication for the WebAPI service.
      * --------------------------------------------------------
      */
-    public class APIAuth
+    public class Auth
     {
         private static pjcEntities db = new pjcEntities();
 

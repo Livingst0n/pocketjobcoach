@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using PJCAdmin.Models;
-using PJCAdmin.Classes;
+using PJCAdmin.Classes.Helpers.APIModelHelpers;
 
 namespace PJCAdmin.ControllersAPI
 {
@@ -16,9 +16,9 @@ namespace PJCAdmin.ControllersAPI
         // GET api/AuthTest
         public IEnumerable<AuthTest> Get(string token)
         {
-            APIAuth.authorizeToken(token);
+            Auth.authorizeToken(token);
 
-            string userName = APIAuth.getUserNameFromToken(token);
+            string userName = Auth.getUserNameFromToken(token);
 
             return db.AuthTests.Where(a => a.UserName.Equals(userName));
         }
@@ -30,9 +30,9 @@ namespace PJCAdmin.ControllersAPI
             //string token = packet.token;
             //AuthTest test = packet.obj;
 
-            APIAuth.authorizeToken(token);
+            Auth.authorizeToken(token);
 
-            test.UserName = APIAuth.getUserNameFromToken(token);
+            test.UserName = Auth.getUserNameFromToken(token);
 
             db.AuthTests.Add(test);
             db.SaveChanges();

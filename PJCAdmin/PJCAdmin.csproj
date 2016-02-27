@@ -158,7 +158,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\APIAuth.cs" />
+    <Compile Include="Classes\Helpers\APIModelHelpers\Auth.cs" />
     <Compile Include="Classes\Helpers\APIModelHelpers\ModelCopier.cs" />
     <Compile Include="Classes\Helpers\APIModelHelpers\RoutineHelper.cs" />
     <Compile Include="Classes\Helpers\DebugHelper.cs" />
