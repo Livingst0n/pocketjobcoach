@@ -23,93 +23,198 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
         #region Current User Methods
         #region Getters
+        /* Returns a list of the names of all routines 
+         * created by the currently logged in user.
+         */
         public List<string> getRoutineNames()
         {
             return getRoutineNames(AccountHelper.getCurrentUsername());
         }
+        /* Returns a list of all routines created by the 
+         * currently logged in user.
+         */
         public List<Routine> getRoutines()
         {
             return getRoutines(AccountHelper.getCurrentUsername());
         }
+        /* Returns a list of all routines created by the 
+         * currently logged in user in model format.
+         */
         public List<RoutineModel> getRoutineModels()
         {
             return getRoutineModels(AccountHelper.getCurrentUsername());
         }
+        /* Returns a list of all routines created by the 
+         * currently logged in user that matches the given 
+         * routine name.
+         * @param routineName: The routine name to match.
+         */
         public List<Routine> getRoutinesByName(string routineName)
         {
             return getRoutinesByName(AccountHelper.getCurrentUsername(), routineName);
         }
+        /* Returns a list of all routines created by the
+         * currently logged in user that matches the given 
+         * routine name in model format.
+         * @param routineName: The routine name to match.
+         */
         public List<RoutineModel> getRoutineModelsByName(string routineName)
         {
             return getRoutineModelsByName(AccountHelper.getCurrentUsername(), routineName);
         }
+        /* Returns the most recent active routine created
+         * by the currently logged in user that matches the
+         * given routine name.
+         * @param routineName: The routine name to match.
+         */
         public Routine getActiveRoutineByName(string routineName)
         {
             return getActiveRoutineByName(AccountHelper.getCurrentUsername(), routineName);
         }
+        /* Returns the most recent active routine created
+         * by the currently logged in user that matches the 
+         * given routine name in model format.
+         * @param routineName: The routine name to match.
+         */
         public RoutineModel getActiveRoutineModelByName(string routineName)
         {
             return getActiveRoutineModelByName(AccountHelper.getCurrentUsername(), routineName);
         }
+        /* Returns the most recent routine created by the
+         * currently logged in user that matches the given
+         * routine name (either active or disabled).
+         * @param routineName: The routine name to match.
+         */
         public Routine getMostRecentRoutineByName(string routineName)
         {
             return getMostRecentRoutineByName(AccountHelper.getCurrentUsername(), routineName);
         }
+        /* Returns the most recent routine created by the
+         * currently logged in user that matches the given
+         * routine name (either active or disabled) in model
+         * format.
+         * @param routineName: The routine name to match.
+         */
         public RoutineModel getMostRecentRoutineModelByName(string routineName)
         {
             return getMostRecentRoutineModelByName(AccountHelper.getCurrentUsername(), routineName);
         }
         #endregion
         #region Boolean Checks
+        /* Returns whether or not the currently logged in
+         * user has created any routines matching the given 
+         * name.
+         * @param routineName: The routine name to match.
+         */
         public bool routineExists(string routineName)
         {
             return routineExists(AccountHelper.getCurrentUsername(), routineName);
         }
+        /* Returns whether or not any routines created by the 
+         * currently logged in user that match the given name
+         * are active.
+         * @param routineName: The routine name to match.
+         */
         public bool routineIsActive(string routineName)
         {
             return routineIsActive(AccountHelper.getCurrentUsername(), routineName);
         }
+        /* Returns whether or not the most recent routine 
+         * created by the currently logged in user that matches
+         * the given name has any jobs associated with it.
+         * @param routineName: The routine name to match.
+         */
         public bool routineHasJobs(string routineName)
         {
             return routineHasJobs(AccountHelper.getCurrentUsername(), routineName);
         }
         #endregion
         #region Creating, Updating, and Deleting
+        /* Creates a new routine for the currently logged in
+         * user from the given model.
+         * @param model: The model of the routine to create
+         * from.
+         */
         public void createRoutine(RoutineModel model)
         {
             createRoutine(AccountHelper.getCurrentUsername(), model);
         }
+        /* Updates the most recent routine created by the 
+         * currently logged in user that matches the given
+         * name. Creates a new routine if no routine matches
+         * the given name or if the matched routine already
+         * has jobs associated with it.
+         * @param routineName: The routine name to match.
+         * @param model: The model to update or create
+         * a routine from.
+         */
         public void updateRoutine(string routineName, RoutineModel model)
         {
             updateRoutine(AccountHelper.getCurrentUsername(), routineName, model);
         }
-        public void deleteRoutine(string routineName, bool deleteAll)
+        /* Deletes the most recent routine created by the 
+         * currently logged in user that matches the given
+         * name. Deletes all routines created by the current
+         * user that matches the given name if deleteAll is 
+         * true.
+         * @param routineName: The routine name to match.
+         * @param deleteAll: Determines whether all matching
+         * routines should be deleted or only the most recent.
+         */
+        public void deleteRoutine(string routineName, bool deleteAll = false)
         {
             deleteRoutine(AccountHelper.getCurrentUsername(), routineName, deleteAll);
         }
+        /* Deletes all routines created by the currently
+         * logged in user that matches the given name.
+         * @param routineName: The routine name to match.
+         */
         public void deleteAllVersionsOfRoutine(string routineName)
         {
             deleteAllVersionsOfRoutine(AccountHelper.getCurrentUsername(), routineName);
         }
+        /* Deletes the most recent routine created by the 
+         * currently logged in user that matches the given
+         * name.
+         * @param routineName: The routine name to match.
+         */
         public void deleteMostRecentRoutine(string routineName)
         {
             deleteMostRecentRoutine(AccountHelper.getCurrentUsername(), routineName);
         }
         #endregion
         #region Enabling and Disabling
-        //Will always be the most recent
+        /* Enables the most recent routine created by the
+         * currently logged in user that matches the given
+         * name.
+         * @param routineName: The routine name to match.
+         */
         public void enableRoutine(string routineName)
         {
             enableRoutine(AccountHelper.getCurrentUsername(), routineName);
         }
+        /* Efficiently disables all routines created by the
+         * currently logged in user that matches the given
+         * name.
+         * @param routineName: The routine name to match.
+         */
         public void disableRoutine(string routineName)
         {
             disableRoutine(AccountHelper.getCurrentUsername(), routineName);
         }
+        /* Disables the most recent routine created by the 
+         * currently logged in user that matches the given
+         * name.
+         * @param routineName: The routine name to match.
+         */
         public void disableMostRecentRoutine(string routineName)
         {
             disableMostRecentRoutine(AccountHelper.getCurrentUsername(), routineName);
         }
+        /* Disables all routines created by the currently
+         * logged in user that match the given name.
+         * @param routineName: The routine name to match.
+         */
         public void disableAllRoutinesByName(string routineName)
         {
             disableAllRoutinesByName(AccountHelper.getCurrentUsername(), routineName);
@@ -118,6 +223,11 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         #endregion
         #region Specified Creator Methods
         #region Getters
+        /* Returns a list of the names of all routines
+         * created by the given user.
+         * @param creatorUsername: The username of the
+         * user who created the routine.
+         */
         public List<string> getRoutineNames(string creatorUsername)
         {
             List<string> lstRoutines = new List<string>();
@@ -126,10 +236,20 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             return lstRoutines;
         }
+        /* Returns a list of all routines created by the
+         * given user
+         * @param creatorUsername: The username of the
+         * user who created the routine.
+         */
         public List<Routine> getRoutines(string creatorUsername)
         {
             return db.UserNames.Find(creatorUsername).Routines.ToList();
         }
+        /* Returns a list of all routines created by the
+         * given user in model format.
+         * @param creatorUsername: The username of the
+         * user who created the routine.
+         */
         public List<RoutineModel> getRoutineModels(string creatorUsername)
         {
             List<RoutineModel> lst = new List<RoutineModel>();
@@ -139,10 +259,23 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             return lst;
         }
+        /* Returns a list of all routines created by the
+         * given user that matches the given routine name.
+         * @param creatorUsername: The username of the
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public List<Routine> getRoutinesByName(string creatorUsername, string routineName)
         {
             return getRoutines(creatorUsername).AsQueryable().Where(r => r.routineTitle.Equals(routineName)).ToList();
         }
+        /* Returns a list of all routines created by the 
+         * given user that matches the given routine name
+         * in model format.
+         * @param creatorUsername: The username of the
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public List<RoutineModel> getRoutineModelsByName(string creatorUsername, string routineName)
         {
             List<RoutineModel> lst = new List<RoutineModel>();
@@ -152,6 +285,13 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             return lst;
         }
+        /* Returns the most recent active routine created
+         * by the given user that matches the given routine
+         * name.
+         * @param creatorUsername: The username of the 
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public Routine getActiveRoutineByName(string creatorUsername, string routineName)
         {
             IQueryable<Routine> activeRoutines = getRoutinesByName(creatorUsername, routineName).AsQueryable().Where(r => r.isDisabled == false).OrderBy(r => r.updatedDate);
@@ -165,28 +305,68 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             return activeRoutines.Last();
         }
+        /* Returns the most recent active routine created
+         * by the given user that matches the given routine
+         * name in model format.
+         * @param creatorUsername: The username of the 
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public RoutineModel getActiveRoutineModelByName(string creatorUsername, string routineName)
         {
             return ModelCopier.copyRoutineToModel(getActiveRoutineByName(creatorUsername, routineName));
         }
+        /* Returns the most recent routine created by the
+         * given user that matches the given routine name
+         * (either active or disabled).
+         * @param creatorUsername: The username of the 
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public Routine getMostRecentRoutineByName(string creatorUsername, string routineName)
         {
             return getRoutinesByName(creatorUsername, routineName).OrderBy(r => r.updatedDate).Last();
         }
+        /* Returns the most recent routine created by the
+         * given user that matches the given routine name
+         * (either active or disabled) in model format.
+         * @param creatorUsername: The username of the
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public RoutineModel getMostRecentRoutineModelByName(string creatorUsername, string routineName)
         {
             return ModelCopier.copyRoutineToModel(getMostRecentRoutineByName(creatorUsername, routineName));
         }
         #endregion
         #region Boolean Checks
+        /* Returns whether or not the given user has created
+         * any routines matching the given name.
+         * @param creatorUsername: The username of the 
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public bool routineExists(string creatorUsername, string routineName)
         {
             return getRoutinesByName(creatorUsername, routineName).Count() > 0;
         }
+        /* Returns whether or not any routines created by the
+         * given user that match the given name are active.
+         * @param creatorUsername: The username of the 
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public bool routineIsActive(string creatorUsername, string routineName)
         {
             return getActiveRoutineByName(creatorUsername, routineName) != null;
         }
+        /* Returns whether or not the most recent routine
+         * created by the given user that matches the given
+         * name has any jobs associated with it.
+         * @param creatorUsername: The username of the
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public bool routineHasJobs(string creatorUsername, string routineName)
         {
             if (!routineExists(creatorUsername, routineName))
@@ -200,6 +380,13 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         }
         #endregion
         #region Creating, Updating, and Deleting
+        /* Creates a new routine for the given user from 
+         * the given model.
+         * @param creatorUsername: The username of the
+         * user who created the routine.
+         * @param model: The model of the routine to create
+         * from.
+         */
         public void createRoutine(string creatorUsername, RoutineModel model)
         {
             Routine r = new Routine()
@@ -223,6 +410,17 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             foreach (FeedbackModel f in model.Feedbacks)
                 feedbackHelper.createRoutineFeedback(r.routineID, f);
         }
+        /* Updates the most recent routine created by the
+         * given user that matches the given name. Creates
+         * a new routine if no routine matches the given
+         * name or if the matched routine already has jobs
+         * associated with it.
+         * @param creatorUsername: The username of the
+         * user who is to be the creator of the routine.
+         * @param routineName: The routine name to match.
+         * @param model: The model to update or create
+         * a routine from.
+         */
         public void updateRoutine(string creatorUsername, string routineName, RoutineModel model)
         {
             if (!routineExists(creatorUsername, routineName))
@@ -240,6 +438,16 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 modifyExistingRoutine(creatorUsername, routineName, model);
             }
         }
+        /* Deletes the most recent routine created by the
+         * given user that matches the given name. Deletes
+         * all routines created by the given user that 
+         * matches the given name if deleteAll is true.
+         * @param creatorUsername: The username of the 
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         * @param deleteAll: Determines whether all matching
+         * routines should be deleted or only the most recent.
+         */
         public void deleteRoutine(string creatorUsername, string routineName, bool deleteAll)
         {
             if (deleteAll)
@@ -247,18 +455,35 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             else
                 deleteMostRecentRoutine(creatorUsername, routineName);
         }
+        /* Deletes all routines created by the given user
+         * that matches the given name.
+         * @param creatorUsername: The username of the 
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public void deleteAllVersionsOfRoutine(string creatorUsername, string routineName)
         {
             foreach (Routine r in getRoutinesByName(creatorUsername, routineName))
                 deleteRoutine(r);
         }
+        /* Deletes the most recent routine created by the
+         * given user that matches the given name.
+         * @param creatorUsername: The username of the 
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public void deleteMostRecentRoutine(string creatorUsername, string routineName)
         {
             deleteRoutine(getMostRecentRoutineByName(creatorUsername, routineName));
         }
         #endregion
         #region Enabling and Disabling
-        //Will always be the most recent
+        /* Enables the most recent routine created by the
+         * given user that matches the given name.
+         * @param creatorUsername: The username for the
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public void enableRoutine(string creatorUsername, string routineName)
         {
             Routine r = getMostRecentRoutineByName(creatorUsername, routineName);
@@ -270,6 +495,12 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 db.SaveChanges();
             }
         }
+        /* Efficiently disables all routines created by the
+         * given user that matches the given name.
+         * @param creatorUsername: The username for the
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public void disableRoutine(string creatorUsername, string routineName)
         {
             disableMostRecentRoutine(creatorUsername, routineName);
@@ -277,6 +508,12 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             if (routineIsActive(creatorUsername, routineName))
                 disableAllRoutinesByName(creatorUsername, routineName);
         }
+        /* Disables the most recent routine created by the
+         * given user that matches the given name.
+         * @param creatorUsername: The username for the
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public void disableMostRecentRoutine(string creatorUsername, string routineName)
         {
             Routine r = getMostRecentRoutineByName(creatorUsername, routineName);
@@ -284,6 +521,12 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.Entry<Routine>(r).State = System.Data.EntityState.Modified;
             db.SaveChanges();
         }
+        /* Disables all routines created by the given user
+         * that match the given name.
+         * @param creatorUsername: The username for the 
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         */
         public void disableAllRoutinesByName(string creatorUsername, string routineName)
         {
             List<Routine> routines = getRoutinesByName(creatorUsername, routineName);
@@ -302,6 +545,9 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         #endregion
         #endregion
         #region Private Methods
+        /* Deletes the given routine from the database.
+         * @param routine: The routine record to delete.
+         */
         private void deleteRoutine(Routine routine)
         {
             /*jobHelper.deleteAllJobsByRoutine(routine.routineID);
@@ -316,6 +562,15 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             //TODO check Feedback, Task, Job, Note etc for deletion. (Orphans should be, non-orphans should not be)
         }
+        /* Updates the most recent routine created by the
+         * given user that matches the given name, using
+         * the given model.
+         * @param creatorUsername: The username of the 
+         * user who created the routine.
+         * @param routineName: The routine name to match.
+         * @param model: The model to use for updating
+         * the existing routine.
+         */
         private void modifyExistingRoutine(string creatorUsername, string routineName, RoutineModel model)
         {
             Routine r = getMostRecentRoutineByName(creatorUsername, routineName);
@@ -332,6 +587,13 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.Entry<Routine>(r).State = System.Data.EntityState.Modified;
             db.SaveChanges();
         }
+        /* Disables all old routines in the given list of
+         * routines. The most recent routine in the list is
+         * left as is.
+         * @param routines: A list of routines for which only
+         * the most recent should be allowed to be active. 
+         * All entries should have the same routine name.
+         */
         private void disableOldRoutines(List<Routine> routines)
         {
             routines.Remove(routines.OrderBy(r => r.updatedDate).Last());
