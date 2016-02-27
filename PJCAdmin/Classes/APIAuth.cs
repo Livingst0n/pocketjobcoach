@@ -8,10 +8,23 @@ using PJCAdmin.Models;
 
 namespace PJCAdmin.Classes
 {
+    /* --------------------------------------------------------
+     * The APIAuth class provides common methods relating 
+     * to Authentication for the WebAPI service.
+     * --------------------------------------------------------
+     */
     public class APIAuth
     {
         private static pjcEntities db = new pjcEntities();
 
+        /* Returns the username for the user associated
+         * with the given token.
+         * @param token: The token retrieved from the 
+         * server that was returned to the server with
+         * an HTTP request.
+         * @throws TokenIsInvalidException: if isTokenValid
+         * returns false for the token.
+         */
         public static string getUserNameFromToken(string token)
         {
             if (! isTokenValid(token))
@@ -24,15 +37,15 @@ namespace PJCAdmin.Classes
 
             return authToken.userName;
         }
-
-        private static bool isExpired(DateTime expirationDate)
-        {
-            if (expirationDate.CompareTo(DateTime.Now) < 0)
-                return true;
-            else
-                return false;
-        }
-
+        /* Returns whether or not the given token is valid.
+         * A token is considered valid if it exists in an
+         * AuthToken record within the database and if
+         * isExpired returns false for the AuthToken's 
+         * expiration date.
+         * @param token: The token retrieved from the
+         * server that was returned to the server with
+         * an HTTP request.
+         */
         public static bool isTokenValid(string token)
         {
             if (token.Length < 38)
@@ -59,7 +72,15 @@ namespace PJCAdmin.Classes
 
             return true;
         }
-
+        /* Authorizes the given token and updates the token's
+         * expiration date.
+         * @param token: The token retrieved from the 
+         * server that was returned to the server with
+         * an HTTP request.
+         * @throws HTTPStatusCode.Unauthorized: if 
+         * isTokenValid returns false. This causes 
+         * an HTTP Response to be sent to the client.
+         */
         public static void authorizeToken(string token)
         {
             if (!isTokenValid(token))
@@ -77,7 +98,18 @@ namespace PJCAdmin.Classes
             db.SaveChanges();
 
         }
-
+        /* Returns whether or not the given expiration date
+         * has passed.
+         * @param expirationDate: The datetime to be checked.
+         */
+        private static bool isExpired(DateTime expirationDate)
+        {
+            if (expirationDate.CompareTo(DateTime.Now) < 0)
+                return true;
+            else
+                return false;
+        }
+        
         public void dispose()
         {
             db.Dispose();
