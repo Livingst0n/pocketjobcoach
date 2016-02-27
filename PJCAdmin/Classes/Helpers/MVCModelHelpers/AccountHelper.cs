@@ -280,7 +280,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         public bool isThisUserUsersParent(string userName)
         {
             string thisUsername = System.Web.Security.Membership.GetUser().UserName;
-            MembershipUser parent = getUsersParent(user);
+            MembershipUser parent = getUsersParent(userName);
             if (parent != null && parent.UserName.Equals(thisUsername))
                 return true;
             else
