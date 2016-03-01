@@ -397,8 +397,27 @@ namespace PJCMobile.Controllers
             return View();
         }
 
-        [HttpPost]
         public ActionResult Unlock(string username)
+        {
+            if (!(Roles.IsUserInRole("Administrator")))
+            {
+                Response.Redirect("~/Unauthorized");
+                return View();
+            }
+
+            if (username == null || username.Equals(""))
+            {
+                Response.Redirect("~/Account/List");
+                return View();
+            }
+
+            ViewData["user"] = username;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Unlock(string username, int nothing = 0)
         {
             if (!(Roles.IsUserInRole("Administrator")))
             {

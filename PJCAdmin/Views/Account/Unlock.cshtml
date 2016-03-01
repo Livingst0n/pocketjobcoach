@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Unlock";
+}
+
+<h2>Unlock User Confirmation</h2>
+
+<h4>Are you sure you want to unlock @ViewData["user"]?</h4>
+<br />
+<form action="~/Account/Unlock" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="username" value="@ViewData["user"]"/>
+    <input type="submit" value="Yes" />
+</form>
+<br />
+<br />
+@Html.ActionLink("Cancel", "List")
