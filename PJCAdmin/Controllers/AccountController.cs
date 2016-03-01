@@ -253,6 +253,10 @@ namespace PJCMobile.Controllers
             }
 
             MembershipUser currentUser = System.Web.Security.Membership.GetUser(user);
+            
+            if (currentUser.IsLockedOut)
+                currentUser.UnlockUser();
+
             string newpassword = currentUser.ResetPassword();
             //Send email to user with new password
             try
