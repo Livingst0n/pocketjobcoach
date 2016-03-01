@@ -35,8 +35,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 expectedDuration = model.expectedDuration
             };
 
-            TaskCategory tc = enumHelper.getTaskCategory(model.TaskCategory.categoryName); 
-            t.TaskCategory = tc;
+            t.TaskCategory = enumHelper.getTaskCategory(model.TaskCategory.categoryName); 
 
             db.Tasks.Add(t);
             db.SaveChanges();
@@ -93,8 +92,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 task.expectedDuration = model.expectedDuration;
             }
 
-            TaskCategory tc = enumHelper.getTaskCategory(model.TaskCategory.categoryName); 
-            task.TaskCategory = tc;
+            task.TaskCategory = enumHelper.getTaskCategory(model.TaskCategory.categoryName);
 
             db.Entry<Task>(task).State = System.Data.EntityState.Modified;
             db.SaveChanges();
