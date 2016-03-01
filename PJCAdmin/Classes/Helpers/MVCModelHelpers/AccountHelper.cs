@@ -189,7 +189,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public bool isThisUserUsersJobCoach(string userName)
         {
-            string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+            string thisUsername = getCurrentUsername();
             MembershipUser jobCoach = getUsersJobCoach(userName);
             if (jobCoach != null && jobCoach.UserName.Equals(thisUsername))
                 return true;
@@ -279,7 +279,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public bool isThisUserUsersParent(string userName)
         {
-            string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+            string thisUsername = getCurrentUsername();
             MembershipUser parent = getUsersParent(userName);
             if (parent != null && parent.UserName.Equals(thisUsername))
                 return true;

@@ -14,6 +14,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
     public class FeedbackHelper
     {
         private pjcEntities db = new pjcEntities();
+        private EnumHelper helper = new EnumHelper();
 
         #region Feedback
         /* Returns the matching Feedback record.
@@ -23,8 +24,8 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         private Feedback getMatchingFeedback(FeedbackModel model)
         {
-            byte mediaTypeID = getMatchingMediaType(model.MediaType.mediaTypeName).mediaTypeID;
-            byte feedbackTypeID = getMatchingFeedbackType(model.FeedbackType.feedbackTypeName).feedbackTypeID;
+            byte mediaTypeID = helper.getMediaType(model.MediaType.mediaTypeName).mediaTypeID;
+            byte feedbackTypeID = helper.getFeedbackType(model.FeedbackType.feedbackTypeName).feedbackTypeID;
 
             List<Feedback> lst = db.Feedbacks.Where(f => f.mediaTypeID == mediaTypeID && f.feedbackID == feedbackTypeID).ToList();
             foreach (Feedback f in lst)
@@ -47,8 +48,8 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 feedbackTitle = model.feedbackTitle,
                 feedbackMessage = model.feedbackMessage
             };
-            feedback.FeedbackType = getMatchingFeedbackType(model.FeedbackType.feedbackTypeName);
-            feedback.MediaType = getMatchingMediaType(model.MediaType.mediaTypeName);
+            feedback.FeedbackType = helper.getFeedbackType(model.FeedbackType.feedbackTypeName);
+            feedback.MediaType = helper.getMediaType(model.MediaType.mediaTypeName);
 
             db.Feedbacks.Add(feedback);
             db.SaveChanges();
@@ -231,16 +232,6 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             }
         }
         #endregion
-
-        //TODO move to EnumHelper?
-        private MediaType getMatchingMediaType(string typeName)
-        {
-            return db.MediaTypes.Where(t => t.mediaTypeName.Equals(typeName)).First();
-        }
-        private FeedbackType getMatchingFeedbackType(string typeName)
-                {
-                    return db.FeedbackTypes.Where(t => t.feedbackTypeName.Equals(typeName)).First();
-                }
         
         //TODO delete processes if .Remove function doesn't remove orphaned children
 

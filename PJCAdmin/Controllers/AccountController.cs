@@ -46,7 +46,7 @@ namespace PJCMobile.Controllers
             }
 
             List<MembershipUser> lstUsers = new List<MembershipUser>();
-            string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+            string thisUsername = AccountHelper.getCurrentUsername();
             
             if (Roles.IsUserInRole("Job Coach"))
             {
@@ -124,7 +124,7 @@ namespace PJCMobile.Controllers
                 return View();
             }
 
-            string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+            string thisUsername = AccountHelper.getCurrentUsername();
 
             if (!helper.userExists(user))
                 return HttpNotFound();
@@ -289,7 +289,7 @@ namespace PJCMobile.Controllers
             ViewData["AvailableChildren"] = helper.getListOfUnassignedChildren();
 
             //Below Here
-            string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+            string thisUsername = AccountHelper.getCurrentUsername();
             ViewData["Users"] = db.Users.ToList();
             ViewData["Jobs"] = db.UserNames.Find(thisUsername).Routines.ToList();
 

@@ -25,7 +25,7 @@ namespace PJCAdmin.Controllers
                 return View();
             }
 
-            string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+            string thisUsername = AccountHelper.getCurrentUsername();
 
             if (Roles.IsUserInRole("Administrator"))
             {
@@ -110,7 +110,7 @@ namespace PJCAdmin.Controllers
             }
             else
             {
-                string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+                string thisUsername = AccountHelper.getCurrentUsername();
 
                 if (Roles.IsUserInRole("Job Coach"))
                 {

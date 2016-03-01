@@ -15,6 +15,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
     {
         private pjcEntities db = new pjcEntities();
         private FeedbackHelper feedbackHelper = new FeedbackHelper();
+        private EnumHelper enumHelper = new EnumHelper();
 
         #region Creating, Updating, and Deleting
         /* Creates a task from the given model for the given 
@@ -34,7 +35,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 expectedDuration = model.expectedDuration
             };
 
-            TaskCategory tc = getTaskCategoryByName(model.TaskCategory.categoryName); 
+            TaskCategory tc = enumHelper.getTaskCategory(model.TaskCategory.categoryName); 
             t.TaskCategory = tc;
 
             db.Tasks.Add(t);
@@ -92,7 +93,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 task.expectedDuration = model.expectedDuration;
             }
 
-            TaskCategory tc = getTaskCategoryByName(model.TaskCategory.categoryName); 
+            TaskCategory tc = enumHelper.getTaskCategory(model.TaskCategory.categoryName); 
             task.TaskCategory = tc;
 
             db.Entry<Task>(task).State = System.Data.EntityState.Modified;
@@ -153,12 +154,6 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             return true;
         }
         #endregion
-        
-        //TODO move to EnumHelper?
-        private TaskCategory getTaskCategoryByName(string taskCategoryName)
-        {
-            return db.TaskCategories.Where(c => c.categoryName.Equals(taskCategoryName)).First();
-        }
         
         public void dispose()
         {
