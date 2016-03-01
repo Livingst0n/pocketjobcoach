@@ -42,23 +42,16 @@ namespace PJCMobile.Controllers
                 ViewData["Parents"] = helper.getListOfUsersInRole("Parent");
                 ViewData["Users"] = helper.getListOfUsersInRole("User");
                 
-                return View(System.Web.Security.Membership.GetAllUsers());
+                return View();
             }
 
-            List<MembershipUser> lstUsers = new List<MembershipUser>();
             string thisUsername = AccountHelper.getCurrentUsername();
             
             if (Roles.IsUserInRole("Job Coach"))
-            {
-                lstUsers = helper.getListOfUsersAssignedToJobCoach(thisUsername);
-                ViewData["AssignedUsers"] = lstUsers;
-            }
+                ViewData["AssignedUsers"] = helper.getListOfUsersAssignedToJobCoach(thisUsername);
 
             if (Roles.IsUserInRole("Parent"))
-            {
-                lstUsers = helper.getListOfUsersChildOfParent(thisUsername);
-                ViewData["Children"] = lstUsers;
-            }
+                ViewData["Children"] = helper.getListOfUsersChildOfParent(thisUsername);
             
             return View();
         }
