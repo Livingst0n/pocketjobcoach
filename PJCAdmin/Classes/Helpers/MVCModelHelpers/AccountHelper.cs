@@ -189,7 +189,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public bool isThisUserUsersJobCoach(string userName)
         {
-            string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+            string thisUsername = getCurrentUsername();
             MembershipUser jobCoach = getUsersJobCoach(userName);
             if (jobCoach != null && jobCoach.UserName.Equals(thisUsername))
                 return true;
@@ -202,11 +202,14 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public void updateJobCoach(string userName, string jobCoach)
         {
+            UserName user = db.UserNames.Find(userName);
             if (jobCoach == null)
-                db.UserNames.Find(userName).UserName3 = null;
+                user.UserName3 = null;
             else
                 //UserName3 is the job coach
-                db.UserNames.Find(userName).UserName3 = db.UserNames.Find(jobCoach);
+                user.UserName3 = db.UserNames.Find(jobCoach);
+
+            db.Entry<UserName>(user).State = System.Data.EntityState.Modified;
             db.SaveChanges();
         }
         /* Updates the list of users assigned to the
@@ -217,16 +220,18 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public void updateAssignedUsers(string userName, string[] assignedUsers)
         {
+            UserName user = db.UserNames.Find(userName);
             //UserName12 is all usernames assigned to the selected username
-            db.UserNames.Find(userName).UserName12.Clear();
+            user.UserName12.Clear();
             if (assignedUsers != null)
             {
                 foreach (string id in assignedUsers)
                 {
                     string selectedUserName = db.Users.Find(Guid.Parse(id)).UserName;
-                    db.UserNames.Find(userName).UserName12.Add(db.UserNames.Find(selectedUserName));
+                    user.UserName12.Add(db.UserNames.Find(selectedUserName));
                 }
             }
+            db.Entry<UserName>(user).State = System.Data.EntityState.Modified;
             db.SaveChanges();
         }
         #endregion
@@ -279,7 +284,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public bool isThisUserUsersParent(string userName)
         {
-            string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+            string thisUsername = getCurrentUsername();
             MembershipUser parent = getUsersParent(userName);
             if (parent != null && parent.UserName.Equals(thisUsername))
                 return true;
@@ -292,11 +297,15 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public void updateParent(string userName, string parent)
         {
+            UserName user = db.UserNames.Find(userName);
+
             if (parent == null)
-                db.UserNames.Find(userName).UserName2 = null;
+                user.UserName2 = null;
             else
                 //UserName2 is the guardian
-                db.UserNames.Find(userName).UserName2 = db.UserNames.Find(parent);
+                user.UserName2 = db.UserNames.Find(parent);
+
+            db.Entry<UserName>(user).State = System.Data.EntityState.Modified;
             db.SaveChanges();
         }
         /* Updates the list of children assigned to the
@@ -308,15 +317,17 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         public void updateAssignedChildren(string userName, string[] assignedChildren)
         {
             //UserName11 is all children of the selected username
-            db.UserNames.Find(userName).UserName11.Clear();
+            UserName user = db.UserNames.Find(userName);
+            user.UserName11.Clear();
             if (assignedChildren != null)
             {
                 foreach (string id in assignedChildren)
                 {
                     string selectedUserName = db.Users.Find(Guid.Parse(id)).UserName;
-                    db.UserNames.Find(userName).UserName11.Add(db.UserNames.Find(selectedUserName));
+                    user.UserName11.Add(db.UserNames.Find(selectedUserName));
                 }
             }
+            db.Entry<UserName>(user).State = System.Data.EntityState.Modified;
             db.SaveChanges();
         }
         #endregion

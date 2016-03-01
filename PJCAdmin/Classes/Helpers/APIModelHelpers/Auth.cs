@@ -91,8 +91,15 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
             int id = Int32.Parse(token.Substring(37));
             AuthToken authToken = db.AuthTokens.Find(id);
 
-            //update expiration, 10 minutes of inactivity
-            authToken.expirationDate = DateTime.Now.AddMinutes(10);
+            if (isExpired(authToken.expirationDate.AddMinutes(-10)))
+            {
+                //update expiration, 10 minutes of inactivity
+                authToken.expirationDate = DateTime.Now.AddMinutes(10);
+            }
+            else
+            {
+                authToken.expirationDate = DateTime.Now.AddYears(50);
+            }
 
             db.Entry(authToken).State = System.Data.EntityState.Modified;
             db.SaveChanges();

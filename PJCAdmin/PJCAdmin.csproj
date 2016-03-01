@@ -464,6 +464,7 @@
     <Content Include="Views\TaskCategory\Create.cshtml" />
     <Content Include="Views\TaskCategory\Edit.cshtml" />
     <Content Include="Views\TaskCategory\Delete.cshtml" />
+    <Content Include="Views\Account\Unlock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -46,7 +46,7 @@ namespace PJCMobile.Controllers
             }
 
             List<MembershipUser> lstUsers = new List<MembershipUser>();
-            string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+            string thisUsername = AccountHelper.getCurrentUsername();
             
             if (Roles.IsUserInRole("Job Coach"))
             {
@@ -124,7 +124,7 @@ namespace PJCMobile.Controllers
                 return View();
             }
 
-            string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+            string thisUsername = AccountHelper.getCurrentUsername();
 
             if (!helper.userExists(user))
                 return HttpNotFound();
@@ -253,6 +253,10 @@ namespace PJCMobile.Controllers
             }
 
             MembershipUser currentUser = System.Web.Security.Membership.GetUser(user);
+            
+            if (currentUser.IsLockedOut)
+                currentUser.UnlockUser();
+
             string newpassword = currentUser.ResetPassword();
             //Send email to user with new password
             try
@@ -289,7 +293,7 @@ namespace PJCMobile.Controllers
             ViewData["AvailableChildren"] = helper.getListOfUnassignedChildren();
 
             //Below Here
-            string thisUsername = System.Web.Security.Membership.GetUser().UserName;
+            string thisUsername = AccountHelper.getCurrentUsername();
             ViewData["Users"] = db.Users.ToList();
             ViewData["Jobs"] = db.UserNames.Find(thisUsername).Routines.ToList();
 
@@ -397,8 +401,27 @@ namespace PJCMobile.Controllers
             return View();
         }
 
-        [HttpPost]
         public ActionResult Unlock(string username)
+        {
+            if (!(Roles.IsUserInRole("Administrator")))
+            {
+                Response.Redirect("~/Unauthorized");
+                return View();
+            }
+
+            if (username == null || username.Equals(""))
+            {
+                Response.Redirect("~/Account/List");
+                return View();
+            }
+
+            ViewData["user"] = username;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Unlock(string username, int nothing = 0)
         {
             if (!(Roles.IsUserInRole("Administrator")))
             {
