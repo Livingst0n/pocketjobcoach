@@ -60,7 +60,7 @@ namespace PJCMobile.Controllers
                 ViewData["Children"] = lstUsers;
             }
             
-            return View(lstUsers);
+            return View();
         }
 
         public ActionResult Details(string user = "")

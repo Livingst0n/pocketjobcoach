@@ -4,37 +4,170 @@ ViewBag.Title = "Users";
 
 <h2>Users</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            User
-        </th>
-        <th></th>
-    </tr>
-@foreach (MembershipUser user in Model)
+@if (Roles.IsUserInRole("Administrator"))
 {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => user.UserName)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { user = user.UserName }) |
-            @Html.ActionLink("Edit", "Edit", new { user = user.UserName }) |
-            @Html.ActionLink("Reset Password", "AdminResetPassword", new { user = user.UserName })
+    @Html.ActionLink("Create New", "Create")
+}
+</p>
+<table> 
             @if (Roles.IsUserInRole("Administrator"))
             {
-                <span>|</span>
-                if(user.IsLockedOut){
-                    @Html.ActionLink("Unlock", "Unlock", new { username = user.UserName });
-                }else{
-                    <span>Active</span>
+                <tr>
+                    <th>
+                        @("Administrators")
+                    </th>
+                </tr>
+                    //foreach (MembershipUser user in Model)
+                    foreach (MembershipUser user in ViewData["Admins"] as IEnumerable<MembershipUser>)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.UserName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { user = user.UserName }) |
+                        @Html.ActionLink("Edit", "Edit", new { user = user.UserName })
+                        
+                        <span> |</span>
+                        @Html.ActionLink("Reset Password", "AdminResetPassword", new { user = user.UserName })
+                        <span>|</span>
+                        @if (user.IsLockedOut)
+                        {     
+                            @Html.ActionLink("Unlock", "Unlock", new { username = user.UserName });
+                        }
+                        else {
+                            <span>Active</span>
+                        }
+                        <span>|</span>
+                        @Html.ActionLink("Delete", "Delete", new { username = user.UserName })
+                    </td>
+                </tr>
                 }
-                <span>|</span>
-                @Html.ActionLink("Delete", "Delete", new { username = user.UserName })
+                <tr>
+                    <th>
+                            @("Job Coaches")
+
+                    </th>
+                </tr>
+
+                foreach (MembershipUser user in ViewData["Job Coaches"] as IEnumerable<MembershipUser>)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.UserName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { user = user.UserName }) |
+                            @Html.ActionLink("Edit", "Edit", new { user = user.UserName })
+                        
+                            <span> |</span>
+                            @Html.ActionLink("Reset Password", "AdminResetPassword", new { user = user.UserName })
+                            <span>|</span>
+                            @if (user.IsLockedOut)
+                            {
+                                @Html.ActionLink("Unlock", "Unlock", new { username = user.UserName });
+                            }
+                            else {
+                                <span>Active</span>
+                            }
+                            <span>|</span>
+                            @Html.ActionLink("Delete", "Delete", new { username = user.UserName })
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <th>
+                            @("Parents")
+                    </th>
+                </tr>
+                foreach (MembershipUser user in ViewData["Parents"] as IEnumerable<MembershipUser>)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.UserName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { user = user.UserName }) |
+                            @Html.ActionLink("Edit", "Edit", new { user = user.UserName })
+                           
+                            <span> |</span>
+                            @Html.ActionLink("Reset Password", "AdminResetPassword", new { user = user.UserName })
+                            <span>|</span>
+                            @if (user.IsLockedOut)
+                            {
+
+                                @Html.ActionLink("Unlock", "Unlock", new { username = user.UserName });
+                            }
+                            else {
+                                <span>Active</span>
+                            }
+                            <span>|</span>
+                            @Html.ActionLink("Delete", "Delete", new { username = user.UserName })
+                            
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <th>
+                            @("Users")
+                    </th>
+                </tr>
+                foreach (MembershipUser user in ViewData["Users"] as IEnumerable<MembershipUser>)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.UserName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { user = user.UserName }) |
+                            @Html.ActionLink("Edit", "Edit", new { user = user.UserName })
+                            
+                            <span> |</span>
+                            @Html.ActionLink("Reset Password", "AdminResetPassword", new { user = user.UserName })
+                            <span>|</span>
+                            @if (user.IsLockedOut)
+                            {
+
+                                @Html.ActionLink("Unlock", "Unlock", new { username = user.UserName });
+                            }
+                            else {
+                                <span>Active</span>
+                            }
+                            <span>|</span>
+                            @Html.ActionLink("Delete", "Delete", new { username = user.UserName })
+                            
+                        </td>
+                    </tr>
+                }
             }
-        </td>
-    </tr>
-}
-</table>
+            @if (Roles.IsUserInRole("Job Coach"))
+            {
+                foreach (MembershipUser user in ViewData["AssignedUsers"] as IEnumerable<MembershipUser>)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.UserName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { user = user.UserName }) |
+                            @Html.ActionLink("Edit", "Edit", new { user = user.UserName })
+                        </td>
+                    </tr>
+                }
+            }
+            @if (Roles.IsUserInRole("Parent"))
+            {
+                foreach (MembershipUser user in ViewData["Children"] as IEnumerable<MembershipUser>)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.UserName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { user = user.UserName }) |
+                            @Html.ActionLink("Edit", "Edit", new { user = user.UserName })
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
