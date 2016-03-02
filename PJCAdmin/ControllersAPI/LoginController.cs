@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using PJCAdmin.Models;
+using PJCAdmin.Classes.Helpers.APIModelHelpers;
 
 namespace PJCAdmin.ControllersAPI
 {
@@ -62,6 +63,36 @@ namespace PJCAdmin.ControllersAPI
             }
             else
                 return Request.CreateResponse(HttpStatusCode.Forbidden);
+        }
+
+        //POST .../api/Login
+        public HttpResponseMessage Post(string token, ChangePasswordModel model)
+        {
+            Auth.authorizeToken(token);
+
+            if (!(ModelState.IsValid))
+                return Request.CreateResponse<string>(HttpStatusCode.BadRequest, "The current password is incorrect or the new password is invalid.");
+
+            string userName = Auth.getUserNameFromToken(token);
+            
+            System.Web.Security.MembershipUser user = System.Web.Security.Membership.GetUser(userName);
+            bool changePasswordSucceeded;
+
+            // ChangePassword will throw an exception rather
+            // than return false in certain failure scenarios.
+            try
+            {
+                changePasswordSucceeded = user.ChangePassword(model.OldPassword, model.NewPassword);
+            }
+            catch (Exception)
+            {
+                changePasswordSucceeded = false;
+            }
+
+            if (changePasswordSucceeded)
+                return Request.CreateResponse<string>(HttpStatusCode.OK,"Password Updated");
+            else
+                return Request.CreateResponse<string>(HttpStatusCode.BadRequest, "The current password is incorrect or the new password is invalid.");
         }
 
         protected override void Dispose(bool disposing)
