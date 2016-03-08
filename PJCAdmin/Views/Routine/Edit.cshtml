@@ -14,21 +14,41 @@
 }
 <h2>Edit Routine <small style="color:#808080">@Html.DisplayFor(model => model.routineTitle)</small></h2>
 
-
 <table>
-    <tr><td><b>Routine</b></td><td>Testing</td></tr>
+    <tr><td>Assigned to: @Html.DisplayFor(model => model.assigneeUserName)</td></tr>
+    <tr><td>
+        @if (Model.isTimed) { @("Timed - " + Model.expectedDuration) }
+        else { @("Not Timed - " + Model.expectedDuration) }
+        </td></tr>
+    <tr><td>
+        @if (Model.isNotifiable) { @("Will email on job completion") }
+        else { @("Won't email on job completion") }
+        </td></tr>
+    <tr><td>
+        @if (Model.isDisabled) { @("Disabled") }
+        else { @("Enabled") }
+        </td></tr>
 </table>
 
+<h3>Routine Feedback</h3>
+<table>
+</table>
+
+<h3>Tasks</h3>
 <ol id="Tasks">
+    @foreach (PJCAdmin.Models.TaskModel task in Model.Tasks)
+    {
+        @Html.Partial("_EditTask", task);
+    }
 </ol>
 
 <script>
     function InsertNewTask(atIndex) {
         if ($("#Tasks li").length > atIndex) {
-            $('#Tasks li:eq(' + atIndex + ')').before('@Html.Partial("_EditTask", new PJCAdmin.Models.TaskModel())');
+            $('#Tasks li:eq(' + atIndex + ')').before('@Html.Partial("_NewTask", new PJCAdmin.Models.TaskModel())');
         }
         else if ($("#Tasks li").length == atIndex){
-            $("#Tasks").append('@Html.Partial("_EditTask", new PJCAdmin.Models.TaskModel())');
+            $("#Tasks").append('@Html.Partial("_NewTask", new PJCAdmin.Models.TaskModel())');
         }
         return false;
     }
@@ -43,7 +63,7 @@
     }
 
     $(document).ready( function() {
-        InsertNewTask(0);
+        //InsertNewTask(0);
         $("#Tasks").on('click', 'button.AddTask', function (event) {
             event.preventDefault();
             var currentIndex = $(this).parent().parent().index();

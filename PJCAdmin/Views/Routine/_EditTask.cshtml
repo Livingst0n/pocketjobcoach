@@ -1,9 +1,31 @@
 ﻿@model PJCAdmin.Models.TaskModel
-\
-<li>\
-    <div>\
-        <p>TestTaskName - Description</p>\
-        <button class="AddTask">Add New Task</button>\
-        <button class="RemoveTask">Remove Task</button>\
-    </div>\
+<li>
+    <table>
+        <tr><td>@(Html.DisplayFor(model => model.taskName)) - @(Html.DisplayFor(model => model.taskDescription))</td></tr>
+        <tr><td>Category: @(Html.DisplayFor(model => model.TaskCategory.categoryName))</td></tr>
+        <tr><td>Sequence Number: @(Html.DisplayFor(model => model.sequenceNo))</td></tr>
+        <tr><td>
+            @if (Model.isTimed) { @("Timed - " + Model.expectedDuration) }
+            else { @("Not Timed - " + Model.expectedDuration) }
+            </td></tr>
+    </table>
+
+    <h4>Task Feedback</h4>
+    <table>
+        @foreach (PJCAdmin.Models.FeedbackModel feedback in Model.Feedbacks)
+        {
+            @Html.Partial("_ViewFeedback", feedback);
+        }
+    </table>
+
+    <table>
+        <tr>
+            <td>
+                <button class="AddTask">Add New Task</button>
+            </td>
+            <td>
+                <button class="RemoveTask">Remove Task</button>
+            </td>
+        </tr>
+    </table>
 </li>

@@ -198,7 +198,7 @@ namespace PJCAdmin.Controllers
 
                     ViewData["mockUser"] = mockUser;
                     ViewData["Routine"] = helper.getActiveRoutineByName(mockUser, routineName);
-                    return View();
+                    return View(helper.getActiveRoutineModelByName(mockUser, routineName));
                 }
             }
 
@@ -206,7 +206,7 @@ namespace PJCAdmin.Controllers
                 return HttpNotFound();
 
             ViewData["Routine"] = helper.getActiveRoutineByName(routineName);
-            return View();
+            return View(helper.getActiveRoutineModelByName(routineName));
         }
 
         [HttpPost]
