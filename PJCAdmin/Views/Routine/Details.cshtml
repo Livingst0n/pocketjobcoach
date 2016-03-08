@@ -16,10 +16,10 @@
 <script>
     function InsertNewTask(atIndex) {
         if ($("#Tasks li").length > atIndex) {
-            $('#Tasks li:eq(' + atIndex + ')').before('@Html.Partial("_Task", new PJCAdmin.Models.TaskModel())');
+            $('#Tasks li:eq(' + atIndex + ')').before('@Html.Partial("_ViewTask", new PJCAdmin.Models.TaskModel())');
         }
         else if ($("#Tasks li").length == atIndex){
-            $("#Tasks").append('@Html.Partial("_Task", new PJCAdmin.Models.TaskModel())');
+            $("#Tasks").append('@Html.Partial("_ViewTask", new PJCAdmin.Models.TaskModel())');
         }
         return false;
     }

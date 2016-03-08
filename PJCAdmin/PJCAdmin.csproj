@@ -466,7 +466,12 @@
     <Content Include="Views\TaskCategory\Delete.cshtml" />
     <Content Include="Views\Account\Unlock.cshtml" />
     <Content Include="Views\Routine\Details.cshtml" />
-    <Content Include="Views\Routine\_Task.cshtml" />
+    <Content Include="Views\Routine\_ViewTask.cshtml" />
+    <Content Include="Views\Routine\List.cshtml" />
+    <Content Include="Views\Routine\Create.cshtml" />
+    <Content Include="Views\Routine\Edit.cshtml" />
+    <Content Include="Views\Routine\Delete.cshtml" />
+    <Content Include="Views\Routine\_EditTask.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

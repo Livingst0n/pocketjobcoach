@@ -1,0 +1,12 @@
+﻿@{
+ViewBag.Title = "Delete Routine";
+}
+
+@if (Roles.IsUserInRole("Administrator") && !(ViewData["mockUser"] as string).Equals(""))
+{
+    <h1>
+        Viewing as: @(ViewData["mockUser"] as string)
+    </h1>
+    <p>@Html.ActionLink("View as different user","List")</p>
+}
+<h2>Delete Routine</h2>
