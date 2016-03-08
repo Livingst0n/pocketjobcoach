@@ -17,7 +17,12 @@ namespace PJCAdmin.Controllers
 
         // GET: /Routine/
 
-        public ActionResult Index(string mockUser = "")
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult List(string mockUser = "")
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent")))
             {
@@ -34,9 +39,11 @@ namespace PJCAdmin.Controllers
                     //What should Admin see? A user select to continue?
                     ViewData["JobCoaches"] = accountHelper.getListOfUsersInRole("Job Coach");
                     ViewData["Parents"] = accountHelper.getListOfUsersInRole("Parent");
+                    ViewData["mockUser"] = "";
                 }
                 else
                 {
+                    ViewData["mockUser"] = mockUser;
                     ViewData["RoutineNames"] = helper.getRoutineNames(mockUser);
                 }
             }
@@ -69,6 +76,7 @@ namespace PJCAdmin.Controllers
                         return HttpNotFound();
 
                     ViewData["RoutineDetails"] = helper.getActiveRoutineByName(mockUser, routineName);
+                    ViewData["mockUser"] = mockUser;
                 }
             }
             else //User is JobCoach or Parent
@@ -98,6 +106,7 @@ namespace PJCAdmin.Controllers
                 }
                 else
                 {
+                    ViewData["mockUser"] = mockUser;
                     if (Roles.IsUserInRole(mockUser, "Job Coach"))
                     {
                         ViewData["AssignedUsers"] = accountHelper.getListOfUsersAssignedToJobCoach(mockUser);
@@ -186,6 +195,7 @@ namespace PJCAdmin.Controllers
                     if (!helper.routineExists(mockUser, routineName))
                         return HttpNotFound();
 
+                    ViewData["mockUser"] = mockUser;
                     ViewData["Routine"] = helper.getActiveRoutineByName(mockUser, routineName);
                     return View();
                 }
@@ -256,6 +266,7 @@ namespace PJCAdmin.Controllers
                         return View();
                     }
 
+                    ViewData["mockUser"] = mockUser;
                     ViewData["Routine"] = routineName;
                     return View();
                 }
