@@ -472,6 +472,7 @@
     <Content Include="Views\Routine\Edit.cshtml" />
     <Content Include="Views\Routine\Delete.cshtml" />
     <Content Include="Views\Routine\_EditTask.cshtml" />
+    <Content Include="Views\Routine\_ViewFeedback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
