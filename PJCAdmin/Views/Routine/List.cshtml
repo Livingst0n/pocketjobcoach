@@ -19,16 +19,31 @@ ViewBag.Title = "Routines";
 <table> 
             @if (Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
             {
-                foreach (string routineName in ViewData["RoutineNames"] as IEnumerable<string>)
+                foreach (PJCAdmin.Models.Routine routine in ViewData["Routines"] as IEnumerable<PJCAdmin.Models.Routine>)
                 {
                     <tr>
                         <td>
-                            @(routineName /*Html.DisplayFor(modelItem => user.UserName)*/ )
+                            @(Html.DisplayFor(modelItem => routine.routineTitle))
                         </td>
                         <td>
-                            @Html.ActionLink("Details", "Details", new { routineName = routineName }) |
-                            @Html.ActionLink("Edit", "Edit", new { routineName = routineName }) |
-                            @Html.ActionLink("Delete", "Delete", new { routineName = routineName})
+                            Assigned to: @(routine.assigneeUserName)
+                        </td>
+                        <td>
+                            @if (routine.isDisabled)
+                            {
+                                @("Disabled")
+                            }
+                            else
+                            {
+                                @("Enabled")
+                            }     
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { routineName = routine.routineTitle }) |
+                            @Html.ActionLink("Edit", "Edit", new { routineName = routine.routineTitle }) |
+                            @Html.ActionLink("Delete", "Delete", new { routineName = routine.routineTitle})
                         </td>
                     </tr>
                 }
@@ -79,16 +94,31 @@ ViewBag.Title = "Routines";
                 }
                 else //mockUser is set
                 {
-                    foreach (string routineName in ViewData["RoutineNames"] as IEnumerable<string>)
+                    foreach (PJCAdmin.Models.Routine routine in ViewData["Routines"] as IEnumerable<PJCAdmin.Models.Routine>)
                     {
                         <tr>
                             <td>
-                                @(routineName /*Html.DisplayFor(modelItem => user.UserName)*/ )
+                                @(Html.DisplayFor(modelItem => routine.routineTitle) )
                             </td>
                             <td>
-                                @Html.ActionLink("Details", "Details", new { routineName = routineName, mockUser = ViewData["mockUser"] as string }) |
-                                @Html.ActionLink("Edit", "Edit", new { routineName = routineName, mockUser = ViewData["mockUser"] as string }) |
-                                @Html.ActionLink("Delete", "Delete", new { routineName = routineName, mockUser = ViewData["mockUser"] as string})
+                                Assigned to: @(routine.assigneeUserName)
+                            </td>
+                            <td>
+                                @if (routine.isDisabled)
+                                {
+                                    @("Disabled")
+                                }
+                                else
+                                {
+                                    @("Enabled")
+                                }     
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.ActionLink("Details", "Details", new { routineName = routine.routineTitle, mockUser = ViewData["mockUser"] as string }) |
+                                @Html.ActionLink("Edit", "Edit", new { routineName = routine.routineTitle, mockUser = ViewData["mockUser"] as string }) |
+                                @Html.ActionLink("Delete", "Delete", new { routineName = routine.routineTitle, mockUser = ViewData["mockUser"] as string})
                             </td>
                         </tr>
                     }

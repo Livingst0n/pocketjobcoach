@@ -44,12 +44,12 @@ namespace PJCAdmin.Controllers
                 else
                 {
                     ViewData["mockUser"] = mockUser;
-                    ViewData["RoutineNames"] = helper.getRoutineNames(mockUser);
+                    ViewData["Routines"] = helper.getRoutines(mockUser);
                 }
             }
             else //user is jobcoach or parent
             {
-                ViewData["RoutineNames"] = helper.getRoutineNames();
+                ViewData["Routines"] = helper.getRoutines();
             }
 
             return View();
@@ -77,6 +77,7 @@ namespace PJCAdmin.Controllers
 
                     ViewData["RoutineDetails"] = helper.getActiveRoutineByName(mockUser, routineName);
                     ViewData["mockUser"] = mockUser;
+                    return View(helper.getActiveRoutineByName(mockUser, routineName));
                 }
             }
             else //User is JobCoach or Parent
@@ -85,8 +86,8 @@ namespace PJCAdmin.Controllers
                     return HttpNotFound();
 
                 ViewData["RoutineDetails"] = helper.getActiveRoutineByName(routineName);
+                return View(helper.getActiveRoutineByName(routineName));
             }
-            return View();
         }
 
         public ActionResult Create(string mockUser = "")
