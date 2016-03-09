@@ -1,49 +1,39 @@
-﻿@model PJCAdmin.Models.RoutineModel
+﻿@model PJCAdmin.Models.Routine
 
 @{
-    ViewBag.Title = "Routine Details - Testing";
+    ViewBag.Title = "Routine Details";
     //ProfileCommon userProfile = (ProfileCommon)ProfileCommon.Create(Model.UserName, true);
 }
 
 <h2>Routine Details <small style="color:#808080">@Html.DisplayFor(model => model.routineTitle)</small></h2>
 <table>
-    <tr><td><b>Routine</b></td><td>Testing</td></tr>
+    <tr><td>Assigned to: @Html.DisplayFor(model => model.assigneeUserName)</td></tr>
+    <tr><td>
+        @if (Model.isTimed) { @("Timed - " + Model.expectedDuration) }
+        else { @("Not Timed - " + Model.expectedDuration) }
+        </td></tr>
+    <tr><td>
+        @if (Model.isNotifiable) { @("Will email on job completion") }
+        else { @("Won't email on job completion") }
+        </td></tr>
+    <tr><td>
+        @if (Model.isDisabled) { @("Disabled") }
+        else { @("Enabled") }
+        </td></tr>
 </table>
 
+<h3>Routine Feedback</h3>
+<table>
+    @foreach (PJCAdmin.Models.Feedback feedback in Model.Feedbacks)
+    {
+        @Html.Partial("_ViewFeedback", feedback);
+    }
+</table>
+
+<h3>Tasks</h3>
 <ol id="Tasks">
+    @foreach (PJCAdmin.Models.Task task in Model.Tasks)
+    {
+        @Html.Partial("_ViewTask", task);
+    }
 </ol>
-
-<script>
-    function InsertNewTask(atIndex) {
-        if ($("#Tasks li").length > atIndex) {
-            $('#Tasks li:eq(' + atIndex + ')').before('@Html.Partial("_Task", new PJCAdmin.Models.TaskModel())');
-        }
-        else if ($("#Tasks li").length == atIndex){
-            $("#Tasks").append('@Html.Partial("_Task", new PJCAdmin.Models.TaskModel())');
-        }
-        return false;
-    }
-
-    function DeleteTask(atIndex) {
-        if ($("#Tasks li").length == 1) {
-            return false;
-        }
-
-        $("#Tasks li").eq(atIndex).remove();
-        return false;
-    }
-
-    $(document).ready( function() {
-        InsertNewTask(0);
-        $("#Tasks").on('click', 'button.AddTask', function (event) {
-            event.preventDefault();
-            var currentIndex = $(this).parent().parent().index();
-            InsertNewTask(currentIndex);
-        });
-        $("#Tasks").on('click', 'button.RemoveTask', function (event) {
-            event.preventDefault();
-            var currentIndex = $(this).parent().parent().index();
-            DeleteTask(currentIndex);
-        });
-    });
-</script>

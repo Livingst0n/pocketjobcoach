@@ -1,0 +1,127 @@
+﻿@{
+ViewBag.Title = "Routines";
+}
+
+@if (Roles.IsUserInRole("Administrator") && !(ViewData["mockUser"] as string).Equals(""))
+{
+    <h1>
+        Viewing as: @(ViewData["mockUser"] as string)
+    </h1>
+    <p>@Html.ActionLink("View as different user","List")</p>
+}
+@if (!Roles.IsUserInRole("Administrator") || !(ViewData["mockUser"] as string).Equals(""))
+{
+    <h2>Routines</h2>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+<table> 
+            @if (Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent"))
+            {
+                foreach (PJCAdmin.Models.Routine routine in ViewData["Routines"] as IEnumerable<PJCAdmin.Models.Routine>)
+                {
+                    <tr>
+                        <td>
+                            @(Html.DisplayFor(modelItem => routine.routineTitle))
+                        </td>
+                        <td>
+                            Assigned to: @(routine.assigneeUserName)
+                        </td>
+                        <td>
+                            @if (routine.isDisabled)
+                            {
+                                @("Disabled")
+                            }
+                            else
+                            {
+                                @("Enabled")
+                            }     
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { routineName = routine.routineTitle }) |
+                            @Html.ActionLink("Edit", "Edit", new { routineName = routine.routineTitle }) |
+                            @Html.ActionLink("Delete", "Delete", new { routineName = routine.routineTitle})
+                        </td>
+                    </tr>
+                }
+            }
+            @if (Roles.IsUserInRole("Administrator"))
+            {
+                if ((ViewData["mockUser"] as string).Equals("")) //mockUser is not chosen
+                {
+                    <tr>
+                        <th>
+                            Select a user to view their routines...
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                                @("Job Coaches")
+
+                        </th>
+                    </tr>
+
+                    foreach (MembershipUser user in ViewData["JobCoaches"] as IEnumerable<MembershipUser>)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => user.UserName)
+                            </td>
+                            <td>
+                                @Html.ActionLink("View as", "List", new { mockUser = user.UserName })
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <th>
+                                @("Parents")
+                        </th>
+                    </tr>
+                    foreach (MembershipUser user in ViewData["Parents"] as IEnumerable<MembershipUser>)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => user.UserName)
+                            </td>
+                            <td>
+                                @Html.ActionLink("View as", "List", new { mockUser = user.UserName })
+                            </td>
+                        </tr>
+                    }
+                }
+                else //mockUser is set
+                {
+                    foreach (PJCAdmin.Models.Routine routine in ViewData["Routines"] as IEnumerable<PJCAdmin.Models.Routine>)
+                    {
+                        <tr>
+                            <td>
+                                @(Html.DisplayFor(modelItem => routine.routineTitle) )
+                            </td>
+                            <td>
+                                Assigned to: @(routine.assigneeUserName)
+                            </td>
+                            <td>
+                                @if (routine.isDisabled)
+                                {
+                                    @("Disabled")
+                                }
+                                else
+                                {
+                                    @("Enabled")
+                                }     
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.ActionLink("Details", "Details", new { routineName = routine.routineTitle, mockUser = ViewData["mockUser"] as string }) |
+                                @Html.ActionLink("Edit", "Edit", new { routineName = routine.routineTitle, mockUser = ViewData["mockUser"] as string }) |
+                                @Html.ActionLink("Delete", "Delete", new { routineName = routine.routineTitle, mockUser = ViewData["mockUser"] as string})
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </table>

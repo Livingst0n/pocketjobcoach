@@ -1,0 +1,20 @@
+﻿@model PJCAdmin.Models.Task
+<li>
+    <table>
+        <tr><td>@(Html.DisplayFor(model => model.taskName)) - @(Html.DisplayFor(model => model.taskDescription))</td></tr>
+        <tr><td>Category: @(Html.DisplayFor(model => model.TaskCategory.categoryName))</td></tr>
+        <tr><td>Sequence Number: @(Html.DisplayFor(model => model.sequenceNo))</td></tr>
+        <tr><td>
+            @if (Model.isTimed) { @("Timed - " + Model.expectedDuration) }
+            else { @("Not Timed - " + Model.expectedDuration) }
+            </td></tr>
+    </table>
+
+    <h4>Task Feedback</h4>
+    <table>
+        @foreach (PJCAdmin.Models.Feedback feedback in Model.Feedbacks)
+        {
+            @Html.Partial("_ViewFeedback", feedback);
+        }
+    </table>
+</li>
