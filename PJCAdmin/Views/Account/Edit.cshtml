@@ -59,20 +59,24 @@
                     <input type="hidden" name="usertype" value="@Roles.GetRolesForUser()[0]"/>
                 }
             </li>
+            <!--
             <li>
                 <label>Job</label>
                 <select name="job" id="selectjob">
                     <option value="">None</option>
-                    @for (int i = 0; i < ((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).Count; i++)
+                    //atfor (int i = 0; i < ((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).Count; i++)
                     {
                         
-                        <option value="@(((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineID)" @if (((PJCAdmin.Models.Routine)ViewData["SelectedJob"]).routineID == ((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineID) { @Html.Raw("selected")} >
-                            @Html.Label(((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineTitle)
+                        <option value="at//(((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineID)" at//if (((PJCAdmin.Models.Routine)ViewData["SelectedJob"]).routineID == ((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineID) { @Html.Raw("selected")} >
+                            //atHtml.Label(((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineTitle)
                         </option>
                     }
                 </select>
                 <label>Apply Template Tasks <input type="checkbox" name="applyJobTemplate" value="true" /></label>
-            </li>
+            
+            </li>-->
+            @if (Roles.IsUserInRole(Model.UserName, "Job Coach"))
+            {
             <li style="margin-top:20px;"><label>Assigned Users</label></li>
             <li>
                 <ul id="assignedUsersList">
@@ -86,7 +90,7 @@
                                 {
                                     <span>&nbsp; &nbsp;</span><button class="remove-user" data-taskid="@(((List<PJCAdmin.Models.User>)ViewData["SelectedUsers"]).ElementAt(i).UserId)" data-selected="false"><i class="fa fa-trash"></i></button>
                                 }
-                                @Html.Hidden("selectedUsers[" + i + "]",((List<PJCAdmin.Models.User>) ViewData["SelectedUsers"]).ElementAt(i).UserId)
+                                @Html.Hidden("selectedUsers[" + i + "]", ((List<PJCAdmin.Models.User>)ViewData["SelectedUsers"]).ElementAt(i).UserId)
                             </li>
                         }
                     }
@@ -96,7 +100,8 @@
                     }
                 </ul>
             </li>
-            @if (Roles.IsUserInRole("Administrator"))
+
+            if (Roles.IsUserInRole("Administrator"))
             {
                 <li style="margin-top:20px;">
                     <select name="selectAddUsers" id="selectAddUsers">
@@ -109,6 +114,7 @@
                     </select>
                     <button id="addUser">Assign User</button>
                 </li>
+            }
             }
         </ol>
         <input type="submit" value="Save" />

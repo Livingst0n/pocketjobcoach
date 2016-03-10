@@ -6,7 +6,7 @@
 }
 
 <h2>User Details <small style="color:#808080">@Html.DisplayFor(model => model.UserName)</small></h2>
-@if (Model.UserName == Membership.GetUser().UserName) { 
+@if (Model.UserName == Membership.GetUser().UserName) {
     @Html.ActionLink("Change Password", "ChangePassword");
 }
 <table>
@@ -26,12 +26,12 @@
     </tr>
     <tr><td><b>E-Mail</b></td><td>@Html.DisplayFor(model => model.Email)</td></tr>
     <tr><td><b>Phone</b></td><td>@Html.Raw(userProfile.PhoneNumber)</td></tr>
-    <tr>
+    <!--<tr>
         <td><b>Job</b></td>
         <td>
-            @Html.Raw(((PJCAdmin.Models.Routine)ViewData["SelectedRoutine"]).routineTitle)
+            @{}//Html.Raw(((PJCAdmin.Models.Routine)ViewData["SelectedRoutine"]).routineTitle)
         </td>
-    </tr>
+    </tr>-->
     <tr><td><b>User Type</b></td><td>
     @foreach (string role in Roles.GetRolesForUser(Model.UserName))
     {
@@ -39,21 +39,69 @@
     }
   
     </td></tr>
-    <tr>
-    <td><b>Assigned Users</b></td>
-    <td>
-        @for (int i = 0; i < ((List<MembershipUser>)ViewData["AssignedUsers"]).Count; i++)
+    
+    @if (Roles.IsUserInRole(Model.UserName, "Job Coach"))
+    {
+        <tr>
+            <td><b>Assigned Users</b></td>
+        </tr>
+        <tr>
+            <td>
+                @for (int i = 0; i < ((List<MembershipUser>)ViewData["AssignedUsers"]).Count; i++)
+                {
+                    @Html.ActionLink(((List<MembershipUser>)ViewData["AssignedUsers"]).ElementAt(i).UserName, "Details", new { user = ((List<MembershipUser>)ViewData["AssignedUsers"]).ElementAt(i).UserName })
+                    <br />
+                }
+            </td>
+        </tr>
+    }
+
+    @if (Roles.IsUserInRole(Model.UserName, "Parent"))
+    {
+        <tr>
+            <td><b>Children</b></td>
+        </tr>
+        <tr>
+            <td>
+                @for (int i = 0; i < ((List<MembershipUser>)ViewData["Children"]).Count; i++)
+                {
+                    @Html.ActionLink(((List<MembershipUser>)ViewData["Children"]).ElementAt(i).UserName, "Details", new { user = ((List<MembershipUser>)ViewData["Children"]).ElementAt(i).UserName })
+                    <br />
+                }
+            </td>
+        </tr>
+    }
+
+    @if (Roles.IsUserInRole(Model.UserName, "User"))
+    {
+        if ((MembershipUser)ViewData["Job Coach"] != null)
         {
-            @Html.ActionLink(((List<MembershipUser>)ViewData["AssignedUsers"]).ElementAt(i).UserName, "Details", new { user = ((List<MembershipUser>)ViewData["AssignedUsers"]).ElementAt(i).UserName })
-            <br />
+        <tr>
+            <td><b>Job Coach</b></td>
+            <td>
+                @Html.ActionLink(((MembershipUser)ViewData["Job Coach"]).UserName, "Details", new { user = ((MembershipUser)ViewData["Job Coach"]).UserName })
+                <br />
+            </td>
+        </tr>
         }
-    </td>
-    </tr>
+        if ((MembershipUser)ViewData["Parent"] != null)
+        {
+        <tr>
+            <td><b>Parent</b></td>
+            <td>
+                @Html.ActionLink(((MembershipUser)ViewData["Parent"]).UserName, "Details", new { user = ((MembershipUser)ViewData["Parent"]).UserName })
+                <br />
+            </td>
+        </tr>
+        }
+    }
 </table>
 
+<!--
 <p>
-    @Html.ActionLink("Assigned Tasks", "AssignedTasks", new { user = Model.UserName })
+    @{}//Html.ActionLink("Assigned Tasks", "AssignedTasks", new { user = Model.UserName })
 </p>
+    -->
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { user = Model.UserName }) |
