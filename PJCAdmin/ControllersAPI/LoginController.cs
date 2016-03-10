@@ -14,7 +14,8 @@ namespace PJCAdmin.ControllersAPI
         private pjcEntities db = new pjcEntities();
 
         //POST .../api/Login
-        public HttpResponseMessage Post(LoginModel model)
+        [HttpPost]
+        public HttpResponseMessage Login(LoginModel model)
         {
             if (System.Web.Security.Membership.ValidateUser(model.UserName, model.Password))
             {
@@ -66,7 +67,8 @@ namespace PJCAdmin.ControllersAPI
         }
 
         //POST .../api/Login
-        public HttpResponseMessage Post(string token, ChangePasswordModel model)
+        [HttpPost]
+        public HttpResponseMessage ChangePassword(string token, ChangePasswordModel model)
         {
             Auth.authorizeToken(token);
 
@@ -93,6 +95,13 @@ namespace PJCAdmin.ControllersAPI
                 return Request.CreateResponse<string>(HttpStatusCode.OK,"Password Updated");
             else
                 return Request.CreateResponse<string>(HttpStatusCode.BadRequest, "The current password is incorrect or the new password is invalid.");
+        }
+
+        [HttpPost]
+        public HttpResponseMessage RenewToken(string token)
+        {
+            Auth.authorizeToken(token);
+            return Request.CreateResponse<string>(HttpStatusCode.OK,"Token renewed");
         }
 
         protected override void Dispose(bool disposing)
