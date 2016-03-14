@@ -97,11 +97,11 @@ namespace PJCAdmin.ControllersAPI
                 return Request.CreateResponse<string>(HttpStatusCode.BadRequest, "The current password is incorrect or the new password is invalid.");
         }
 
-        [HttpPost]
+        [HttpGet]
         public HttpResponseMessage RenewToken(string token)
         {
             Auth.authorizeToken(token);
-            return Request.CreateResponse<string>(HttpStatusCode.OK,"Token renewed");
+            return Request.CreateResponse<string>(HttpStatusCode.OK, "Token renewed");
         }
 
         protected override void Dispose(bool disposing)
