@@ -66,12 +66,12 @@
         //InsertNewTask(0);
         $("#Tasks").on('click', 'button.AddTask', function (event) {
             event.preventDefault();
-            var currentIndex = $(this).parent().parent().index();
+            var currentIndex = $(this).closest('li').index();
             InsertNewTask(currentIndex);
         });
         $("#Tasks").on('click', 'button.RemoveTask', function (event) {
             event.preventDefault();
-            var currentIndex = $(this).parent().parent().index();
+            var currentIndex = $(this).closest('li').index();
             DeleteTask(currentIndex);
         });
     });
