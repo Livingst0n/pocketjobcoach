@@ -478,6 +478,7 @@
     <Content Include="Views\Test\List.cshtml" />
     <Content Include="Views\Test\Edit.cshtml" />
     <Content Include="Views\Routine\ListByAssignedUser.cshtml" />
+    <Content Include="Views\Routine\_EditFeedback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
