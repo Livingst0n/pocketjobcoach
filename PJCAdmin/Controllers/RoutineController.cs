@@ -44,12 +44,12 @@ namespace PJCAdmin.Controllers
                 else
                 {
                     ViewData["mockUser"] = mockUser;
-                    ViewData["Routines"] = helper.getRoutines(mockUser);
+                    ViewData["Routines"] = helper.getMostRecentRoutines(mockUser);
                 }
             }
             else //user is jobcoach or parent
             {
-                ViewData["Routines"] = helper.getRoutines();
+                ViewData["Routines"] = helper.getMostRecentRoutines();
             }
 
             return View();
@@ -75,9 +75,9 @@ namespace PJCAdmin.Controllers
                     if (!helper.routineExists(mockUser, routineName))
                         return HttpNotFound();
 
-                    ViewData["RoutineDetails"] = helper.getActiveRoutineByName(mockUser, routineName);
+                    ViewData["RoutineDetails"] = helper.getMostRecentRoutineByName(mockUser, routineName);
                     ViewData["mockUser"] = mockUser;
-                    return View(helper.getActiveRoutineByName(mockUser, routineName));
+                    return View(helper.getMostRecentRoutineByName(mockUser, routineName));
                 }
             }
             else //User is JobCoach or Parent
@@ -85,8 +85,8 @@ namespace PJCAdmin.Controllers
                 if (!helper.routineExists(routineName))
                     return HttpNotFound();
 
-                ViewData["RoutineDetails"] = helper.getActiveRoutineByName(routineName);
-                return View(helper.getActiveRoutineByName(routineName));
+                ViewData["RoutineDetails"] = helper.getMostRecentRoutineByName(routineName);
+                return View(helper.getMostRecentRoutineByName(routineName));
             }
         }
 
@@ -197,16 +197,16 @@ namespace PJCAdmin.Controllers
                         return HttpNotFound();
 
                     ViewData["mockUser"] = mockUser;
-                    ViewData["Routine"] = helper.getActiveRoutineByName(mockUser, routineName);
-                    return View(helper.getActiveRoutineModelByName(mockUser, routineName));
+                    ViewData["Routine"] = helper.getMostRecentRoutineByName(mockUser, routineName);
+                    return View(helper.getMostRecentRoutineModelByName(mockUser, routineName));
                 }
             }
 
             if (!helper.routineExists(routineName))
                 return HttpNotFound();
 
-            ViewData["Routine"] = helper.getActiveRoutineByName(routineName);
-            return View(helper.getActiveRoutineModelByName(routineName));
+            ViewData["Routine"] = helper.getMostRecentRoutineByName(routineName);
+            return View(helper.getMostRecentRoutineModelByName(routineName));
         }
 
         [HttpPost]
