@@ -1,0 +1,50 @@
+﻿@{
+ViewBag.Title = "Test Edit";
+}
+
+<h2>Test Edit</h2>
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <ul id="userList">
+            <li id="nousers" style="color:#999"><i>No Users</i></li>
+        </ul>
+
+
+        <select name="selectUsers" id="selectUsers">
+            @for (int i = 0; i < ((List<string>)ViewData["availableUsers"]).Count; i++)
+            {
+                <option value="@(((List<string>)ViewData["availableUsers"]).ElementAt(i))">
+                    @Html.Label(((List<string>)ViewData["availableUsers"]).ElementAt(i))
+                </option>
+            }
+        </select>
+        <button id="addUser">Assign User</button>
+
+        <input type="submit" value="Save" />
+    </fieldset>
+}
+
+<script>
+    $(function () {
+        $('#addUser').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if ($('#nousers').size() > 0)
+                $('#nousers').remove();
+            var id = $('#selectUsers').val();
+            var name = $('#selectUsers option:selected').html();
+            $('#userList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="SelectedUsers[' + ($('#userList').children().size()).toString() + ']"  value="' + id + '" /></li>')
+        });
+
+        $('#userList').on('click', '.remove-user', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).parent().remove();
+            if ($('#userList').children().size() == 0) {
+                $('#userList').append('<li id="nousers" style="color:#999"><i>No Users</i></li>');
+            }
+        });
+    });
+</script>

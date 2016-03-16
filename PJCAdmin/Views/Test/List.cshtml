@@ -1,0 +1,12 @@
+﻿@{
+ViewBag.Title = "Test List";
+}
+
+<h2>Test List</h2>
+
+<ul>
+    @foreach (string selected in Model as IEnumerable<string>)
+    {
+        <li>@(selected)</li>
+    }
+</ul>
