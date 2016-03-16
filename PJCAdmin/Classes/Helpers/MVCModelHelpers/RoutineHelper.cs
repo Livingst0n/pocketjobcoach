@@ -44,6 +44,36 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         {
             return getRoutineModels(AccountHelper.getCurrentUsername());
         }
+        /*TODO*/
+        public List<Routine> getRoutinesAssignedTo(string assigneeUsername)
+        {
+            return getRoutinesAssignedTo(AccountHelper.getCurrentUsername(), assigneeUsername);
+        }
+        /*TODO*/
+        public List<RoutineModel> getRoutineModelsAssignedTo(string assigneeUsername)
+        {
+            return getRoutineModelsAssignedTo(AccountHelper.getCurrentUsername(), assigneeUsername);
+        }
+        /*TODO*/
+        public List<Routine> getMostRecentRoutines()
+        {
+            return getMostRecentRoutines(AccountHelper.getCurrentUsername());
+        }
+        /*TODO*/
+        public List<RoutineModel> getMostRecentRoutineModels()
+        {
+            return getMostRecentRoutineModels(AccountHelper.getCurrentUsername());
+        }
+        /*TODO*/
+        public List<Routine> getMostRecentRoutinesAssignedTo(string assigneeUsername)
+        {
+            return getMostRecentRoutinesAssignedTo(AccountHelper.getCurrentUsername(), assigneeUsername);
+        }
+        /*TODO*/
+        public List<RoutineModel> getMostRecentRoutineModelsAssignedTo(string assigneeUsername)
+        {
+            return getMostRecentRoutineModelsAssignedTo(AccountHelper.getCurrentUsername(), assigneeUsername);
+        }
         /* Returns a list of all routines created by the 
          * currently logged in user that matches the given 
          * routine name.
@@ -253,6 +283,58 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         public List<RoutineModel> getRoutineModels(string creatorUsername)
         {
             return ModelCopier.copyRoutinesToModels(getRoutines(creatorUsername));
+        }
+        /*TODO*/
+        public List<Routine> getRoutinesAssignedTo(string creatorUsername, string assigneeUsername)
+        {
+            return getRoutines(creatorUsername).Where(r => r.assigneeUserName.Equals(assigneeUsername)).ToList();
+        }
+        /*TODO*/
+        public List<RoutineModel> getRoutineModelsAssignedTo(string creatorUsername, string assigneeUsername)
+        {
+            return ModelCopier.copyRoutinesToModels(getRoutinesAssignedTo(creatorUsername, assigneeUsername));
+        }
+        /*TODO*/
+        public List<Routine> getMostRecentRoutines(string creatorUsername)
+        {
+            var query = getRoutines(creatorUsername).GroupBy(r => new {r.assigneeUserName, r.routineTitle});
+            List<Routine> lst = new List<Routine>();
+
+            foreach (var routineGroup in query)
+                if (routineGroup.Count() > 0)
+                    lst.Add(routineGroup.OrderBy(r => r.updatedDate).First());
+
+            return lst;
+        }
+        /*TODO*/
+        public List<RoutineModel> getMostRecentRoutineModels(string creatorUsername)
+        {
+            return ModelCopier.copyRoutinesToModels(getMostRecentRoutines(creatorUsername));
+            /*List<RoutineModel> lst = new List<RoutineModel>();
+
+            foreach (Routine r in getMostRecentRoutines(creatorUsername))
+                lst.Add(ModelCopier.copyRoutineToModel(r));
+
+            return lst;*/
+        }
+        /*TODO*/
+        public List<Routine> getMostRecentRoutinesAssignedTo(string creatorUsername, string assigneeUsername)
+        {
+            var query = getRoutinesAssignedTo(creatorUsername, assigneeUsername).GroupBy(r => r.routineTitle);
+            List<Routine> lst = new List<Routine>();
+
+            foreach (var routineGroup in query)
+            {
+                if (routineGroup.Count() > 0)
+                    lst.Add(routineGroup.OrderBy(r => r.updatedDate).First());
+            }
+
+            return lst;
+        }
+        /*TODO*/
+        public List<RoutineModel> getMostRecentRoutineModelsAssignedTo(string creatorUsername, string assigneeUsername)
+        {
+            return ModelCopier.copyRoutinesToModels(getMostRecentRoutinesAssignedTo(creatorUsername, assigneeUsername));
         }
         /* Returns a list of all routines created by the
          * given user that matches the given routine name.
