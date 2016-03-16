@@ -13,6 +13,16 @@ ViewBag.Title = "Routines";
 {
     <h2>Routines</h2>
     <p>
+        @if (Roles.IsUserInRole("Administrator"))
+        {
+            @Html.ActionLink("View list by assigned user", "ListByAssignedUser", new { mockUser = ViewData["mockUser"] as string })
+        }
+        else
+        {
+            @Html.ActionLink("View list by assigned user", "ListByAssignedUser")
+        }
+    </p>
+    <p>
         @Html.ActionLink("Create New", "Create")
     </p>
 }
