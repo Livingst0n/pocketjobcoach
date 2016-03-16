@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Edit";
 
-    ProfileCommon userProfile = (ProfileCommon) ProfileCommon.Create(Model.UserName, true);
+    ProfileCommon userProfile = (ProfileCommon)ProfileCommon.Create(Model.UserName, true);
 }
 
 <h2>Edit User</h2>
@@ -56,7 +56,7 @@
                 else
                 {
                     @Roles.GetRolesForUser()[0]
-                    <input type="hidden" name="usertype" value="@Roles.GetRolesForUser()[0]"/>
+                    <input type="hidden" name="usertype" value="@Roles.GetRolesForUser()[0]" />
                 }
             </li>
             <!--
@@ -66,55 +66,177 @@
                     <option value="">None</option>
                     //atfor (int i = 0; i < ((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).Count; i++)
                     {
-                        
-                        <option value="at//(((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineID)" at//if (((PJCAdmin.Models.Routine)ViewData["SelectedJob"]).routineID == ((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineID) { @Html.Raw("selected")} >
+
+                        <option value="at//(((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineID)" at//if (((PJCAdmin.Models.Routine)ViewData["SelectedJob"]).routineID == ((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineID) { atHtml.Raw("selected")} >
                             //atHtml.Label(((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineTitle)
                         </option>
                     }
                 </select>
                 <label>Apply Template Tasks <input type="checkbox" name="applyJobTemplate" value="true" /></label>
-            
+
             </li>-->
             @if (Roles.IsUserInRole(Model.UserName, "Job Coach"))
             {
-            <li style="margin-top:20px;"><label>Assigned Users</label></li>
-            <li>
-                <ul id="assignedUsersList">
-                    @if (((List<PJCAdmin.Models.User>)ViewData["SelectedUsers"]).Count > 0)
+                <li style="margin-top:20px;"><label>Assigned Users</label></li>
+                <li>
+                    <ul id="assignedUsersList">
+                        @if (((List<MembershipUser>)ViewData["AssignedUsers"]).Count > 0)
                     {
-                        for (int i = 0; i < ((List<PJCAdmin.Models.User>)ViewData["SelectedUsers"]).Count; i++)
+                        for (int i = 0; i < ((List<MembershipUser>)ViewData["AssignedUsers"]).Count; i++)
+                        {
+                                <li>
+                                    @(((List<MembershipUser>)ViewData["AssignedUsers"]).ElementAt(i).UserName)
+                                    @if (Roles.IsUserInRole("Administrator"))
+                                    {
+                                        <span>&nbsp; &nbsp;</span><button class="remove-user" data-taskid="@(((List<MembershipUser>)ViewData["AssignedUsers"]).ElementAt(i).UserName)" data-selected="false"><i class="fa fa-trash"></i></button>
+                                    }
+                                    @Html.Hidden("AssignedUsers[" + i + "]", ((List<MembershipUser>)ViewData["AssignedUsers"]).ElementAt(i).UserName)
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li id="nousers" style="color:#999"><i>No Assigned Users</i></li>
+                        }
+                    </ul>
+                </li>
+
+                if (Roles.IsUserInRole("Administrator"))
+                {
+                    <li style="margin-top:20px;">
+                        <select name="selectAddUsers" id="selectAddUsers">
+                            @for (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableUsers"]).Count; i++)
+                        {
+                                <option value="@(((List<MembershipUser>)ViewData["AvailableUsers"]).ElementAt(i).UserName)">
+                                    @Html.Label(((List<MembershipUser>)ViewData["AvailableUsers"]).ElementAt(i).UserName)
+                                </option>
+                            }
+                        </select>
+                        <button id="addUser">Assign User</button>
+                    </li>
+                }
+            }
+
+            @if (Roles.IsUserInRole(Model.UserName, "Parent"))
+            {
+                <li style="margin-top:20px;"><label>Children</label></li>
+                <li>
+                    <ul id="assignedUsersList">
+                        @if (((List<MembershipUser>)ViewData["Children"]).Count > 0)
+                    {
+                        for (int i = 0; i < ((List<MembershipUser>)ViewData["Children"]).Count; i++)
+                        {
+                                <li>
+                                    @(((List<MembershipUser>)ViewData["Children"]).ElementAt(i).UserName)
+                                    @if (Roles.IsUserInRole("Administrator"))
+                                    {
+                                        <span>&nbsp; &nbsp;</span><button class="remove-user" data-taskid="@(((List<MembershipUser>)ViewData["Children"]).ElementAt(i).UserName)" data-selected="false"><i class="fa fa-trash"></i></button>
+                                    }
+                                    @Html.Hidden("Children[" + i + "]", ((List<MembershipUser>)ViewData["Children"]).ElementAt(i).UserName)
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li id="nousers" style="color:#999"><i>No Children</i></li>
+                        }
+                    </ul>
+                </li>
+                //need to fix this so it only shows users that have the users type, not all users
+                if (Roles.IsUserInRole("Administrator"))
+                {
+                    <li style="margin-top:20px;">
+                        <select name="selectAddUsers" id="selectAddUsers">
+                            @for (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableChildren"]).Count; i++)
+                            {
+                                <option value="@(((List<MembershipUser>)ViewData["AvailableChildren"]).ElementAt(i).UserName)">
+                                    @Html.Label(((List<MembershipUser>)ViewData["AvailableChildren"]).ElementAt(i).UserName)
+                                </option>
+                            }
+                        </select>
+                        <button id="addUser">Assign User</button>
+                    </li>
+                }
+            }
+
+            @if (Roles.IsUserInRole(Model.UserName, "User"))
+            {
+                <li style="margin-top:20px;"><label>Parent</label></li>
+                <li>
+                    <ul id="assignedUsersList">
+                        @if (ViewData["Parent"] != null)
+                        {
+                                <li>
+                                    @ViewData["Parent"]
+                                    @if (Roles.IsUserInRole("Administrator"))
+                                    {
+                                        <span>&nbsp; &nbsp;</span><button class="remove-user" data-taskid="@ViewData["Parent"]" data-selected="false"><i class="fa fa-trash"></i></button>
+                                    }
+                                    @Html.Hidden("Parent", ViewData["Parent"])
+                                </li>
+                        }
+  
+                        else
+                        {
+                            <li id="nousers" style="color:#999"><i>No Children</i></li>
+                        }
+                    </ul>
+                </li>
+
+                <li style="margin-top:20px;"><label>Job Coach</label></li>
+                <li>
+                    <ul id="assignedUsersList">
+                        @if (ViewData["Job Coach"] != null)
                         {
                             <li>
-                                @(((List<PJCAdmin.Models.User>)ViewData["SelectedUsers"]).ElementAt(i).UserName)
+                                @ViewData["Job Coach"]
                                 @if (Roles.IsUserInRole("Administrator"))
                                 {
-                                    <span>&nbsp; &nbsp;</span><button class="remove-user" data-taskid="@(((List<PJCAdmin.Models.User>)ViewData["SelectedUsers"]).ElementAt(i).UserId)" data-selected="false"><i class="fa fa-trash"></i></button>
+                                    <span>&nbsp; &nbsp;</span><button class="remove-user" data-taskid="@ViewData["Job Coach"]" data-selected="false"><i class="fa fa-trash"></i></button>
                                 }
-                                @Html.Hidden("selectedUsers[" + i + "]", ((List<PJCAdmin.Models.User>)ViewData["SelectedUsers"]).ElementAt(i).UserId)
+                                @Html.Hidden("Job Coach", ViewData["Job Coach"])
                             </li>
                         }
-                    }
-                    else
-                    {
-                        <li id="nousers" style="color:#999"><i>No Assigned Users</i></li>
-                    }
-                </ul>
-            </li>
 
-            if (Roles.IsUserInRole("Administrator"))
-            {
-                <li style="margin-top:20px;">
-                    <select name="selectAddUsers" id="selectAddUsers">
-                        @for (int i = 0; i < ((List<PJCAdmin.Models.User>)ViewData["Users"]).Count; i++)
+                        else
                         {
-                            <option value="@(((List<PJCAdmin.Models.User>)ViewData["Users"]).ElementAt(i).UserId)">
-                                @Html.Label(((List<PJCAdmin.Models.User>)ViewData["Users"]).ElementAt(i).UserName)
-                            </option>
+                            <li id="nousers" style="color:#999"><i>No Children</i></li>
                         }
-                    </select>
-                    <button id="addUser">Assign User</button>
+                    </ul>
                 </li>
-            }
+
+                if (Roles.IsUserInRole("Administrator"))
+                {
+                    if (ViewData["Job Coach"] == null)
+                    {
+                        <li style="margin-top:20px;">
+                            <select name="selectAddUsers" id="selectAddUsers">
+                                @for (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableJobCoaches"]).Count; i++)
+                                {
+                                    <option value="@(((List<MembershipUser>)ViewData["AvailableJobCoaches"]).ElementAt(i).UserName)">
+                                        @Html.Label(((List<MembershipUser>)ViewData["AvailableJobCoaches"]).ElementAt(i).UserName)
+                                    </option>
+                                }
+                            </select>
+                            <button id="addUser">Assign Job Coach</button>
+                        </li>
+                    }
+
+                    if (ViewData["Parent"] == null)
+                    {
+                        <li style="margin-top:20px;">
+                            <select name="selectAddUsers" id="selectAddUsers">
+                                @for (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableParents"]).Count; i++)
+                                {
+                                    <option value="@(((List<MembershipUser>)ViewData["AvailableParents"]).ElementAt(i).UserName)">
+                                        @Html.Label(((List<MembershipUser>)ViewData["AvailableParents"]).ElementAt(i).UserName)
+                                    </option>
+                                }
+                            </select>
+                            <button id="addUser">Assign Parent</button>
+                        </li>
+                    }
+                }
             }
         </ol>
         <input type="submit" value="Save" />
@@ -130,7 +252,7 @@
                 $('#nousers').remove();
             var id = $('#selectAddUsers').val();
             var name = $('#selectAddUsers option:selected').html();
-            $('#assignedUsersList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="selectedUsers[' + ($('#assignedUsersList').size()-1).toString() + ']"  value="' + id + '" /></li>')
+            $('#assignedUsersList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="selectedUsers[' + ($('#assignedUsersList').size() - 1).toString() + ']"  value="' + id + '" /></li>')
         });
 
         $('#assignedUsersList').on('click', '.remove-user', function (e) {
@@ -149,6 +271,6 @@
 }
 
 <p>
-    @Html.ActionLink("Back to User Details", "Details", new { user = Model.UserName }) |
+    <!--atHtml.ActionLink("Back to User Details", "Details", new { user = Model.UserName }) |-->
     @Html.ActionLink("Back to List", "List")
 </p>

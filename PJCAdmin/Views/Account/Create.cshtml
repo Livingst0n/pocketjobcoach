@@ -50,20 +50,21 @@
                         }
                     }
                 </select>
-            </li>
+            </li><!--
             <li>
                 <label>Job</label>
                 <select name="job" id="selectjob">
                     <option value=""></option>
-                    @for (int i = 0; i < ((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).Count; i++)
+                    atfor (int i = 0; i < ((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).Count; i++)
                     {
-                        <option value="@(((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineID)">
-                            @Html.Label(((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineTitle)
+                        <option value="at(((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineID)">
+                            atHtml.Label(((List<PJCAdmin.Models.Routine>)ViewData["Jobs"]).ElementAt(i).routineTitle)
                         </option>
                     }
                 </select>
                 <label>Apply Template Tasks <input type="checkbox" name="applyJobTemplate" value="1" /></label>
             </li>
+                     -->
             <li style="margin-top:20px;"><label>Assigned Users</label></li>
             <li>
                 <ul id="assignedUsersList">
