@@ -24,9 +24,16 @@
 
 <h3>Routine Feedback</h3>
 <table>
-    @foreach (PJCAdmin.Models.Feedback feedback in Model.Feedbacks)
+    @if (Model.Feedbacks.Count == 0)
     {
-        @Html.Partial("_ViewFeedback", feedback);
+        <tr><td>No Feedback</td></tr>
+    }
+    else
+    {
+        foreach (PJCAdmin.Models.Feedback feedback in Model.Feedbacks)
+        {
+            @Html.Partial("_ViewFeedback", feedback);
+        }
     }
 </table>
 
