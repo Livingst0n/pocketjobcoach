@@ -287,7 +287,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         /*TODO*/
         public List<Routine> getRoutinesAssignedTo(string creatorUsername, string assigneeUsername)
         {
-            return getRoutines(creatorUsername).Where(r => r.assigneeUserName.Equals(assigneeUsername)).ToList();
+            return getRoutines(creatorUsername).Where(r => r.assigneeUserName != null && r.assigneeUserName.Equals(assigneeUsername)).ToList();
         }
         /*TODO*/
         public List<RoutineModel> getRoutineModelsAssignedTo(string creatorUsername, string assigneeUsername)
