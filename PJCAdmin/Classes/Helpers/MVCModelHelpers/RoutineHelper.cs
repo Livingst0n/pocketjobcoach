@@ -252,12 +252,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public List<RoutineModel> getRoutineModels(string creatorUsername)
         {
-            List<RoutineModel> lst = new List<RoutineModel>();
-
-            foreach (Routine r in getRoutines(creatorUsername))
-                lst.Add(ModelCopier.copyRoutineToModel(r));
-
-            return lst;
+            return ModelCopier.copyRoutinesToModels(getRoutines(creatorUsername));
         }
         /* Returns a list of all routines created by the
          * given user that matches the given routine name.
