@@ -1,0 +1,15 @@
+﻿@model PJCAdmin.Models.Feedback
+<tr>
+    <td>
+        Type: @(Model.FeedbackType.feedbackTypeName)
+    </td>
+    <td>
+        @(Model.feedbackTitle)
+    </td>
+    <td>
+        @(Model.feedbackMessage)
+    </td>
+    <td>
+        Media: @(Model.MediaType.mediaTypeName)
+    </td>
+</tr>
