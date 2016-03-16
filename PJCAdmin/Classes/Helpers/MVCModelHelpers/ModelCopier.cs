@@ -17,6 +17,17 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
     public class ModelCopier
     {
         #region Non-Enum Models
+        public static List<RoutineModel> copyRoutinesToModels(List<Routine> rs)
+        {
+            if (rs == null || rs.Count() == 0)
+                return null;
+
+            List<RoutineModel> lst = new List<RoutineModel>();
+            foreach (Routine r in rs)
+                lst.Add(copyRoutineToModel(r));
+
+            return lst;
+        }
         public static RoutineModel copyRoutineToModel(Routine r)
         {
             if (r == null)
@@ -40,6 +51,17 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             return newRoutine;
         }
+        public static List<TaskModel> copyTasksToModel(List<Task> ts)
+        {
+            if (ts == null || ts.Count() == 0)
+                return null;
+
+            List<TaskModel> lst = new List<TaskModel>();
+            foreach (Task t in ts)
+                lst.Add(copyTaskToModel(t));
+
+            return lst;
+        }
         public static TaskModel copyTaskToModel(Task t)
         {
             if (t == null)
@@ -60,6 +82,17 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 newTask.Feedbacks.Add(copyFeedbackToModel(f));
 
             return newTask;
+        }
+        public static List<FeedbackModel> copyFeedbacksToModel(List<Feedback> fs)
+        {
+            if (fs == null || fs.Count() == 0)
+                return null;
+
+            List<FeedbackModel> lst = new List<FeedbackModel>();
+            foreach (Feedback f in fs)
+                lst.Add(copyFeedbackToModel(f));
+
+            return lst;
         }
         public static FeedbackModel copyFeedbackToModel(Feedback f)
         {
