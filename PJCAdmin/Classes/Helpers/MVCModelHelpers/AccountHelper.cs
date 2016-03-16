@@ -225,10 +225,11 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             user.UserName12.Clear();
             if (assignedUsers != null)
             {
-                foreach (string id in assignedUsers)
+                foreach (string username in assignedUsers)
                 {
-                    string selectedUserName = db.Users.Find(Guid.Parse(id)).UserName;
-                    user.UserName12.Add(db.UserNames.Find(selectedUserName));
+                    UserName selectedUserName = db.UserNames.Find(username);
+                    if (!(selectedUserName == null))
+                        user.UserName12.Add(selectedUserName);
                 }
             }
             db.Entry<UserName>(user).State = System.Data.EntityState.Modified;
