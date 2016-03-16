@@ -55,6 +55,68 @@ namespace PJCAdmin.Controllers
             return View();
         }
 
+        public ActionResult ListByAssignedUser(string assignedTo, string mockUser = "")
+        {
+            if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent")))
+            {
+                Response.Redirect("~/Unauthorized");
+                return View();
+            }
+
+            string thisUsername = AccountHelper.getCurrentUsername();
+
+            if (Roles.IsUserInRole("Administrator"))
+            {
+                if (mockUser == null || mockUser.Equals("") || !accountHelper.userExists(mockUser))
+                {
+                    Response.Redirect("~/Routine");
+                    return View();
+                }
+                else
+                {
+                    ViewData["mockUser"] = mockUser;
+
+                    if (assignedTo == null || !accountHelper.userExists(assignedTo))
+                    {
+                        if (Roles.IsUserInRole(mockUser, "Job Coach"))
+                        {
+                            ViewData["Assignees"] = accountHelper.getListOfUsersAssignedToJobCoach(mockUser);
+                        }
+                        else if (Roles.IsUserInRole(mockUser, "Parent"))
+                        {
+                            ViewData["Assignees"] = accountHelper.getListOfUsersChildOfParent(mockUser);
+                        }
+                    }
+                    else
+                    {
+                        ViewData["AssignedTo"] = assignedTo;
+                        ViewData["Routines"] = helper.getMostRecentRoutinesAssignedTo(mockUser, assignedTo);
+                    }
+                }
+            }
+            else //user is jobcoach or parent
+            {
+                if (assignedTo == null || !accountHelper.userExists(assignedTo))
+                {
+                    if (Roles.IsUserInRole("Job Coach"))
+                    {
+                        ViewData["Assignees"] = accountHelper.getListOfUsersAssignedToJobCoach(thisUsername);
+                    }
+                    else if (Roles.IsUserInRole("Parent"))
+                    {
+                        ViewData["Assignees"] = accountHelper.getListOfUsersChildOfParent(thisUsername);
+                    }
+                }
+                else
+                {
+                    ViewData["AssignedTo"] = assignedTo;
+                    ViewData["Routines"] = helper.getMostRecentRoutinesAssignedTo(assignedTo);
+                }
+            }
+
+            return View();
+        }
+
         public ActionResult Details(string routineName, string mockUser = "")
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent")))
