@@ -23,7 +23,7 @@ ViewBag.Title = "Routines";
         }
     </p>
     <p>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Create New", "Create", new { mockUser = ViewData["mockUser"] })
     </p>
 }
 <table> 
