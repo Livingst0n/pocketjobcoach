@@ -172,11 +172,11 @@ namespace PJCAdmin.Controllers
                     ViewData["mockUser"] = mockUser;
                     if (Roles.IsUserInRole(mockUser, "Job Coach"))
                     {
-                        ViewData["AssignedUsers"] = accountHelper.getListOfUsersAssignedToJobCoach(mockUser);
+                        ViewData["Assignees"] = accountHelper.getListOfUsersAssignedToJobCoach(mockUser);
                     }
                     else if (Roles.IsUserInRole(mockUser, "Parent"))
                     {
-                        ViewData["Children"] = accountHelper.getListOfUsersChildOfParent(mockUser);
+                        ViewData["Assignees"] = accountHelper.getListOfUsersChildOfParent(mockUser);
                     }
                 }
             }
@@ -186,11 +186,11 @@ namespace PJCAdmin.Controllers
 
                 if (Roles.IsUserInRole("Job Coach"))
                 {
-                    ViewData["AssignedUsers"] = accountHelper.getListOfUsersAssignedToJobCoach(thisUsername);
+                    ViewData["Assignees"] = accountHelper.getListOfUsersAssignedToJobCoach(thisUsername);
                 }
                 else if (Roles.IsUserInRole("Parent"))
                 {
-                    ViewData["Children"] = accountHelper.getListOfUsersChildOfParent(thisUsername);
+                    ViewData["Assignees"] = accountHelper.getListOfUsersChildOfParent(thisUsername);
                 }
             }
 
