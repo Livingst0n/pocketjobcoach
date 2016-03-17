@@ -161,6 +161,7 @@
     <Compile Include="Classes\Helpers\APIModelHelpers\Auth.cs" />
     <Compile Include="Classes\Helpers\APIModelHelpers\ModelCopier.cs" />
     <Compile Include="Classes\Helpers\APIModelHelpers\RoutineHelper.cs" />
+    <Compile Include="Classes\Helpers\DbHelper.cs" />
     <Compile Include="Classes\Helpers\DebugHelper.cs" />
     <Compile Include="Classes\Helpers\MVCModelHelpers\AccountHelper.cs" />
     <Compile Include="Classes\Helpers\MVCModelHelpers\EnumHelper.cs" />
