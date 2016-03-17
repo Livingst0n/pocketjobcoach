@@ -13,8 +13,8 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
      */
     public class FeedbackHelper
     {
-        private pjcEntities db = new pjcEntities();
-        private EnumHelper helper = new EnumHelper();
+        private EnumHelper enumHelper = new EnumHelper();
+        private DbHelper helper = new DbHelper();
 
         #region Feedback
         /* Returns the matching Feedback record.
@@ -24,10 +24,10 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         private Feedback getMatchingFeedback(FeedbackModel model)
         {
-            byte mediaTypeID = helper.getMediaType(model.MediaType.mediaTypeName).mediaTypeID;
-            byte feedbackTypeID = helper.getFeedbackType(model.FeedbackType.feedbackTypeName).feedbackTypeID;
+            byte mediaTypeID = enumHelper.getMediaType(model.MediaType.mediaTypeName).mediaTypeID;
+            byte feedbackTypeID = enumHelper.getFeedbackType(model.FeedbackType.feedbackTypeName).feedbackTypeID;
 
-            List<Feedback> lst = db.Feedbacks.Where(f => f.mediaTypeID == mediaTypeID && f.feedbackID == feedbackTypeID).ToList();
+            List<Feedback> lst = helper.getAllFeedbacks().Where(f => f.mediaTypeID == mediaTypeID && f.feedbackID == feedbackTypeID).ToList();
             foreach (Feedback f in lst)
             {
                 if (f.feedbackTitle.Equals(model.feedbackTitle) && f.feedbackMessage.Equals(model.feedbackMessage))
@@ -48,13 +48,10 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 feedbackTitle = model.feedbackTitle,
                 feedbackMessage = model.feedbackMessage
             };
-            feedback.FeedbackType = helper.getFeedbackType(model.FeedbackType.feedbackTypeName);
-            feedback.MediaType = helper.getMediaType(model.MediaType.mediaTypeName);
+            feedback.FeedbackType = enumHelper.getFeedbackType(model.FeedbackType.feedbackTypeName);
+            feedback.MediaType = enumHelper.getMediaType(model.MediaType.mediaTypeName);
 
-            db.Feedbacks.Add(feedback);
-            db.SaveChanges();
-
-            return feedback;
+            return helper.createFeedback(feedback);
         }
         #endregion
         #region RoutineFeedback
@@ -73,10 +70,8 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             if (feedback == null)
                 feedback = createFeedback(model);
 
-            feedback.Routines.Add(db.Routines.Find(routineID));
-            db.Entry<Feedback>(feedback).State = System.Data.EntityState.Modified;
-            db.SaveChanges();
-
+            feedback.Routines.Add(helper.findRoutine(routineID));
+            
             return feedback;
         }
         /* Returns whether a RoutineFeedback connection
@@ -128,9 +123,8 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 return;
             }
 
-            feedback.Routines.Add(db.Routines.Find(routineID));
-            db.Entry<Feedback>(feedback).State = System.Data.EntityState.Modified;
-            db.SaveChanges();
+            feedback.Routines.Add(helper.findRoutine(routineID));
+            helper.updateFeedback(feedback);
         }
         /* Creates a RoutineFeedback connection for each 
          * given feedback to the given routine.
@@ -161,11 +155,9 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             if (feedback == null)
                 feedback = createFeedback(model);
 
-            feedback.Tasks.Add(db.Tasks.Find(taskID));
-            db.Entry<Feedback>(feedback).State = System.Data.EntityState.Modified;
-            db.SaveChanges();
+            feedback.Tasks.Add(helper.findTask(taskID));
 
-            return feedback;
+            return helper.updateFeedback(feedback);
         }
         /* Returns whether a TaskFeedback connection
          * already exists between the given feedback and
@@ -215,9 +207,8 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 return;
             }
 
-            feedback.Tasks.Add(db.Tasks.Find(taskID));
-            db.Entry<Feedback>(feedback).State = System.Data.EntityState.Modified;
-            db.SaveChanges();
+            feedback.Tasks.Add(helper.findTask(taskID));
+            helper.updateFeedback(feedback);
         }
         /* Creates a TaskFeedback connection for each
          * given feedback to the given task.
@@ -237,7 +228,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
         public void dispose()
         {
-            db.Dispose();
+            helper.dispose();
         }
     }
 }

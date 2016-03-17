@@ -17,7 +17,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
      */
     public class AccountHelper
     {
-        private pjcEntities db = new pjcEntities();
+        private DbHelper helper = new DbHelper();
 
         #region User Accounts
         /* Returns a list of all users of the given role.
@@ -121,9 +121,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public void createUserNameRecord(object providerUserKey)
         {
-            User user = db.Users.Find(providerUserKey);
-            db.UserNames.Add(new UserName() { userID = user.UserId, userName1 = user.UserName });
-            db.SaveChanges();
+            helper.createUserName(providerUserKey);
         }
         /* Removes a given user from the PJC system.
          * @param userName: The username of the user
@@ -134,8 +132,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             //TODO delete all references to this user
             //deleteAllReferencesToUser(username);
 
-            db.UserNames.Remove(db.UserNames.Find(userName));
-            db.SaveChanges();
+            helper.deleteUserName(userName);
 
             System.Web.Security.Membership.DeleteUser(userName);
         }
@@ -151,7 +148,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             List<MembershipUser> lstUsers = new List<MembershipUser>();
 
             //UserName12 is collection where self is jobcoach
-            foreach (PJCAdmin.Models.UserName usr in db.UserNames.Find(jobCoachUserName).UserName12)
+            foreach (PJCAdmin.Models.UserName usr in helper.findUserName(jobCoachUserName).UserName12)
             {
                 lstUsers.Add(System.Web.Security.Membership.GetUser(usr.userName1));
             }
@@ -178,7 +175,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public MembershipUser getUsersJobCoach(string userName)
         {
-            string jobCoachUserName = db.UserNames.Find(userName).jobCoachUserName;
+            string jobCoachUserName = helper.findUserName(userName).jobCoachUserName;
             if (jobCoachUserName == null)
                 return null;
             return System.Web.Security.Membership.GetUser(jobCoachUserName);
@@ -202,15 +199,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public void updateJobCoach(string userName, string jobCoach)
         {
-            UserName user = db.UserNames.Find(userName);
-            if (jobCoach == null)
-                user.UserName3 = null;
-            else
-                //UserName3 is the job coach
-                user.UserName3 = db.UserNames.Find(jobCoach);
-
-            db.Entry<UserName>(user).State = System.Data.EntityState.Modified;
-            db.SaveChanges();
+            helper.updateJobCoachAssignment(userName, jobCoach);
         }
         /* Updates the list of users assigned to the
          * given job coach.
@@ -220,20 +209,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public void updateAssignedUsers(string userName, string[] assignedUsers)
         {
-            UserName user = db.UserNames.Find(userName);
-            //UserName12 is all usernames assigned to the selected username
-            user.UserName12.Clear();
-            if (assignedUsers != null)
-            {
-                foreach (string username in assignedUsers)
-                {
-                    UserName selectedUserName = db.UserNames.Find(username);
-                    if (!(selectedUserName == null))
-                        user.UserName12.Add(selectedUserName);
-                }
-            }
-            db.Entry<UserName>(user).State = System.Data.EntityState.Modified;
-            db.SaveChanges();
+            helper.updateAssignedUsers(userName, assignedUsers);
         }
         #endregion
         #region Parent Assignment
@@ -247,7 +223,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             List<MembershipUser> lstUsers = new List<MembershipUser>();
 
             //UserName11 is collection where self is guardian
-            foreach (PJCAdmin.Models.UserName usr in db.UserNames.Find(parentUserName).UserName11)
+            foreach (PJCAdmin.Models.UserName usr in helper.findUserName(parentUserName).UserName11)
             {
                 lstUsers.Add(System.Web.Security.Membership.GetUser(usr.userName1));
             }
@@ -274,7 +250,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public MembershipUser getUsersParent(string userUserName)
         {
-            string parentUserName = db.UserNames.Find(userUserName).guardianUserName;
+            string parentUserName = helper.findUserName(userUserName).guardianUserName;
             if (parentUserName == null)
                 return null;
             return System.Web.Security.Membership.GetUser(parentUserName);
@@ -298,16 +274,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public void updateParent(string userName, string parent)
         {
-            UserName user = db.UserNames.Find(userName);
-
-            if (parent == null)
-                user.UserName2 = null;
-            else
-                //UserName2 is the guardian
-                user.UserName2 = db.UserNames.Find(parent);
-
-            db.Entry<UserName>(user).State = System.Data.EntityState.Modified;
-            db.SaveChanges();
+            helper.updateParentAssignment(userName, parent);
         }
         /* Updates the list of children assigned to the
          * given parent.
@@ -317,19 +284,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public void updateAssignedChildren(string userName, string[] assignedChildren)
         {
-            //UserName11 is all children of the selected username
-            UserName user = db.UserNames.Find(userName);
-            user.UserName11.Clear();
-            if (assignedChildren != null)
-            {
-                foreach (string id in assignedChildren)
-                {
-                    string selectedUserName = db.Users.Find(Guid.Parse(id)).UserName;
-                    user.UserName11.Add(db.UserNames.Find(selectedUserName));
-                }
-            }
-            db.Entry<UserName>(user).State = System.Data.EntityState.Modified;
-            db.SaveChanges();
+            helper.updateAssignedChildren(userName, assignedChildren);
         }
         #endregion
         #region EmailOutboxes
@@ -341,7 +296,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public EmailOutbox getEmailOutboxForPurpose(string purpose)
         {
-            return db.EmailOutboxes.Where(s => s.purpose == purpose).FirstOrDefault();
+            return helper.getAllEmailOutboxes().Where(s => s.purpose == purpose).FirstOrDefault();
         }
         #endregion
         
@@ -350,7 +305,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         {//TODO check if duplicated routines show up. They probably will and will need to be restricted to unique routine names
             List<Routine> createdRoutines = new List<Routine>();
             //Routines is routines username has created
-            foreach (Routine r in db.UserNames.Find(creatorUserName).Routines)
+            foreach (Routine r in helper.findUserName(creatorUserName).Routines)
             {
                 createdRoutines.Add(r);
             }
@@ -362,7 +317,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         {//TODO check if previous versions of routines show up. They probably will and will need to be restricted to unique routine names
             List<Routine> assignedRoutines = new List<Routine>();
             //Routines1 is routines username has been assigned
-            foreach (Routine r in db.UserNames.Find(assigneeUserName).Routines1)
+            foreach (Routine r in helper.findUserName(assigneeUserName).Routines1)
             {
                 assignedRoutines.Add(r);
             }
@@ -376,7 +331,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         private bool isUserAssigned(MembershipUser usr)
         {
-            string jobCoachUserName = db.UserNames.Find(usr.UserName).jobCoachUserName;
+            string jobCoachUserName = helper.findUserName(usr.UserName).jobCoachUserName;
             if (jobCoachUserName == null)
                 return false;
             if (!userExists(jobCoachUserName))
@@ -389,7 +344,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         private bool isChildAssigned(MembershipUser usr)
         {
-            string parentUserName = db.UserNames.Find(usr.UserName).guardianUserName;
+            string parentUserName = helper.findUserName(usr.UserName).guardianUserName;
             if (parentUserName == null)
                 return false;
             if (!userExists(parentUserName))
@@ -400,7 +355,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
         public void dispose()
         {
-            db.Dispose();
+            helper.dispose();
         }
     }
 }

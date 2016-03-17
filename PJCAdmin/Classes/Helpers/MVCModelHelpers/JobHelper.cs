@@ -13,7 +13,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
      */
     public class JobHelper
     {
-        private pjcEntities db = new pjcEntities();
+        private DbHelper helper = new DbHelper();
 
         /* Returns whether or not jobs have been created
          * for the given routine.
@@ -21,12 +21,12 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public bool jobsExistForRoutine(int routineID)
         {
-            return db.Routines.Find(routineID).Jobs.Count() > 0;
+            return helper.findRoutine(routineID).Jobs.Count() > 0;
         }
 
         public void dispose()
         {
-            db.Dispose();
+            helper.dispose();
         }
     }
 }

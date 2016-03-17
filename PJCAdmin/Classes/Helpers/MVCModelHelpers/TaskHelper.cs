@@ -13,9 +13,9 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
      */
     public class TaskHelper
     {
-        private pjcEntities db = new pjcEntities();
         private FeedbackHelper feedbackHelper = new FeedbackHelper();
         private EnumHelper enumHelper = new EnumHelper();
+        private DbHelper helper = new DbHelper();
 
         #region Creating, Updating, and Deleting
         /* Creates a task from the given model for the given 
@@ -35,10 +35,9 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 expectedDuration = model.expectedDuration
             };
 
-            t.TaskCategory = enumHelper.getTaskCategory(model.TaskCategory.categoryName); 
+            t.TaskCategory = enumHelper.getTaskCategory(model.TaskCategory.categoryName);
 
-            db.Tasks.Add(t);
-            db.SaveChanges();
+            t = helper.createTask(t);
 
             foreach (FeedbackModel f in model.Feedbacks)
                 feedbackHelper.createTaskFeedback(t.taskID, f);
@@ -94,8 +93,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
             task.TaskCategory = enumHelper.getTaskCategory(model.TaskCategory.categoryName);
 
-            db.Entry<Task>(task).State = System.Data.EntityState.Modified;
-            db.SaveChanges();
+            task = helper.updateTask(task);
 
             feedbackHelper.updateTaskFeedbacks(task.taskID, model.Feedbacks.ToList());
         }
@@ -104,8 +102,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         public void deleteTask(Task task)
         {
             //TODO validate orphaned Feedbacks are deleted
-            db.Tasks.Remove(task);
-            db.SaveChanges();
+            helper.deleteTask(task);
         }
         #endregion
         #region Private Methods
@@ -155,7 +152,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         
         public void dispose()
         {
-            db.Dispose();
+            helper.dispose();
             feedbackHelper.dispose();
         }
     }

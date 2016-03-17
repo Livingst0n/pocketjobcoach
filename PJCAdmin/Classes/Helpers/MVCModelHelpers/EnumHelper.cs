@@ -15,7 +15,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
      */
     public class EnumHelper
     {
-        private pjcEntities db = new pjcEntities();
+        private DbHelper helper = new DbHelper();
 
         #region TaskCategory
         /* Creates a new TaskCategory enum for the
@@ -28,20 +28,22 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             if (taskCategoryExists(category))
                 return; //TODO model error
 
-            TaskCategory tc = new TaskCategory()
-            {
-                categoryName = category
-            };
-
-            db.TaskCategories.Add(tc);
-            db.SaveChanges();
+            helper.createTaskCategory(category);
         }
         /* Returns a list of all categories in the 
          * TaskCategory enum.
          */
         public List<TaskCategory> getAllTaskCategories()
         {
-            return db.TaskCategories.ToList();
+            return helper.getAllTaskCategories().ToList();
+        }
+        /*TODO*/
+        public IEnumerable<string> getAllTaskCategoryNames()
+        {
+            foreach (TaskCategory category in getAllTaskCategories())
+            {
+                yield return category.categoryName;
+            }
         }
         /* Returns the TaskCategory record for the given
          * category.
@@ -52,7 +54,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             if (!taskCategoryExists(category))
                 return null;
 
-            return db.TaskCategories.Where(c => c.categoryName.Equals(category)).First();
+            return getAllTaskCategories().Where(c => c.categoryName.Equals(category)).First();
         }
         /* Changes the category name of the existing
          * enum record. Noop if the new category exists.
@@ -72,10 +74,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             }
 
             TaskCategory tc = getTaskCategory(oldCategory);
-            tc.categoryName = newCategory;
-
-            db.Entry<TaskCategory>(tc).State = System.Data.EntityState.Modified;
-            db.SaveChanges();
+            helper.updateTaskCategory(tc, newCategory);
         }
         /* Removes the TaskCategory record for the
          * given category. Noop if tasks exist for
@@ -91,8 +90,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             if (taskCategoryHasTasks(categoryName))
                 return; //TODO model error
 
-            db.TaskCategories.Remove(getTaskCategory(categoryName));
-            db.SaveChanges();
+            helper.deleteTaskCategory(getTaskCategory(categoryName));
         }
         /* Returns whether the TaskCategory enum contains
          * the given category.
@@ -100,7 +98,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public bool taskCategoryExists(string categoryName)
         {
-            return db.TaskCategories.Where(c => c.categoryName.Equals(categoryName)).Count() > 0;
+            return helper.getAllTaskCategories().Where(c => c.categoryName.Equals(categoryName)).Count() > 0;
         }
         /* Returns whether the given category has been 
          * associated with any Tasks.
@@ -135,7 +133,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public List<MediaType> getAllMediaTypes() 
         {
-            return db.MediaTypes.ToList();
+            return helper.getAllMediaTypes().ToList();
         }
         /* Returns the MediaType record for the given
          * type.
@@ -146,7 +144,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             if (!mediaTypeExists(type))
                 return null;
 
-            return db.MediaTypes.Where(t => t.mediaTypeName.Equals(type)).First();
+            return helper.getAllMediaTypes().Where(t => t.mediaTypeName.Equals(type)).First();
         }
         /* update MediaType is code-managed*/
         /* public void updateMediaType(string oldType, string newType) 
@@ -184,7 +182,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public bool mediaTypeExists(string typeName) 
         {
-            return db.MediaTypes.Where(t => t.mediaTypeName.Equals(typeName)).Count() > 0;
+            return helper.getAllMediaTypes().Where(t => t.mediaTypeName.Equals(typeName)).Count() > 0;
         }
         /* Returns whether the given type has been
          * associated with any Feedbacks.
@@ -218,7 +216,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public List<FeedbackType> getAllFeedbackTypes() 
         {
-            return db.FeedbackTypes.ToList();
+            return helper.getAllFeedbackTypes().ToList();
         }
         /* Returns the FeedbackType record for the given
          * type.
@@ -229,7 +227,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             if (!feedbackTypeExists(type))
                 return null;
 
-            return db.FeedbackTypes.Where(t => t.feedbackTypeName.Equals(type)).First();
+            return helper.getAllFeedbackTypes().Where(t => t.feedbackTypeName.Equals(type)).First();
         }
         /* update FeedbackType is managed in code*/
         /* public void updateFeedbackType(string oldType, string newType) 
@@ -267,7 +265,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public bool feedbackTypeExists(string typeName) 
         {
-            return db.FeedbackTypes.Where(t => t.feedbackTypeName.Equals(typeName)).Count() > 0;
+            return helper.getAllFeedbackTypes().Where(t => t.feedbackTypeName.Equals(typeName)).Count() > 0;
         }
         /* Returns whether the given type has been
          * associated with any Feedbacks.
@@ -284,7 +282,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
 
         public void dispose()
         {
-            db.Dispose();
+            helper.dispose();
         }
     }
 }

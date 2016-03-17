@@ -14,12 +14,13 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
      * username.
      * --------------------------------------------------------
      */
+    //TODO add get...AssignedToUser...(...) functions
     public class RoutineHelper
     {
-        private pjcEntities db = new pjcEntities();
         private TaskHelper taskHelper = new TaskHelper();
         private FeedbackHelper feedbackHelper = new FeedbackHelper();
         private JobHelper jobHelper = new JobHelper();
+        private DbHelper helper = new DbHelper();
 
         #region Current User Methods
         #region Getters
@@ -261,7 +262,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         public List<string> getRoutineNames(string creatorUsername)
         {
             List<string> lstRoutines = new List<string>();
-            foreach (Routine r in db.UserNames.Find(creatorUsername).Routines)
+            foreach (Routine r in helper.findUserName(creatorUsername).Routines)
                 lstRoutines.Add(r.routineTitle);
 
             return lstRoutines;
@@ -273,7 +274,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public List<Routine> getRoutines(string creatorUsername)
         {
-            return db.UserNames.Find(creatorUsername).Routines.ToList();
+            return helper.findUserName(creatorUsername).Routines.ToList();
         }
         /* Returns a list of all routines created by the
          * given user in model format.
@@ -478,8 +479,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 updatedDate = DateTime.Now
             };
 
-            db.Routines.Add(r);
-            db.SaveChanges();
+            r = helper.createRoutine(r);
 
             foreach (TaskModel t in model.Tasks)
                 taskHelper.createTask(r.routineID, t);
@@ -568,8 +568,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             if (r.isDisabled)
             {
                 r.isDisabled = false;
-                db.Entry<Routine>(r).State = System.Data.EntityState.Modified;
-                db.SaveChanges();
+                helper.updateRoutine(r);
             }
         }
         /* Efficiently disables all routines created by the
@@ -595,8 +594,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         {
             Routine r = getMostRecentRoutineByName(creatorUsername, routineName);
             r.isDisabled = true;
-            db.Entry<Routine>(r).State = System.Data.EntityState.Modified;
-            db.SaveChanges();
+            helper.updateRoutine(r);
         }
         /* Disables all routines created by the given user
          * that match the given name.
@@ -613,11 +611,9 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 if (!r.isDisabled)
                 {
                     r.isDisabled = true;
-                    db.Entry<Routine>(r).State = System.Data.EntityState.Modified;
+                    helper.updateRoutine(r);
                 }
             }
-
-            db.SaveChanges();
         }
         #endregion
         #endregion
@@ -634,8 +630,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             db.Entry<Routine>(routine).State = System.Data.EntityState.Deleted;
             db.SaveChanges();*/
 
-            db.Routines.Remove(routine);
-            db.SaveChanges();
+            helper.deleteRoutine(routine);
 
             //TODO check Feedback, Task, Job, Note etc for deletion. (Orphans should be, non-orphans should not be)
         }
@@ -661,8 +656,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
             taskHelper.modifyExistingTasks(r.Tasks.ToList(), model.Tasks.ToList(),true);
             feedbackHelper.updateRoutineFeedbacks(r.routineID, model.Feedbacks.ToList());
 
-            db.Entry<Routine>(r).State = System.Data.EntityState.Modified;
-            db.SaveChanges();
+            helper.updateRoutine(r);
         }
         /* Disables all old routines in the given list of
          * routines. The most recent routine in the list is
@@ -680,17 +674,15 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
                 if (routine.isDisabled == false)
                 {
                     routine.isDisabled = true;
-                    db.Entry<Routine>(routine).State = System.Data.EntityState.Modified;
+                    helper.updateRoutine(routine);
                 }
             }
-
-            db.SaveChanges();
         }
         #endregion
 
         public void dispose()
         {
-            db.Dispose();
+            helper.dispose();
             feedbackHelper.dispose();
             jobHelper.dispose();
             taskHelper.dispose();

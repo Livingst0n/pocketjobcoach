@@ -15,7 +15,7 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
      */
     public class Auth
     {
-        private static pjcEntities db = new pjcEntities();
+        private static DbHelper helper = new DbHelper();
 
         /* Returns the username for the user associated
          * with the given token.
@@ -33,7 +33,7 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
             }
 
             int id = Int32.Parse(token.Substring(37));
-            AuthToken authToken = db.AuthTokens.Find(id);
+            AuthToken authToken = helper.findAuthToken(id);
 
             return authToken.userName;
         }
@@ -54,14 +54,14 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
             string guid = token.Substring(0, 36);
             int id = Int32.Parse(token.Substring(37));
 
-            AuthToken authToken = db.AuthTokens.Find(id);
+            AuthToken authToken = helper.findAuthToken(id);
 
             if (authToken == null)
                 return false;
 
             if (!authToken.token.Equals(token))
             {
-                db.Entry(authToken).Reload();
+                authToken = helper.reloadToken(authToken);
 
                 if (!authToken.token.Equals(token))
                     return false;
@@ -89,7 +89,7 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
             }
 
             int id = Int32.Parse(token.Substring(37));
-            AuthToken authToken = db.AuthTokens.Find(id);
+            AuthToken authToken = helper.findAuthToken(id);
 
             if (isExpired(authToken.expirationDate.AddMinutes(-10)))
             {
@@ -101,8 +101,7 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
                 authToken.expirationDate = DateTime.Now.AddYears(50);
             }
 
-            db.Entry(authToken).State = System.Data.EntityState.Modified;
-            db.SaveChanges();
+            helper.updateToken(authToken);
 
         }
         /* Returns whether or not the given expiration date
@@ -119,7 +118,7 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
         
         public void dispose()
         {
-            db.Dispose();
+            helper.dispose();
         }
     }
 }

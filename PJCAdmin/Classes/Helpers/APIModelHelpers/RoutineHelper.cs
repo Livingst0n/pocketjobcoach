@@ -13,7 +13,7 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
      */
     public class RoutineHelper
     {
-        private pjcEntities db = new pjcEntities();
+        private DbHelper helper = new DbHelper();
 
         #region Getters
         /*Returns a list of all routines assigned to the given 
@@ -25,11 +25,11 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
          */
         public List<Routine> getRoutinesAssignedByParentForSerialization(string userName)
         {
-            string parentUserName = db.UserNames.Find(userName).guardianUserName;
+            string parentUserName = helper.findUserName(userName).guardianUserName;
 
             List<Routine> routinesByParent = new List<Routine>();
 
-            foreach (Routine r in db.UserNames.Find(userName).Routines1)
+            foreach (Routine r in helper.findUserName(userName).Routines1)
             {
                 if (r.creatorUserName.Equals(parentUserName))
                     routinesByParent.Add(ModelCopier.copyRoutine(r));
@@ -46,11 +46,11 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
          */
         public List<Routine> getRoutinesAssignedByJobCoachForSerialization(string userName)
         {
-            string jobCoachUserName = db.UserNames.Find(userName).jobCoachUserName;
+            string jobCoachUserName = helper.findUserName(userName).jobCoachUserName;
 
             List<Routine> routinesByJobCoach = new List<Routine>();
 
-            foreach (Routine r in db.UserNames.Find(userName).Routines1)
+            foreach (Routine r in helper.findUserName(userName).Routines1)
             {
                 if (r.creatorUserName.Equals(jobCoachUserName))
                     routinesByJobCoach.Add(ModelCopier.copyRoutine(r));
@@ -69,7 +69,7 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
         {
             List<Routine> assignedRoutines = new List<Routine>();
 
-            foreach (Routine r in db.UserNames.Find(userName).Routines1)
+            foreach (Routine r in helper.findUserName(userName).Routines1)
             {
                 assignedRoutines.Add(ModelCopier.copyRoutine(r));
             }
@@ -80,7 +80,7 @@ namespace PJCAdmin.Classes.Helpers.APIModelHelpers
 
         public void dispose()
         {
-            db.Dispose();
+            helper.dispose();
         }
     }
 }
