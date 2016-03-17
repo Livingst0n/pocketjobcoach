@@ -1,17 +1,32 @@
 ﻿@model PJCAdmin.Models.TaskModel
-\
 <li>\
     <table>\
+        <tr><td><input type="text" name="Tasks['+atIndex+'].taskName" value="" /> - <input type="text" name="Tasks['+atIndex+'].taskDescription" value="" /></td></tr>\
+        <tr><td>Category: <select name="Tasks['+atIndex+'].TaskCategory.categoryName">\
+                                @foreach (string name in ViewData["TaskCategories"] as List<string>)
+                                {
+                                    <option value="@name">@name</option>@("")
+                                }\
+                          </select></td></tr> <!-- TODO Make Hidden: Not used? -->\
+        <tr><td>Sequence Number: <input type="text" name="Tasks['+atIndex+'].sequenceNo" value="" /></td></tr> <!-- TODO Make Hidden -->\
         <tr><td>\
-            <p>NewTaskName - Description</p>\
+            Timed? <input type="checkbox" name="Tasks['+atIndex+'].isTimed" /> - \
+            <input type="text" name="Tasks['+atIndex+'].expectedDuration" value="" />\
             </td></tr>\
+    </table>\
+    \
+    <h4>Task Feedback</h4>\
+    <table>\
+    </table>\
+    \
+    <table>\
         <tr>\
             <td>\
-                <button class="AddTask">Add New Task</button>\
+                <button class="AddTask">Add New Task Before</button>\
             </td>\
             <td>\
-                <button class="RemoveTask">Remove Task</button>\
+                <button class="RemoveTask">Remove This Task</button>\
             </td>\
         </tr>\
     </table>\
-</li>
+</li>\

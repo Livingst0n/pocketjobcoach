@@ -1,4 +1,6 @@
-﻿@{
+﻿@model PJCAdmin.Models.RoutineModel
+
+@{
 ViewBag.Title = "Create New Routine";
 }
 
@@ -10,3 +12,94 @@ ViewBag.Title = "Create New Routine";
     <p>@Html.ActionLink("View as different user","List")</p>
 }
 <h2>Create New Routine</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <table>
+            <tr><td>
+                Title: @Html.EditorFor(m => m.routineTitle)
+            </td></tr>
+            <tr><td>
+                Assigned to: <select name="assigneeUserName">
+                                @foreach (MembershipUser user in ViewData["Assignees"] as List<MembershipUser>)
+                                {
+                                    <option value="@(user.UserName)">
+                                        @(user.UserName)
+                                    </option>
+                                }
+                          </select>
+            </td></tr>
+            <tr><td>
+                Timed? @Html.CheckBoxFor(m => m.isTimed) - Time Limit: @Html.EditorFor(m => m.expectedDuration)
+            </td></tr>
+            <tr><td>
+                Email on job completion? @Html.CheckBoxFor(m => m.isNotifiable)
+            </td></tr>
+            <tr><td>
+                Disabled? @Html.CheckBoxFor(m => m.isDisabled)
+            </td></tr>
+        </table>
+
+        <h3>Routine Feedback</h3>
+        <ol id="RoutineFeedbacks">
+        </ol>
+
+        <h3>Tasks</h3>
+        <ol id="Tasks">
+        </ol>
+        <button id="AddFinalTask" class="AddFinalTask">Add Task At End</button>
+
+        <input type="submit" value="Save" />
+    </fieldset>
+}
+
+<script>
+    function InsertNewTask(atIndex) {
+        if ($("#Tasks li").length > atIndex) {
+            $('#Tasks li:eq(' + atIndex + ')').before('@Html.Partial("_NewTask", new PJCAdmin.Models.TaskModel(),new ViewDataDictionary{{"TaskCategories",ViewData["TaskCategories"]}})');
+        }
+        else if ($("#Tasks li").length == atIndex){
+            $("#Tasks").append('@Html.Partial("_NewTask", new PJCAdmin.Models.TaskModel(),new ViewDataDictionary{{"TaskCategories", ViewData["TaskCategories"]}})');
+        }
+        return false;
+    }
+
+    function DeleteTask(atIndex) {
+        if ($("#Tasks li").length == 1) {
+            return false;
+        }
+
+        $("#Tasks li").eq(atIndex).remove();
+        return false;
+    }
+
+    function UpdateTaskSequenceNos() {//Doesn't work yet
+        $.each($("#Tasks").children(), function (key, child) {
+            var index = child.index();
+            child.innerHTML.replace(/\[\d*\]/, "[" + index + "]");
+        });
+    }
+
+    $(document).ready( function() {
+        InsertNewTask(0);
+        $("#Tasks").on('click', 'button.AddTask', function (event) {
+            event.preventDefault();
+            var currentIndex = $(this).closest('li').index();
+            InsertNewTask(currentIndex);
+        });
+        $("#Tasks").on('click', 'button.RemoveTask', function (event) {
+            event.preventDefault();
+            var currentIndex = $(this).closest('li').index();
+            DeleteTask(currentIndex);
+        });
+        $("#AddFinalTask").on('click', function (event) {
+            event.preventDefault();
+            var endIndex = $("#Tasks").children().size();
+            InsertNewTask(endIndex);
+        });
+    });
+</script>

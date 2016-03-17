@@ -1,30 +1,30 @@
 ﻿@model PJCAdmin.Models.TaskModel
 <li>
     <table>
-        <tr><td>@(Html.DisplayFor(model => model.taskName)) - @(Html.DisplayFor(model => model.taskDescription))</td></tr>
-        <tr><td>Category: @(Html.DisplayFor(model => model.TaskCategory.categoryName))</td></tr>
-        <tr><td>Sequence Number: @(Html.DisplayFor(model => model.sequenceNo))</td></tr>
+        <tr><td><input type="text" name="Tasks[@(Model.sequenceNo - 1)].taskName" value="@Model.taskName" /> - <input type="text" name="Tasks[@(Model.sequenceNo - 1)].taskDescription" value="@Model.taskDescription" /></td></tr>
+        <tr><td>Category: @(Html.DisplayFor(model => model.TaskCategory.categoryName))</td></tr> <!-- TODO Make Hidden: Not used? -->
+        <tr><td>Sequence Number: <input type="text" name="Tasks[@(Model.sequenceNo - 1)].sequenceNo" value="@Model.sequenceNo" /></td></tr> <!-- TODO Make Hidden -->
         <tr><td>
-            @if (Model.isTimed) { @("Timed - " + Model.expectedDuration) }
-            else { @("Not Timed - " + Model.expectedDuration) }
+            Timed? @Html.EditorFor(model => model.isTimed, "TemplateName","Tasks[" + (Model.sequenceNo - 1) + "].isTimed") - 
+            @Html.EditorFor(model => model.expectedDuration, "TemplateTimeName", "Tasks[" + (Model.sequenceNo - 1) + "].expectedDuration")
             </td></tr>
     </table>
 
     <h4>Task Feedback</h4>
     <table>
-        @foreach (PJCAdmin.Models.FeedbackModel feedback in Model.Feedbacks)
+        @*@foreach (PJCAdmin.Models.FeedbackModel feedback in Model.Feedbacks)
         {
-            @Html.Partial("_ViewFeedback", feedback);
-        }
+            @Html.Partial("_ViewFeedback", feedback,new ViewDataDictionary(new{taskSequenceNo = Model.sequenceNo}));
+        }*@
     </table>
 
     <table>
         <tr>
             <td>
-                <button class="AddTask">Add New Task</button>
+                <button class="AddTask">Add New Task Before</button>
             </td>
             <td>
-                <button class="RemoveTask">Remove Task</button>
+                <button class="RemoveTask">Remove This Task</button>
             </td>
         </tr>
     </table>

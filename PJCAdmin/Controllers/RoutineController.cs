@@ -160,6 +160,9 @@ namespace PJCAdmin.Controllers
                 return View();
             }
 
+            EnumHelper enumhelp = new EnumHelper();
+            ViewData["TaskCategories"] = enumhelp.getAllTaskCategoryNames().ToList();
+
             if (Roles.IsUserInRole("Administrator"))
             {
                 if (mockUser == null || mockUser.Equals("") || !accountHelper.userExists(mockUser))
@@ -207,6 +210,9 @@ namespace PJCAdmin.Controllers
                 return View();
             }
 
+            if (!(ModelState.IsValid))
+                return RedirectToAction("Create", "Routine", new { mockUser = mockUser });
+
             if (Roles.IsUserInRole("Administrator"))
             {
                 if (mockUser == null || mockUser.Equals("") || !accountHelper.userExists(mockUser))
@@ -223,7 +229,7 @@ namespace PJCAdmin.Controllers
                     }
 
                     helper.createRoutine(mockUser, model);
-                    return RedirectToAction("Index", "Routine", mockUser);
+                    return RedirectToAction("List", "Routine", new { mockUser = mockUser });
                 }
             }
 
@@ -235,7 +241,7 @@ namespace PJCAdmin.Controllers
 
             helper.createRoutine(model);
 
-            return RedirectToAction("Index", "Routine");
+            return RedirectToAction("List", "Routine");
         }
 
         public ActionResult Edit(string routineName = "", string mockUser = "")
@@ -294,7 +300,7 @@ namespace PJCAdmin.Controllers
                         return HttpNotFound();
 
                     helper.updateRoutine(mockUser, routineName, model);
-                    return RedirectToAction("Index", "Routine", mockUser);
+                    return RedirectToAction("Index", "Routine", new { mockUser = mockUser });
                 }
             }
 

@@ -14,33 +14,49 @@
 }
 <h2>Edit Routine <small style="color:#808080">@Html.DisplayFor(model => model.routineTitle)</small></h2>
 
-<table>
-    <tr><td>Assigned to: @Html.DisplayFor(model => model.assigneeUserName)</td></tr>
-    <tr><td>
-        @if (Model.isTimed) { @("Timed - " + Model.expectedDuration) }
-        else { @("Not Timed - " + Model.expectedDuration) }
-        </td></tr>
-    <tr><td>
-        @if (Model.isNotifiable) { @("Will email on job completion") }
-        else { @("Won't email on job completion") }
-        </td></tr>
-    <tr><td>
-        @if (Model.isDisabled) { @("Disabled") }
-        else { @("Enabled") }
-        </td></tr>
-</table>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
 
-<h3>Routine Feedback</h3>
-<table>
-</table>
+    <fieldset>
+        @Html.HiddenFor(m => m.routineTitle)
+        <table>
+            <tr><td>
+                Assigned to: @Html.DisplayFor(model => model.assigneeUserName)
+                @Html.HiddenFor(m => m.assigneeUserName)
+            </td></tr>
+            <tr><td>
+                Timed? @Html.CheckBoxFor(m => m.isTimed) - Time Limit: @Html.EditorFor(m => m.expectedDuration)
+            </td></tr>
+            <tr><td>
+                Email on job completion? @Html.CheckBoxFor(m => m.isNotifiable)
+            </td></tr>
+            <tr><td>
+                Disabled? @Html.CheckBoxFor(m => m.isDisabled)
+            </td></tr>
+        </table>
 
-<h3>Tasks</h3>
-<ol id="Tasks">
-    @foreach (PJCAdmin.Models.TaskModel task in Model.Tasks)
-    {
-        @Html.Partial("_EditTask", task);
-    }
-</ol>
+        <h3>Routine Feedback</h3>
+        <ol id="RoutineFeedbacks">
+            @*@foreach (PJCAdmin.Models.FeedbackModel feedback in Model.Feedbacks)
+            {
+                @Html.Partial("_EditFeedback", feedback);
+            }*@
+        </ol>
+
+        <h3>Tasks</h3>
+        <ol id="Tasks">
+            @foreach (PJCAdmin.Models.TaskModel task in Model.Tasks)
+            {
+                @Html.Partial("_EditTask", task);
+            }
+        </ol>
+        <button id="AddFinalTask" class="AddFinalTask">Add Task At End</button>
+
+        <input type="submit" value="Save" />
+    </fieldset>
+}
 
 <script>
     function InsertNewTask(atIndex) {
@@ -62,6 +78,13 @@
         return false;
     }
 
+    function UpdateTaskSequenceNos() {
+        $.each($("#Tasks").children(), function (key, child) {
+            var index = child.index();
+            child.innerHTML.replace(/\[\d*\]/, "[" + index + "]");
+        });
+    }
+
     $(document).ready( function() {
         //InsertNewTask(0);
         $("#Tasks").on('click', 'button.AddTask', function (event) {
@@ -73,6 +96,11 @@
             event.preventDefault();
             var currentIndex = $(this).closest('li').index();
             DeleteTask(currentIndex);
+        });
+        $("#AddFinalTask").on('click', function (event) {
+            event.preventDefault();
+            var endIndex = $("#Tasks").children().size();
+            InsertNewTask(endIndex);
         });
     });
 </script>
