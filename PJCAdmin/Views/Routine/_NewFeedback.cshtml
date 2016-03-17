@@ -1,0 +1,22 @@
+﻿@model PJCAdmin.Models.FeedbackModel
+<tr>\
+    <td>\
+        Type: @{PJCAdmin.Classes.Helpers.MVCModelHelpers.EnumHelper helper = new PJCAdmin.Classes.Helpers.MVCModelHelpers.EnumHelper();}\
+        <select name="@(ViewData["NamePath"]).feedbackTypeName">
+            @foreach (PJCAdmin.Models.FeedbackType type in helper.getAllFeedbackTypes()){
+                <option value="@type.feedbackTypeName">@type.feedbackTypeName</option>
+            }
+        </select>
+                
+        @(Model.FeedbackType.feedbackTypeName)\
+    </td>\
+    <td>\
+        @(Model.feedbackTitle)\
+    </td>\
+    <td>\
+        @(Model.feedbackMessage)\
+    </td>\
+    <td>\
+        Media: @(Model.MediaType.mediaTypeName)\
+    </td>\
+</tr>\
