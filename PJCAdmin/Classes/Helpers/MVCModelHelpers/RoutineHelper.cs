@@ -137,9 +137,9 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          * name.
          * @param routineName: The routine name to match.
          */
-        public bool routineExists(string routineName)
+        public bool routineExists(string routineName, string assigneeName)
         {
-            return routineExists(AccountHelper.getCurrentUsername(), routineName);
+            return routineExists(AccountHelper.getCurrentUsername(), routineName, assigneeName);
         }
         /* Returns whether or not any routines created by the 
          * currently logged in user that match the given name
@@ -155,9 +155,9 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          * the given name has any jobs associated with it.
          * @param routineName: The routine name to match.
          */
-        public bool routineHasJobs(string routineName)
+        public bool routineHasJobs(string routineName, string assigneeName)
         {
-            return routineHasJobs(AccountHelper.getCurrentUsername(), routineName);
+            return routineHasJobs(AccountHelper.getCurrentUsername(), routineName, assigneeName);
         }
         #endregion
         #region Creating, Updating, and Deleting
@@ -424,9 +424,9 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          * user who created the routine.
          * @param routineName: The routine name to match.
          */
-        public bool routineExists(string creatorUsername, string routineName)
+        public bool routineExists(string creatorUsername, string routineName, string assigneeName)
         {
-            return getRoutinesByName(creatorUsername, routineName).Count() > 0;
+            return getMostRecentRoutineModelsAssignedTo(creatorUsername, assigneeName).Where(r => r.routineTitle.Equals(routineName)).Count() > 0;
         }
         /* Returns whether or not any routines created by the
          * given user that match the given name are active.
@@ -445,9 +445,9 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          * user who created the routine.
          * @param routineName: The routine name to match.
          */
-        public bool routineHasJobs(string creatorUsername, string routineName)
+        public bool routineHasJobs(string creatorUsername, string routineName, string assigneeName)
         {
-            if (!routineExists(creatorUsername, routineName))
+            if (!routineExists(creatorUsername, routineName, assigneeName))
                 return false;
 
             Routine routine = getMostRecentRoutineByName(creatorUsername, routineName);
@@ -500,10 +500,10 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
          */
         public void updateRoutine(string creatorUsername, string routineName, RoutineModel model)
         {
-            if (!routineExists(creatorUsername, routineName))
+            if (!routineExists(creatorUsername, routineName, model.assigneeUserName))
                 createRoutine(creatorUsername, model);
 
-            if (routineHasJobs(creatorUsername, routineName))
+            if (routineHasJobs(creatorUsername, routineName, model.assigneeUserName))
             { // Cannot edit routines that have existing jobs
                 //Except if times are same and steps are still in same order
                 //TODO add check for similarity

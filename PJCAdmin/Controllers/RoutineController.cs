@@ -117,7 +117,7 @@ namespace PJCAdmin.Controllers
             return View();
         }
 
-        public ActionResult Details(string routineName, string mockUser = "")
+        public ActionResult Details(string routineName, string assigneeName, string mockUser = "")
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent")))
             {
@@ -134,7 +134,7 @@ namespace PJCAdmin.Controllers
                 }
                 else
                 {
-                    if (!helper.routineExists(mockUser, routineName))
+                    if (!helper.routineExists(mockUser, routineName, assigneeName))
                         return HttpNotFound();
 
                     ViewData["RoutineDetails"] = helper.getMostRecentRoutineByName(mockUser, routineName);
@@ -144,7 +144,7 @@ namespace PJCAdmin.Controllers
             }
             else //User is JobCoach or Parent
             {
-                if (!helper.routineExists(routineName))
+                if (!helper.routineExists(routineName, assigneeName))
                     return HttpNotFound();
 
                 ViewData["RoutineDetails"] = helper.getMostRecentRoutineByName(routineName);
@@ -222,7 +222,7 @@ namespace PJCAdmin.Controllers
                 }
                 else
                 {
-                    if (helper.routineExists(mockUser, model.routineTitle))
+                    if (helper.routineExists(mockUser, model.routineTitle, model.assigneeUserName))
                     {
                         ModelState.AddModelError("", "Routine must have a unique name");
                         return View();
@@ -233,7 +233,7 @@ namespace PJCAdmin.Controllers
                 }
             }
 
-            if (helper.routineExists(model.routineTitle))
+            if (helper.routineExists(model.routineTitle, model.assigneeUserName))
             {
                 ModelState.AddModelError("", "Routine must have a unique name");
                 return View();
@@ -244,7 +244,7 @@ namespace PJCAdmin.Controllers
             return RedirectToAction("List", "Routine");
         }
 
-        public ActionResult Edit(string routineName = "", string mockUser = "")
+        public ActionResult Edit(string routineName, string assigneeName, string mockUser = "")
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent")))
             {
@@ -261,7 +261,7 @@ namespace PJCAdmin.Controllers
                 }
                 else
                 {
-                    if (!helper.routineExists(mockUser, routineName))
+                    if (!helper.routineExists(mockUser, routineName, assigneeName))
                         return HttpNotFound();
 
                     ViewData["mockUser"] = mockUser;
@@ -270,7 +270,7 @@ namespace PJCAdmin.Controllers
                 }
             }
 
-            if (!helper.routineExists(routineName))
+            if (!helper.routineExists(routineName, assigneeName))
                 return HttpNotFound();
 
             ViewData["Routine"] = helper.getMostRecentRoutineByName(routineName);
@@ -296,7 +296,7 @@ namespace PJCAdmin.Controllers
                 }
                 else
                 {
-                    if (!helper.routineExists(mockUser, routineName))
+                    if (!helper.routineExists(mockUser, routineName, model.assigneeUserName))
                         return HttpNotFound();
 
                     helper.updateRoutine(mockUser, routineName, model);
@@ -304,7 +304,7 @@ namespace PJCAdmin.Controllers
                 }
             }
 
-            if (!helper.routineExists(routineName))
+            if (!helper.routineExists(routineName, model.assigneeUserName))
                 return HttpNotFound();
 
             helper.updateRoutine(routineName, model);
