@@ -211,9 +211,39 @@ namespace PJCAdmin.Controllers
                 Response.Redirect("~/Unauthorized");
                 return View();
             }
+            
+            EnumHelper enumhelp = new EnumHelper();
+            ViewData["TaskCategories"] = enumhelp.getAllTaskCategoryNames().ToList();
+            ViewData["FeedbackTypes"] = enumhelp.getAllFeedbackTypeNames().ToList();
+            ViewData["MediaTypes"] = enumhelp.getAllMediaTypeNames().ToList();
+
+            if (Roles.IsUserInRole("Administrator"))
+            {
+                ViewData["mockUser"] = mockUser;
+                if (Roles.IsUserInRole(mockUser, "Job Coach"))
+                {
+                    ViewData["Assignees"] = accountHelper.getListOfUsersAssignedToJobCoach(mockUser);
+                }
+                else if (Roles.IsUserInRole(mockUser, "Parent"))
+                {
+                    ViewData["Assignees"] = accountHelper.getListOfUsersChildOfParent(mockUser);
+                }
+            }
+            else if (Roles.IsUserInRole("Job Coach"))
+            {
+                string thisUsername = AccountHelper.getCurrentUsername();
+                ViewData["Assignees"] = accountHelper.getListOfUsersAssignedToJobCoach(thisUsername);
+            }
+            else if (Roles.IsUserInRole("Parent"))
+            {
+                string thisUsername = AccountHelper.getCurrentUsername();
+                ViewData["Assignees"] = accountHelper.getListOfUsersChildOfParent(thisUsername);
+            }
 
             if (!(ModelState.IsValid))
-                return RedirectToAction("Create", "Routine", new { mockUser = mockUser }); //TODO pass model back to repopulate page or try model error as below
+            {
+                return View(model);
+            }
 
             if (Roles.IsUserInRole("Administrator"))
             {
@@ -227,7 +257,7 @@ namespace PJCAdmin.Controllers
                     if (helper.routineExists(mockUser, model.routineTitle, model.assigneeUserName))
                     {
                         ModelState.AddModelError("", "Routine must have a unique name");
-                        return View();
+                        return View(model);
                     }
 
                     helper.createRoutine(mockUser, model);
@@ -238,7 +268,7 @@ namespace PJCAdmin.Controllers
             if (helper.routineExists(model.routineTitle, model.assigneeUserName))
             {
                 ModelState.AddModelError("", "Routine must have a unique name");
-                return View();
+                return View(model);
             }
 
             helper.createRoutine(model);
@@ -295,6 +325,18 @@ namespace PJCAdmin.Controllers
             {
                 Response.Redirect("~/Unauthorized");
                 return View();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                EnumHelper enumhelp = new EnumHelper();
+                ViewData["TaskCategories"] = enumhelp.getAllTaskCategoryNames().ToList();
+                ViewData["FeedbackTypes"] = enumhelp.getAllFeedbackTypeNames().ToList();
+                ViewData["MediaTypes"] = enumhelp.getAllMediaTypeNames().ToList();
+
+                ViewData["mockUser"] = mockUser;
+
+                return View(model);
             }
 
             if (Roles.IsUserInRole("Administrator"))
