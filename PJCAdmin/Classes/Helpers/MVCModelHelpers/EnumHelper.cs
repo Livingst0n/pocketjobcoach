@@ -41,9 +41,7 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         public IEnumerable<string> getAllTaskCategoryNames()
         {
             foreach (TaskCategory category in getAllTaskCategories())
-            {
                 yield return category.categoryName;
-            }
         }
         /* Returns the TaskCategory record for the given
          * category.
@@ -135,6 +133,12 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         {
             return helper.getAllMediaTypes().ToList();
         }
+        /*TODO*/
+        public IEnumerable<string> getAllMediaTypeNames()
+        {
+            foreach (MediaType type in getAllMediaTypes())
+                yield return type.mediaTypeName;
+        }
         /* Returns the MediaType record for the given
          * type.
          * @param type: The type name.
@@ -217,6 +221,12 @@ namespace PJCAdmin.Classes.Helpers.MVCModelHelpers
         public List<FeedbackType> getAllFeedbackTypes() 
         {
             return helper.getAllFeedbackTypes().ToList();
+        }
+        /*TODO*/
+        public IEnumerable<string> getAllFeedbackTypeNames()
+        {
+            foreach (FeedbackType type in getAllFeedbackTypes())
+                yield return type.feedbackTypeName;
         }
         /* Returns the FeedbackType record for the given
          * type.
