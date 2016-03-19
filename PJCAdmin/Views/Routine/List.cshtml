@@ -51,9 +51,9 @@ ViewBag.Title = "Routines";
                     </tr>
                     <tr>
                         <td>
-                            @Html.ActionLink("Details", "Details", new { routineName = routine.routineTitle }) |
-                            @Html.ActionLink("Edit", "Edit", new { routineName = routine.routineTitle }) |
-                            @Html.ActionLink("Delete", "Delete", new { routineName = routine.routineTitle})
+                            @Html.ActionLink("Details", "Details", new { routineName = routine.routineTitle, assigneeName = routine.assigneeUserName }) |
+                            @Html.ActionLink("Edit", "Edit", new { routineName = routine.routineTitle, assigneeName = routine.assigneeUserName }) |
+                            @Html.ActionLink("Delete", "Delete", new { routineName = routine.routineTitle, assigneeName = routine.assigneeUserName})
                         </td>
                     </tr>
                 }
@@ -126,9 +126,9 @@ ViewBag.Title = "Routines";
                         </tr>
                         <tr>
                             <td>
-                                @Html.ActionLink("Details", "Details", new { routineName = routine.routineTitle, mockUser = ViewData["mockUser"] as string }) |
-                                @Html.ActionLink("Edit", "Edit", new { routineName = routine.routineTitle, mockUser = ViewData["mockUser"] as string }) |
-                                @Html.ActionLink("Delete", "Delete", new { routineName = routine.routineTitle, mockUser = ViewData["mockUser"] as string})
+                                @Html.ActionLink("Details", "Details", new { routineName = routine.routineTitle, assigneeName = routine.assigneeUserName, mockUser = ViewData["mockUser"] as string }) |
+                                @Html.ActionLink("Edit", "Edit", new { routineName = routine.routineTitle, assigneeName = routine.assigneeUserName, mockUser = ViewData["mockUser"] as string }) |
+                                @Html.ActionLink("Delete", "Delete", new { routineName = routine.routineTitle, assigneeName = routine.assigneeUserName, mockUser = ViewData["mockUser"] as string})
                             </td>
                         </tr>
                     }

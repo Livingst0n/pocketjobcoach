@@ -137,9 +137,9 @@ namespace PJCAdmin.Controllers
                     if (!helper.routineExists(mockUser, routineName, assigneeName))
                         return HttpNotFound();
 
-                    ViewData["RoutineDetails"] = helper.getMostRecentRoutineByName(mockUser, routineName);
+                    ViewData["RoutineDetails"] = helper.getMostRecentRoutineAssignedToByName(mockUser, routineName, assigneeName);
                     ViewData["mockUser"] = mockUser;
-                    return View(helper.getMostRecentRoutineByName(mockUser, routineName));
+                    return View(helper.getMostRecentRoutineAssignedToByName(mockUser, routineName, assigneeName));
                 }
             }
             else //User is JobCoach or Parent
@@ -147,8 +147,8 @@ namespace PJCAdmin.Controllers
                 if (!helper.routineExists(routineName, assigneeName))
                     return HttpNotFound();
 
-                ViewData["RoutineDetails"] = helper.getMostRecentRoutineByName(routineName);
-                return View(helper.getMostRecentRoutineByName(routineName));
+                ViewData["RoutineDetails"] = helper.getMostRecentRoutineAssignedToByName(routineName, assigneeName);
+                return View(helper.getMostRecentRoutineAssignedToByName(routineName, assigneeName));
             }
         }
 
@@ -162,6 +162,7 @@ namespace PJCAdmin.Controllers
 
             EnumHelper enumhelp = new EnumHelper();
             ViewData["TaskCategories"] = enumhelp.getAllTaskCategoryNames().ToList();
+            //TODO add getall enum listings and move to after tests
 
             if (Roles.IsUserInRole("Administrator"))
             {
@@ -211,7 +212,7 @@ namespace PJCAdmin.Controllers
             }
 
             if (!(ModelState.IsValid))
-                return RedirectToAction("Create", "Routine", new { mockUser = mockUser });
+                return RedirectToAction("Create", "Routine", new { mockUser = mockUser }); //TODO pass model back to repopulate page or try model error as below
 
             if (Roles.IsUserInRole("Administrator"))
             {
@@ -252,6 +253,10 @@ namespace PJCAdmin.Controllers
                 return View();
             }
 
+            EnumHelper enumhelp = new EnumHelper();
+            ViewData["TaskCategories"] = enumhelp.getAllTaskCategoryNames().ToList();
+            //TODO add getall enum listings and move to after tests
+
             if (Roles.IsUserInRole("Administrator"))
             {
                 if (mockUser == null || mockUser.Equals("") || !accountHelper.userExists(mockUser))
@@ -265,16 +270,16 @@ namespace PJCAdmin.Controllers
                         return HttpNotFound();
 
                     ViewData["mockUser"] = mockUser;
-                    ViewData["Routine"] = helper.getMostRecentRoutineByName(mockUser, routineName);
-                    return View(helper.getMostRecentRoutineModelByName(mockUser, routineName));
+                    ViewData["Routine"] = helper.getMostRecentRoutineAssignedToByName(mockUser, routineName, assigneeName);
+                    return View(helper.getMostRecentRoutineModelAssignedToByName(mockUser, routineName, assigneeName));
                 }
             }
 
             if (!helper.routineExists(routineName, assigneeName))
                 return HttpNotFound();
 
-            ViewData["Routine"] = helper.getMostRecentRoutineByName(routineName);
-            return View(helper.getMostRecentRoutineModelByName(routineName));
+            ViewData["Routine"] = helper.getMostRecentRoutineAssignedToByName(routineName, assigneeName);
+            return View(helper.getMostRecentRoutineModelAssignedToByName(routineName, assigneeName));
         }
 
         [HttpPost]
@@ -300,7 +305,7 @@ namespace PJCAdmin.Controllers
                         return HttpNotFound();
 
                     helper.updateRoutine(mockUser, routineName, model);
-                    return RedirectToAction("Index", "Routine", new { mockUser = mockUser });
+                    return RedirectToAction("List", "Routine", new { mockUser = mockUser });
                 }
             }
 
@@ -309,10 +314,10 @@ namespace PJCAdmin.Controllers
 
             helper.updateRoutine(routineName, model);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("List");
         }
 
-        public ActionResult Delete(string routineName, string mockUser = "")
+        public ActionResult Delete(string routineName, string assigneeName, string mockUser = "")
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent")))
             {
@@ -337,6 +342,7 @@ namespace PJCAdmin.Controllers
 
                     ViewData["mockUser"] = mockUser;
                     ViewData["Routine"] = routineName;
+                    ViewData["Assignee"] = assigneeName;
                     return View();
                 }
             }
@@ -348,12 +354,13 @@ namespace PJCAdmin.Controllers
             }
 
             ViewData["Routine"] = routineName;
+            ViewData["Assignee"] = assigneeName;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string routineName, string mockUser = "", bool deleteAll = false, int nothing = 0)
+        public ActionResult Delete(string routineName, string assigneeName, bool deleteAll = false, string mockUser = "", int nothing = 0)
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent")))
             {
@@ -370,16 +377,16 @@ namespace PJCAdmin.Controllers
                 }
                 else
                 {
-                    helper.deleteRoutine(mockUser, routineName, deleteAll);
+                    helper.deleteRoutine(mockUser, routineName, assigneeName, deleteAll);
 
-                    Response.Redirect("~/Routine?mockUser=" + mockUser);
+                    Response.Redirect("~/Routine/List?mockUser=" + mockUser);
                     return View();
                 }
             }
 
-            helper.deleteRoutine(routineName, deleteAll);
+            helper.deleteRoutine(routineName, assigneeName, deleteAll);
 
-            Response.Redirect("~/Routine");
+            Response.Redirect("~/Routine/List");
             return View();
         }
 
