@@ -160,10 +160,6 @@ namespace PJCAdmin.Controllers
                 return View();
             }
 
-            EnumHelper enumhelp = new EnumHelper();
-            ViewData["TaskCategories"] = enumhelp.getAllTaskCategoryNames().ToList();
-            //TODO add getall enum listings and move to after tests
-
             if (Roles.IsUserInRole("Administrator"))
             {
                 if (mockUser == null || mockUser.Equals("") || !accountHelper.userExists(mockUser))
@@ -197,6 +193,11 @@ namespace PJCAdmin.Controllers
                     ViewData["Assignees"] = accountHelper.getListOfUsersChildOfParent(thisUsername);
                 }
             }
+
+            EnumHelper enumhelp = new EnumHelper();
+            ViewData["TaskCategories"] = enumhelp.getAllTaskCategoryNames().ToList();
+            ViewData["FeedbackTypes"] = enumhelp.getAllFeedbackTypeNames().ToList();
+            ViewData["MediaTypes"] = enumhelp.getAllMediaTypeNames().ToList();
 
             return View();
         }
@@ -253,10 +254,6 @@ namespace PJCAdmin.Controllers
                 return View();
             }
 
-            EnumHelper enumhelp = new EnumHelper();
-            ViewData["TaskCategories"] = enumhelp.getAllTaskCategoryNames().ToList();
-            //TODO add getall enum listings and move to after tests
-
             if (Roles.IsUserInRole("Administrator"))
             {
                 if (mockUser == null || mockUser.Equals("") || !accountHelper.userExists(mockUser))
@@ -271,15 +268,23 @@ namespace PJCAdmin.Controllers
 
                     ViewData["mockUser"] = mockUser;
                     ViewData["Routine"] = helper.getMostRecentRoutineAssignedToByName(mockUser, routineName, assigneeName);
-                    return View(helper.getMostRecentRoutineModelAssignedToByName(mockUser, routineName, assigneeName));
                 }
             }
+            else
+            {
 
-            if (!helper.routineExists(routineName, assigneeName))
-                return HttpNotFound();
+                if (!helper.routineExists(routineName, assigneeName))
+                    return HttpNotFound();
 
-            ViewData["Routine"] = helper.getMostRecentRoutineAssignedToByName(routineName, assigneeName);
-            return View(helper.getMostRecentRoutineModelAssignedToByName(routineName, assigneeName));
+                ViewData["Routine"] = helper.getMostRecentRoutineAssignedToByName(routineName, assigneeName);
+            }
+
+            EnumHelper enumhelp = new EnumHelper();
+            ViewData["TaskCategories"] = enumhelp.getAllTaskCategoryNames().ToList();
+            ViewData["FeedbackTypes"] = enumhelp.getAllFeedbackTypeNames().ToList();
+            ViewData["MediaTypes"] = enumhelp.getAllMediaTypeNames().ToList();
+
+            return View(ViewData["Routine"]);
         }
 
         [HttpPost]
