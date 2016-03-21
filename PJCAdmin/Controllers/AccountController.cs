@@ -55,7 +55,6 @@ namespace PJCMobile.Controllers
             
             return View();
         }
-
         public ActionResult Details(string user = "")
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent")))

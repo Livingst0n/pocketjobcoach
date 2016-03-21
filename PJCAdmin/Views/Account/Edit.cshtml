@@ -121,7 +121,7 @@
             {
                 <li style="margin-top:20px;"><label>Children</label></li>
                 <li>
-                    <ul id="assignedUsersList">
+                    <ul id="assignedChildrenList">
                         @if (((List<MembershipUser>)ViewData["Children"]).Count > 0)
                     {
                         for (int i = 0; i < ((List<MembershipUser>)ViewData["Children"]).Count; i++)
@@ -146,7 +146,7 @@
                 if (Roles.IsUserInRole("Administrator"))
                 {
                     <li style="margin-top:20px;">
-                        <select name="selectAddUsers" id="selectAddUsers">
+                        <select name="selectAddChildren" id="selectAddChildren">
                             @for (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableChildren"]).Count; i++)
                             {
                                 <option value="@(((List<MembershipUser>)ViewData["AvailableChildren"]).ElementAt(i).UserName)">
@@ -154,7 +154,7 @@
                                 </option>
                             }
                         </select>
-                        <button id="addChild">Assign User</button>
+                        <button id="addChild">Assign Child</button>
                     </li>
                 }
             }
@@ -163,7 +163,7 @@
             {
                 <li style="margin-top:20px;"><label>Parent</label></li>
                 <li>
-                    <ul id="assignedParent">
+                    <ul id="assignedParentList">
                         @if (ViewData["Parent"] != null)
                         {
                                 <li>
@@ -185,7 +185,7 @@
 
                 <li style="margin-top:20px;"><label>Job Coach</label></li>
                 <li>
-                    <ul id="assignedJobCoach">
+                    <ul id="assignedJobCoachList">
                         @if (ViewData["Job Coach"] != null)
                         {
                             <li>
