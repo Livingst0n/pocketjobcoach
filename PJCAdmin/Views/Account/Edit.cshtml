@@ -39,7 +39,7 @@
                 <label>User Type</label>
                 @if (Roles.IsUserInRole("Administrator"))
                 {
-                    <select name="usertype" class="form-control">
+                    <select name="userRole" class="form-control">
                         @foreach (string role in Roles.GetAllRoles())
                         {
                             if (Roles.IsUserInRole(Model.UserName, role))
@@ -56,7 +56,7 @@
                 else
                 {
                     @Roles.GetRolesForUser()[0]
-                    <input type="hidden" name="usertype" value="@Roles.GetRolesForUser()[0]" />
+                    <input type="hidden" name="userRole" value="@Roles.GetRolesForUser()[0]" />
                 }
             </li>
             <!--
