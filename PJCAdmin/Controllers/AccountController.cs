@@ -174,8 +174,8 @@ namespace PJCMobile.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Edit(string userName, string email, string phoneNumber, string userRole, string[] assignedUsers, string[] assignedChildren, string jobCoach, string parent) 
-        public ActionResult Edit(string userName, string email, string userType, string[] selectedUsers, string job, string applyJobTemplate, string phoneNumber)
+        public ActionResult Edit(string userName, string email, string phoneNumber, string userRole, string[] assignedUsers, string[] assignedChildren, string[] jobCoach, string[] parent) 
+        //public ActionResult Edit(string userName, string email, string userType, string[] selectedUsers, string job, string applyJobTemplate, string phoneNumber)
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent")))
             {
@@ -194,35 +194,37 @@ namespace PJCMobile.Controllers
             
             if (Roles.IsUserInRole("Administrator"))
             {
-                string userRole = userType;
+                //string userRole = userType;
                 helper.updateUserRole(userName, userRole);
 
                 helper.updateAssignedUsers(userName, null);
-                //updateAssignedChildren(userName, null);
-                //updateJobCoach(userName, null);
-                //updateParent(userName, null);
+                helper.updateAssignedChildren(userName, null);
+                helper.updateJobCoach(userName, null);
+                helper.updateParent(userName, null);
 
                 if (Roles.IsUserInRole(userName, "Administrator")){
                     //placeholder
                 }
                 else if (Roles.IsUserInRole(userName, "Job Coach")){
-                    string[] assignedUsers = selectedUsers;
+                    //string[] assignedUsers = selectedUsers;
                     helper.updateAssignedUsers(userName, assignedUsers);
                 }
                 else if (Roles.IsUserInRole(userName, "Parent")){
-                    //updateAssignedChildren(userName, assignedChildren);
+                    helper.updateAssignedChildren(userName, assignedChildren);
+                    
                 }
                 else if (Roles.IsUserInRole(userName, "User")){
-                    //updateJobCoach(userName, jobCoach);
-                    //updateParent(userName, parent);
+
+                    helper.updateJobCoach(userName, jobCoach[0]);
+                    helper.updateParent(userName, parent[0]);
                 }
             }
             
             //Below Here
             //Jobs
             db.UserNames.Find(userName).Routines1.Clear(); //Currently allows removal of non-self routines
-            if (job != "") { }
-            db.UserNames.Find(userName).Routines1.Add(db.Routines.Find(Convert.ToInt32(job)));
+            //if (job != "") { }
+            //db.UserNames.Find(userName).Routines1.Add(db.Routines.Find(Convert.ToInt32(job)));
 
             /*if (Convert.ToBoolean(applyJobTemplate))
             {
