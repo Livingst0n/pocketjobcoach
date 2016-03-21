@@ -93,13 +93,6 @@ namespace PJCMobile.Controllers
                 //ViewData["AssignedRoutines"] = getListOfAssignedRoutines(user);
             }
 
-            //Below Here
-            ViewData["AssignedUsers"] = helper.getListOfUsersAssignedToJobCoach(user);
-
-            if (db.UserNames.Find(user).Routines1.Count > 0)
-                ViewData["SelectedRoutine"] = db.UserNames.Find(user).Routines1.ElementAt(0); //routines assigned to user
-            else
-                ViewData["SelectedRoutine"] = new PJCAdmin.Models.Routine();
             return View(System.Web.Security.Membership.GetUser(user));
         }
 
@@ -155,27 +148,12 @@ namespace PJCMobile.Controllers
                 ViewData["Parent"] = helper.getUsersParent(user);
             }
 
-            //Below Here
-            List<PJCAdmin.Models.User> selectedUsers = new List<PJCAdmin.Models.User>();
-            foreach (PJCAdmin.Models.UserName usr in db.UserNames.Find(user).UserName12) //Only users for which this user is JC
-            {
-                selectedUsers.Add(db.Users.Find(usr.userID));
-            }
-            ViewData["SelectedUsers"] = selectedUsers;
-            ViewData["Users"] = db.Users.ToList();
-            ViewData["Jobs"] = db.UserNames.Find(thisUsername).Routines.ToList(); //Only able to assign routines the current user has created
-            if (db.UserNames.Find(user).Routines1.Count > 0)
-                ViewData["SelectedJob"] = db.UserNames.Find(user).Routines1.ElementAt(0);
-            else
-                ViewData["SelectedJob"] = new PJCAdmin.Models.Routine();
-
             return View(System.Web.Security.Membership.GetUser(user));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(string userName, string email, string phoneNumber, string userRole, string[] assignedUsers, string[] assignedChildren, string[] jobCoach, string[] parent) 
-        //public ActionResult Edit(string userName, string email, string userType, string[] selectedUsers, string job, string applyJobTemplate, string phoneNumber)
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent")))
             {
@@ -194,7 +172,6 @@ namespace PJCMobile.Controllers
             
             if (Roles.IsUserInRole("Administrator"))
             {
-                //string userRole = userType;
                 helper.updateUserRole(userName, userRole);
 
                 helper.updateAssignedUsers(userName, null);
@@ -206,7 +183,6 @@ namespace PJCMobile.Controllers
                     //placeholder
                 }
                 else if (Roles.IsUserInRole(userName, "Job Coach")){
-                    //string[] assignedUsers = selectedUsers;
                     helper.updateAssignedUsers(userName, assignedUsers);
                 }
                 else if (Roles.IsUserInRole(userName, "Parent")){
@@ -219,22 +195,6 @@ namespace PJCMobile.Controllers
                     helper.updateParent(userName, parent[0]);
                 }
             }
-            
-            //Below Here
-            //Jobs
-            db.UserNames.Find(userName).Routines1.Clear(); //Currently allows removal of non-self routines
-            //if (job != "") { }
-            //db.UserNames.Find(userName).Routines1.Add(db.Routines.Find(Convert.ToInt32(job)));
-
-            /*if (Convert.ToBoolean(applyJobTemplate))
-            {
-                foreach (PJCAdmin.Models.Task t in db.Routines.Find(Convert.ToInt32(job)).Tasks)
-                {
-                    db.Users.Find(user.ProviderUserKey).usertasks.Add(new usertask { task = t, User = db.Users.Find(user.ProviderUserKey), daysOfWeek = "" });
-                }
-            }*/ //Not using usertask, tasks are associated with the Routine itself.
-
-            db.SaveChanges();
             
             return RedirectToAction("List");
         }
@@ -287,18 +247,12 @@ namespace PJCMobile.Controllers
             ViewData["AvailableUsers"] = helper.getListOfUnassignedUsers();
             ViewData["AvailableChildren"] = helper.getListOfUnassignedChildren();
 
-            //Below Here
-            string thisUsername = AccountHelper.getCurrentUsername();
-            ViewData["Users"] = db.Users.ToList();
-            ViewData["Jobs"] = db.UserNames.Find(thisUsername).Routines.ToList();
-
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Create(RegisterModel model, string userRole, string[] assignedUsers, string[] assignedChildren, string jobCoach, string parent)
-        public ActionResult Create(RegisterModel model, string usertype, string[] selectedUsers, string job)
+        public ActionResult Create(RegisterModel model, string userRole, string[] assignedUsers, string[] assignedChildren, string jobCoach, string parent)
         {
             if (!(Roles.IsUserInRole("Administrator")))
             {
@@ -322,7 +276,6 @@ namespace PJCMobile.Controllers
 
             helper.createUserNameRecord(user.ProviderUserKey);
             helper.updatePhoneNumber(model.UserName, model.PhoneNumber);
-            string userRole = usertype;
             helper.updateUserRole(model.UserName, userRole);
                 
             if (Roles.IsUserInRole(model.UserName, "Administrator"))
@@ -331,7 +284,6 @@ namespace PJCMobile.Controllers
             }
             else if (Roles.IsUserInRole(model.UserName, "Job Coach"))
             {
-                string[] assignedUsers = selectedUsers;
                 helper.updateAssignedUsers(model.UserName, assignedUsers);
             }
             else if (Roles.IsUserInRole(model.UserName, "Parent"))
@@ -343,14 +295,6 @@ namespace PJCMobile.Controllers
                 //updateJobCoach(model.UserName, jobCoach);
                 //updateParent(model.UserName, parent);
             }
-
-            //Below Here
-            //Job Management
-                
-            db.UserNames.Find(model.UserName).Routines1.Clear();
-            if (job != "")
-                db.UserNames.Find(model.UserName).Routines1.Add(db.Routines.Find(Convert.ToInt32(job)));
-            db.SaveChanges();
 
             return RedirectToAction("List", "Account");
         }
