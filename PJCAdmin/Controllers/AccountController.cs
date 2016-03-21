@@ -153,7 +153,7 @@ namespace PJCMobile.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string userName, string email, string phoneNumber, string userRole, string[] assignedUsers, string[] assignedChildren, string[] jobCoach, string[] parent) 
+        public ActionResult Edit(string userName, string email, string phoneNumber, string userRole, string[] assignedUsers, string[] assignedChildren, string jobCoach, string parent) 
         {
             if (!(Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("Job Coach") || Roles.IsUserInRole("Parent")))
             {
@@ -191,8 +191,8 @@ namespace PJCMobile.Controllers
                 }
                 else if (Roles.IsUserInRole(userName, "User")){
 
-                    helper.updateJobCoach(userName, jobCoach[0]);
-                    helper.updateParent(userName, parent[0]);
+                    helper.updateJobCoach(userName, jobCoach);
+                    helper.updateParent(userName, parent);
                 }
             }
             

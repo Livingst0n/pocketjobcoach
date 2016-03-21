@@ -37,7 +37,7 @@
             </li>
             <li>
                 <label>User Type</label>
-                <select name="usertype" class="form-control">
+                <select name="userRole" class="form-control">
                     @foreach (string role in Roles.GetAllRoles())
                     {
                         if (role == "User")
@@ -73,10 +73,10 @@
             </li>
             <li style="margin-top:20px;">
                 <select name="selectAddUsers" id="selectAddUsers">
-                    @for (int i = 0; i < ((List<PJCAdmin.Models.User>)ViewData["Users"]).Count; i++)
+                    @for (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableUsers"]).Count; i++)
                     {
-                        <option value="@(((List<PJCAdmin.Models.User>)ViewData["Users"]).ElementAt(i).UserId)">
-                            @Html.Label(((List<PJCAdmin.Models.User>)ViewData["Users"]).ElementAt(i).UserName)
+                        <option value="@(((List<MembershipUser>)ViewData["AvailableUsers"]).ElementAt(i).UserName)">
+                            @Html.Label(((List<MembershipUser>)ViewData["AvailableUsers"]).ElementAt(i).UserName)
                         </option>
                     }
                 </select>
@@ -96,7 +96,7 @@
                 $('#nousers').remove();
             var id = $('#selectAddUsers').val();
             var name = $('#selectAddUsers option:selected').html();
-            $('#assignedUsersList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="selectedUsers[' + ($('#assignedUsersList').size()).toString() + ']"  value="' + id + '" /></li>')
+            $('#assignedUsersList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="assignedUsers[' + ($('#assignedUsersList').size()).toString() + ']"  value="' + id + '" /></li>')
         });
 
         $('#assignedUsersList').on('click', '.remove-user', function (e) {

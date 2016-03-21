@@ -186,15 +186,15 @@
                 <li style="margin-top:20px;"><label>Job Coach</label></li>
                 <li>
                     <ul id="assignedJobCoachList">
-                        @if (ViewData["Job Coach"] != null)
+                        @if (ViewData["JobCoach"] != null)
                         {
                             <li>
-                                @ViewData["Job Coach"]
+                                @ViewData["JobCoach"]
                                 @if (Roles.IsUserInRole("Administrator"))
                                 {
-                                    <span>&nbsp; &nbsp;</span><button class="remove-user" data-taskid="@ViewData["Job Coach"]" data-selected="false"><i class="fa fa-trash"></i></button>
+                                    <span>&nbsp; &nbsp;</span><button class="remove-user" data-taskid="@ViewData["JobCoach"]" data-selected="false"><i class="fa fa-trash"></i></button>
                                 }
-                                @Html.Hidden("Job Coach", ViewData["Job Coach"])
+                                @Html.Hidden("JobCoach", ViewData["JobCoach"])
                             </li>
                         }
 
@@ -222,7 +222,7 @@
                         </li>
                     }
 
-                    if (ViewData["Job Coach"] == null)
+                    if (ViewData["JobCoach"] == null)
                     {
                         <li style="margin-top:20px;">
                             <select name="selectAddJobCoach" id="selectAddJobCoach">
@@ -270,7 +270,7 @@
                 $('#nousers').remove();
             var id = $('#selectAddParent').val();
             var name = $('#selectAddParent option:selected').html();
-            $('#assignedParentList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="parent[' + ($('#assignedParentList').size() - 1).toString() + ']"  value="' + id + '" /></li>')
+            $('#assignedParentList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="parent"  value="' + id + '" /></li>')
         });
         $('#addJobCoach').on('click', function (e) {
             e.preventDefault();
@@ -279,7 +279,7 @@
                 $('#nousers').remove();
             var id = $('#selectAddJobCoach').val();
             var name = $('#selectAddJobCoach option:selected').html();
-            $('#assignedJobCoachList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="jobCoach[' + ($('#assignedJobCoachList').size() - 1).toString() + ']"  value="' + id + '" /></li>')
+            $('#assignedJobCoachList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="jobCoach"  value="' + id + '" /></li>')
         });
 
 
