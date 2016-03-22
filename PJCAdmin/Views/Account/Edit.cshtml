@@ -90,7 +90,7 @@
                                     {
                                         <span>&nbsp; &nbsp;</span><button class="remove-user" data-taskid="@(((List<MembershipUser>)ViewData["AssignedUsers"]).ElementAt(i).UserName)" data-selected="false"><i class="fa fa-trash"></i></button>
                                     }
-                                    @Html.Hidden("AssignedUsers[" + i + "]", ((List<MembershipUser>)ViewData["AssignedUsers"]).ElementAt(i).UserName)
+                                    @Html.Hidden("assignedUsers[" + i + "]", ((List<MembershipUser>)ViewData["AssignedUsers"]).ElementAt(i).UserName)
                                 </li>
                             }
                         }
@@ -132,7 +132,7 @@
                                     {
                                         <span>&nbsp; &nbsp;</span><button class="remove-user" data-taskid="@(((List<MembershipUser>)ViewData["Children"]).ElementAt(i).UserName)" data-selected="false"><i class="fa fa-trash"></i></button>
                                     }
-                                    @Html.Hidden("Children[" + i + "]", ((List<MembershipUser>)ViewData["Children"]).ElementAt(i).UserName)
+                                    @Html.Hidden("assignedChildren[" + i + "]", ((List<MembershipUser>)ViewData["Children"]).ElementAt(i).UserName)
                                 </li>
                             }
                         }

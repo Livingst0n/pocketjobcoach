@@ -45,15 +45,25 @@
         <tr>
             <td><b>Assigned Users</b></td>
         </tr>
+        
+            if (((List<MembershipUser>)ViewData["AssignedUsersNew"]).Count > 0)
+            {
         <tr>
             <td>
-                @for (int i = 0; i < ((List<MembershipUser>)ViewData["AssignedUsers"]).Count; i++)
+                @for (int i = 0; i < ((List<MembershipUser>)ViewData["AssignedUsersNew"]).Count; i++)
                 {
-                    @Html.ActionLink(((List<MembershipUser>)ViewData["AssignedUsers"]).ElementAt(i).UserName, "Details", new { user = ((List<MembershipUser>)ViewData["AssignedUsers"]).ElementAt(i).UserName })
+                    @Html.ActionLink(((List<MembershipUser>)ViewData["AssignedUsersNew"]).ElementAt(i).UserName, "Details", new { user = ((List<MembershipUser>)ViewData["AssignedUsersNew"]).ElementAt(i).UserName })
                     <br />
                 }
             </td>
         </tr>
+            }
+        
+        else
+        {
+
+        }
+
     }
 
     @if (Roles.IsUserInRole(Model.UserName, "Parent"))
@@ -61,6 +71,8 @@
         <tr>
             <td><b>Children</b></td>
         </tr>
+        if (((List<MembershipUser>)ViewData["Children"]).Count > 0)
+        {
         <tr>
             <td>
                 @for (int i = 0; i < ((List<MembershipUser>)ViewData["Children"]).Count; i++)
@@ -70,6 +82,11 @@
                 }
             </td>
         </tr>
+        }
+        else
+        {
+
+        }
     }
 
     @if (Roles.IsUserInRole(Model.UserName, "User"))
