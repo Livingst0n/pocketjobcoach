@@ -138,7 +138,7 @@
                         }
                         else
                         {
-                            <li id="nousers" style="color:#999"><i>No Assigned Children</i></li>
+                            <li id="nochildren" style="color:#999"><i>No Assigned Children</i></li>
                         }
                     </ul>
                 </li>
@@ -178,10 +178,26 @@
   
                         else
                         {
-                            <li id="nousers" style="color:#999"><i>No Assigned Parent</i></li>
+                            <li id="noparent" style="color:#999"><i>No Assigned Parent</i></li>
                         }
                     </ul>
                 </li>
+                if (Roles.IsUserInRole("Administrator"))
+                {
+                    
+                        <li style="margin-top:20px;">
+                            <select name="selectAddParent" id="selectAddParent">
+                                @for (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableParents"]).Count; i++)
+                                {
+                                    <option value="@(((List<MembershipUser>)ViewData["AvailableParents"]).ElementAt(i).UserName)">
+                                        @Html.Label(((List<MembershipUser>)ViewData["AvailableParents"]).ElementAt(i).UserName)
+                                    </option>
+                                }
+                            </select>
+                            <button id="addParent">Assign Parent</button>
+                        </li>
+                    
+                }
 
                 <li style="margin-top:20px;"><label>Job Coach</label></li>
                 <li>
@@ -200,30 +216,13 @@
 
                         else
                         {
-                            <li id="nousers" style="color:#999"><i>No Assigned Job Coach</i></li>
+                            <li id="nojobcoach" style="color:#999"><i>No Assigned Job Coach</i></li>
                         }
                     </ul>
                 </li>
-
+                
                 if (Roles.IsUserInRole("Administrator"))
                 {
-                    if (ViewData["Parent"] == null)
-                    {
-                        <li style="margin-top:20px;">
-                            <select name="selectAddParent" id="selectAddParent">
-                                @for (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableParents"]).Count; i++)
-                                {
-                                    <option value="@(((List<MembershipUser>)ViewData["AvailableParents"]).ElementAt(i).UserName)">
-                                        @Html.Label(((List<MembershipUser>)ViewData["AvailableParents"]).ElementAt(i).UserName)
-                                    </option>
-                                }
-                            </select>
-                            <button id="addParent">Assign Parent</button>
-                        </li>
-                    }
-
-                    if (ViewData["JobCoach"] == null)
-                    {
                         <li style="margin-top:20px;">
                             <select name="selectAddJobCoach" id="selectAddJobCoach">
                                 @for (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableJobCoaches"]).Count; i++)
@@ -235,7 +234,7 @@
                             </select>
                             <button id="addJobCoach">Assign Job Coach</button>
                         </li>
-                    }
+                    
                 }
             }
         </ol>
@@ -257,8 +256,8 @@
         $('#addChild').on('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            if ($('#nousers').size() > 0)
-                $('#nousers').remove();
+            if ($('#nochildren').size() > 0)
+                $('#nochildren').remove();
             var id = $('#selectAddChildren').val();
             var name = $('#selectAddChildren option:selected').html();
             $('#assignedChildrenList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="assignedChildren[' + ($('#assignedChildrenList').size() - 1).toString() + ']"  value="' + id + '" /></li>')
@@ -266,19 +265,21 @@
         $('#addParent').on('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            if ($('#nousers').size() > 0)
-                $('#nousers').remove();
+            if ($('#noparent').size() > 0)
+                $('#noparent').remove();
             var id = $('#selectAddParent').val();
             var name = $('#selectAddParent option:selected').html();
+            $('#assignedParentList').empty();
             $('#assignedParentList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="parent"  value="' + id + '" /></li>')
         });
         $('#addJobCoach').on('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            if ($('#nousers').size() > 0)
-                $('#nousers').remove();
+            if ($('#nojobcoach').size() > 0)
+                $('#nojobcoach').remove();
             var id = $('#selectAddJobCoach').val();
             var name = $('#selectAddJobCoach option:selected').html();
+            $('#assignedJobCoachList').empty();
             $('#assignedJobCoachList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="jobCoach"  value="' + id + '" /></li>')
         });
 
