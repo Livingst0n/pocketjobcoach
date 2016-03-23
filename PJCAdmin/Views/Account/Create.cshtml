@@ -65,7 +65,7 @@
                 <label>Apply Template Tasks <input type="checkbox" name="applyJobTemplate" value="1" /></label>
             </li>
                      -->
-            <li style="margin-top:20px;"><label>Assigned Users</label></li>
+            <li id ="assignedUsersHeading" style="margin-top:20px;"><label>Assigned Users</label></li>
             <li>
                 <ul id="assignedUsersList">
                     <li id="nousers" style="color:#999"><i>No Assigned Users</i></li>
@@ -96,7 +96,23 @@
                 $('#nousers').remove();
             var id = $('#selectAddUsers').val();
             var name = $('#selectAddUsers option:selected').html();
-            $('#assignedUsersList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="assignedUsers[' + ($('#assignedUsersList').size()).toString() + ']"  value="' + id + '" /></li>')
+            $('#assignedUsersList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="assignedUsers[' + ($('#assignedUsersList').children.size()).toString() + ']"  value="' + id + '" /></li>')
+        });
+
+        $('userRole').on('change', function (e)
+        {
+            var role = $('#userRole').val();
+            if(role == "User")
+            {
+                $('#assignedUsersHeading').hide();
+                $('#assignedUsersList').hide();
+                $('#selectAddUsers').hide();
+                $('#addUser').hide();
+            }
+            if(role == "Parent")
+            {
+
+            }
         });
 
         $('#assignedUsersList').on('click', '.remove-user', function (e) {

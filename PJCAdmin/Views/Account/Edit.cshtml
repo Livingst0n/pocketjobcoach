@@ -260,7 +260,7 @@
                 $('#nochildren').remove();
             var id = $('#selectAddChildren').val();
             var name = $('#selectAddChildren option:selected').html();
-            $('#assignedChildrenList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="assignedChildren[' + ($('#assignedChildrenList').size() - 1).toString() + ']"  value="' + id + '" /></li>')
+            $('#assignedChildrenList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="assignedChildren[' + ($('#assignedChildrenList').children().size()).toString() + ']"  value="' + id + '" /></li>')
         });
         $('#addParent').on('click', function (e) {
             e.preventDefault();
