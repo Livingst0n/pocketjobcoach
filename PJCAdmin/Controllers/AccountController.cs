@@ -296,7 +296,8 @@ namespace PJCMobile.Controllers
                 //updateParent(model.UserName, parent);
             }
 
-            return RedirectToAction("List", "Account");
+            //return RedirectToAction("List", "Account");
+            return RedirectToAction("Edit", new { user = model.UserName});
         }
 
         public ActionResult Delete(string username)
