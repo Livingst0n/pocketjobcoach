@@ -146,38 +146,16 @@
 
 <script>
     $(function () {
-        $('#assignedUsersHeading').hide();
-        $('#assignedUsersList').hide();
-        $('#selectAddUsers').hide();
-        $('#addUser').hide();
-
-        $('#assignedChildrenHeading').hide();
-        $('#assignedChildrenList').hide();
-        $('#selectAddChildren').hide();
-        $('#addChild').hide();
+        hideAssignedUsersSection();
+        hideChildrenSection();
 
         //to get the dynamic functionality, delete the following 2 hide sections, then uncomment the whole huge section below
 
-        $('#assignedParentHeading').hide();
-        $('#assignedParentList').hide();
-        $('#selectAddParent').hide();
-        $('#addParent').hide();
+        hideParentSection();
+        hideJobCoachSection();
 
-        $('#assignedJobCoachHeading').hide();
-        $('#assignedJobCoachList').hide();
-        $('#selectAddJobCoach').hide();
-        $('#addJobCoach').hide();
-
-
-        /*$('#assignedParentHeading').show();
-        $('#assignedParentList').show();
-        $('#selectAddParent').show();
-        $('#addParent').show();
-
-        $('#assignedJobCoachHeading').show();
-        $('#assignedJobCoachList').show();
-        $('#selectAddJobCoach').show();
-        $('#addJobCoach').show();
+        /*showParentSection();
+        showJobCoachSection();
 
 
         $('#addUser').on('click', function (e) {
@@ -258,97 +236,84 @@
             var name = $('#userRole option:selected').html();
             if(name == "Administrator")
             {
-                $('#assignedUsersHeading').hide();
-                $('#assignedUsersList').hide();
-                $('#selectAddUsers').hide();
-                $('#addUser').hide();
-
-                $('#assignedChildrenHeading').hide();
-                $('#assignedChildrenList').hide();
-                $('#selectAddChildren').hide();
-                $('#addChild').hide();
-
-                $('#assignedParentHeading').hide();
-                $('#assignedParentList').hide();
-                $('#selectAddParent').hide();
-                $('#addParent').hide();
-
-                $('#assignedJobCoachHeading').hide();
-                $('#assignedJobCoachList').hide();
-                $('#selectAddJobCoach').hide();
-                $('#addJobCoach').hide();
+                hideAssignedUsersSection();
+                hideChildrenSection();
+                hideParentSection();
+                hideJobCoachSection();
             }
             if(name == "Parent")
             {
-                $('#assignedUsersHeading').hide();
-                $('#assignedUsersList').hide();
-                $('#selectAddUsers').hide();
-                $('#addUser').hide();
-
-                $('#assignedChildrenHeading').show();
-                $('#assignedChildrenList').show();
-                $('#selectAddChildren').show();
-                $('#addChild').show();
-
-                $('#assignedParentHeading').hide();
-                $('#assignedParentList').hide();
-                $('#selectAddParent').hide();
-                $('#addParent').hide();
-
-                $('#assignedJobCoachHeading').hide();
-                $('#assignedJobCoachList').hide();
-                $('#selectAddJobCoach').hide();
-                $('#addJobCoach').hide();
-               
+                hideAssignedUsersSection();
+                showChildrenSection();
+                hideParentSection();
+                hideJobCoachSection();
             }
             if(name == "Job Coach")
             {
-                $('#assignedUsersHeading').show();
-                $('#assignedUsersList').show();
-                $('#selectAddUsers').show();
-                $('#addUser').show();
-
-                $('#assignedChildrenHeading').hide();
-                $('#assignedChildrenList').hide();
-                $('#selectAddChildren').hide();
-                $('#addChild').hide();
-
-                $('#assignedParentHeading').hide();
-                $('#assignedParentList').hide();
-                $('#selectAddParent').hide();
-                $('#addParent').hide();
-
-                $('#assignedJobCoachHeading').hide();
-                $('#assignedJobCoachList').hide();
-                $('#selectAddJobCoach').hide();
-                $('#addJobCoach').hide();
-                
-                
+                showAssignedUsersSection();
+                hideChildrenSection();
+                hideParentSection();
+                hideJobCoachSection();  
             }
             if(name == "User")
             {
-                $('#assignedUsersHeading').hide();
-                $('#assignedUsersList').hide();
-                $('#selectAddUsers').hide();
-                $('#addUser').hide();
-
-                $('#assignedChildrenHeading').hide();
-                $('#assignedChildrenList').hide();
-                $('#selectAddChildren').hide();
-                $('#addChild').hide();
-
-                $('#assignedParentHeading').show();
-                $('#assignedParentList').show();
-                $('#selectAddParent').show();
-                $('#addParent').show();
-
-                $('#assignedJobCoachHeading').show();
-                $('#assignedJobCoachList').show();
-                $('#selectAddJobCoach').show();
-                $('#addJobCoach').show();
+                hideAssignedUsersSection();
+                hideChildrenSection();
+                showParentSection();
+                showJobCoachSection();
             }
-        });*/
-    });
+        });
+    });*/
+
+    function showAssignedUsersSection() {
+        $('#assignedUsersHeading').show();
+        $('#assignedUsersList').show();
+        $('#selectAddUsers').show();
+        $('#addUser').show();
+    }
+    function showChildrenSection() {
+        $('#assignedChildrenHeading').show();
+        $('#assignedChildrenList').show();
+        $('#selectAddChildren').show();
+        $('#addChild').show();
+    }
+    function showParentSection() {
+        $('#assignedParentHeading').show();
+        $('#assignedParentList').show();
+        $('#selectAddParent').show();
+        $('#addParent').show();
+    }
+    function showJobCoachSection() {
+        $('#assignedJobCoachHeading').show();
+        $('#assignedJobCoachList').show();
+        $('#selectAddJobCoach').show();
+        $('#addJobCoach').show();
+    }
+
+    function hideAssignedUsersSection() {
+        $('#assignedUsersHeading').hide();
+        $('#assignedUsersList').hide();
+        $('#selectAddUsers').hide();
+        $('#addUser').hide();
+    }
+    function hideChildrenSection() {
+        $('#assignedChildrenHeading').hide();
+        $('#assignedChildrenList').hide();
+        $('#selectAddChildren').hide();
+        $('#addChild').hide();
+    }
+    function hideParentSection() {
+        $('#assignedParentHeading').hide();
+        $('#assignedParentList').hide();
+        $('#selectAddParent').hide();
+        $('#addParent').hide();
+    }
+    function hideJobCoachSection() {
+        $('#assignedJobCoachHeading').hide();
+        $('#assignedJobCoachList').hide();
+        $('#selectAddJobCoach').hide();
+        $('#addJobCoach').hide();
+    }
 </script>
 
 @section Scripts {
