@@ -297,7 +297,7 @@ namespace PJCAdmin.Controllers
                         return HttpNotFound();
 
                     ViewData["mockUser"] = mockUser;
-                    ViewData["Routine"] = helper.getMostRecentRoutineAssignedToByName(mockUser, routineName, assigneeName);
+                    ViewData["Routine"] = helper.getMostRecentRoutineModelAssignedToByName(mockUser, routineName, assigneeName);
                 }
             }
             else
@@ -306,7 +306,7 @@ namespace PJCAdmin.Controllers
                 if (!helper.routineExists(routineName, assigneeName))
                     return HttpNotFound();
 
-                ViewData["Routine"] = helper.getMostRecentRoutineAssignedToByName(routineName, assigneeName);
+                ViewData["Routine"] = helper.getMostRecentRoutineModelAssignedToByName(routineName, assigneeName);
             }
 
             EnumHelper enumhelp = new EnumHelper();
