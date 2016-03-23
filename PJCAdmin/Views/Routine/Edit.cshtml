@@ -62,6 +62,7 @@
     function InsertNewTask(atIndex) {
         if ($("#Tasks li").length > atIndex) {
             $('#Tasks li:eq(' + atIndex + ')').before('@Html.Partial("_NewTask", new PJCAdmin.Models.TaskModel(),ViewData)');
+            UpdateTaskSequenceNos();
         }
         else if ($("#Tasks li").length == atIndex){
             $("#Tasks").append('@Html.Partial("_NewTask", new PJCAdmin.Models.TaskModel(),ViewData)');
@@ -75,13 +76,15 @@
         }
 
         $("#Tasks li").eq(atIndex).remove();
+        UpdateTaskSequenceNos();
         return false;
     }
 
     function UpdateTaskSequenceNos() {
-        $.each($("#Tasks").children(), function (key, child) {
-            var index = child.index();
-            child.innerHTML.replace(/\[\d*\]/, "[" + index + "]");
+        $.each($("#Tasks").find("input"), function (key, input) {
+            var myIndex = $("#Tasks").find("input").eq(key).closest("li").index();
+            var newName = input.name.replace(/\[\d*\]/, "[" + myIndex + "]");
+            $("#Tasks").find("input").eq(key).attr('name', newName);
         });
     }
 

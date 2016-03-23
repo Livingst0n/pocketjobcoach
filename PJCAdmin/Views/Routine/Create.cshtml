@@ -61,6 +61,7 @@ ViewBag.Title = "Create New Routine";
     function InsertNewTask(atIndex) {
         if ($("#Tasks li").length > atIndex) {
             $('#Tasks li:eq(' + atIndex + ')').before('@Html.Partial("_NewTask", new PJCAdmin.Models.TaskModel(),new ViewDataDictionary{{"TaskCategories",ViewData["TaskCategories"]}})');
+            UpdateTaskSequenceNos();
         }
         else if ($("#Tasks li").length == atIndex){
             $("#Tasks").append('@Html.Partial("_NewTask", new PJCAdmin.Models.TaskModel(),new ViewDataDictionary{{"TaskCategories", ViewData["TaskCategories"]}})');
@@ -74,13 +75,15 @@ ViewBag.Title = "Create New Routine";
         }
 
         $("#Tasks li").eq(atIndex).remove();
+        UpdateTaskSequenceNos();
         return false;
     }
 
-    function UpdateTaskSequenceNos() {//Doesn't work yet
-        $.each($("#Tasks").children(), function (key, child) {
-            var index = child.index();
-            child.innerHTML.replace(/\[\d*\]/, "[" + index + "]");
+    function UpdateTaskSequenceNos() {
+        $.each($("#Tasks").find("input"), function (key, input) {
+            var myIndex = $("#Tasks").find("input").eq(key).closest("li").index();
+            var newName = input.name.replace(/\[\d*\]/, "[" + myIndex + "]");
+            $("#Tasks").find("input").eq(key).attr('name', newName);
         });
     }
 
