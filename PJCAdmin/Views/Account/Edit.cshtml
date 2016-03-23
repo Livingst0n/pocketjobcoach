@@ -244,16 +244,19 @@
 
 <script>
     $(function () {
-        hideAssignedUsersSection();
-        hideChildrenSection();
+        //Commented out since sections are shown by default, may be changed based on what is needed
+        //for dynamic role changes.
+
+        //hideAssignedUsersSection();
+        //hideChildrenSection();
 
         //to get the dynamic functionality, delete the following 2 hide sections, then uncomment the whole huge section below
 
         //hideParentSection();
         //hideJobCoachSection();
 
-        showParentSection();
-        showJobCoachSection();
+        //showParentSection();
+        //showJobCoachSection();
 
         $('#addUser').on('click', function (e) {
             e.preventDefault();
