@@ -289,16 +289,16 @@ namespace PJCMobile.Controllers
             }
             else if (Roles.IsUserInRole(model.UserName, "Parent"))
             {
-                //updateAssignedChildren(model.UserName, assignedChildren);
+                helper.updateAssignedChildren(model.UserName, assignedChildren);
             }
             else if (Roles.IsUserInRole(model.UserName, "User"))
             {
-                //updateJobCoach(model.UserName, jobCoach);
-                //updateParent(model.UserName, parent);
+                helper.updateJobCoach(model.UserName, jobCoach);
+                helper.updateParent(model.UserName, parent);
             }
 
             //return RedirectToAction("List", "Account");
-            return RedirectToAction("Edit", new { user = model.UserName});
+            return RedirectToAction("Details", new { user = model.UserName});
         }
 
         public ActionResult Delete(string username)
