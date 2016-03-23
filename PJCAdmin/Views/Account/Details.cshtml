@@ -46,6 +46,9 @@
     @if (Roles.IsUserInRole(Model.UserName, "Job Coach"))
     {
         <tr>
+            <td>@Html.ActionLink("View all Created Jobs", "", "")</td>
+        </tr>
+        <tr>
             <td><b>Assigned Users</b></td>
         </tr>
 
@@ -84,6 +87,9 @@
 
     @if (Roles.IsUserInRole(Model.UserName, "Parent"))
             {
+        <tr>
+            <td>@Html.ActionLink("View all Created Jobs", "", "")</td>
+        </tr>
         <tr>
             <td><b>Children</b></td>
         </tr>

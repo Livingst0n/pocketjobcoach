@@ -65,6 +65,7 @@
                 <label>Apply Template Tasks <input type="checkbox" name="applyJobTemplate" value="1" /></label>
             </li>
                      -->
+            <!--
             <li id ="assignedUsersHeading" style="margin-top:20px;"><label>Assigned Users</label></li>
             <li>
                 <ul id="assignedUsersList">
@@ -73,15 +74,16 @@
             </li>
             <li style="margin-top:20px;">
                 <select name="selectAddUsers" id="selectAddUsers">
-                    @for (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableUsers"]).Count; i++)
+                    atfor (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableUsers"]).Count; i++)
                     {
-                        <option value="@(((List<MembershipUser>)ViewData["AvailableUsers"]).ElementAt(i).UserName)">
-                            @Html.Label(((List<MembershipUser>)ViewData["AvailableUsers"]).ElementAt(i).UserName)
+                        <option value="at(((List<MembershipUser>)ViewData["AvailableUsers"]).ElementAt(i).UserName)">
+                            atHtml.Label(((List<MembershipUser>)ViewData["AvailableUsers"]).ElementAt(i).UserName)
                         </option>
                     }
                 </select>
                 <button id="addUser">Assign User</button>
             </li>
+            -->
         </ol>
         <input type="submit" value="Create User" />
     </fieldset>
