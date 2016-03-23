@@ -1,0 +1,22 @@
+$.each($("#Tasks").children(),function(taskIndex, task){
+$.each($("#Tasks").eq(taskIndex).find("input"), function(key, child){
+child.name = child.name.replace(/\[\d*\]/,"[-1]");
+});
+});
+
+$.each($("#Tasks").find("input"),function(key, input){
+input.closest("li").index();
+input.name = input.name.replace(/\[\d*\]/,"[-1]");
+});
+
+$.each($("#Tasks").children(),function(taskIndex, task){
+$.each($("#Tasks").eq(taskIndex).find("input"), function(key, child){
+var myIndex = child.closest("li").index();
+child.name = child.name.replace(/\[\d*\]/,"["+myIndex+"]");
+});
+});
+
+$.each($("#Tasks").find("input"),function(key, input){
+var myIndex = $("#Tasks").find("input").eq(key).closest("li").index();
+$("#Tasks").find("input").eq(key).name = input.name.replace(/\[\d*\]/,"["+myIndex+"]");
+});
