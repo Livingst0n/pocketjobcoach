@@ -37,7 +37,7 @@
             </li>
             <li>
                 <label>User Type</label>
-                <select name="userRole" class="form-control">
+                <select id="userRole" name="userRole" class="form-control">
                     @foreach (string role in Roles.GetAllRoles())
                     {
                         if (role == "User")
@@ -65,7 +65,7 @@
                 <label>Apply Template Tasks <input type="checkbox" name="applyJobTemplate" value="1" /></label>
             </li>
                      -->
-            <!--
+            
             <li id ="assignedUsersHeading" style="margin-top:20px;"><label>Assigned Users</label></li>
             <li>
                 <ul id="assignedUsersList">
@@ -74,16 +74,71 @@
             </li>
             <li style="margin-top:20px;">
                 <select name="selectAddUsers" id="selectAddUsers">
-                    atfor (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableUsers"]).Count; i++)
+                    @for (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableUsers"]).Count; i++)
                     {
-                        <option value="at(((List<MembershipUser>)ViewData["AvailableUsers"]).ElementAt(i).UserName)">
-                            atHtml.Label(((List<MembershipUser>)ViewData["AvailableUsers"]).ElementAt(i).UserName)
+                        <option value="@(((List<MembershipUser>)ViewData["AvailableUsers"]).ElementAt(i).UserName)">
+                            @Html.Label(((List<MembershipUser>)ViewData["AvailableUsers"]).ElementAt(i).UserName)
                         </option>
                     }
                 </select>
                 <button id="addUser">Assign User</button>
             </li>
-            -->
+
+            <li id="assignedChildrenHeading" style="margin-top:20px;"><label>Assigned Children</label></li>
+            <li>
+                <ul id="assignedChildrenList">
+                    <li id="noChildren" style="color:#999"><i>No Assigned Children</i></li>
+                </ul>
+            </li>
+            <li style="margin-top:20px;">
+                <select name="selectAddChildren" id="selectAddChildren">
+                    @for (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableChildren"]).Count; i++)
+                        {
+                        <option value="@(((List<MembershipUser>)ViewData["AvailableChildren"]).ElementAt(i).UserName)">
+                            @Html.Label(((List<MembershipUser>)ViewData["AvailableChildren"]).ElementAt(i).UserName)
+                        </option>
+                        }
+                </select>
+                <button id="addChild">Assign Child</button>
+            </li>
+
+            <li id="assignedParentHeading" style="margin-top:20px;"><label>Assigned Parent</label></li>
+            <li>
+                <ul id="assignedParentList">
+                    <li id="noParent" style="color:#999"><i>No Parent</i></li>
+                </ul>
+            </li>
+            <li style="margin-top:20px;">
+                <select name="selectAddParent" id="selectAddParent">
+                    @for (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableParents"]).Count; i++)
+                    {
+                        <option value="@(((List<MembershipUser>)ViewData["AvailableParents"]).ElementAt(i).UserName)">
+                            @Html.Label(((List<MembershipUser>)ViewData["AvailableParents"]).ElementAt(i).UserName)
+                        </option>
+                    }
+                </select>
+                <button id="addParent">Assign Parent</button>
+            </li>
+
+            <li id="assignedJobCoachHeading" style="margin-top:20px;"><label>Assigned Job Coach</label></li>
+            <li>
+                <ul id="assignedJobCoachList">
+                    <li id="noJobCoach" style="color:#999"><i>No Job Coach</i></li>
+                </ul>
+            </li>
+            <li style="margin-top:20px;">
+                <select name="selectAddJobCoach" id="selectAddJobCoach">
+                    @for (int i = 0; i < ((List<MembershipUser>)ViewData["AvailableJobCoaches"]).Count; i++)
+                    {
+                        <option value="@(((List<MembershipUser>)ViewData["AvailableJobCoaches"]).ElementAt(i).UserName)">
+                            @Html.Label(((List<MembershipUser>)ViewData["AvailableJobCoaches"]).ElementAt(i).UserName)
+                        </option>
+                    }
+                </select>
+                <button id="addJobCoach">Assign Job Coach</button>
+            </li>
+                
+            
         </ol>
         <input type="submit" value="Create User" />
     </fieldset>
@@ -91,6 +146,40 @@
 
 <script>
     $(function () {
+        $('#assignedUsersHeading').hide();
+        $('#assignedUsersList').hide();
+        $('#selectAddUsers').hide();
+        $('#addUser').hide();
+
+        $('#assignedChildrenHeading').hide();
+        $('#assignedChildrenList').hide();
+        $('#selectAddChildren').hide();
+        $('#addChild').hide();
+
+        //to get the dynamic functionality, delete the following 2 hide sections, then uncomment the whole huge section below
+
+        $('#assignedParentHeading').hide();
+        $('#assignedParentList').hide();
+        $('#selectAddParent').hide();
+        $('#addParent').hide();
+
+        $('#assignedJobCoachHeading').hide();
+        $('#assignedJobCoachList').hide();
+        $('#selectAddJobCoach').hide();
+        $('#addJobCoach').hide();
+
+
+        /*$('#assignedParentHeading').show();
+        $('#assignedParentList').show();
+        $('#selectAddParent').show();
+        $('#addParent').show();
+
+        $('#assignedJobCoachHeading').show();
+        $('#assignedJobCoachList').show();
+        $('#selectAddJobCoach').show();
+        $('#addJobCoach').show();
+
+
         $('#addUser').on('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
@@ -98,24 +187,38 @@
                 $('#nousers').remove();
             var id = $('#selectAddUsers').val();
             var name = $('#selectAddUsers option:selected').html();
-            $('#assignedUsersList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="assignedUsers[' + ($('#assignedUsersList').children.size()).toString() + ']"  value="' + id + '" /></li>')
+            $('#assignedUsersList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="assignedUsers[' + ($('#assignedUsersList').children().size()).toString() + ']"  value="' + id + '" /></li>')
+        });
+        $('#addChild').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if ($('#nochildren').size() > 0)
+                $('#nochildren').remove();
+            var id = $('#selectAddChildren').val();
+            var name = $('#selectAddChildren option:selected').html();
+            $('#assignedChildrenList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="assignedChildren[' + ($('#assignedChildrenList').children().size()).toString() + ']"  value="' + id + '" /></li>')
+        });
+        $('#addParent').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if ($('#noparent').size() > 0)
+                $('#noparent').remove();
+            var id = $('#selectAddParent').val();
+            var name = $('#selectAddParent option:selected').html();
+            $('#assignedParentList').empty();
+            $('#assignedParentList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="parent"  value="' + id + '" /></li>')
+        });
+        $('#addJobCoach').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if ($('#nojobcoach').size() > 0)
+                $('#nojobcoach').remove();
+            var id = $('#selectAddJobCoach').val();
+            var name = $('#selectAddJobCoach option:selected').html();
+            $('#assignedJobCoachList').empty();
+            $('#assignedJobCoachList').append('<li>' + name + '&nbsp; &nbsp;<button class="remove-user"><i class="fa fa-trash"></i></button><input type="hidden" name="jobCoach"  value="' + id + '" /></li>')
         });
 
-        $('userRole').on('change', function (e)
-        {
-            var role = $('#userRole').val();
-            if(role == "User")
-            {
-                $('#assignedUsersHeading').hide();
-                $('#assignedUsersList').hide();
-                $('#selectAddUsers').hide();
-                $('#addUser').hide();
-            }
-            if(role == "Parent")
-            {
-
-            }
-        });
 
         $('#assignedUsersList').on('click', '.remove-user', function (e) {
             e.preventDefault();
@@ -125,6 +228,126 @@
                 $('#assignedUsersList').append('<li id="nousers" style="color:#999"><i>No Assigned Users</i></li>');
             }
         });
+        $('#assignedChildrenList').on('click', '.remove-user', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).parent().remove();
+            if ($('#assignedChildrenList').children().size() == 0) {
+                $('#assignedChildrenList').append('<li id="nousers" style="color:#999"><i>No Assigned Children</i></li>');
+            }
+        });
+        $('#assignedParentList').on('click', '.remove-user', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).parent().remove();
+            if ($('#assignedParentList').children().size() == 0) {
+                $('#assignedParentList').append('<li id="nousers" style="color:#999"><i>No Assigned Parent</i></li>');
+            }
+        });
+        $('#assignedJobCoachList').on('click', '.remove-user', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).parent().remove();
+            if ($('#assignedJobCoachList').children().size() == 0) {
+                $('#assignedJobCoachList').append('<li id="nousers" style="color:#999"><i>No Assigned Job Coach</i></li>');
+            }
+        });
+        
+        $('#userRole').on('change', function (e)
+        {
+            var name = $('#userRole option:selected').html();
+            if(name == "Administrator")
+            {
+                $('#assignedUsersHeading').hide();
+                $('#assignedUsersList').hide();
+                $('#selectAddUsers').hide();
+                $('#addUser').hide();
+
+                $('#assignedChildrenHeading').hide();
+                $('#assignedChildrenList').hide();
+                $('#selectAddChildren').hide();
+                $('#addChild').hide();
+
+                $('#assignedParentHeading').hide();
+                $('#assignedParentList').hide();
+                $('#selectAddParent').hide();
+                $('#addParent').hide();
+
+                $('#assignedJobCoachHeading').hide();
+                $('#assignedJobCoachList').hide();
+                $('#selectAddJobCoach').hide();
+                $('#addJobCoach').hide();
+            }
+            if(name == "Parent")
+            {
+                $('#assignedUsersHeading').hide();
+                $('#assignedUsersList').hide();
+                $('#selectAddUsers').hide();
+                $('#addUser').hide();
+
+                $('#assignedChildrenHeading').show();
+                $('#assignedChildrenList').show();
+                $('#selectAddChildren').show();
+                $('#addChild').show();
+
+                $('#assignedParentHeading').hide();
+                $('#assignedParentList').hide();
+                $('#selectAddParent').hide();
+                $('#addParent').hide();
+
+                $('#assignedJobCoachHeading').hide();
+                $('#assignedJobCoachList').hide();
+                $('#selectAddJobCoach').hide();
+                $('#addJobCoach').hide();
+               
+            }
+            if(name == "Job Coach")
+            {
+                $('#assignedUsersHeading').show();
+                $('#assignedUsersList').show();
+                $('#selectAddUsers').show();
+                $('#addUser').show();
+
+                $('#assignedChildrenHeading').hide();
+                $('#assignedChildrenList').hide();
+                $('#selectAddChildren').hide();
+                $('#addChild').hide();
+
+                $('#assignedParentHeading').hide();
+                $('#assignedParentList').hide();
+                $('#selectAddParent').hide();
+                $('#addParent').hide();
+
+                $('#assignedJobCoachHeading').hide();
+                $('#assignedJobCoachList').hide();
+                $('#selectAddJobCoach').hide();
+                $('#addJobCoach').hide();
+                
+                
+            }
+            if(name == "User")
+            {
+                $('#assignedUsersHeading').hide();
+                $('#assignedUsersList').hide();
+                $('#selectAddUsers').hide();
+                $('#addUser').hide();
+
+                $('#assignedChildrenHeading').hide();
+                $('#assignedChildrenList').hide();
+                $('#selectAddChildren').hide();
+                $('#addChild').hide();
+
+                $('#assignedParentHeading').show();
+                $('#assignedParentList').show();
+                $('#selectAddParent').show();
+                $('#addParent').show();
+
+                $('#assignedJobCoachHeading').show();
+                $('#assignedJobCoachList').show();
+                $('#selectAddJobCoach').show();
+                $('#addJobCoach').show();
+            }
+        });*/
     });
 </script>
 
