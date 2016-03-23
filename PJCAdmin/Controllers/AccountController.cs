@@ -267,6 +267,7 @@ namespace PJCMobile.Controllers
             if (createStatus != MembershipCreateStatus.Success)
             {
                 ModelState.AddModelError("", "Unable to create user!");
+                ModelState.AddModelError("", createStatus.ToString());
 
                 // If we got this far, something failed, redisplay form
                 return View();
